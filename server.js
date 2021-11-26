@@ -13,6 +13,14 @@ server.get('/', (req, res) => {
     return res.render('index');
 });
 
+server.get('/revenues', (req, res) => {
+    return res.render('revenues');
+});
+
+server.get('/about', (req, res) => {
+    return res.render('about');
+});
+
 server.listen(5000, () => {
     console.log("Server is running!");
 });
