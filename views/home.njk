@@ -1,0 +1,92 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Foodfy</title>
+{% endblock %}
+
+{% block contents %}
+    <section class="box-chef">
+        <div class="box-info">
+            <h2>As melhores receitas</h2>
+            <p>
+                Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.
+            </p>
+        </div>
+
+        <div class="box-img-chef">
+            <img src="/assets/chef.png" alt="Imagem Chef">
+        </div>
+    </section>
+
+    <section class="cards-food">
+        <h3>Mais acessadas</h3>
+        
+        <div class="cards">
+            <div class="card">
+                <div class="card-img">
+                    <img src="/assets/burger.png" alt="Triplo Bacon Burguer">
+                </div>
+
+                <div class="card-info">
+                    <h4>Triplo bacon burger</h4>
+                    <p>por Jorge Relato</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="/assets/pizza.png" alt="Pizza 4 estações">
+                </div>
+
+                <div class="card-info">
+                    <h4>Pizza 4 estações</h4>
+                    <p>por Fabiana Melo</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="/assets/espaguete.png" alt="Espaguete ao alho">
+                </div>
+
+                <div class="card-info">
+                    <h4>Espaguete ao alho</h4>
+                    <p>por Júlia Kinoto</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="/assets/lasanha.png" alt="Lasanha mac n' cheese">
+                </div>
+
+                <div class="card-info">
+                    <h4>Lasanha mac n' cheese</h4>
+                    <p>por Juliano Vieira</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-img">
+                    <img src="/assets/doce.png" alt="Docinhos pão-do-céu">
+                </div>
+
+                <div class="card-info">
+                    <h4>Docinhos pão-do-céu</h4>
+                    <p>por Ricardo Golves</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img src="/assets/asinhas.png" alt="Asinhas de frango ao barbecue">
+                </div>
+
+                <div class="card-info">
+                    <h4>Asinhas de frango ao barbecue</h4>
+                    <p>por Vania Steroski</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

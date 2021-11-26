@@ -2,7 +2,7 @@ const express = require('express');
 const nunjucks = require('nunjucks');
 const server = express();
 
-server.set('view engine', 'html');
+server.set('view engine', 'njk');
 server.use(express.static('public'));
 
 nunjucks.configure('views', {
@@ -10,7 +10,7 @@ nunjucks.configure('views', {
 });
 
 server.get('/', (req, res) => {
-    return res.render('index');
+    return res.render('home');
 });
 
 server.get('/revenues', (req, res) => {
