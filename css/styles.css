@@ -44,8 +44,6 @@ header {
     display: flex;
 }
 
-
-
 /* ========== LOGO ========== */
 .sr-only {
     position: absolute;
@@ -65,7 +63,6 @@ header {
 }
 
 /* ========== NAVIGATION ========== */
-
 nav ul {
     display: flex;
 }
@@ -89,8 +86,6 @@ nav ul li:nth-child(1) {
     height: 366px;
     border-radius: 30px;
     margin-bottom: 50px;
-    /* padding: 60px; */
-
     display: flex;
 }
 
@@ -161,7 +156,6 @@ nav ul li:nth-child(1) {
     margin-top: 5px;
 }
 
-
 /* ========== PAGE ABOUT ========== */
 .about-info h2,
 .about-info h3,
@@ -208,8 +202,6 @@ nav ul li:nth-child(1) {
     width: 660px;
     padding: 30px;
     border-radius: 16px;
-    /* height: 50%; 
-    margin: 50vh auto; */
 }
 
 .modal-image img {
@@ -239,7 +231,6 @@ nav ul li:nth-child(1) {
 
 .modal-close {
     color: var(--black-footer);
-    
     text-align: center;
 }
 
