@@ -1,0 +1,23 @@
+{
+  "name": "Foodfy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/300Marco/desafio-foodfy-rocketseat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/300Marco/desafio-foodfy-rocketseat/issues"
+  },
+  "homepage": "https://github.com/300Marco/desafio-foodfy-rocketseat#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
