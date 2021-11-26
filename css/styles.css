@@ -75,6 +75,14 @@ nav ul li a {
     color: var(--black);
 }
 
+nav ul li a.fixed {
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    font-weight: bold;
+}
+
 nav ul li:nth-child(1) {
     font-size: 1.6rem;
     margin-right: 30px;
