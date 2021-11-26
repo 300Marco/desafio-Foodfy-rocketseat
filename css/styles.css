@@ -139,9 +139,18 @@ nav ul li:nth-child(1) {
     gap: 20px;
 }
 
+.card {
+    cursor: pointer;
+}
+
 .card-img img {
     width: 100%;
     border-radius: 15px;
+    transition: filter 300ms;
+}
+
+.card-img img:hover {
+    filter: brightness(70%);
 }
 
 .card-info h4 {
