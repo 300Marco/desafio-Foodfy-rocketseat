@@ -21,6 +21,10 @@ server.get('/about', (req, res) => {
     return res.render('about');
 });
 
+server.use((req, res) => {
+    return res.status(404).render('not-found');
+});
+
 server.listen(5000, () => {
     console.log("Server is running!");
 });
