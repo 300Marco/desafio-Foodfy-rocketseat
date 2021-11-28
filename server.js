@@ -11,7 +11,7 @@ nunjucks.configure('views', {
 });
 
 server.get('/', (req, res) => {
-    return res.render('home');
+    return res.render('home', {revenues: data});
 });
 
 server.get('/revenues', (req, res) => {
