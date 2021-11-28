@@ -15,7 +15,7 @@ server.get('/', (req, res) => {
 });
 
 server.get('/revenues', (req, res) => {
-    return res.render('revenues');
+    return res.render('revenues', {revenues: data});
 });
 
 server.get('/about', (req, res) => {

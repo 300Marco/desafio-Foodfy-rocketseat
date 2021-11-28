@@ -7,137 +7,18 @@
 {% block contents %}
     <section class="cards-food">
         <div class="cards">
-            <div class="card" id="burger">
-                <div class="card-img">
-                    <img src="/assets/burger.png" alt="Triplo Bacon Burguer">
-                </div>
+            {% for revenue in revenues %}
+                <div class="card" id="{{revenue.id}}">
+                    <div class="card-img">
+                        <img src="{{revenue.image}}" alt="{{revenue.title}}">
+                    </div>
 
-                <div class="card-info" id="Triplo bacon burger">
-                    <h4>Triplo bacon burger</h4>
-                    <p>por Jorge Relato</p>
+                    <div class="card-info" id="{{revenue.title}}">
+                        <h4>{{revenue.title}}</h4>
+                        <p>{{revenue.author}}</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card" id="pizza">
-                <div class="card-img">
-                    <img src="/assets/pizza.png" alt="Pizza 4 estações">
-                </div>
-
-                <div class="card-info" id="Pizza 4 estações">
-                    <h4>Pizza 4 estações</h4>
-                    <p>por Fabiana Melo</p>
-                </div>
-            </div>
-
-            <div class="card" id="espaguete">
-                <div class="card-img">
-                    <img src="/assets/espaguete.png" alt="Espaguete ao alho">
-                </div>
-
-                <div class="card-info" id="Espaguete ao alho">
-                    <h4>Espaguete ao alho</h4>
-                    <p>por Júlia Kinoto</p>
-                </div>
-            </div>
-
-            <div class="card" id="lasanha">
-                <div class="card-img">
-                    <img src="/assets/lasanha.png" alt="Lasanha mac n' cheese">
-                </div>
-
-                <div class="card-info" id="Lasanha mac n' cheese">
-                    <h4>Lasanha mac n' cheese</h4>
-                    <p>por Juliano Vieira</p>
-                </div>
-            </div>
-            
-            <div class="card" id="doce">
-                <div class="card-img">
-                    <img src="/assets/doce.png" alt="Docinhos pão-do-céu">
-                </div>
-
-                <div class="card-info" id="Docinhos pão-do-céu">
-                    <h4>Docinhos pão-do-céu</h4>
-                    <p>por Ricardo Golves</p>
-                </div>
-            </div>
-
-            <div class="card" id="asinhas">
-                <div class="card-img">
-                    <img src="/assets/asinhas.png" alt="Asinhas de frango ao barbecue">
-                </div>
-
-                <div class="card-info" id="Asinhas de frango ao barbecue">
-                    <h4>Asinhas de frango ao barbecue</h4>
-                    <p>por Vania Steroski</p>
-                </div>
-            </div>
-
-            <div class="card" id="burger">
-                <div class="card-img">
-                    <img src="/assets/burger.png" alt="Triplo Bacon Burguer">
-                </div>
-
-                <div class="card-info" id="Triplo bacon burger">
-                    <h4>Triplo bacon burger</h4>
-                    <p>por Jorge Relato</p>
-                </div>
-            </div>
-
-            <div class="card" id="pizza">
-                <div class="card-img">
-                    <img src="/assets/pizza.png" alt="Pizza 4 estações">
-                </div>
-
-                <div class="card-info" id="Pizza 4 estações">
-                    <h4>Pizza 4 estações</h4>
-                    <p>por Fabiana Melo</p>
-                </div>
-            </div>
-
-            <div class="card" id="espaguete">
-                <div class="card-img">
-                    <img src="/assets/espaguete.png" alt="Espaguete ao alho">
-                </div>
-
-                <div class="card-info" id="Espaguete ao alho">
-                    <h4>Espaguete ao alho</h4>
-                    <p>por Júlia Kinoto</p>
-                </div>
-            </div>
-
-            <div class="card" id="lasanha">
-                <div class="card-img">
-                    <img src="/assets/lasanha.png" alt="Lasanha mac n' cheese">
-                </div>
-
-                <div class="card-info" id="Lasanha mac n' cheese">
-                    <h4>Lasanha mac n' cheese</h4>
-                    <p>por Juliano Vieira</p>
-                </div>
-            </div>
-            
-            <div class="card" id="doce">
-                <div class="card-img">
-                    <img src="/assets/doce.png" alt="Docinhos pão-do-céu">
-                </div>
-
-                <div class="card-info" id="Docinhos pão-do-céu">
-                    <h4>Docinhos pão-do-céu</h4>
-                    <p>por Ricardo Golves</p>
-                </div>
-            </div>
-
-            <div class="card" id="asinhas">
-                <div class="card-img">
-                    <img src="/assets/asinhas.png" alt="Asinhas de frango ao barbecue">
-                </div>
-
-                <div class="card-info" id="Asinhas de frango ao barbecue">
-                    <h4>Asinhas de frango ao barbecue</h4>
-                    <p>por Vania Steroski</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </section>
 {% endblock %}
