@@ -1,5 +1,6 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
+const data = require('./data');
 const server = express();
 
 server.set('view engine', 'njk');
