@@ -18,6 +18,13 @@ server.get('/revenues', (req, res) => {
     return res.render('revenues', {revenues: data});
 });
 
+server.get('/revenues/:index', (req, res) => {
+    const revenues = data;
+    const revenuesIndex = req.params.index;
+
+    return res.send(revenues[revenuesIndex]);
+});
+
 server.get('/about', (req, res) => {
     return res.render('about');
 });
