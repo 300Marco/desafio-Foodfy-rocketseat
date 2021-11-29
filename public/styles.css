@@ -203,44 +203,6 @@ nav ul li:nth-child(1) {
 }
 
 /* ========== PAGE REVENUES ========== */
-/* ========== MODAL ========== */
-.modal-overlay {
-    background-color: #00000099;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-
-    opacity: 0;
-    visibility: hidden;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal {
-    background-color: white;
-    width: 660px;
-    padding: 30px;
-    border-radius: 16px;
-}
-
-.modal-image img {
-    width: 100%;
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
-
-.modal-content {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.modal-content span {
-    display: block;
-}
-
 .title-dish {
     font-size: 2.4rem;
     margin-bottom: 5px;
@@ -248,7 +210,6 @@ nav ul li:nth-child(1) {
 
 .name-user {
     color: var(--black-light);
-    /* font-size: 1.8rem; */
 }
 
 .modal-close {
@@ -264,12 +225,6 @@ nav ul li:nth-child(1) {
 
 .modal-close a:hover {
     color: var(--black-about);
-}
-
-/* ========== ACTIVE MODAL ========== */
-.modal-overlay.active{
-    opacity: 1;
-    visibility: visible;
 }
 
 /* ========== FOOTER ========== */
@@ -327,7 +282,7 @@ footer span {
     background-size: cover !important;
     background-position: center center !important;
     width: 100%;
-    height: 240px;
+    height: 280px;
     border-radius: 15px;
 }
 
@@ -348,6 +303,9 @@ footer span {
 .revenue-info {
     margin-bottom: 50px;
 }
+.revenue-info h3 {
+    font-size: 2.4rem;
+}
 
 .revenue-info ul {
     margin: 20px 0 40px 0;
@@ -364,10 +322,6 @@ footer span {
     cursor: pointer;
     margin-left: 8px;
     text-transform: uppercase;
-}
-
-.ingredients h3 {
-    font-size: 24px;
 }
 
 /* ========== PAGE REVENUE - show/hide action ========== */
