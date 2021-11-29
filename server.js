@@ -14,25 +14,24 @@ server.get('/', (req, res) => {
     return res.render('home', {revenues: data});
 });
 
+server.get('/about', (req, res) => {
+    return res.render('about');
+});
+
 server.get('/revenues', (req, res) => {
     return res.render('revenues', {revenues: data});
 });
 
-// server.get('/revenues/:index', (req, res) => {
-//     const revenues = data;
-//     const revenuesIndex = req.params.index;
+server.get('/revenue/:index', (req, res) => {
+    const revenue = data;
+    const revenueIndex = req.params.index;
+    const revenueItems = revenue[revenueIndex];
 
-//     const test = data.find()
+    if(revenueItems == undefined) {
+        return res.render('not-found');
+    }
 
-//     return res.send(revenues[revenuesIndex]);
-// });
-
-server.get('/revenue', (req, res) => {
-    return res.render('revenue', {revenue: data});
-});
-
-server.get('/about', (req, res) => {
-    return res.render('about');
+    return res.render('revenue', {revenue: revenueItems});
 });
 
 server.use((req, res) => {

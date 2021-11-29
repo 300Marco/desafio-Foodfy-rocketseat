@@ -6,11 +6,11 @@
 
 {% block contents %}
     
-    <div class="revenue-image" style="background: url(/assets/burger.png)"></div>
+    <div class="revenue-image" style="background: url({{revenue.image}})"></div>
 
     <div class="revenue-title">
-        <h2>Triplo bacon burguer</h2>
-        <span>por Jorge Relato</span>
+        <h2>{{revenue.title}}</h2>
+        <span>{{revenue.author}}</span>
     </div>
 
     <div class="revenue-info">
@@ -21,21 +21,9 @@
             </h3>
 
             <ul>
-                <li>
-                    passo 1
-                </li>
-                <li>
-                    passo 2
-                </li>
-                <li>
-                    passo 3
-                </li>
-                <li>
-                    passo 4
-                </li>
-                <li>
-                    passo 5
-                </li>
+                {% for ingredient in revenue.ingredients %}
+                    <li>{{ingredient}}</li>
+                {% endfor %}
             </ul>
         </section>
 
@@ -46,21 +34,9 @@
             </h3>
             
             <ul>
-                <li>
-                    passo 1
-                </li>
-                <li>
-                    passo 2
-                </li>
-                <li>
-                    passo 3
-                </li>
-                <li>
-                    passo 4
-                </li>
-                <li>
-                    passo 5
-                </li>
+                {% for preparation in revenue.preparation %}
+                    <li>{{preparation}}</li>
+                {% endfor %}
             </ul>
         </section>
 
@@ -71,21 +47,7 @@
             </h3>
             
             <ul>
-                <li>
-                    passo 1
-                </li>
-                <li>
-                    passo 2
-                </li>
-                <li>
-                    passo 3
-                </li>
-                <li>
-                    passo 4
-                </li>
-                <li>
-                    passo 5
-                </li>
+                <li>{{revenue.information}}</li>
             </ul>
         </section>
     </div>
