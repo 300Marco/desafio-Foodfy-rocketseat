@@ -365,3 +365,8 @@ footer span {
 .ingredients h3 {
     font-size: 24px;
 }
+
+/* ========== PAGE REVENUE - show/hide action ========== */
+.hide ul li {
+    display: none;
+}
