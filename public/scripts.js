@@ -1,23 +1,9 @@
-const cards = document.querySelectorAll('.card');
-const modalOverlay = document.querySelector('.modal-overlay');
+const cards = document.querySelectorAll('.card'); // seleciona todos os cards
 
 for(let card of cards) {
-    card.addEventListener('click', () => {
-        const imgId = card.getAttribute('id');
-        const titleRevenues = card.querySelector('.card-info')
-            .getAttribute('id');
-        const username = card.querySelector('p');
-
-        modalOverlay.classList.add('active');
-        
-        modalOverlay.querySelector('img').src = `../assets/${imgId}.png`;
-        modalOverlay.querySelector('.title-dish').innerHTML = titleRevenues;
-        modalOverlay.querySelector('.name-user').innerHTML = username.innerText;
+    card.addEventListener('click', () => { // ouve o clique em um card
+        const revenueId = card.getAttribute('id'); // pega o id de onde possui a classe "card".
+        window.location.href = `/revenue/${revenueId}`; // envia o endereço para a url
     });
 }
-
-modalOverlay.querySelector('.modal-close')
-    .addEventListener('click', () => {
-    modalOverlay.classList.remove('active');
-});
 
