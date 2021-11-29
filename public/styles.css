@@ -89,6 +89,10 @@ nav ul li:nth-child(1) {
     margin-right: 30px;
 }
 
+.active {
+    font-weight: bold;
+}
+
 /* ========== BOX CHEF ========== */
 .box-chef {
     background-color: var(--box-chef);
