@@ -6,19 +6,19 @@
 
 {% block links %}
     <li><a href="/about">Sobre</a></li>
-    <li><a href="/revenues" class="active">Receitas</a></li>
+    <li><a href="/recipes" class="active">Receitas</a></li>
 {% endblock %}
 
 {% block contents %}
     
-    <div class="revenue-image" style="background: url({{revenue.image}})"></div>
+    <div class="recipe-image" style="background: url({{recipe.image}})"></div>
 
-    <div class="revenue-title">
-        <h2>{{revenue.title}}</h2>
-        <span>{{revenue.author}}</span>
+    <div class="recipe-title">
+        <h2>{{recipe.title}}</h2>
+        <span>{{recipe.author}}</span>
     </div>
 
-    <div class="revenue-info">
+    <div class="recipe-info">
         <section class="ingredients">
             <h3>
                 Ingredientes
@@ -26,7 +26,7 @@
             </h3>
 
             <ul>
-                {% for ingredient in revenue.ingredients %}
+                {% for ingredient in recipe.ingredients %}
                     <li>{{ingredient}}</li>
                 {% endfor %}
             </ul>
@@ -39,7 +39,7 @@
             </h3>
             
             <ul>
-                {% for preparation in revenue.preparation %}
+                {% for preparation in recipe.preparation %}
                     <li>{{preparation}}</li>
                 {% endfor %}
             </ul>
@@ -52,7 +52,7 @@
             </h3>
             
             <ul>
-                <li>{{revenue.information}}</li>
+                <li>{{recipe.information}}</li>
             </ul>
         </section>
     </div>

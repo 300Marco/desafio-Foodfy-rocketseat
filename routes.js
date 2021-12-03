@@ -3,27 +3,27 @@ const routes = express.Router();
 const data = require('./data');
 
 routes.get('/', (req, res) => {
-    return res.render('recipes/index', {revenues: data});
+    return res.render('recipes/index', {recipes: data});
 });
 
 routes.get('/about', (req, res) => {
     return res.render('recipes/about');
 });
 
-routes.get('/revenues', (req, res) => {
-    return res.render('recipes/revenues', {revenues: data});
+routes.get('/recipes', (req, res) => {
+    return res.render('recipes/recipes', {recipes: data});
 });
 
-routes.get('/revenue/:index', (req, res) => {
-    const revenue = data;
-    const revenueIndex = req.params.index;
-    const revenueItems = revenue[revenueIndex];
+routes.get('/recipe/:index', (req, res) => {
+    const recipe = data;
+    const recipeIndex = req.params.index;
+    const recipeItems = recipe[recipeIndex];
 
-    if(revenueItems == undefined) {
-        return res.render('not-found');
+    if(recipeItems == undefined) {
+        return res.render('recipes/not-found');
     }
 
-    return res.render('recipes/revenue', {revenue: revenueItems});
+    return res.render('recipes/recipe', {recipe: recipeItems});
 });
 
 // ADMIN

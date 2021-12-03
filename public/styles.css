@@ -276,8 +276,8 @@ footer span {
     margin: 20px 0;
 }
 
-/* ========== PAGE REVENUE ========== */
-.revenue-image {
+/* ========== PAGE RECIPE ========== */
+.recipe-image {
     background-repeat: no-repeat !important;
     background-size: cover !important;
     background-position: center center !important;
@@ -286,37 +286,37 @@ footer span {
     border-radius: 15px;
 }
 
-.revenue-title {
+.recipe-title {
     text-align: center;
     margin: 50px 0;
 }
 
-.revenue-title h2 {
+.recipe-title h2 {
     font-size: 36px;
 }
 
-.revenue-title span {
+.recipe-title span {
     color: var(--black-light);
     font-size: 20px;
 }
 
-.revenue-info {
+.recipe-info {
     margin-bottom: 50px;
 }
-.revenue-info h3 {
+.recipe-info h3 {
     font-size: 2.4rem;
 }
 
-.revenue-info ul {
+.recipe-info ul {
     margin: 20px 0 40px 0;
 }
 
-.revenue-info ul li {
+.recipe-info ul li {
     color: var(--black-about);
     line-height: 25px;
 }
 
-.revenue-info span {
+.recipe-info span {
     color: var(--black-footer);
     font-size: 12px;
     cursor: pointer;
@@ -324,7 +324,7 @@ footer span {
     text-transform: uppercase;
 }
 
-/* ========== PAGE REVENUE - show/hide action ========== */
+/* ========== PAGE RECIPE - show/hide action ========== */
 .hide ul li {
     display: none;
 }
