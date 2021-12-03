@@ -15,6 +15,7 @@
     --black-about: #444444;
     --black-light: #777777;
     --black-footer: #999999;
+    --purple: #6558C3;
 
     /* Layout */
     --box-chef: #FBDFDB;
@@ -32,8 +33,10 @@ body {
 
 }
 
+/* recipes and admin */
 header, 
-.container {
+.container,
+.header-menu-box {
     width: 940px;
     margin: 0 auto;
 }
@@ -327,4 +330,34 @@ footer span {
 /* ========== PAGE RECIPE - show/hide action ========== */
 .hide ul li {
     display: none;
+}
+
+
+/* ========== PAGE ADMIN ========== */
+.header-background {
+    background-color: var(--black);
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.cards-food-admin h3{
+    margin-bottom: 30px;
+}
+
+.cards-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px;
+}
+
+.card-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+} 
+
+.cards-admin .card-info a {
+    color: var(--purple);
+    font-size: 1.4rem;
+    font-weight: bold;
 }
