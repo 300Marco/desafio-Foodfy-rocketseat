@@ -3,15 +3,15 @@ const routes = express.Router();
 const data = require('./data');
 
 routes.get('/', (req, res) => {
-    return res.render('index', {revenues: data});
+    return res.render('recipes/index', {revenues: data});
 });
 
 routes.get('/about', (req, res) => {
-    return res.render('about');
+    return res.render('recipes/about');
 });
 
 routes.get('/revenues', (req, res) => {
-    return res.render('revenues', {revenues: data});
+    return res.render('recipes/revenues', {revenues: data});
 });
 
 routes.get('/revenue/:index', (req, res) => {
@@ -23,7 +23,12 @@ routes.get('/revenue/:index', (req, res) => {
         return res.render('not-found');
     }
 
-    return res.render('revenue', {revenue: revenueItems});
+    return res.render('recipes/revenue', {revenue: revenueItems});
+});
+
+// ADMIN
+routes.get('/admin/revenues', (req, res) => {
+    return res.render('admin/admin');
 });
 
 routes.use((req, res) => {
