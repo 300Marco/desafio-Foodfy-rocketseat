@@ -1,18 +1,13 @@
 const express = require('express');
+const recipes = require('./recipes');
 const routes = express.Router();
 const data = require('./data');
 
-routes.get('/', (req, res) => {
-    return res.render('recipes/index', {recipes: data});
-});
+routes.get('/', recipes.index);
 
-routes.get('/about', (req, res) => {
-    return res.render('recipes/about');
-});
+routes.get('/about', recipes.about);
 
-routes.get('/recipes', (req, res) => {
-    return res.render('recipes/recipes', {recipes: data});
-});
+routes.get('/recipes', recipes.recipes);
 
 routes.get('/recipe/:index', (req, res) => {
     const recipe = data;
