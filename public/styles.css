@@ -417,10 +417,10 @@ footer span {
     width: 100%;
 }
 
-.recipe-edit button {
+.add-button {
     background: none;
     border: none;
-    color: var(--purple);
+    color: var(--color-purple);
     cursor: pointer;
     font-weight: bold;
     font-size: 1.6rem;
@@ -430,5 +430,5 @@ footer span {
     height: 257px;
 }
 
-
+/* ========== PAGE CREATE ========== */
 
