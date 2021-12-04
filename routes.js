@@ -1,9 +1,8 @@
 const express = require('express');
 const recipes = require('./controllers/recipes');
 const routes = express.Router();
-const data = require('./data');
+const data = require('./data.json');
 const fileSystem = require('fs');
-const { response } = require('express');
 
 routes.get('/', recipes.index);
 
@@ -49,7 +48,9 @@ routes.post("/admin/recipes", (req, res) => {
         }
     }
 
-    fileSystem.writeFile('data.json', JSON.stringify(req.body), (err) => {
+    data.recipes.push(req.body);
+
+    fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
         if(err) {
             return res.send('Error Write File');
         }

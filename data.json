@@ -1,1 +1,12 @@
-{"image":"http://google.com","ingredients":"um","preparation":"doi","information":"instruções"}
+{
+  "recipes": [
+    {
+      "image": "https://d1uz88p17r663j.cloudfront.net/original/8fee36bf950557ff9f896b9104f36907_bolo-vulcao-brigadeiro-receitas-nestle.jpg",
+      "title": "Bolo de Chocolate",
+      "author": "Marco Santana",
+      "ingredients": "coisas",
+      "preparation": "coisas",
+      "information": "Informações"
+    }
+  ]
+}
