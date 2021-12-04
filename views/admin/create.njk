@@ -21,56 +21,97 @@
 {% block contents %}
     <form method="POST" action="/admin/recipes">
         <div class="recipe-detail">
-            <span class="detail-title">Receita: {{recipes[0].title}}</span>
-
-            <div class="buttons">
-                <button class="delete-button">Deletar</button>
-                <button class="edit-button" type="submit">Salvar Receita</button>
-            </div>
+            <span class="detail-title">Criando Receita</span>
+            <button class="edit-button" type="submit">Salvar Receita</button>
         </div>
 
         <div class="recipe-edit">
             <div class="recipe">
-
-                {# MUDAR SELETOR SPAN PARA DIV, EM TODOS #}
-
-                <span>Imagem da receita</span>
-                <input type="url" name="image">
+                <div class="name-input">Imagem da receita</div>
+                <input type="text" name="image">
             </div>
 
             <div class="preparation">
-                <span>Título da receita</span>
+                <div class="name-input">Título da receita</div>
                 <input name="title">
             </div>
 
             <div class="preparation">
-                <span>Feito por</span>
+                <div class="name-input">Feito por</div>
                 <input name="author">
             </div>
 
             <div id="ingredients">
                 <div class="ingredient">
-                    <span>Ingredients</span>
-                    <input name="ingredients">
-                    <button>Adicionar novo ingrediente</button>
+                    <div class="name-input">Ingredients</div>
+                    <input name="ingredients[]" value="">
+                    
+                    <div class="box-ingredients"></div>
+
+                    <button class="add-button add-ingredient" type="button">
+                        Adicionar novo ingrediente
+                    </button>
                 </div>
             </div>
 
             <div class="preparation">
-                <span>Modo de preparo</span>
-                <input name="preparation">
-                <button>Adicionar novo ingrediente</button>
+                <div class="name-input">Modo de preparo</div>
+                <input name="preparation[]">
+
+                <div class="box-preparation"></div>
+
+                <button class="add-button add-preparation" type="button">
+                    Adicionar novo ingrediente
+                </button>
             </div>
 
             <div class="information">
-                <span>Informações adicionais</span>
-                {# Arrumar aqui #}
+                <div class="name-input">Informações adicionais</div>
                 <textarea name="information"></textarea>
             </div>
         </div>
     </form>
+
+    <script>
+        
+        addIngrdient();
+        addPreparation();
+
+        function addIngrdient() {
+            const btnAddIngredient = document.querySelector('.add-ingredient');
+            const box = document.querySelector('.box-ingredients');
+
+            btnAddIngredient.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                
+                newInput.setAttribute('type', 'text');
+                newInput.setAttribute('name', 'ingredients[]');
+
+                box.appendChild(newInput);
+            });
+        }
+
+        function addPreparation() {
+            const btnAddPreparation = document.querySelector('.add-preparation');
+            const box = document.querySelector('.box-preparation');
+
+            btnAddPreparation.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                
+                newInput.setAttribute('type', 'text');
+                newInput.setAttribute('name', 'preparation[]');
+
+                box.appendChild(newInput);
+            });
+        }
+        
+    </script>
 {% endblock %}
 
 {% block footer %}
+    
+{% endblock %}
+
+{% block scripts %}
     
 {% endblock %}

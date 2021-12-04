@@ -2,10 +2,6 @@ const fileSystem = require('fs');
 const data = require('../data.json');
 
 exports.index = (req, res) => {
-    const recipe = data;
-
-    console.log(recipe);
-
     return res.render('recipes/index', {recipes: data.recipes});
 }
 

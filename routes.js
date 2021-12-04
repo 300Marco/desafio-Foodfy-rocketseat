@@ -48,10 +48,10 @@ routes.post("/admin/recipes", (req, res) => {
         }
     }
 
-    const id = Number(data.recipes.length + 1);
-
+    const id = Number(data.recipes.length);
+    
     let {image, title, author, ingredients, preparation,information} = req.body;
-
+    
     data.recipes.push({
         id,
         image, 
@@ -61,6 +61,7 @@ routes.post("/admin/recipes", (req, res) => {
         preparation,
         information        
     });
+    
 
     fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
         if(err) {
