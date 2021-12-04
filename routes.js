@@ -2,6 +2,8 @@ const express = require('express');
 const recipes = require('./controllers/recipes');
 const routes = express.Router();
 const data = require('./data');
+const fileSystem = require('fs');
+const { response } = require('express');
 
 routes.get('/', recipes.index);
 
@@ -36,6 +38,26 @@ routes.get('/admin/recipes/:id', (req, res) => {
 
 routes.get('/admin/recipes/:id/edit', (req, res) => {
     return res.render('admin/edit', {recipes: data});
+});
+
+routes.post("/admin/recipes", (req, res) => {
+    const keys = Object.keys(req.body);
+    
+    for(key of keys) {
+        if(req.body[key] == "") {
+            return res.send("Please fill in all fields");
+        }
+    }
+
+    fileSystem.writeFile('data.json', JSON.stringify(req.body), (err) => {
+        if(err) {
+            return res.send('Error Write File');
+        }
+
+        return res.redirect('/admin/recipes');
+    });
+    
+    // return res.send(req.body);
 });
 
 routes.use((req, res) => {
