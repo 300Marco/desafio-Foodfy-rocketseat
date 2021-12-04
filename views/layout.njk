@@ -15,22 +15,22 @@
 
         {% block header %}
             <header>
-                    <div class="title">
-                        <h1 class="sr-only">Foodfy</h1>
+                <div class="title">
+                    <h1 class="sr-only">Foodfy</h1>
 
-                        <a href="/">
-                            <img src="/assets/logo.png" alt="Foodfy">
-                        </a>
-                    </div>
+                    <a href="/">
+                        <img src="/assets/logo.png" alt="Foodfy">
+                    </a>
+                </div>
 
-                    <nav>
-                        <ul>
-                            {% block links %}
-                                <li><a href="/about">Sobre</a></li>
-                                <li><a href="/recipes">Receitas</a></li>
-                            {% endblock %}
-                        </ul>
-                    </nav>
+                <nav>
+                    <ul>
+                        {% block links %}
+                            <li><a href="/about">Sobre</a></li>
+                            <li><a href="/recipes">Receitas</a></li>
+                        {% endblock %}
+                    </ul>
+                </nav>
             </header>
         {% endblock %}
 
