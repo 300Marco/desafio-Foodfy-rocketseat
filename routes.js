@@ -26,6 +26,18 @@ routes.get('/admin/recipes', (req, res) => {
     return res.render('admin/index', {recipes: data});
 });
 
+routes.get('/admin/recipes/create', (req, res) => {
+    return res.render('admin/create');
+});
+
+routes.get('/admin/recipes/:id', (req, res) => {
+    return res.render('admin/details', {recipe: data});
+});
+
+routes.get('/admin/recipes/:id/edit', (req, res) => {
+    return res.render('admin/edit', {recipes: data});
+});
+
 routes.use((req, res) => {
     return res.status(404).render('not-found');
 });
