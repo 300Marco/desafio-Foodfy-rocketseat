@@ -11,7 +11,7 @@ routes.get('/about', recipes.about);
 routes.get('/recipes', recipes.recipes);
 
 routes.get('/recipe/:index', (req, res) => {
-    const recipe = data;
+    const recipe = data.recipes;
     const recipeIndex = req.params.index;
     const recipeItems = recipe[recipeIndex];
 
@@ -48,7 +48,19 @@ routes.post("/admin/recipes", (req, res) => {
         }
     }
 
-    data.recipes.push(req.body);
+    const id = Number(data.recipes.length + 1);
+
+    let {image, title, author, ingredients, preparation,information} = req.body;
+
+    data.recipes.push({
+        id,
+        image, 
+        title,
+        author,
+        ingredients,
+        preparation,
+        information        
+    });
 
     fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
         if(err) {
@@ -57,8 +69,6 @@ routes.post("/admin/recipes", (req, res) => {
 
         return res.redirect('/admin/recipes');
     });
-    
-    // return res.send(req.body);
 });
 
 routes.use((req, res) => {

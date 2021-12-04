@@ -1,6 +1,6 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
-const data = require('./data');
+// const data = require('./data');
 const routes = require('./routes');
 const server = express();
 
