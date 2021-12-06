@@ -20,16 +20,16 @@
 
 {% block contents %}
     <div class="recipe-detail">
-        <span class="detail-title">Receita: {{recipe[0].title}}</span>
+        <span class="detail-title">Receita: {{recipe.title}}</span>
 
         <a class="edit-button">Editar Receita</a>
     </div>
 
-    <div class="recipe-image" style="background: url({{recipe[0].image}})"></div>
+    <div class="recipe-image" style="background: url({{recipe.image}})"></div>
 
     <div class="recipe-title">
-        <h2>{{recipe[0].title}}</h2>
-        <span>por {{recipe[0].author}}</span>
+        <h2>{{recipe.title}}</h2>
+        <span>por {{recipe.author}}</span>
     </div>
 
     <div class="recipe-info">
@@ -40,9 +40,9 @@
             </h3>
 
             <ul>
-                {# {% for ingredient in recipe.ingredients %} #}
-                    <li>{{recipe[0].ingredients}}</li>
-                {# {% endfor %} #}
+                {% for ingredient in recipe.ingredients %}
+                    <li>{{ingredient}}</li>
+                {% endfor %}
             </ul>
         </section>
 
@@ -53,9 +53,9 @@
             </h3>
             
             <ul>
-                {# {% for preparation in recipe.preparation %} #}
-                    <li>{{recipe[0].preparation}}</li>
-                {# {% endfor %} #}
+                {% for preparation in recipe.preparation %}
+                    <li>{{preparation}}</li>
+                {% endfor %}
             </ul>
         </section>
 
@@ -66,7 +66,7 @@
             </h3>
             
             <ul>
-                <li>{{recipe[0].information}}</li>
+                <li>{{recipe.information}}</li>
             </ul>
         </section>
     </div>

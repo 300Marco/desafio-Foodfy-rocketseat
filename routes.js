@@ -32,7 +32,17 @@ routes.get('/admin/recipes/create', (req, res) => {
 });
 
 routes.get('/admin/recipes/:id', (req, res) => {
-    return res.render('admin/details', {recipe: data});
+    const { id } = req.params;
+
+    const foundRecipe = data.recipes.find((recipes) => {
+        return id == recipes.id;
+    });
+
+    if(!foundRecipe) {
+        return res.send("Recipe not found");
+    }
+
+    return res.render('admin/details', {recipe: foundRecipe});
 });
 
 routes.get('/admin/recipes/:id/edit', (req, res) => {
