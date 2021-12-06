@@ -48,13 +48,11 @@ routes.get('/admin/recipes/:id', (req, res) => {
 routes.get('/admin/recipes/:id/edit', (req, res) => {
     const { id } = req.params;
 
-    const foundRecipe = data.recipes.find((recipes) => {
-        return id == recipes.id;
+    const foundRecipe = data.recipes.find((recipe) => {
+        return id == recipe.id;
     });
 
-    if(!foundRecipe) {
-        return res.send("Recipe not found");
-    }
+    if(!foundRecipe) return res.send("Recipe not found");
 
     return res.render('admin/edit', {recipe: foundRecipe});
 });
@@ -84,11 +82,36 @@ routes.post("/admin/recipes", (req, res) => {
     
 
     fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
-        if(err) {
-            return res.send('Error Write File');
-        }
+        if(err) return res.send('Error Write File');
 
         return res.redirect('/admin/recipes');
+    });
+});
+
+routes.put('/admin/recipes', (req, res) => {
+    const { id } = req.body;
+    let index = 0;
+
+    const foundRecipe = data.recipes.find((recipe, foundIndex) => {
+        if(id == recipe.id) {
+            index = foundIndex;
+            return true;
+        }
+    });
+
+    if(!foundRecipe) return res.send("Recipe not found");
+
+    const recipe = {
+        ...foundRecipe,
+        ...req.body
+    }
+
+    data.recipes[index] = recipe;
+
+    fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+        if(err) return res.send('Error Write File');
+
+        return res.redirect(`/admin/recipes/${id}`);
     });
 });
 
