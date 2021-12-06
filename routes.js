@@ -66,9 +66,9 @@ routes.post("/admin/recipes", (req, res) => {
         }
     }
 
-    const id = Number(data.recipes.length);
-    
     let {image, title, author, ingredients, preparation,information} = req.body;
+    
+    const id = Number(data.recipes.length);
     
     data.recipes.push({
         id,
@@ -84,7 +84,7 @@ routes.post("/admin/recipes", (req, res) => {
     fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
         if(err) return res.send('Error Write File');
 
-        return res.redirect('/admin/recipes');
+        return res.redirect(`/admin/recipes/${id}`);
     });
 });
 
@@ -103,7 +103,8 @@ routes.put('/admin/recipes', (req, res) => {
 
     const recipe = {
         ...foundRecipe,
-        ...req.body
+        ...req.body,
+        id: Number(req.body.id)
     }
 
     data.recipes[index] = recipe;

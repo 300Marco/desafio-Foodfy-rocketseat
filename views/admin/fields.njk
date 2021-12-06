@@ -16,14 +16,14 @@
 
     <div id="ingredients">
         <div class="ingredient">
-            <div class="name-input">Ingredients</div>
-                        
+            <div class="name-input">Ingredientes</div>
+            
+            <div class="box-input-ingredient"></div>
+
             {% for ingredient in recipe.ingredients %}
                 <input name="ingredients[]" value="{{ingredient}}">
             {% endfor %}
 
-            <input name="ingredients[]" value="{{ingredient}}">
-            
             <div class="box-ingredients"></div>
             
             <button class="add-button add-ingredient" type="button">
@@ -34,19 +34,18 @@
 
     <div class="preparation">
         <div class="name-input">Modo de preparo</div>
-        
+
+        <div class="box-input-preparation"></div>
+
         {% for preparation in recipe.preparation %}
             <input name="preparation[]" value="{{preparation}}">
         {% endfor %}
 
-        <input name="preparation[]" value="{{preparation}}">
-
         <div class="box-preparation"></div>
 
         <button class="add-button add-preparation" type="button">
-            Adicionar novo ingrediente
+            Adicionar novo passo
         </button>
-        
     </div>
 
     <div class="information">
