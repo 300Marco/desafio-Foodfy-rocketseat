@@ -116,6 +116,22 @@ routes.put('/admin/recipes', (req, res) => {
     });
 });
 
+routes.delete('/admin/recipes', (req, res) => {
+    const { id } = req.body
+
+    const filteredRecipes = data.recipes.filter((recipe) => {
+        return recipe.id != id;
+    });
+
+    data.recipes = filteredRecipes;
+
+    fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+        if(err) return res.send('Write file error!');
+    
+        return res.redirect('/admin/recipes');
+    });
+});
+
 routes.use((req, res) => {
     return res.status(404).render('not-found');
 });

@@ -436,3 +436,14 @@ footer span {
 .delete-button {
     margin-right: 10px;
 }
+
+/* ========== PAGE EDIT ========== */
+.recipe-form {
+    position: relative;
+}
+
+#form-delete {
+    position: absolute;
+    top: 0;
+    right: 150px;
+}
