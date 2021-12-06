@@ -358,10 +358,23 @@ footer span {
     gap: 20px;
 } 
 
-.cards-admin .card-info a {
-    color: var(--purple);
+.cards-admin a {
+    color: var(--color-purple);
     font-size: 1.4rem;
     font-weight: bold;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.card-img-admin img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.card-info-admin p {
+    color: var(--black-light);
+    font-size: 1.4rem;
+    margin-top: 5px;
 }
 
 /* ========== PAGE DETAILS ========== */

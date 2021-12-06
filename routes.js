@@ -24,7 +24,7 @@ routes.get('/recipe/:index', (req, res) => {
 
 // ADMIN
 routes.get('/admin/recipes', (req, res) => {
-    return res.render('admin/index', {recipes: data});
+    return res.render('admin/index', {recipes: data.recipes});
 });
 
 routes.get('/admin/recipes/create', (req, res) => {
