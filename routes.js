@@ -46,7 +46,17 @@ routes.get('/admin/recipes/:id', (req, res) => {
 });
 
 routes.get('/admin/recipes/:id/edit', (req, res) => {
-    return res.render('admin/edit', {recipes: data});
+    const { id } = req.params;
+
+    const foundRecipe = data.recipes.find((recipes) => {
+        return id == recipes.id;
+    });
+
+    if(!foundRecipe) {
+        return res.send("Recipe not found");
+    }
+
+    return res.render('admin/edit', {recipe: foundRecipe});
 });
 
 routes.post("/admin/recipes", (req, res) => {

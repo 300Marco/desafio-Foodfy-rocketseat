@@ -21,7 +21,7 @@
 {% block contents %}
     <form action="">
         <div class="recipe-detail">
-            <span class="detail-title">Receita: {{recipes[0].title}}</span>
+            <span class="detail-title">Editando Receita</span>
 
             <div class="buttons">
                 <a class="delete-button">Deletar</a>
@@ -29,42 +29,48 @@
             </div>
         </div>
 
-        <div class="recipe-edit">
-            <div class="recipe">
-
-                {# MUDAR SELETOR SPAN PARA DIV, EM TODOS #}
-
-                <span>Imagem da receita</span>
-                <input type="url" name="" id="" value="{{recipes[0].image}}">
-            </div>
-
-            <div id="ingredients">
-                <div class="ingredient">
-                    <span>Ingredients</span>
-                    <input name="" id="" value="{{recipes[0].ingredients[0]}}">
-                    <input name="" id="" value="{{recipes[0].ingredients[1]}}">
-                    <input name="" id="" value="{{recipes[0].ingredients[2]}}">
-                    <button>Adicionar novo ingrediente</button>
-                </div>
-            </div>
-
-            <div class="preparation">
-                <span>Modo de preparo</span>
-                <input name="" id="" value="{{recipes[0].preparation[0]}}">
-                <input name="" id="" value="{{recipes[0].preparation[1]}}">
-                <input name="" id="" value="{{recipes[0].preparation[2]}}">
-                <button>Adicionar novo ingrediente</button>
-            </div>
-
-            <div class="information">
-                <span>Informações adicionais</span>
-                {# Arrumar aqui #}
-                <textarea name="" id="" placeholder="{{recipes[0].information}}"></textarea>
-            </div>
-        </div>
+        {% include "admin/fields.njk" %}
     </form>
+
+    <script>
+        addIngrdient();
+        addPreparation();
+
+        function addIngrdient() {
+            const btnAddIngredient = document.querySelector('.add-ingredient');
+            const box = document.querySelector('.box-ingredients');
+
+            btnAddIngredient.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                
+                newInput.setAttribute('type', 'text');
+                newInput.setAttribute('name', 'ingredients[]');
+
+                box.appendChild(newInput);
+            });
+        }
+
+        function addPreparation() {
+            const btnAddPreparation = document.querySelector('.add-preparation');
+            const box = document.querySelector('.box-preparation');
+
+            btnAddPreparation.addEventListener('click', () => {
+                const newInput = document.createElement('input');
+                
+                newInput.setAttribute('type', 'text');
+                newInput.setAttribute('name', 'preparation[]');
+
+                box.appendChild(newInput);
+            });
+        }
+        
+    </script>
 {% endblock %}
 
 {% block footer %}
+    
+{% endblock %}
+
+{% block scripts %}
     
 {% endblock %}

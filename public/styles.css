@@ -393,21 +393,21 @@ footer span {
     background-color: var(--color-red);
 }
 
-/* ========== PAGE EDIT ========== */
+/* ========== FIELDS ========== */
 .recipe,
 .ingredient,
 .preparation {
     margin-bottom: 30px;
 }
 
-.recipe-edit .name-input {
+.recipe-fields .name-input {
     font-size: 1.6rem;
     font-weight: bold;
     display: block;
     margin-bottom: 10px;
 }
 
-.recipe-edit input,
+.recipe-fields input,
 .information textarea {
     border-radius: 4px;
     border: 1px solid var(--border-input);
@@ -428,7 +428,11 @@ footer span {
 
 .information textarea {
     height: 257px;
+    font-family: 'Roboto', sans-serif;
+    line-height: 2.5rem;
 }
 
 /* ========== PAGE CREATE ========== */
-
+.delete-button {
+    margin-right: 10px;
+}
