@@ -17,7 +17,7 @@
     <div id="ingredients">
         <div class="ingredient">
             <div class="name-input">Ingredientes</div>
-            
+
             <input class="hide-input" name="ingredients[]">
 
             {% for ingredient in recipe.ingredients %}
@@ -68,5 +68,38 @@
             inputIngredient.classList.remove("hide-input");
             inputPreparation.classList.remove("hide-input");
         }
+    }
+
+    addIngrdient();
+    addPreparation();
+    
+    function addIngrdient() {
+        const btnAddIngredient = document.querySelector('.add-ingredient');
+        const box = document.querySelector('.box-ingredients');
+
+        btnAddIngredient.addEventListener('click', () => {
+            const newInput = document.createElement('input');
+            
+            newInput.setAttribute('type', 'text');
+            newInput.setAttribute('name', 'ingredients[]');
+
+            box.appendChild(newInput);
+
+            console.log(newInput);
+        });
+    }
+
+    function addPreparation() {
+        const btnAddPreparation = document.querySelector('.add-preparation');
+        const box = document.querySelector('.box-preparation');
+
+        btnAddPreparation.addEventListener('click', () => {
+            const newInput = document.createElement('input');
+            
+            newInput.setAttribute('type', 'text');
+            newInput.setAttribute('name', 'preparation[]');
+
+            box.appendChild(newInput);
+        });
     }
 </script>

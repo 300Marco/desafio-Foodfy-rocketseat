@@ -27,40 +27,6 @@
 
         {% include "admin/fields.njk" %}
     </form>
-
-    <script>
-        addIngrdient();
-        addPreparation();
-        
-        function addIngrdient() {
-            const btnAddIngredient = document.querySelector('.add-ingredient');
-            const box = document.querySelector('.box-ingredients');
-
-            btnAddIngredient.addEventListener('click', () => {
-                const newInput = document.createElement('input');
-                
-                newInput.setAttribute('type', 'text');
-                newInput.setAttribute('name', 'ingredients[]');
-
-                box.appendChild(newInput);
-            });
-        }
-
-        function addPreparation() {
-            const btnAddPreparation = document.querySelector('.add-preparation');
-            const box = document.querySelector('.box-preparation');
-
-            btnAddPreparation.addEventListener('click', () => {
-                const newInput = document.createElement('input');
-                
-                newInput.setAttribute('type', 'text');
-                newInput.setAttribute('name', 'preparation[]');
-
-                box.appendChild(newInput);
-            });
-        }
-        
-    </script>
 {% endblock %}
 
 {% block footer %} {% endblock %}
