@@ -17,8 +17,8 @@
     <div id="ingredients">
         <div class="ingredient">
             <div class="name-input">Ingredientes</div>
-
-            <input class="hide-input" name="ingredients[]">
+            
+            <input name="ingredients[]">
 
             {% for ingredient in recipe.ingredients %}
                 <input name="ingredients[]" value="{{ingredient}}">
@@ -35,7 +35,7 @@
     <div class="preparation">
         <div class="name-input">Modo de preparo</div>
 
-        <input class="input-script hide-input" name="preparation[]">
+        <input class="input-script" name="preparation[]">
 
         {% for preparation in recipe.preparation %}
             <input name="preparation[]" value="{{preparation}}">
@@ -64,9 +64,9 @@
 
         let href = String(currentPage);
 
-        if(href == '/admin/recipes/create') {
-            inputIngredient.classList.remove("hide-input");
-            inputPreparation.classList.remove("hide-input");
+        if(href != '/admin/recipes/create') {
+            inputIngredient.parentNode.removeChild(inputIngredient);
+            inputPreparation.parentNode.removeChild(inputPreparation);
         }
     }
 
