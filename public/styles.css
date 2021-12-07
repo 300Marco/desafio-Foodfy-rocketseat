@@ -264,36 +264,52 @@ footer span {
 /* ========== PAGE NOT FOUND ========== */
 .box-error {
     background: url(/assets/404.png) no-repeat top;
-    background-size: 700px;
-    padding-bottom: 50px;
+    background-size: 900px;
+    background-position: top center;
+    height: calc(100vh - 104px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .error-message {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 700px;
+
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
 }
 
 .error-image img {
-    width: 350px;
+    width: 280px;
 }
 
 .error-info {
     color: var(--black-about);
-    font-size: 2.5rem;
     text-align: center;
 }
 
 .error-info span {
+    margin: 10px 0;
     display: block;
 }
 
 .error-info span:nth-child(1) {
+    color: #953930;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    font-weight: bold;
     margin: 20px 0;
 }
+
+.error-info span a {
+    color: #953930;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
 
 /* ========== PAGE RECIPE ========== */
 .recipe-image {
