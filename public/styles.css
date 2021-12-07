@@ -351,6 +351,8 @@ footer span {
 .recipe-info ul li {
     color: var(--black-about);
     line-height: 25px;
+    list-style: disc;
+    margin-left: 18px;
 }
 
 .recipe-info span {
@@ -359,6 +361,10 @@ footer span {
     cursor: pointer;
     margin-left: 8px;
     text-transform: uppercase;
+}
+
+.additional-information ul li {
+    list-style: none;
 }
 
 /* ========== PAGE RECIPE - show/hide action ========== */
@@ -455,6 +461,11 @@ footer span {
 
 .delete-button:hover {
     background-color: var(--color-red-dark);
+}
+
+.recipe-info-admin ul li {
+    margin: 0;
+    list-style: none;
 }
 
 /* ========== FIELDS ========== */

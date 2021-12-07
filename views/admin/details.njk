@@ -32,7 +32,7 @@
         <span>por {{recipe.author}}</span>
     </div>
 
-    <div class="recipe-info">
+    <div class="recipe-info recipe-info-admin">
         <section class="ingredients">
             <h3>
                 Ingredientes
@@ -41,7 +41,7 @@
 
             <ul>
                 {% for ingredient in recipe.ingredients %}
-                    <li>{{ingredient}}</li>
+                    <li>- {{ingredient}}</li>
                 {% endfor %}
             </ul>
         </section>
@@ -54,7 +54,7 @@
             
             <ul>
                 {% for preparation in recipe.preparation %}
-                    <li>{{preparation}}</li>
+                    <li>- {{preparation}}</li>
                 {% endfor %}
             </ul>
         </section>
