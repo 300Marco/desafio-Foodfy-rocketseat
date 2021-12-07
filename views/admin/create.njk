@@ -31,30 +31,6 @@
     <script>
         addIngrdient();
         addPreparation();
-        createInputIngredient();
-        createInputPreparation();
-
-        function createInputIngredient() {
-            const boxInputIngredient = document.querySelector('.box-input-ingredient');
-            
-            const createInput = document.createElement('input');
-
-            createInput.setAttribute('type', 'text');
-            createInput.setAttribute('name', 'ingredients[]');
-
-            boxInputIngredient.appendChild(createInput);
-        }
-
-        function createInputPreparation() {
-            const boxInputPreparation = document.querySelector('.box-input-preparation');
-            
-            const createInput = document.createElement('input');
-
-            createInput.setAttribute('type', 'text');
-            createInput.setAttribute('name', 'preparation[]');
-
-            boxInputPreparation.appendChild(createInput);
-        }
         
         function addIngrdient() {
             const btnAddIngredient = document.querySelector('.add-ingredient');

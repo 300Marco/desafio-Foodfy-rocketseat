@@ -18,7 +18,7 @@
         <div class="ingredient">
             <div class="name-input">Ingredientes</div>
             
-            <div class="box-input-ingredient"></div>
+            <input class="hide-input" name="ingredients[]">
 
             {% for ingredient in recipe.ingredients %}
                 <input name="ingredients[]" value="{{ingredient}}">
@@ -35,7 +35,7 @@
     <div class="preparation">
         <div class="name-input">Modo de preparo</div>
 
-        <div class="box-input-preparation"></div>
+        <input class="input-script hide-input" name="preparation[]">
 
         {% for preparation in recipe.preparation %}
             <input name="preparation[]" value="{{preparation}}">
@@ -53,3 +53,20 @@
         <textarea name="information">{{recipe.information}}</textarea>
     </div>
 </div>
+
+<script>
+    displayInput();
+
+    function displayInput() {
+        const currentPage = location.pathname;
+        const inputIngredient = document.querySelector('.ingredient input');
+        const inputPreparation = document.querySelector('.input-script');
+
+        let href = String(currentPage);
+
+        if(href == '/admin/recipes/create') {
+            inputIngredient.classList.remove("hide-input");
+            inputPreparation.classList.remove("hide-input");
+        }
+    }
+</script>

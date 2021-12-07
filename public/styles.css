@@ -501,6 +501,10 @@ footer span {
     margin-right: 10px;
 }
 
+.hide-input {
+    display: none;
+}
+
 /* ========== PAGE EDIT ========== */
 .recipe-form {
     position: relative;
