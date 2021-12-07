@@ -16,7 +16,9 @@
     --black-light: #777777;
     --black-footer: #999999;
     --color-purple: #6558C3;
+    --color-purple-dark: #3b2f94;
     --color-red: #DC4747;
+    --color-red-dark: #b13131;
 
     /* Layout */
     --box-chef: #FBDFDB;
@@ -394,6 +396,11 @@ footer span {
     font-weight: bold;
     margin-top: 10px;
     display: inline-block;
+    transition: filter 300ms;
+}
+
+.cards-admin a:hover {
+    filter: brightness(0.7);
 }
 
 .card-img-admin {
@@ -435,10 +442,19 @@ footer span {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 300ms;
+}
+
+.edit-button:hover {
+    background-color: var(--color-purple-dark);
 }
 
 .delete-button {
     background-color: var(--color-red);
+}
+
+.delete-button:hover {
+    background-color: var(--color-red-dark);
 }
 
 /* ========== FIELDS ========== */
