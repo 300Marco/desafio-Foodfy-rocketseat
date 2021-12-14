@@ -12,8 +12,8 @@ exports.create = (req, res) => {
 exports.details = (req, res) => {
     const { id } = req.params;
 
-    const foundRecipe = data.recipes.find((recipes) => {
-        return id == recipes.id;
+    const foundRecipe = data.recipes.find((recipe) => {
+        return id == recipe.id;
     });
 
     if(!foundRecipe) {
@@ -45,7 +45,7 @@ exports.post = (req, res) => {
         }
     }
 
-    let {image, title, author, ingredients, preparation,information} = req.body;
+    let {image, title, author, ingredients, preparation, information} = req.body;
     
     const id = Number(data.recipes.length);
     
@@ -59,7 +59,6 @@ exports.post = (req, res) => {
         information        
     });
     
-
     fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
         if(err) return res.send('Error Write File');
 

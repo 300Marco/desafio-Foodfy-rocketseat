@@ -2,8 +2,6 @@ const express = require('express');
 const recipes = require('./controllers/recipes');
 const adminRecipes = require('./controllers/admin');
 const routes = express.Router();
-const data = require('./data.json');
-const fileSystem = require('fs');
 
 routes.get('/', recipes.index);
 

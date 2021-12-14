@@ -1,6 +1,5 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
-// const data = require('./data');
 const routes = require('./routes');
 const methodOverride = require('method-override');
 const server = express();
