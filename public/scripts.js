@@ -61,3 +61,61 @@ function hideInformation() {
     });
 }
 
+// Logic for removing input 
+// on pages other than the create page
+
+const recipeFields = document.querySelector('.recipe-fields');
+
+if(recipeFields) {
+    displayInput();
+}
+
+function displayInput() {
+    const currentPage = location.pathname;
+    const inputIngredient = document.querySelector('.ingredient input');
+    const inputPreparation = document.querySelector('.input-script');
+
+    let href = String(currentPage);
+
+    if(href != '/admin/recipes/create') {
+        inputIngredient.parentNode.removeChild(inputIngredient);
+        inputPreparation.parentNode.removeChild(inputPreparation);
+    }
+}
+
+
+// Add new inputs 
+const btnAddIngredient = document.querySelector('.add-ingredient');
+const btnAddPreparation = document.querySelector('.add-preparation');
+
+if(btnAddIngredient || btnAddPreparation) {
+    addIngredient();
+    addPreparation();
+}
+
+function addIngredient() {
+    const box = document.querySelector('.box-ingredients');
+
+    btnAddIngredient.addEventListener('click', () => {
+        const newInput = document.createElement('input');
+        
+        newInput.setAttribute('type', 'text');
+        newInput.setAttribute('name', 'ingredients[]');
+
+        box.appendChild(newInput);
+    });
+}
+
+function addPreparation() {
+    const box = document.querySelector('.box-preparation');
+
+    btnAddPreparation.addEventListener('click', () => {
+        const newInput = document.createElement('input');
+        
+        newInput.setAttribute('type', 'text');
+        newInput.setAttribute('name', 'preparation[]');
+
+        box.appendChild(newInput);
+    });
+}
+
