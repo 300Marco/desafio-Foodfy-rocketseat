@@ -7,12 +7,18 @@ for(let card of cards) {
     });
 }
 
-hideIngredients();
-hidePreparation();
-hideInformation();
+// Show and hide
+const ingredients = document.querySelector('.ingredients');
+const preparation = document.querySelector('.method-of-preparation');
+const information = document.querySelector(".additional-information");
+
+if(ingredients || preparation || information) {
+    hideIngredients();
+    hidePreparation();
+    hideInformation();
+}
 
 function hideIngredients() {
-    const ingredients = document.querySelector('.ingredients');
     const ingredientsSpan = document.querySelector('.ingredients span');
     
     ingredientsSpan.addEventListener('click', () => {
@@ -28,7 +34,6 @@ function hideIngredients() {
 
 
 function hidePreparation() {
-    const preparation = document.querySelector('.method-of-preparation');
     const preparationSpan = document.querySelector('.method-of-preparation span');
     
     preparationSpan.addEventListener('click', () => {
@@ -43,7 +48,6 @@ function hidePreparation() {
 }
 
 function hideInformation() {
-    const information = document.querySelector(".additional-information");
     const informationSpan = document.querySelector('.additional-information span');
 
     information.addEventListener('click', () => {
@@ -56,3 +60,4 @@ function hideInformation() {
         }
     });
 }
+
