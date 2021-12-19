@@ -63,7 +63,6 @@ function hideInformation() {
 
 // Logic for removing input 
 // on pages other than the create page
-
 const recipeFields = document.querySelector('.recipe-fields');
 
 if(recipeFields) {
