@@ -1,6 +1,9 @@
+const db = require('../../config/db');
+const { date } = require('../../lib/utils');
+
 module.exports ={
     show (req, res) {
-        return res.render('admin/index', {recipes: data.recipes});
+        return res.render('admin/index');
     },
     create (req, res) {
         return res.render('admin/create');
@@ -31,32 +34,41 @@ module.exports ={
     },
     // METHODS HTTP
     post (req, res) {
-        const keys = Object.keys(req.body);
+        const query = `
+            INSERT INTO recipes (
+                chef_id,
+                image,
+                title,
+                ingredients,
+                preparation,
+                information,
+                created_at
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id
+        `;
+
+        const values = [
+            req.body.chef_id,
+            req.body.image,
+            req.body.title,
+            req.body.ingredients,
+            req.body.preparation,
+            req.body.information,
+            date(Date.now()).iso
+        ]
+
+        // const keys = Object.keys(req.body);
         
-        for(key of keys) {
-            if(req.body[key] == "") {
-                return res.send("Please fill in all fields");
-            }
-        }
-    
-        let {image, title, author, ingredients, preparation, information} = req.body;
-        
-        const id = Number(data.recipes.length);
-        
-        data.recipes.push({
-            id,
-            image, 
-            title,
-            author,
-            ingredients,
-            preparation,
-            information        
-        });
-        
-        fileSystem.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
-            if(err) return res.send('Error Write File');
-    
-            return res.redirect(`/admin/recipes/${id}`);
+        // for(key of keys) {
+        //     if(req.body[key] == "") {
+        //         return res.send("Please fill in all fields");
+        //     }
+        // }
+
+        db.query(query, values, (err, results) => {
+            if(err) return res.send('Database Error!');
+
+            return res.redirect(`/admin/recipes/${results.rows[0].id}`);
         });
     },
     put (req, res) {
