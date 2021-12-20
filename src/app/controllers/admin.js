@@ -1,5 +1,5 @@
 const fileSystem = require('fs');
-const data = require('../data.json');
+const data = require('../../../data.json');
 
 exports.show = (req, res) => {
     return res.render('admin/index', {recipes: data.recipes});

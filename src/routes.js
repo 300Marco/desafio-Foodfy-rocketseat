@@ -1,6 +1,6 @@
 const express = require('express');
-const recipes = require('./controllers/recipes');
-const adminRecipes = require('./controllers/admin');
+const recipes = require('./app/controllers/recipes');
+const adminRecipes = require('./app/controllers/admin');
 const routes = express.Router();
 
 routes.get('/', recipes.index);
