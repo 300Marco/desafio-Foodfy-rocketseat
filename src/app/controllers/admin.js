@@ -1,6 +1,3 @@
-const fileSystem = require('fs');
-const data = require('../../../data.json');
-
 module.exports ={
     show (req, res) {
         return res.render('admin/index', {recipes: data.recipes});
