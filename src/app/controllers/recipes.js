@@ -18,14 +18,28 @@ module.exports = {
         // return res.render('recipes/recipes');
     },
     recipe(req, res) {
-        const recipe = data.recipes;
         const recipeIndex = req.params.index;
-        const recipeItems = recipe[recipeIndex];
+        
+        Recipe.find(recipeIndex, (recipe) => {
+
+            if(recipe == undefined) {
+                return res.render('recipes/not-found');
+            }
+
+            recipe.ingredients = recipe.ingredients.split(',');
+            recipe.preparation = recipe.preparation.split(',');
+
+            return res.render('recipes/recipe', {recipe});
+        });
+
+        // const recipe = data.recipes;
+        // const recipeIndex = req.params.index;
+        // const recipeItems = recipe[recipeIndex];
     
-        if(recipeItems == undefined) {
-            return res.render('recipes/not-found');
-        }
+        // if(recipeItems == undefined) {
+        //     return res.render('recipes/not-found');
+        // }
     
-        return res.render('recipes/recipe', {recipe: recipeItems});
+        // return res.render('recipes/recipe', {recipe: recipeItems});
     }
 }

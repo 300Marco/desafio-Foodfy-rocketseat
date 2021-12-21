@@ -12,17 +12,14 @@ module.exports ={
         return res.render('admin/create');
     },
     details(req, res) {
-        // const { id } = req.params;
-    
-        // const foundRecipe = data.recipes.find((recipe) => {
-        //     return id == recipe.id;
-        // });
-    
-        // if(!foundRecipe) {
-        //     return res.send("Recipe not found");
-        // }
-    
-        // return res.render('admin/details', {recipe: foundRecipe});
+        Admin.find(req.params.id, (recipe) => {
+            if(!recipe) return res.send("Recipe not found!");
+
+            recipe.ingredients = recipe.ingredients.split(',');
+            recipe.preparation = recipe.preparation.split(',');
+
+            return res.render('admin/details', {recipe});
+        });
     },
     edit(req, res) {
         // const { id } = req.params;
