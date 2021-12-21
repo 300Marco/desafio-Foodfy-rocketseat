@@ -84,6 +84,10 @@ module.exports ={
         // });
     },
     delete(req, res) {
+        Admin.delete(req.body.id, () => {
+            return res.redirect('/admin/recipes');
+        });
+
         // const { id } = req.body
     
         // const filteredRecipes = data.recipes.filter((recipe) => {
