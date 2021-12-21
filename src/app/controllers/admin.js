@@ -15,13 +15,19 @@ module.exports ={
         Admin.find(req.params.id, (recipe) => {
             if(!recipe) return res.send("Recipe not found!");
 
-            recipe.ingredients = recipe.ingredients.split(',');
-            recipe.preparation = recipe.preparation.split(',');
+            // recipe.ingredients = recipe.ingredients.split(',');
+            // recipe.preparation = recipe.preparation.split(',');
 
             return res.render('admin/details', {recipe});
         });
     },
     edit(req, res) {
+        Admin.find(req.params.id, (recipe) => {
+            if(!recipe) return res.send("Recipe not found!");
+
+            return res.render('admin/edit', {recipe});
+        });
+
         // const { id } = req.params;
     
         // const foundRecipe = data.recipes.find((recipe) => {
@@ -43,10 +49,14 @@ module.exports ={
         }
 
         Admin.create(req.body, (recipe) => {
-            return res.redirect(`/recipes/${recipe.id}`);
+            return res.redirect(`/admin/recipes/${recipe.id}`);
         });
     },
     put(req, res) {
+        Admin.update(req.body, () => {
+            return res.redirect(`/admin/recipes/${req.body.id}`);
+        });
+
         // const { id } = req.body;
         // let index = 0;
     
