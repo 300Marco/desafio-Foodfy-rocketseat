@@ -30,7 +30,7 @@ routes.delete('/admin/recipes', adminRecipes.delete);
 // ADMIN - CHEFS
 routes.get('/admin/chefs', adminChefs.show);
 
-routes.get('/admin/chefs/details', adminChefs.details);
+routes.get('/admin/chefs/:id', adminChefs.details);
 
 routes.get('/admin/chefs/create', adminChefs.create);
 

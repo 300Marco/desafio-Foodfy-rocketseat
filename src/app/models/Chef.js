@@ -31,5 +31,15 @@ module.exports = {
 
             callback(results.rows[0]);
         });
+    },
+    find(id, callback) {
+        db.query(`
+            SELECT *
+            FROM chefs
+            WHERE id = $1`, [id], (err, results) => {
+            if(err) throw 'Database Error!';
+            
+            callback(results.rows[0]);
+        });
     }
 }

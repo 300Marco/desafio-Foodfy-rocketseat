@@ -8,7 +8,11 @@ module.exports = {
 
     },
     details(req, res) {
-        return res.render('chefs/details');
+        Chef.find(req.params.id, (chef) => {
+            if(!chef) return res.send("Chef not found!");
+
+            return res.render('chefs/details', {chef});
+        });
     },
     create(req, res) {
         return res.render('chefs/create');
