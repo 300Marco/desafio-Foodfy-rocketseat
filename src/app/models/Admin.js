@@ -5,9 +5,9 @@ module.exports = {
     all(callback) {
         db.query(`
             SELECT * FROM recipes`, (err, results) => {
-            if(err) throw 'Database Error!';
+                if(err) throw 'Database Error!';
 
-            callback(results.rows);
+                callback(results.rows);
         });
     },
     create(data, callback) {
@@ -32,7 +32,7 @@ module.exports = {
             data.preparation,
             data.information,
             date(Date.now()).iso
-        ]
+        ];
 
         db.query(query, values, (err, results) => {
             if(err) throw 'Database Error!';
@@ -45,9 +45,9 @@ module.exports = {
             SELECT * 
             FROM recipes
             WHERE id = $1`, [id], (err, results) => {
-            if(err) throw 'Database Error!';
+                if(err) throw 'Database Error!';
 
-            callback(results.rows[0]);
+                callback(results.rows[0]);
         });
     },
     update(data, callback) {
@@ -80,9 +80,9 @@ module.exports = {
         db.query(`
             DELETE FROM recipes
             WHERE id = $1`, [id], (err, results) => {
-            if(err) throw 'Database Error!';
+                if(err) throw 'Database Error!';
 
-            return callback();
+                return callback();
         });
     }
 }

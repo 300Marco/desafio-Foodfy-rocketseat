@@ -4,9 +4,9 @@ module.exports = {
     all(callback) {
         db.query(`
             SELECT * FROM recipes`, (err, results) => {
-            if(err) throw 'Database Error!';
+                if(err) throw 'Database Error!';
 
-            callback(results.rows);
+                callback(results.rows);
         });
     },
     find(id, callback) {

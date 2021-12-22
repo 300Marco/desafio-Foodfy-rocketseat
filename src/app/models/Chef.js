@@ -8,7 +8,7 @@ module.exports = {
                 if(err) throw 'Database Error!';
                 
                 callback(results.rows);
-            });
+        });
     },
     create(data, callback) {
         const query = `
@@ -24,7 +24,7 @@ module.exports = {
             data.name,
             data.avatar_url,
             date(Date.now()).iso
-        ]
+        ];
 
         db.query(query, values, (err, results) => {
             if(err) throw 'Database Error!';
@@ -37,9 +37,9 @@ module.exports = {
             SELECT *
             FROM chefs
             WHERE id = $1`, [id], (err, results) => {
-            if(err) throw 'Database Error!';
-            
-            callback(results.rows[0]);
+                if(err) throw 'Database Error!';
+                
+                callback(results.rows[0]);
         });
     },
     update(data, callback) {
@@ -66,9 +66,9 @@ module.exports = {
         db.query(`
             DELETE FROM chefs
             WHERE id = $1`, [id], (err, results) => {
-            if(err) throw 'Database Error!';
+                if(err) throw 'Database Error!';
 
-            return callback();
+                return callback();
         });
     }
 }
