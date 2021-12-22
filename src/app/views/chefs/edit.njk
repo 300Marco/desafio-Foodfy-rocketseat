@@ -21,7 +21,7 @@
 
 {% block contents %}
     <div class="recipe-form">
-        <form method="POST" action="/admin/recipes?_method=put">
+        <form method="POST" action="?_method=put">
             <div class="recipe-detail">
                 <span class="detail-title">Editando Chef</span>
 
@@ -41,7 +41,7 @@
             >
         </form>
 
-        <form id="form-delete" method="POST" action="/admin/recipes?_method=delete">
+        <form id="form-delete" method="POST" action="?_method=delete">
             <input type="hidden" name="id" value="{{recipe.id}}">
             {# <button class="delete-button">Deletar</button> #}
         </form>
