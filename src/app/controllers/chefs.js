@@ -3,7 +3,7 @@ module.exports = {
         return res.render('chefs/index');
     },
     details(req, res) {
-        return res.send('Página detalhes');
+        return res.render('chefs/details');
     },
     create(req, res) {
         return res.send('Página create');

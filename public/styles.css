@@ -566,3 +566,21 @@ footer span {
 .card-admin-chefs .card-info-admin a:hover {
     filter: brightness(0.7);
 }
+
+/* ========== CHEF - PAGE DETAILS ========== */
+.box-chef-image {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chef-image {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}

@@ -1,0 +1,88 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Admin Foodfy</title>
+{% endblock %}
+
+{% block header %}
+    <header class="header-background">
+        <div class="header-menu-box">
+            <div class="title">
+                <h2 class="sr-only">Admin Foodfy</h2>
+
+                <a href="/admin/recipes">
+                    <img src="/assets/admin-logo.png" alt="Foodfy">
+                </a>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block contents %}
+    <section>
+        <div class="recipe-detail">
+            <span class="detail-title">Chef: Nome do chefe</span>
+
+            <a class="edit-button" href="/admin/recipes/{{recipe.id}}/edit">Editar Chef</a>
+        </div>
+
+        <div class="box-chef-image">
+            <div class="chef-image" style="background: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)"></div>
+        </div>
+
+        <div class="recipe-title">
+            <h2>Nome do Chef</h2>
+            <span>2 receitas</span>
+        </div>
+    </section>
+
+    <section class="cards-food cards-food-admin">
+        <h3>Receitas</h3>
+            <div class="cards cards-admin-recipes">
+                {# {% for recipe in recipes %} #}
+                    <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url(https://img.cybercook.com.br/receitas/529/bolo-vulcao-de-cenoura-com-brigadeiro.jpeg)">
+                        </div>
+
+                        <div class="card-info-admin-recipes">
+                            <h4>Bolo de chocolate</h4>
+                            <p>por {{recipe.author}}</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url(https://img.cybercook.com.br/receitas/529/bolo-vulcao-de-cenoura-com-brigadeiro.jpeg)">
+                        </div>
+
+                        <div class="card-info-admin-recipes">
+                            <h4>Bolo de chocolate</h4>
+                            <p>por {{recipe.author}}</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url(https://img.cybercook.com.br/receitas/529/bolo-vulcao-de-cenoura-com-brigadeiro.jpeg)">
+                        </div>
+
+                        <div class="card-info-admin-recipes">
+                            <h4>Bolo de chocolate</h4>
+                            <p>por {{recipe.author}}</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url(https://img.cybercook.com.br/receitas/529/bolo-vulcao-de-cenoura-com-brigadeiro.jpeg)">
+                        </div>
+
+                        <div class="card-info-admin-recipes">
+                            <h4>Bolo de chocolate</h4>
+                            <p>por {{recipe.author}}</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                {# {% endfor %} #}
+            </div>
+    </section>
+{% endblock %}
+
+{% block footer %} {% endblock %}
