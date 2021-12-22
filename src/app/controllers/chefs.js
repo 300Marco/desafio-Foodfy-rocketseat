@@ -7,6 +7,9 @@ module.exports = {
         });
 
     },
+    create(req, res) {
+        return res.render('chefs/create');
+    },
     details(req, res) {
         Chef.find(req.params.id, (chef) => {
             if(!chef) return res.send("Chef not found!");
@@ -14,11 +17,12 @@ module.exports = {
             return res.render('chefs/details', {chef});
         });
     },
-    create(req, res) {
-        return res.render('chefs/create');
-    },
     edit(req, res) {
-        return res.render('chefs/edit');
+        Chef.find(req.params.id, (chef) => {
+            if(!chef) return res.send("Chef not found!");
+
+            return res.render('chefs/edit', {chef});
+        });
     },
     // METHODS HTTP
     post(req, res) {
@@ -33,5 +37,10 @@ module.exports = {
         Chef.create(req.body, (chef) => {
             return res.send('chef criado');
         });
-    }
+    }, 
+    put(req, res) {
+        Chef.update(req.body, () => {
+            return res.redirect(`/admin/chefs/${req.body.id}`);
+        });
+    },
 }

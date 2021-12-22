@@ -34,9 +34,11 @@ routes.get('/admin/chefs/:id', adminChefs.details);
 
 routes.get('/admin/chefs/create', adminChefs.create);
 
-routes.get('/admin/chefs/edit', adminChefs.edit);
+routes.get('/admin/chefs/:id/edit', adminChefs.edit);
 
 routes.post('/admin/chefs', adminChefs.post);
+
+routes.put('/admin/chefs', adminChefs.put);
 
 routes.use((req, res) => {
     return res.status(404).render('not-found');
