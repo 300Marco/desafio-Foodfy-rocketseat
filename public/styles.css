@@ -372,8 +372,9 @@ footer span {
     display: none;
 }
 
+/* ==========  PAGES ADMIN  ========== */
 
-/* ========== PAGE ADMIN ========== */
+/* ========== RECIPES - PAGE ADMIN ========== */
 .header-background {
     background-color: var(--black);
     width: 100%;
@@ -384,19 +385,19 @@ footer span {
     margin-bottom: 30px;
 }
 
-.cards-admin {
+.cards-admin-recipes {
     display: grid;
     grid-template-columns: 1fr 1fr !important;
     gap: 20px;
 }
 
-.card-admin {
+.card-admin-recipes {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 } 
 
-.cards-admin a {
+.cards-admin-recipes a {
     color: var(--color-purple);
     font-size: 1.4rem;
     font-weight: bold;
@@ -405,11 +406,11 @@ footer span {
     transition: filter 300ms;
 }
 
-.cards-admin a:hover {
+.cards-admin-recipes a:hover {
     filter: brightness(0.7);
 }
 
-.card-img-admin {
+.card-img-admin-recipes {
     width: 100%;
     height: 100px;
     background-repeat: no-repeat;
@@ -419,13 +420,13 @@ footer span {
     transition: filter 300ms;
 }
 
-.card-info-admin p {
+.card-info-admin-recipes p {
     color: var(--black-light);
     font-size: 1.4rem;
     margin-top: 5px;
 }
 
-/* ========== PAGE DETAILS ========== */
+/* ========== RECIPES - PAGE DETAILS ========== */
 .recipe-detail {
     margin-bottom: 24px;
 
@@ -468,7 +469,7 @@ footer span {
     list-style: none;
 }
 
-/* ========== FIELDS ========== */
+/* ========== RECIPES - FIELDS ========== */
 .recipe,
 .ingredient,
 .preparation {
@@ -507,7 +508,7 @@ footer span {
     line-height: 2.5rem;
 }
 
-/* ========== PAGE CREATE ========== */
+/* ========== RECIPES - PAGE CREATE ========== */
 .delete-button {
     margin-right: 10px;
 }
@@ -516,7 +517,7 @@ footer span {
     display: none;
 }
 
-/* ========== PAGE EDIT ========== */
+/* ========== RECIPES - PAGE EDIT ========== */
 .recipe-form {
     position: relative;
 }
@@ -525,4 +526,43 @@ footer span {
     position: absolute;
     top: 0;
     right: 150px;
+}
+
+/* ========== CHEFS - PAGE INDEX ========== */
+.cards-admin-chefs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+    gap: 30px 61px;
+}
+
+.card-admin-chefs {
+    display: grid;
+    grid-template-columns: 65px 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.card-img-admin-chefs {
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    transition: filter 300ms;
+}
+
+.card-admin-chefs p {
+    margin-bottom: 10px;
+}
+
+.card-admin-chefs .card-info-admin a {
+    color: var(--color-purple);
+    font-size: 1.4rem;
+    font-weight: bold;
+    transition: filter 300ms;
+}
+
+.card-admin-chefs .card-info-admin a:hover {
+    filter: brightness(0.7);
 }

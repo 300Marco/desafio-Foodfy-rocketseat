@@ -1,0 +1,120 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Admin Chefs</title>
+{% endblock %}
+
+{% block header %}
+    <header class="header-background">
+        <div class="header-menu-box">
+            <div class="title">
+                <h2 class="sr-only">Admin Chefs</h2>
+
+                <a href="/admin/recipes">
+                    <img src="/assets/admin-logo.png" alt="Foodfy">
+                </a>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block contents %}
+    <section class="cards-food cards-food-admin">
+        <h3>Gerenciar chefs</h3>
+            <div class="cards cards-admin-chefs">
+                {# {% for recipe in recipes %} #}
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    <div class="card-admin-chefs">
+                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <p>Marquinhos</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                {# {% endfor %} #}
+            </div>
+
+
+
+            {# <div class="cards cards-admin">
+                {% for recipe in recipes %}
+                    <div class="card-admin">
+                        <div class="card-img-admin" style="background-image: url({{recipe.image}})">
+                        </div>
+
+                        <div class="card-info-admin">
+                            <h4>{{recipe.title}}</h4>
+                            <p>por {{recipe.author}}</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> #}
+    </section>
+{% endblock %}
+
+{% block footer %} {% endblock %}
