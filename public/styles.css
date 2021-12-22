@@ -458,6 +458,7 @@ footer span {
 
 .delete-button {
     background-color: var(--color-red);
+    margin-right: 10px;
 }
 
 .delete-button:hover {
@@ -509,24 +510,20 @@ footer span {
 }
 
 /* ========== RECIPES - PAGE CREATE ========== */
-.delete-button {
-    margin-right: 10px;
-}
-
 .hide-input {
     display: none;
 }
 
 /* ========== RECIPES - PAGE EDIT ========== */
-.recipe-form {
+/* .recipe-form {
     position: relative;
-}
+} */
 
-#form-delete {
+/* #form-delete {
     position: absolute;
     top: 0;
     right: 150px;
-}
+} */
 
 /* ========== CHEFS - PAGE INDEX ========== */
 .cards-admin-chefs {

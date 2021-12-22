@@ -9,6 +9,6 @@ module.exports = {
         return res.send('Página create');
     },
     edit(req, res) {
-        return res.send('Página edit');
+        return res.render('chefs/edit');
     }
 }
