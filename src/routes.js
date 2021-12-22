@@ -30,15 +30,17 @@ routes.delete('/admin/recipes', adminRecipes.delete);
 // ADMIN - CHEFS
 routes.get('/admin/chefs', adminChefs.show);
 
-routes.get('/admin/chefs/:id', adminChefs.details);
-
 routes.get('/admin/chefs/create', adminChefs.create);
+
+routes.get('/admin/chefs/:id', adminChefs.details);
 
 routes.get('/admin/chefs/:id/edit', adminChefs.edit);
 
 routes.post('/admin/chefs', adminChefs.post);
 
 routes.put('/admin/chefs', adminChefs.put);
+
+routes.delete('/admin/chefs', adminChefs.delete);
 
 routes.use((req, res) => {
     return res.status(404).render('not-found');

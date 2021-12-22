@@ -35,7 +35,7 @@ module.exports = {
         }
 
         Chef.create(req.body, (chef) => {
-            return res.send('chef criado');
+            return res.redirect(`/admin/chefs/${chef.id}`);
         });
     }, 
     put(req, res) {
@@ -43,4 +43,9 @@ module.exports = {
             return res.redirect(`/admin/chefs/${req.body.id}`);
         });
     },
+    delete(req, res) {
+        Chef.delete(req.body.id, () => {
+            return res.redirect('/admin/chefs');
+        });
+    }
 }
