@@ -14,8 +14,6 @@ module.exports = {
         Recipe.all((recipes) => {
             return res.render('recipes/recipes', {recipes});
         });
-
-        // return res.render('recipes/recipes');
     },
     recipe(req, res) {
         const recipeIndex = req.params.index;
@@ -26,20 +24,7 @@ module.exports = {
                 return res.render('recipes/not-found');
             }
 
-            recipe.ingredients = recipe.ingredients.split(',');
-            recipe.preparation = recipe.preparation.split(',');
-
             return res.render('recipes/recipe', {recipe});
         });
-
-        // const recipe = data.recipes;
-        // const recipeIndex = req.params.index;
-        // const recipeItems = recipe[recipeIndex];
-    
-        // if(recipeItems == undefined) {
-        //     return res.render('recipes/not-found');
-        // }
-    
-        // return res.render('recipes/recipe', {recipe: recipeItems});
     }
 }
