@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block header %}
-    <header class="header-background">
+    {# <header class="header-background">
         <div class="header-menu-box">
             <div class="title">
                 <h2 class="sr-only">Admin Foodfy</h2>
@@ -15,7 +15,9 @@
                 </a>
             </div>
         </div>
-    </header>
+    </header> #}
+    {% include "chefs/header.njk" %}
+
 {% endblock %}
 
 {% block contents %}
