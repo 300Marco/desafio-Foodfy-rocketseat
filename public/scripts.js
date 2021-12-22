@@ -3,7 +3,7 @@ const cards = document.querySelectorAll('.card');
 for(let card of cards) {
     card.addEventListener('click', () => { 
         const revenueId = card.getAttribute('id'); 
-        window.location.href = `/recipe/${revenueId}`; 
+        window.location.href = `/details/${revenueId}`; 
     });
 }
 

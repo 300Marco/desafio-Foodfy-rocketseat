@@ -15,7 +15,7 @@ module.exports = {
             return res.render('recipes/recipes', {recipes});
         });
     },
-    recipe(req, res) {
+    details(req, res) {
         const recipeIndex = req.params.index;
         
         Recipe.find(recipeIndex, (recipe) => {
@@ -24,7 +24,7 @@ module.exports = {
                 return res.render('recipes/not-found');
             }
 
-            return res.render('recipes/recipe', {recipe});
+            return res.render('recipes/details', {recipe});
         });
     }
 }

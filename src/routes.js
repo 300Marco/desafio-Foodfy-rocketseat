@@ -9,7 +9,7 @@ routes.get('/about', recipes.about);
 
 routes.get('/recipes', recipes.recipes);
 
-routes.get('/recipe/:index', recipes.recipe);
+routes.get('/details/:index', recipes.details);
 
 // ADMIN
 routes.get('/admin/recipes', adminRecipes.show);
@@ -25,6 +25,9 @@ routes.post("/admin/recipes", adminRecipes.post);
 routes.put('/admin/recipes', adminRecipes.put);
 
 routes.delete('/admin/recipes', adminRecipes.delete);
+
+// ADMIN - CHEFS
+// routes.get('admin/chefs')
 
 routes.use((req, res) => {
     return res.status(404).render('not-found');
