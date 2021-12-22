@@ -36,6 +36,8 @@ routes.get('/admin/chefs/create', adminChefs.create);
 
 routes.get('/admin/chefs/edit', adminChefs.edit);
 
+routes.post('/admin/chefs', adminChefs.post);
+
 routes.use((req, res) => {
     return res.status(404).render('not-found');
 });

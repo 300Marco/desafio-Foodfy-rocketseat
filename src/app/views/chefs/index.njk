@@ -23,80 +23,17 @@
     <section class="cards-food cards-food-admin">
         <h3>Gerenciar chefs</h3>
             <div class="cards cards-admin-chefs">
-                {# {% for recipe in recipes %} #}
+                {% for chef in chefs %}
                     <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
+                        <div class="card-img-admin-chefs" style="background-image: url({{chef.avatar_url}})">
                         </div>
 
                         <div class="card-info-admin">
-                            <p>Marquinhos</p>
+                            <p>{{chef.name}}</p>
                             <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
                         </div>
                     </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                    <div class="card-admin-chefs">
-                        <div class="card-img-admin-chefs" style="background-image: url(https://tm.ibxk.com.br/2017/06/22/22100428046161.jpg?ims=1120x420)">
-                        </div>
-
-                        <div class="card-info-admin">
-                            <p>Marquinhos</p>
-                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                        </div>
-                    </div>
-                {# {% endfor %} #}
+                {% endfor %}
             </div>
 
 
