@@ -6,7 +6,7 @@ module.exports = {
         return res.render('chefs/details');
     },
     create(req, res) {
-        return res.send('Página create');
+        return res.render('chefs/create');
     },
     edit(req, res) {
         return res.render('chefs/edit');

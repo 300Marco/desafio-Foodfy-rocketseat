@@ -1,0 +1,32 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Criar Chef</title>
+{% endblock %}
+
+{% block header %}
+    <header class="header-background">
+        <div class="header-menu-box">
+            <div class="title">
+                <h2 class="sr-only">Admin Foodfy</h2>
+
+                <a href="/admin/recipes">
+                    <img src="/assets/admin-logo.png" alt="Foodfy">
+                </a>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block contents %}
+    <form method="POST" action="/admin/recipes">
+        <div class="recipe-detail">
+            <span class="detail-title">Criando Chef</span>
+            <button class="edit-button" type="submit">Salvar Chef</button>
+        </div>
+
+        {% include "chefs/fields.njk" %}
+    </form>
+{% endblock %}
+
+{% block footer %} {% endblock %}
