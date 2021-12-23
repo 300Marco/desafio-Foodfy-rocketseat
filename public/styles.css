@@ -270,10 +270,19 @@ header .page-foodfy {
 }
 
 /* ========== PAGE CHEFS ========== */
+.chefs-cards-food {
+    margin: 50px 0;
+}
+
 .chef-card-info p {
     color: var(--black-light);
     font-size: 1.4rem;
     margin-top: 5px;
+}
+
+.chefs-footer {
+    position: absolute;
+    bottom: 0;
 }
 
 /* ========== FOOTER ========== */
