@@ -15,12 +15,21 @@
         <div class="cards cards-admin-chefs">
             {% for chef in chefs %}
                 <div class="card-admin-chefs" id="{{recipe.id}}">
-                    <div class="card-img-admin-chefs" style="background-image: url({{chef.avatar_url}})">
+                    <div 
+                        class="card-img-admin-chefs" 
+                        style="background-image: url({{chef.avatar_url}})">
                     </div>
 
                     <div class="chef-card-info" id="{{chef.name}}">
                         <h4>{{chef.name}}</h4>
-                        <p>1 Receita</p>
+                        <p>
+                            {{chef.total_recipes}}
+                            {% if chef.total_recipes <= '1' %}
+                                Receita
+                            {% else %}
+                                Receitas
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             {% endfor %}
