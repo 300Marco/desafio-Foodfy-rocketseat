@@ -5,7 +5,7 @@ module.exports = {
     all(callback) {
         db.query(`
             SELECT * FROM recipes`, (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows);
         });
@@ -15,27 +15,27 @@ module.exports = {
             INSERT INTO recipes (
                 image,
                 title,
-                chef_id,
                 ingredients,
                 preparation,
                 information,
-                created_at,
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                chef_id,
+                created_at
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id
         `;
 
         const values = [
             data.image,
             data.title,
-            data.chef,
             data.ingredients,
             data.preparation,
             data.information,
+            data.chef,
             date(Date.now()).iso
         ];
 
         db.query(query, values, (err, results) => {
-            if(err) throw 'Database Error!';
+            if(err) throw `Database Error! ${err}`;
 
             callback(results.rows[0]);
         });
@@ -45,7 +45,7 @@ module.exports = {
             SELECT * 
             FROM recipes
             WHERE id = $1`, [id], (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows[0]);
         });
@@ -73,7 +73,7 @@ module.exports = {
         ];
 
         db.query(query, values, (err, results) => {
-            if(err) throw 'Database Error!';
+            if(err) throw `Database Error! ${err}`;
 
             callback();
         });
@@ -82,7 +82,7 @@ module.exports = {
         db.query(`
             DELETE FROM recipes
             WHERE id = $1`, [id], (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 return callback();
         });
@@ -91,7 +91,7 @@ module.exports = {
         db.query(`
             SELECT name, id
             FROM chefs`, (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows);
             });
