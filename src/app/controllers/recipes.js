@@ -29,7 +29,7 @@ module.exports = {
         });
     },
     chefs(req, res) {
-        Chef.all((chefs) => {
+        Recipe.totalRecipes((chefs) => {
             return res.render('recipes/chefs', {chefs});
         });
     }
