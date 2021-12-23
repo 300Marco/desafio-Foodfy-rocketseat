@@ -1,0 +1,44 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Receitas</title>
+{% endblock %}
+
+{% block links %}
+    <li><a href="/about">Sobre</a></li>
+    <li><a href="/recipes" class="active">Receitas</a></li>
+    <li><a href="#">Chefs</a></li>
+{% endblock %}
+
+{% block contents %}
+    <section class="cards-food cards-food-admin">
+        <div class="cards cards-admin-chefs">
+            {% for recipe in recipes %}
+                <div class="card-admin-chefs" id="{{recipe.id}}">
+                    <div class="card-img-admin-chefs" style="background-image: url({{recipe.image}})">
+                    </div>
+
+                    <div class="chef-card-info" id="{{recipe.title}}">
+                        <h4>{{recipe.title}}</h4>
+                        <p>1 Receita</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    {# <section class="cards-food">
+        <div class="cards">
+            {% for recipe in recipes %}
+                <div class="card" id="{{recipe.id}}">
+                    <div class="card-img" style="background-image: url({{recipe.image}})">
+                    </div>
+
+                    <div class="card-info" id="{{recipe.title}}">
+                        <h4>{{recipe.title}}</h4>
+                        <p>por {{recipe.author}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section> #}
+{% endblock %}

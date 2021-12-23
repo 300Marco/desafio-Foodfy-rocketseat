@@ -269,6 +269,13 @@ header .page-foodfy {
     color: var(--black-about);
 }
 
+/* ========== PAGE CHEFS ========== */
+.chef-card-info p {
+    color: var(--black-light);
+    font-size: 1.4rem;
+    margin-top: 5px;
+}
+
 /* ========== FOOTER ========== */
 footer {
     text-align: center;
