@@ -565,6 +565,7 @@ footer span {
 }
 
 .recipe-fields input,
+.recipe-fields select,
 .information textarea {
     border-radius: 4px;
     border: 1px solid var(--border-input);
