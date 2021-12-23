@@ -13,21 +13,21 @@ module.exports = {
     create(data, callback) {
         const query = `
             INSERT INTO recipes (
-                chef_id,
                 image,
                 title,
+                chef_id,
                 ingredients,
                 preparation,
                 information,
-                created_at
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+                created_at,
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING id
         `;
 
         const values = [
-            data.chef_id,
             data.image,
             data.title,
+            data.chef,
             data.ingredients,
             data.preparation,
             data.information,
@@ -57,8 +57,9 @@ module.exports = {
                 title=($2),
                 ingredients=($3),
                 preparation=($4),
-                information=($5)
-            WHERE id = $6
+                information=($5),
+                chef_id=($6)
+            WHERE id = $7
         `;
 
         const values = [
@@ -67,6 +68,7 @@ module.exports = {
             data.ingredients,
             data.preparation,
             data.information,
+            data.chef,
             data.id
         ];
 
@@ -84,5 +86,14 @@ module.exports = {
 
                 return callback();
         });
+    },
+    chefsSelectOptions(callback) {
+        db.query(`
+            SELECT name, id
+            FROM chefs`, (err, results) => {
+                if(err) throw 'Database Error!';
+
+                callback(results.rows);
+            });
     }
 }

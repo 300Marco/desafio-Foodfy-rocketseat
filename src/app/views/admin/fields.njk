@@ -11,7 +11,23 @@
 
     <div class="preparation">
         <div class="name-input">Chef</div>
-        <input name="author" value="{{recipe.author}}">
+        <div>
+            <select name="chef">
+                {% for chef in chefsOptions %}
+                    <option 
+                        value="{{chef.id}}"
+                        {% if recipe.chef_id == chef.id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ chef.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        {# <input name="author" value="{{recipe.author}}"> #}
     </div>
 
     <div id="ingredients">

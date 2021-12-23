@@ -7,7 +7,9 @@ module.exports ={
         });
     },
     create(req, res) {
-        return res.render('admin/create');
+        Admin.chefsSelectOptions((options) => {
+            return res.render('admin/create', {chefsOptions: options});
+        });
     },
     details(req, res) {
         Admin.find(req.params.id, (recipe) => {
@@ -20,7 +22,9 @@ module.exports ={
         Admin.find(req.params.id, (recipe) => {
             if(!recipe) return res.send("Recipe not found!");
 
-            return res.render('admin/edit', {recipe});
+            Admin.chefsSelectOptions((options) => {
+                return res.render('admin/edit', {recipe, chefsOptions: options});
+            });
         });
     },
     // METHODS HTTP
