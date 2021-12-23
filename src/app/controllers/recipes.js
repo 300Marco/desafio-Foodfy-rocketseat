@@ -1,5 +1,6 @@
 
 const Recipe = require('../models/Recipe');
+const Chef = require('../models/Chef');
 
 module.exports = {
     index(req, res) {
@@ -25,6 +26,11 @@ module.exports = {
             }
 
             return res.render('recipes/details', {recipe});
+        });
+    },
+    chefs(req, res) {
+        Chef.all((chefs) => {
+            return res.render('recipes/chefs', {chefs});
         });
     }
 }

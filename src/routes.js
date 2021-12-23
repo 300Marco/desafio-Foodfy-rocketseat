@@ -10,6 +10,8 @@ routes.get('/about', recipes.about);
 
 routes.get('/recipes', recipes.recipes);
 
+routes.get('/chefs', recipes.chefs);
+
 routes.get('/details/:index', recipes.details);
 
 // ADMIN
