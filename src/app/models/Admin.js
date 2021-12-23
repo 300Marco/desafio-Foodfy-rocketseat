@@ -42,13 +42,22 @@ module.exports = {
     },
     find(id, callback) {
         db.query(`
-            SELECT * 
+            SELECT recipes.*, chefs.name AS chefs_name
             FROM recipes
-            WHERE id = $1`, [id], (err, results) => {
+            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            WHERE recipes.id = $1`, [id], (err, results) => {
                 if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows[0]);
         });
+        // db.query(`
+        //     SELECT * 
+        //     FROM recipes
+        //     WHERE id = $1`, [id], (err, results) => {
+        //         if(err) throw `Database Error! ${err}`;
+
+        //         callback(results.rows[0]);
+        // });
     },
     update(data, callback) {
         const query = `
