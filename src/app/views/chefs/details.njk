@@ -11,25 +11,48 @@
 {% block contents %}
     <section>
         <div class="recipe-detail">
-            <span class="detail-title">Chef: Nome do chefe</span>
+            <span class="detail-title">Chef: {{detail[0].name}}</span>
 
-            <a class="edit-button" href="/admin/chefs/{{chef.id}}/edit">Editar Chef</a>
+            <a class="edit-button" href="/admin/chefs/{{detail[0].chef_id}}/edit">Editar Chef</a>
         </div>
 
         <div class="box-chef-image">
-            <div class="chef-image" style="background: url({{chef.avatar_url}})"></div>
+            <div class="chef-image" style="background: url({{detail[0].avatar_url}})"></div>
         </div>
 
         <div class="recipe-title">
-            <h2>{{chef.name}}</h2>
-            <span>2 receitas</span>
+            <h2>{{detail[0].name}}</h2>
+            <span>0 receitas</span>
         </div>
     </section>
 
     <section class="cards-food cards-food-admin">
         <h3>Receitas</h3>
             <div class="cards cards-admin-recipes">
-                <div class="card-admin-recipes">
+                {% for chef in detail %}
+                    <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url({{chef.image}})">
+                        </div>
+
+                        <div class="card-info-admin-recipes">
+                            <h4>{{chef.title}}</h4>
+                            <p>por {{chef.name}}</p>
+                            <a href="/admin/recipes/{{chef.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {# <div class="card-admin-recipes">
+                    <div class="card-img-admin-recipes" style="background-image: url({{detail.image}})">
+                    </div>
+
+                    <div class="card-info-admin-recipes">
+                        <h4>{{detail.title}}</h4>
+                        <p>por {{detail.name}}</p>
+                        <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                    </div>
+                </div> #}
+                {# <div class="card-admin-recipes">
                     <div class="card-img-admin-recipes" style="background-image: url(https://img.cybercook.com.br/receitas/529/bolo-vulcao-de-cenoura-com-brigadeiro.jpeg)">
                     </div>
 
@@ -58,17 +81,7 @@
                         <p>por {{recipe.author}}</p>
                         <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
                     </div>
-                </div>
-                <div class="card-admin-recipes">
-                    <div class="card-img-admin-recipes" style="background-image: url(https://img.cybercook.com.br/receitas/529/bolo-vulcao-de-cenoura-com-brigadeiro.jpeg)">
-                    </div>
-
-                    <div class="card-info-admin-recipes">
-                        <h4>Bolo de chocolate</h4>
-                        <p>por {{recipe.author}}</p>
-                        <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                    </div>
-                </div>
+                </div> #}
             </div>
     </section>
 {% endblock %}

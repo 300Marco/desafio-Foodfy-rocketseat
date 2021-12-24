@@ -11,10 +11,10 @@ module.exports = {
         return res.render('chefs/create');
     },
     details(req, res) {
-        Chef.find(req.params.id, (chef) => {
+        Chef.chefRecipes(req.params.id, (chef) => {
             if(!chef) return res.send("Chef not found!");
 
-            return res.render('chefs/details', {chef});
+            return res.render('chefs/details', {detail: chef});
         });
     },
     edit(req, res) {
