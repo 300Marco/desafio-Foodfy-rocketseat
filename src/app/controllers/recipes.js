@@ -4,17 +4,42 @@ const Chef = require('../models/Chef');
 
 module.exports = {
     index(req, res) {
-        Recipe.all((recipes) => {
-            return res.render('recipes/index', {recipes});
-        });
+        const { search } = req.query;
+
+        if(search) {
+            Recipe.findBy(search, (recipes) => {
+                return res.render('recipes/index', {recipes});
+            });
+        } else {
+            Recipe.all((recipes) => {
+                return res.render('recipes/index', {recipes});
+            });
+        }
+
+        // Recipe.all((recipes) => {
+        //     return res.render('recipes/index', {recipes});
+        // });
     },
     about(req, res) {
         return res.render('recipes/about');
     },
     recipes(req, res) {
-        Recipe.all((recipes) => {
-            return res.render('recipes/recipes', {recipes});
-        });
+        const { search } = req.query;
+
+        if(search) {
+            Recipe.findBy(search, (recipes) => {
+                return res.render('recipes/recipes', {recipes});
+            });
+        } else {
+            Recipe.all((recipes) => {
+                return res.render('recipes/recipes', {recipes});
+            });
+        }
+        
+        
+        // Recipe.all((recipes) => {
+        //     return res.render('recipes/recipes', {recipes});
+        // });
     },
     details(req, res) {
         const recipeIndex = req.params.index;

@@ -35,11 +35,19 @@
                     </nav>
 
                 </div>
-
-                <div class="input-search">
-                    <input type="text" placeholder="Buscar uma receita">
-                    <button>Buscar</button>
-                </div>
+                
+                {% block search %}
+                    <div class="input-search">
+                        <form action="/recipes" method="GET">
+                            <input 
+                                type="text" 
+                                name="search"
+                                placeholder="Buscar uma receita"
+                            >
+                            <button>Buscar</button>
+                        </form>
+                    </div>
+                {% endblock %}
             </header>
         {% endblock %}
 
