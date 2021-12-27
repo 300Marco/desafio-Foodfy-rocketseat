@@ -15,10 +15,6 @@ module.exports = {
                 return res.render('recipes/index', {recipes});
             });
         }
-
-        // Recipe.all((recipes) => {
-        //     return res.render('recipes/index', {recipes});
-        // });
     },
     about(req, res) {
         return res.render('recipes/about');
@@ -35,11 +31,6 @@ module.exports = {
                 return res.render('recipes/recipes', {recipes});
             });
         }
-        
-        
-        // Recipe.all((recipes) => {
-        //     return res.render('recipes/recipes', {recipes});
-        // });
     },
     details(req, res) {
         const recipeIndex = req.params.index;

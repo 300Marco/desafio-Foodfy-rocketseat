@@ -12,12 +12,6 @@ module.exports = {
 
                 callback(results.rows);
         });
-        // db.query(`
-        //     SELECT * FROM recipes`, (err, results) => {
-        //         if(err) throw `Database Error! ${err}`;
-
-        //         callback(results.rows);
-        // });
     },
     create(data, callback) {
         const query = `
@@ -59,14 +53,6 @@ module.exports = {
 
                 callback(results.rows[0]);
         });
-        // db.query(`
-        //     SELECT * 
-        //     FROM recipes
-        //     WHERE id = $1`, [id], (err, results) => {
-        //         if(err) throw `Database Error! ${err}`;
-
-        //         callback(results.rows[0]);
-        // });
     },
     update(data, callback) {
         const query = `

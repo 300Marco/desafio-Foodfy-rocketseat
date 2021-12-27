@@ -22,14 +22,6 @@ module.exports = {
 
                 callback(results.rows);
         });
-        // db.query(`
-        //     SELECT * 
-        //     FROM recipes
-        //     WHERE id = $1`, [id], (err, results) => {
-        //         if(err) throw 'Database Error!';
-
-        //         callback(results.rows[0]);
-        // });
     },
     findBy(search, callback) {
         db.query(`
@@ -41,16 +33,6 @@ module.exports = {
 
                 callback(results.rows);
             });
-        // db.query(`
-        //     SELECT chefs.*
-        //     FROM chefs 
-        //     LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-        //     WHERE chefs.name ILIKE '%${search}%'
-        //     GROUP BY chefs.id`, (err, results) => {
-        //         if(err) throw 'Database Error!';
-
-        //         callback(results.rows);
-        //     });
     },
     totalRecipes(callback) {
         db.query(`
