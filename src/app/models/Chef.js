@@ -84,13 +84,22 @@ module.exports = {
     },
     chefRecipes(id, callback) {
         db.query(`
-            SELECT recipes.*, chefs.name, chefs.avatar_url
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            SELECT chefs.*, recipes.title, recipes.image
+            FROM chefs
+            LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
             WHERE chefs.id = $1`, [id], (err, results) => {
                 if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows);
         });
+        // db.query(`
+        //     SELECT recipes.*, chefs.name, chefs.avatar_url
+        //     FROM recipes
+        //     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        //     WHERE chefs.id = $1`, [id], (err, results) => {
+        //         if(err) throw `Database Error! ${err}`;
+
+        //         callback(results.rows);
+        // });
     }
 }
