@@ -84,7 +84,7 @@ module.exports = {
     },
     chefRecipes(id, callback) {
         db.query(`
-            SELECT chefs.*, recipes.title, recipes.image
+            SELECT chefs.*, recipes.title, recipes.image, recipes.id AS recipes_id
             FROM chefs
             LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
             WHERE chefs.id = $1`, [id], (err, results) => {
@@ -92,6 +92,8 @@ module.exports = {
 
                 callback(results.rows);
         });
+
+        // Não remover no momento.
         // db.query(`
         //     SELECT recipes.*, chefs.name, chefs.avatar_url
         //     FROM recipes
