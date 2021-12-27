@@ -32,6 +32,21 @@ module.exports = {
             });
         }
     },
+    search(req,res) {
+        const { search } = req.query;
+
+        if(search) {
+            Recipe.findBy(search, (recipes) => {
+                return res.render('recipes/search', {recipes});
+            });
+        } else {
+            Recipe.all((recipes) => {
+                return res.render('recipes/search', {recipes});
+            });
+        }
+
+        // return res.render('recipes/search');
+    },
     details(req, res) {
         const recipeIndex = req.params.index;
         

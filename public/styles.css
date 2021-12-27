@@ -244,7 +244,7 @@ header .page-foodfy {
     margin-bottom: 50px;
 }
 
-/* ========== PAGE REVENUES ========== */
+/* ========== PAGE RECIPES ========== */
 .title-dish {
     font-size: 2.4rem;
     margin-bottom: 5px;
@@ -267,6 +267,12 @@ header .page-foodfy {
 
 .modal-close a:hover {
     color: var(--black-about);
+}
+
+/* ========== PAGE SEARCH - RECIPES ========== */
+.search h2 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
 }
 
 /* ========== PAGE CHEFS ========== */
