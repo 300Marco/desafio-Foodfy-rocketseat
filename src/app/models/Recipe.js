@@ -7,7 +7,7 @@ module.exports = {
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
         `, (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows);
         });
@@ -18,7 +18,7 @@ module.exports = {
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
             WHERE recipes.id = $1`, [id], (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows);
         });
@@ -29,7 +29,7 @@ module.exports = {
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
             WHERE recipes.title ILIKE '%${search}%'`, (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 callback(results.rows);
             });
@@ -41,7 +41,7 @@ module.exports = {
             LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
             GROUP BY chefs.id
             ORDER BY total_recipes DESC`, (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
                 
                 callback(results.rows);
         });

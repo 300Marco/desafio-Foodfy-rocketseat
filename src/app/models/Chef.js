@@ -16,7 +16,7 @@ module.exports = {
         // });
         db.query(`
             SELECT * FROM chefs`, (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
                 
                 callback(results.rows);
         });
@@ -38,7 +38,7 @@ module.exports = {
         ];
 
         db.query(query, values, (err, results) => {
-            if(err) throw 'Database Error!';
+            if(err) throw `Database Error! ${err}`;
 
             callback(results.rows[0]);
         });
@@ -48,7 +48,7 @@ module.exports = {
             SELECT *
             FROM chefs
             WHERE id = $1`, [id], (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
                 
                 callback(results.rows[0]);
         });
@@ -68,7 +68,7 @@ module.exports = {
         ];
 
         db.query(query, values, (err, results) => {
-            if(err) throw 'Database Error!';
+            if(err) throw `Database Error! ${err}`;
 
             callback();
         });
@@ -77,7 +77,7 @@ module.exports = {
         db.query(`
             DELETE FROM chefs
             WHERE id = $1`, [id], (err, results) => {
-                if(err) throw 'Database Error!';
+                if(err) throw `Database Error! ${err}`;
 
                 return callback();
         });
