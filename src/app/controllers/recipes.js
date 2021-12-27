@@ -37,15 +37,13 @@ module.exports = {
 
         if(search) {
             Recipe.findBy(search, (recipes) => {
-                return res.render('recipes/search', {recipes});
+                return res.render('recipes/search', {recipes, search});
             });
         } else {
             Recipe.all((recipes) => {
                 return res.render('recipes/search', {recipes});
             });
         }
-
-        // return res.render('recipes/search');
     },
     details(req, res) {
         const recipeIndex = req.params.index;
