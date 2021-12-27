@@ -369,7 +369,8 @@ footer span {
     font-size: 36px;
 }
 
-.recipe-title span {
+.recipe-title span,
+.cards-admin-recipes span {
     color: var(--black-light);
     font-size: 20px;
 }
