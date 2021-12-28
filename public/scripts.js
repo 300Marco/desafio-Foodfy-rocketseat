@@ -119,6 +119,7 @@ function addPreparation() {
 }
 
 const pagination = document.querySelector('.pagination');
+const search = pagination.dataset.search;
 const page = +pagination.dataset.page;
 const total = +pagination.dataset.total;
 const pages = paginate(page, total);
@@ -127,9 +128,13 @@ let elements = "";
 
 for(let page of pages) {
     if(String(page).includes("...")) {
-        elements += `<span href="?page=${page}"> ${page} </span>`
+        elements += `<span> ${page} </span>`
     } else {
-        elements += `<a href="?page=${page}"> ${page} </a>`
+        if(search) {
+            elements += `<a href="?page=${page}&search=${search}"> ${page} </a>`
+        } else {
+            elements += `<a href="?page=${page}"> ${page} </a>`
+        }
     }
 
 }

@@ -60,8 +60,9 @@
                 {% block pagination %}
                     <div 
                         class="pagination"
-                        data-page=15
-                        data-total=20
+                        data-page={{pagination.page}}
+                        data-total={{pagination.total}}
+                        data-search={{search}}
                     ></div>
                 {% endblock %}
             </div>
