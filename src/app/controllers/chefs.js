@@ -46,8 +46,29 @@ module.exports = {
         });
     },
     delete(req, res) {
-        Chef.delete(req.body.id, () => {
-            return res.redirect('/admin/chefs');
+        // console.log(req.body.id)
+        Chef.chefRecipes(req.body.id, (chef) => {
+            if(!chef) return res.send("Chef not found!");
+
+            const [ {title, recipes_id} ] = chef;
+
+            // console.log(chef)
+
+            if(title == null && recipes_id == null) {
+                Chef.delete(req.body.id, () => {
+                    return res.redirect('/admin/chefs');
+                });
+            } else {
+                return res.send('Chefe não pode ser deletado');
+            }
+
+            // return res.render('chefs/details', {detail: chef, recipesAccount});
         });
+        
+
+
+        // Chef.delete(req.body.id, () => {
+        //     return res.redirect('/admin/chefs');
+        // });
     }
 }
