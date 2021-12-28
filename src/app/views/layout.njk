@@ -56,6 +56,14 @@
             <div class="container">
                 {% block contents %}
                 {% endblock %}
+
+                {% block pagination %}
+                    <div 
+                        class="pagination"
+                        data-page=15
+                        data-total=20
+                    ></div>
+                {% endblock %}
             </div>
             
             {% block footer %}    

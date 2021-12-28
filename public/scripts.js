@@ -118,12 +118,26 @@ function addPreparation() {
     });
 }
 
-pagination();
+const pagination = document.querySelector('.pagination');
+const page = +pagination.dataset.page;
+const total = +pagination.dataset.total;
+const pages = paginate(page, total);
 
-function pagination() {
-    let totalPages = 20,
-        selectedPage = 6,
-        pages = [],
+let elements = "";
+
+for(let page of pages) {
+    if(String(page).includes("...")) {
+        elements += `<span href="?page=${page}"> ${page} </span>`
+    } else {
+        elements += `<a href="?page=${page}"> ${page} </a>`
+    }
+
+}
+
+pagination.innerHTML = elements;
+
+function paginate(selectedPage, totalPages) {
+    let pages = [],
         oldPage;
 
     for(let currentPage = 1; currentPage <= totalPages; currentPage++) {
@@ -146,5 +160,5 @@ function pagination() {
         }
     }
 
-    console.log(pages)
+    return pages;
 }
