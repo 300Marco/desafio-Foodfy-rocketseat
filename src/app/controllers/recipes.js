@@ -1,9 +1,28 @@
 
 const Recipe = require('../models/Recipe');
 const Chef = require('../models/Chef');
+const { paginate } = require('../models/Recipe');
 
 module.exports = {
     index(req, res) {
+        // let { search, page, limit } = req.query;
+
+        // page = page || 1;
+        // limit = limit || 2;
+        // let offset = limit * (page -1);
+
+        // const params = {
+        //     search,
+        //     page,
+        //     limit,
+        //     offset,
+        //     callback(recipes) {
+        //         return res.render('recipes/index', {recipes, search});
+        //     }
+        // };
+
+        // Recipe.paginate(params);
+
         const { search } = req.query;
 
         if(search) {
@@ -20,17 +39,36 @@ module.exports = {
         return res.render('recipes/about');
     },
     recipes(req, res) {
-        const { search } = req.query;
+        let { search, page, limit } = req.query;
 
-        if(search) {
-            Recipe.findBy(search, (recipes) => {
-                return res.render('recipes/recipes', {recipes});
-            });
-        } else {
-            Recipe.all((recipes) => {
-                return res.render('recipes/recipes', {recipes});
-            });
-        }
+        page = page || 1;
+        limit = limit || 2;
+        let offset = limit * (page -1);
+
+        const params = {
+            search,
+            page,
+            limit,
+            offset,
+            callback(recipes) {
+                return res.render('recipes/recipes', {recipes, search});
+            }
+        };
+
+        Recipe.paginate(params);
+        
+        
+        // const { search } = req.query;
+
+        // if(search) {
+        //     Recipe.findBy(search, (recipes) => {
+        //         return res.render('recipes/recipes', {recipes});
+        //     });
+        // } else {
+        //     Recipe.all((recipes) => {
+        //         return res.render('recipes/recipes', {recipes});
+        //     });
+        // }
     },
     search(req,res) {
         const { search } = req.query;

@@ -45,5 +45,27 @@ module.exports = {
                 
                 callback(results.rows);
         });
+    },
+    paginate(params) {
+        const { search, limit, offset, callback } = params;
+
+        let query = `
+            SELECT recipes.*, chefs.name AS chefs_name
+            FROM recipes
+            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)`
+        
+        if(search) {
+            query = `${query}
+                WHERE recipes.title ILIKE '%${search}%'`
+        };
+
+        query = `${query}
+        GROUP BY recipes.id, chefs.name LIMIT $1 OFFSET $2`
+
+        db.query(query, [limit, offset], (err, results) => {
+            if(err) throw `Database Error! ${err}`;
+
+            callback(results.rows);
+        });
     }
 }
