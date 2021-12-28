@@ -669,3 +669,31 @@ footer span {
     height: 200px;
     border-radius: 50%;
 }
+
+/* ========== PAGINATION ========== */
+.pagination {
+    text-align: center;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.pagination a,
+.pagination span {
+    color: var(--color-purple);
+    padding: 6px 10px;
+    margin-right: 6px;
+    font-weight: bold;
+    border: 1px solid var(--border-input);
+    border-radius: 4px;
+    transition: filter 300ms;
+    
+    display: inline-flex;
+}
+
+.pagination a:hover {
+    filter: brightness(.7);
+}
+
+.pagination a:last-child {
+    margin: 0;
+}
