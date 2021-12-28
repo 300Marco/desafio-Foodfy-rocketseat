@@ -4,16 +4,6 @@ const { date } = require('../../lib/utils');
 
 module.exports = {
     all(callback) {
-        // db.query(`
-        //     SELECT chefs.*, count(recipes) AS total_recipes 
-        //     FROM chefs 
-        //     LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-        //     GROUP BY chefs.id
-        //     ORDER BY total_recipes DESC`, (err, results) => {
-        //         if(err) throw 'Database Error!';
-                
-        //         callback(results.rows);
-        // });
         db.query(`
             SELECT * FROM chefs`, (err, results) => {
                 if(err) throw `Database Error! ${err}`;
@@ -77,7 +67,8 @@ module.exports = {
         db.query(`
             DELETE FROM chefs
             WHERE id = $1`, [id], (err, results) => {
-                if(err) throw `Database Error! ${err}`;
+                if(err) throw `Database Error! ${err}
+            `;
 
                 return callback();
         });

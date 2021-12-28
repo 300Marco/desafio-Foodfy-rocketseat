@@ -33,8 +33,8 @@ module.exports = {
         for(key of keys) {
             if(req.body[key] == "") {
                 return res.send("Please fill in all fields");
-            }
-        }
+            };
+        };
 
         Chef.create(req.body, (chef) => {
             return res.redirect(`/admin/chefs/${chef.id}`);
@@ -46,29 +46,18 @@ module.exports = {
         });
     },
     delete(req, res) {
-        // console.log(req.body.id)
         Chef.chefRecipes(req.body.id, (chef) => {
             if(!chef) return res.send("Chef not found!");
 
             const [ {title, recipes_id} ] = chef;
-
-            // console.log(chef)
 
             if(title == null && recipes_id == null) {
                 Chef.delete(req.body.id, () => {
                     return res.redirect('/admin/chefs');
                 });
             } else {
-                return res.send('Chefe não pode ser deletado');
-            }
-
-            // return res.render('chefs/details', {detail: chef, recipesAccount});
+                return res.send('Chefes que possuem receitas, não podem ser deletados');
+            };
         });
-        
-
-
-        // Chef.delete(req.body.id, () => {
-        //     return res.redirect('/admin/chefs');
-        // });
     }
 }
