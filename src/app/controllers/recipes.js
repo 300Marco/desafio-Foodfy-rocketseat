@@ -2,6 +2,7 @@
 const Recipe = require('../models/Recipe');
 const Chef = require('../models/Chef');
 const { paginate } = require('../models/Recipe');
+const { default: filters } = require('nunjucks/src/filters');
 
 module.exports = {
     index(req, res) {
@@ -42,7 +43,7 @@ module.exports = {
         let { search, page, limit } = req.query;
 
         page = page || 1;
-        limit = limit || 2;
+        limit = limit || 3;
         let offset = limit * (page -1);
 
         const params = {
@@ -51,7 +52,12 @@ module.exports = {
             limit,
             offset,
             callback(recipes) {
-                return res.render('recipes/recipes', {recipes, search});
+                const pagination = {
+                    total: Math.ceil(recipes[0].total / limit),
+                    page
+                }
+
+                return res.render('recipes/recipes', {recipes, pagination, search});
             }
         };
 
