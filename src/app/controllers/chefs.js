@@ -14,7 +14,9 @@ module.exports = {
         Chef.chefRecipes(req.params.id, (chef) => {
             if(!chef) return res.send("Chef not found!");
 
-            return res.render('chefs/details', {detail: chef});
+            const recipesAccount = chef.length;
+
+            return res.render('chefs/details', {detail: chef, recipesAccount});
         });
     },
     edit(req, res) {

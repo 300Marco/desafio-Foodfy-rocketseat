@@ -22,7 +22,14 @@
 
         <div class="recipe-title">
             <h2>{{detail[0].name}}</h2>
-            <span>0 receitas</span>
+            <span>
+                {{recipesAccount}}
+                {% if recipesAccount == '1' %}
+                    receita
+                {% else %}
+                    receitas
+                {% endif %}
+            </span>
         </div>
     </section>
 
