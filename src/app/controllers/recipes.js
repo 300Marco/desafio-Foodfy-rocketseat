@@ -76,7 +76,7 @@ module.exports = {
                     page
                 }
 
-                return res.render('recipes/recipes', {recipes, pagination, search});
+                return res.render('recipes/search', {recipes, pagination, search});
             }
         };
 
