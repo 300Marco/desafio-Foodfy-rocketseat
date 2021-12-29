@@ -71,15 +71,34 @@ if(recipeFields) {
 
 function displayInput() {
     const currentPage = location.pathname;
-    const inputIngredient = document.querySelector('.ingredient input');
-    const inputPreparation = document.querySelector('.input-script');
+    const inputIngredient = document.querySelector('.input-ingredients');
+    const inputPreparation = document.querySelector('.input-preparation');
+
+    const btnSaveRecipe = document.querySelector('.edit-button');
+    const boxIngredients = document.querySelector('.box-ingredients');
 
     let href = String(currentPage);
 
     if(href != '/admin/recipes/create') {
-        inputIngredient.parentNode.removeChild(inputIngredient);
-        inputPreparation.parentNode.removeChild(inputPreparation);
+        inputIngredient.classList.add('hide-input');
+        inputPreparation.classList.add('hide-input');
+
+        btnSaveRecipe.addEventListener('click', () => {
+            inputIngredient.parentNode.removeChild(inputIngredient);
+            inputPreparation.parentNode.removeChild(inputPreparation);
+        });
     }
+
+    // const currentPage = location.pathname;
+    // const inputIngredient = document.querySelector('.ingredient input');
+    // const inputPreparation = document.querySelector('.input-script');
+
+    // let href = String(currentPage);
+
+    // if(href != '/admin/recipes/create') {
+    //     inputIngredient.parentNode.removeChild(inputIngredient);
+    //     inputPreparation.parentNode.removeChild(inputPreparation);
+    // }
 }
 
 
@@ -107,7 +126,7 @@ function addIngredient() {
         inputIngredients.focus();
     }
 
-    function criaRecipe(textoInput) {
+    function createRecipe(textoInput) {
         const input = createInput();
 
         input.setAttribute('type', 'text');
@@ -118,10 +137,24 @@ function addIngredient() {
         clearInput();
     }
 
-    btnIngredient.addEventListener('click', (e) => {
-        if(!inputIngredients.value) return;
+    // btnIngredient.addEventListener('click', (e) => {
+    //     if(!inputIngredients.value) return;
+
+    //     createRecipe(inputIngredients.value);
+    // });
+
+    btnIngredient.addEventListener('click', () => {
+        const currentPage = location.pathname;
+        let href = String(currentPage);
+
+        if(href == '/admin/recipes/create') {
+            if(!inputIngredients.value) return;
+            createRecipe(inputIngredients.value);
+        } else {
+            createRecipe(inputIngredients.value);
+        }
         
-        criaRecipe(inputIngredients.value);
+        // if(!inputIngredients.value) return;
     });
 
     // Não remover por enquanto
@@ -152,7 +185,7 @@ function addPreparation() {
         inputPreparation.focus();
     }
 
-    function criaRecipe(textoInput) {
+    function createRecipe(textoInput) {
         const input = createInput();
 
         input.setAttribute('type', 'text');
@@ -164,9 +197,20 @@ function addPreparation() {
     }
 
     btnPreparation.addEventListener('click', (e) => {
-        if(!inputPreparation.value) return;
+        const currentPage = location.pathname;
+        let href = String(currentPage);
         
-        criaRecipe(inputPreparation.value);
+        if(href == '/admin/recipes/create') {
+            if(!inputPreparation.value) return;
+            createRecipe(inputPreparation.value);
+        } else {
+            createRecipe(inputPreparation.value);
+        }
+        
+        
+        // if(!inputPreparation.value) return;
+
+        // createRecipe(inputPreparation.value);
     });
 
     // Não remover por enquanto
