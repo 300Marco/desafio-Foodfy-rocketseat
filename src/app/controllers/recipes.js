@@ -1,8 +1,4 @@
-
 const Recipe = require('../models/Recipe');
-const Chef = require('../models/Chef');
-const { paginate } = require('../models/Recipe');
-const { default: filters } = require('nunjucks/src/filters');
 
 module.exports = {
     index(req, res) {
@@ -16,7 +12,7 @@ module.exports = {
             Recipe.all((recipes) => {
                 return res.render('recipes/index', {recipes});
             });
-        }
+        };
     },
     about(req, res) {
         return res.render('recipes/about');
@@ -37,26 +33,13 @@ module.exports = {
                 const pagination = {
                     total: Math.ceil(recipes[0].total / limit),
                     page
-                }
+                };
 
                 return res.render('recipes/recipes', {recipes, pagination, search});
             }
         };
 
         Recipe.paginate(params);
-        
-        
-        // const { search } = req.query;
-
-        // if(search) {
-        //     Recipe.findBy(search, (recipes) => {
-        //         return res.render('recipes/recipes', {recipes});
-        //     });
-        // } else {
-        //     Recipe.all((recipes) => {
-        //         return res.render('recipes/recipes', {recipes});
-        //     });
-        // }
     },
     search(req,res) {
         let { search, page, limit } = req.query;
@@ -74,25 +57,13 @@ module.exports = {
                 const pagination = {
                     total: Math.ceil(recipes[0].total / limit),
                     page
-                }
+                };
 
                 return res.render('recipes/search', {recipes, pagination, search});
             }
         };
 
         Recipe.paginate(params);
-
-        // const { search } = req.query;
-
-        // if(search) {
-        //     Recipe.findBy(search, (recipes) => {
-        //         return res.render('recipes/search', {recipes, search});
-        //     });
-        // } else {
-        //     Recipe.all((recipes) => {
-        //         return res.render('recipes/search', {recipes});
-        //     });
-        // }
     },
     details(req, res) {
         const recipeIndex = req.params.index;
@@ -101,7 +72,7 @@ module.exports = {
 
             if(recipe == undefined) {
                 return res.render('recipes/not-found');
-            }
+            };
 
             return res.render('recipes/details', {recipe});
         });

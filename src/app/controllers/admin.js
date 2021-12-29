@@ -1,6 +1,6 @@
 const Admin = require('../models/Admin');
 
-module.exports ={
+module.exports = {
     show(req, res) {
         Admin.all((recipes) => {
             return res.render('admin/index', {recipes});
@@ -34,8 +34,8 @@ module.exports ={
         for(key of keys) {
             if(req.body[key] == "") {
                 return res.send("Please fill in all fields");
-            }
-        }
+            };
+        };
 
         Admin.create(req.body, (recipe) => {
             return res.redirect(`/admin/recipes/${recipe.id}`);

@@ -1,4 +1,3 @@
-const { query } = require('../../config/db');
 const db = require('../../config/db');
 const { date } = require('../../lib/utils');
 
@@ -67,8 +66,7 @@ module.exports = {
         db.query(`
             DELETE FROM chefs
             WHERE id = $1`, [id], (err, results) => {
-                if(err) throw `Database Error! ${err}
-            `;
+                if(err) throw `Database Error! ${err}`;
 
                 return callback();
         });
