@@ -93,29 +93,93 @@ if(btnAddIngredient || btnAddPreparation) {
 }
 
 function addIngredient() {
-    const box = document.querySelector('.box-ingredients');
+    const inputIngredients = document.querySelector('.input-ingredients');
+    const btnIngredient = document.querySelector('.add-ingredient');
+    const boxIngredients = document.querySelector('.box-ingredients');
 
-    btnAddIngredient.addEventListener('click', () => {
-        const newInput = document.createElement('input');
+    function createInput() {
+        const input = document.createElement('input');
+        return input;
+    }
+
+    function clearInput() {
+        inputIngredients.value = "";
+        inputIngredients.focus();
+    }
+
+    function criaRecipe(textoInput) {
+        const input = createInput();
+
+        input.setAttribute('type', 'text');
+        input.setAttribute('name', 'ingredients[]');
+        input.value = textoInput;
+
+        boxIngredients.appendChild(input);
+        clearInput();
+    }
+
+    btnIngredient.addEventListener('click', (e) => {
+        if(!inputIngredients.value) return;
         
-        newInput.setAttribute('type', 'text');
-        newInput.setAttribute('name', 'ingredients[]');
-
-        box.appendChild(newInput);
+        criaRecipe(inputIngredients.value);
     });
+
+    // Não remover por enquanto
+    // const box = document.querySelector('.box-ingredients');
+
+    // btnAddIngredient.addEventListener('click', () => {
+    //     const newInput = document.createElement('input');
+        
+    //     newInput.setAttribute('type', 'text');
+    //     newInput.setAttribute('name', 'ingredients[]');
+
+    //     box.appendChild(newInput);
+    // });
 }
 
 function addPreparation() {
-    const box = document.querySelector('.box-preparation');
+    const inputPreparation = document.querySelector('.input-preparation');
+    const btnPreparation = document.querySelector('.add-preparation');
+    const boxPreparation = document.querySelector('.box-preparation');
 
-    btnAddPreparation.addEventListener('click', () => {
-        const newInput = document.createElement('input');
+    function createInput() {
+        const input = document.createElement('input');
+        return input;
+    }
+
+    function clearInput() {
+        inputPreparation.value = "";
+        inputPreparation.focus();
+    }
+
+    function criaRecipe(textoInput) {
+        const input = createInput();
+
+        input.setAttribute('type', 'text');
+        input.setAttribute('name', 'preparation[]');
+        input.value = textoInput;
+
+        boxPreparation.appendChild(input);
+        clearInput();
+    }
+
+    btnPreparation.addEventListener('click', (e) => {
+        if(!inputPreparation.value) return;
         
-        newInput.setAttribute('type', 'text');
-        newInput.setAttribute('name', 'preparation[]');
-
-        box.appendChild(newInput);
+        criaRecipe(inputPreparation.value);
     });
+
+    // Não remover por enquanto
+    // const box = document.querySelector('.box-preparation');
+
+    // btnAddPreparation.addEventListener('click', () => {
+    //     const newInput = document.createElement('input');
+        
+    //     newInput.setAttribute('type', 'text');
+    //     newInput.setAttribute('name', 'preparation[]');
+
+    //     box.appendChild(newInput);
+    // });
 }
 
 const pagination = document.querySelector('.pagination');
