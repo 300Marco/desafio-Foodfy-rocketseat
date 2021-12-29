@@ -71,11 +71,11 @@ if(recipeFields) {
 
 function displayInput() {
     const currentPage = location.pathname;
+
     const inputIngredient = document.querySelector('.input-ingredients');
     const inputPreparation = document.querySelector('.input-preparation');
 
     const btnSaveRecipe = document.querySelector('.edit-button');
-    const boxIngredients = document.querySelector('.box-ingredients');
 
     let href = String(currentPage);
 
@@ -88,32 +88,20 @@ function displayInput() {
             inputPreparation.parentNode.removeChild(inputPreparation);
         });
     }
-
-    // const currentPage = location.pathname;
-    // const inputIngredient = document.querySelector('.ingredient input');
-    // const inputPreparation = document.querySelector('.input-script');
-
-    // let href = String(currentPage);
-
-    // if(href != '/admin/recipes/create') {
-    //     inputIngredient.parentNode.removeChild(inputIngredient);
-    //     inputPreparation.parentNode.removeChild(inputPreparation);
-    // }
 }
 
 
-// Add new inputs 
-const btnAddIngredient = document.querySelector('.add-ingredient');
-const btnAddPreparation = document.querySelector('.add-preparation');
+// Add new inputs
+const btnIngredient = document.querySelector('.add-ingredient');
+const btnPreparation = document.querySelector('.add-preparation');
 
-if(btnAddIngredient || btnAddPreparation) {
+if(btnIngredient || btnPreparation) {
     addIngredient();
     addPreparation();
 }
 
 function addIngredient() {
     const inputIngredients = document.querySelector('.input-ingredients');
-    const btnIngredient = document.querySelector('.add-ingredient');
     const boxIngredients = document.querySelector('.box-ingredients');
 
     function createInput() {
@@ -137,12 +125,6 @@ function addIngredient() {
         clearInput();
     }
 
-    // btnIngredient.addEventListener('click', (e) => {
-    //     if(!inputIngredients.value) return;
-
-    //     createRecipe(inputIngredients.value);
-    // });
-
     btnIngredient.addEventListener('click', () => {
         const currentPage = location.pathname;
         let href = String(currentPage);
@@ -153,8 +135,6 @@ function addIngredient() {
         } else {
             createRecipe(inputIngredients.value);
         }
-        
-        // if(!inputIngredients.value) return;
     });
 
     // Não remover por enquanto
@@ -172,7 +152,6 @@ function addIngredient() {
 
 function addPreparation() {
     const inputPreparation = document.querySelector('.input-preparation');
-    const btnPreparation = document.querySelector('.add-preparation');
     const boxPreparation = document.querySelector('.box-preparation');
 
     function createInput() {
@@ -206,11 +185,6 @@ function addPreparation() {
         } else {
             createRecipe(inputPreparation.value);
         }
-        
-        
-        // if(!inputPreparation.value) return;
-
-        // createRecipe(inputPreparation.value);
     });
 
     // Não remover por enquanto
