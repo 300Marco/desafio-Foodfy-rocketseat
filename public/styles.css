@@ -571,6 +571,29 @@ footer span {
     margin-bottom: 10px;
 }
 
+.box-ingredients div {
+    margin-bottom: 15px;
+    
+    display: flex;
+    align-items: center;
+}
+
+.delete-field-button {
+    background-color: var(--color-red);
+    color: white;
+    font-weight: bold;
+    margin-left: 8px;
+    border: none;
+    padding: 18px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 300ms;
+}
+
+.delete-field-button:hover {
+    background-color: var(--color-red-dark);
+}
+
 .recipe-fields input,
 .recipe-fields select,
 .information textarea {
@@ -580,6 +603,10 @@ footer span {
     margin-bottom: 15px;
     padding: 16px;
     width: 100%;
+}
+
+.recipe-fields input {
+    margin: 0;
 }
 
 .add-button {

@@ -109,20 +109,48 @@ function addIngredient() {
         return input;
     }
 
+    function createDiv() {
+        const div = document.createElement('div');
+        return div;
+    }
+
     function clearInput() {
         inputIngredients.value = "";
         inputIngredients.focus();
     }
 
+    function createDeleteButton(div) {
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'X';
+        deleteButton.setAttribute('class', 'delete-field-button');
+        deleteButton.setAttribute('type', 'button');
+
+        div.appendChild(deleteButton);
+    }
+
     function createRecipe(textoInput) {
         const input = createInput();
+        const div = createDiv();
 
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'ingredients[]');
         input.value = textoInput;
 
-        boxIngredients.appendChild(input);
+        div.appendChild(input);
+
+        boxIngredients.appendChild(div);
         clearInput();
+
+        createDeleteButton(div);
+
+        // const input = createInput();
+
+        // input.setAttribute('type', 'text');
+        // input.setAttribute('name', 'ingredients[]');
+        // input.value = textoInput;
+
+        // boxIngredients.appendChild(input);
+        // clearInput();
     }
 
     btnIngredient.addEventListener('click', () => {
@@ -134,6 +162,24 @@ function addIngredient() {
             createRecipe(inputIngredients.value);
         } else {
             createRecipe(inputIngredients.value);
+        }
+    });
+
+    function insertButtonEdit() {
+        const divs = document.querySelectorAll('.box-ingredients div');
+        
+        for(let div of divs) {
+            createDeleteButton(div);
+        }
+    }
+
+    insertButtonEdit();
+
+    document.addEventListener('click', (e) => {
+        const el = e.target;
+
+        if(el.classList.contains('delete-field-button')) {
+            el.parentElement.remove();
         }
     });
 
