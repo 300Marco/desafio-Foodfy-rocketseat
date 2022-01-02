@@ -142,15 +142,6 @@ function addIngredient() {
         clearInput();
 
         createDeleteButton(div);
-
-        // const input = createInput();
-
-        // input.setAttribute('type', 'text');
-        // input.setAttribute('name', 'ingredients[]');
-        // input.value = textoInput;
-
-        // boxIngredients.appendChild(input);
-        // clearInput();
     }
 
     btnIngredient.addEventListener('click', () => {
@@ -238,15 +229,6 @@ function addPreparation() {
         clearInput();
 
         createDeleteButton(div);
-
-        // const input = createInput();
-
-        // input.setAttribute('type', 'text');
-        // input.setAttribute('name', 'preparation[]');
-        // input.value = textoInput;
-
-        // boxPreparation.appendChild(input);
-        // clearInput();
     }
 
     btnPreparation.addEventListener('click', () => {

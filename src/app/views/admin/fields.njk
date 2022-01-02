@@ -31,10 +31,6 @@
         <div class="ingredient">
 
             <div class="name-input">Ingredientes</div>
-            
-            {# {% for ingredient in recipe.ingredients %}
-                <input name="ingredients[]" value="{{ingredient}}">
-            {% endfor %} #}
 
             <div class="box-ingredients">
                 {% for ingredient in recipe.ingredients %}
@@ -70,10 +66,6 @@
     <div class="preparation">
 
         <div class="name-input">Modo de preparo</div>
-
-        {# {% for preparation in recipe.preparation %}
-            <input name="preparation[]" value="{{preparation}}">
-        {% endfor %} #}
 
         <div class="box-preparation">
             {% for preparation in recipe.preparation %}
