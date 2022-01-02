@@ -571,7 +571,8 @@ footer span {
     margin-bottom: 10px;
 }
 
-.box-ingredients div {
+.box-ingredients div,
+.box-preparation div {
     margin-bottom: 15px;
     
     display: flex;

@@ -71,11 +71,17 @@
 
         <div class="name-input">Modo de preparo</div>
 
-        {% for preparation in recipe.preparation %}
+        {# {% for preparation in recipe.preparation %}
             <input name="preparation[]" value="{{preparation}}">
-        {% endfor %}
+        {% endfor %} #}
 
-        <div class="box-preparation"></div>
+        <div class="box-preparation">
+            {% for preparation in recipe.preparation %}
+                <div>
+                    <input name="preparation[]" value="{{preparation}}">
+                </div>
+            {% endfor %}
+        </div>
         
         <input  name="preparation[]" class="input-preparation">
 

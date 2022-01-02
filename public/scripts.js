@@ -205,31 +205,77 @@ function addPreparation() {
         return input;
     }
 
+    function createDiv() {
+        const div = document.createElement('div');
+        return div;
+    }
+
     function clearInput() {
         inputPreparation.value = "";
         inputPreparation.focus();
     }
 
-    function createRecipe(textoInput) {
+    function createDeleteButton(div) {
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'X';
+        deleteButton.setAttribute('class', 'delete-field-button');
+        deleteButton.setAttribute('type', 'button');
+
+        div.appendChild(deleteButton);
+    }
+
+    function createPreparation(textoInput) {
         const input = createInput();
+        const div = createDiv();
 
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'preparation[]');
         input.value = textoInput;
 
-        boxPreparation.appendChild(input);
+        div.appendChild(input);
+
+        boxPreparation.appendChild(div);
         clearInput();
+
+        createDeleteButton(div);
+
+        // const input = createInput();
+
+        // input.setAttribute('type', 'text');
+        // input.setAttribute('name', 'preparation[]');
+        // input.value = textoInput;
+
+        // boxPreparation.appendChild(input);
+        // clearInput();
     }
 
-    btnPreparation.addEventListener('click', (e) => {
+    btnPreparation.addEventListener('click', () => {
         const currentPage = location.pathname;
         let href = String(currentPage);
         
         if(href == '/admin/recipes/create') {
             if(!inputPreparation.value) return;
-            createRecipe(inputPreparation.value);
+            createPreparation(inputPreparation.value);
         } else {
-            createRecipe(inputPreparation.value);
+            createPreparation(inputPreparation.value);
+        }
+    });
+
+    function insertButtonEdit() {
+        const divs = document.querySelectorAll('.box-preparation div');
+        
+        for(let div of divs) {
+            createDeleteButton(div);
+        }
+    }
+
+    insertButtonEdit();
+
+    document.addEventListener('click', (e) => {
+        const el = e.target;
+
+        if(el.classList.contains('delete-field-button')) {
+            el.parentElement.remove();
         }
     });
 
