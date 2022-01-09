@@ -32,7 +32,7 @@ module.exports = {
         const keys = Object.keys(req.body);
         
         for(key of keys) {
-            if(req.body[key] == "") {
+            if(req.body[key] == "" && key != 'information') {
                 return res.send("Please fill in all fields");
             };
         };
@@ -42,6 +42,14 @@ module.exports = {
         });
     },
     put(req, res) {
+        const keys = Object.keys(req.body);
+        
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'information') {
+                return res.send("Please fill in all fields");
+            };
+        };
+
         Admin.update(req.body, () => {
             return res.redirect(`/admin/recipes/${req.body.id}`);
         });
