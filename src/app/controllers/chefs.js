@@ -14,9 +14,17 @@ module.exports = {
         Chef.chefRecipes(req.params.id, (chef) => {
             if(!chef) return res.send("Chef not found!");
 
-            const recipesAccount = chef.length;
+            let recipesCount = 0;
+            
+            for(let count of chef) {
+                if(count.title != null) {
+                    recipesCount = chef.length;
+                } else {
+                    recipesCount;
+                }
+            }
 
-            return res.render('chefs/details', {detail: chef, recipesAccount});
+            return res.render('chefs/details', {detail: chef, recipesCount});
         });
     },
     edit(req, res) {
