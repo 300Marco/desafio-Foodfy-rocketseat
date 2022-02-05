@@ -4,6 +4,7 @@ const adminRecipes = require('./app/controllers/admin');
 const adminChefs = require('./app/controllers/chefs');
 const routes = express.Router();
 
+// WEB PAGE
 routes.get('/', recipes.index);
 
 routes.get('/about', recipes.about);
