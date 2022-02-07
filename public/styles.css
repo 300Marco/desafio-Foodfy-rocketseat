@@ -734,12 +734,12 @@ footer span {
     display: flex;
 }
 
-.photos-upload {
+#photos-upload {
     position: relative;
     margin-right: 10px;
 }
 
-.photos-upload .add-image-button {
+#photos-upload .add-image-button {
     border: 1px solid var(--gray);
     height: 149px;
     width: 149px;
@@ -750,7 +750,7 @@ footer span {
     justify-content: center;
 }
 
-.photos-upload input {
+#photos-upload input {
     position: absolute;
     border: 1px solid red;
     height: 149px;
@@ -760,32 +760,32 @@ footer span {
     opacity: 0;
 }
 
-.photos-upload .fa-plus {
+#photos-upload .fa-plus {
     font-size: 32px;
     color: var(--black-light);
 }
 
 /* ========== PHOTOS PREVIEW */
-.photos-preview {
+#photos-preview {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
     align-content: space-between;
 }
 
-.photos-preview .photo {
+#photos-preview .photo {
     position: relative;
     width: 151px;
     height: 151px;
 }
 
-.photos-preview .photo img {
+#photos-preview .photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.photos-preview .photo .fa-times {
+#photos-preview .photo .fa-times {
     background-color: rgb(255, 255, 255, .8);
     color: var(--color-red-close);
     position: absolute;
@@ -802,7 +802,7 @@ footer span {
     justify-content: center;
 }
 
-.photos-preview .photo .fa-times:hover {
+#photos-preview .photo .fa-times:hover {
     opacity: 1;
     cursor: pointer;
 }
