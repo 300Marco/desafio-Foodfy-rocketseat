@@ -15,8 +15,10 @@
     --black-about: #444444;
     --black-light: #777777;
     --black-footer: #999999;
+    --gray: #DDDDDD;
     --color-purple: #6558C3;
     --color-purple-dark: #3b2f94;
+    --color-red-close: #FF0000;
     --color-red: #DC4747;
     --color-red-dark: #b13131;
 
@@ -724,4 +726,83 @@ footer span {
 
 .pagination a:last-child {
     margin: 0;
+}
+
+/* ========== RECIPES - FIELDS/IMAGE ========== */
+/* ========== PHOTOS UPLOAD */
+.images-box {
+    display: flex;
+}
+
+.photos-upload {
+    position: relative;
+    margin-right: 10px;
+}
+
+.photos-upload .add-image-button {
+    border: 1px solid var(--gray);
+    height: 149px;
+    width: 149px;
+    border-radius: 3.5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photos-upload input {
+    position: absolute;
+    border: 1px solid red;
+    height: 149px;
+    width: 149px;
+    cursor: pointer;
+
+    opacity: 0;
+}
+
+.photos-upload .fa-plus {
+    font-size: 32px;
+    color: var(--black-light);
+}
+
+/* ========== PHOTOS PREVIEW */
+.photos-preview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    align-content: space-between;
+}
+
+.photos-preview .photo {
+    position: relative;
+    width: 151px;
+    height: 151px;
+}
+
+.photos-preview .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photos-preview .photo .fa-times {
+    background-color: rgb(255, 255, 255, .8);
+    color: var(--color-red-close);
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 40px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 400ms;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photos-preview .photo .fa-times:hover {
+    opacity: 1;
+    cursor: pointer;
 }

@@ -1,8 +1,33 @@
 <div class="recipe-fields">
     <div class="recipe">
         <div class="name-input">Imagem da receita</div>
-        <input type="url" name="image" value="{{recipe.image}}">
+        <div class="images-box">
+            <div class="photos-upload">
+                <input 
+                    type="file"
+                    name="photos"
+                    multiple
+                    accept="image/*"
+                >
+                <div class="add-image-button">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+            <div class="photos-preview">
+                <div class="photo" id="">
+                    <img src="/assets/asinhas.png" alt="">
+                    <i class="fas fa-times"></i>
+                </div>
+                <input type="hidden" name="removed_files">
+            </div>
+        </div>
     </div>
+
+
+    {# <div class="recipe">
+        <div class="name-input">Imagem da receita</div>
+        <input type="url" name="image" value="{{recipe.image}}">
+    </div> #}
 
     <div class="preparation">
         <div class="name-input">Título da receita</div>
