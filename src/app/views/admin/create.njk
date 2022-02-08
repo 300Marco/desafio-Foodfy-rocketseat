@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block contents %}
-    <form method="POST" action="/admin/recipes">
+    <form method="POST" action="/admin/recipes" enctype="multipart/form-data">
         <div class="recipe-detail">
             <span class="detail-title">Criando receita</span>
             <button class="edit-button" type="submit">Salvar receita</button>
