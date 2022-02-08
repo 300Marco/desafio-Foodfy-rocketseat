@@ -2,31 +2,59 @@ const Admin = require('../models/Admin');
 const File = require('../models/File');
 
 module.exports = {
-    show(req, res) {
-        Admin.all((recipes) => {
-            return res.render('admin/index', {recipes});
-        });
-    },
-    create(req, res) {
-        Admin.chefsSelectOptions((options) => {
-            return res.render('admin/create', {chefsOptions: options});
-        });
-    },
-    details(req, res) {
-        Admin.find(req.params.id, (recipe) => {
-            if(!recipe) return res.send("Recipe not found!");
+    async show(req, res) {
+        const results = await Admin.all();
+        const recipes = results.rows;
 
-            return res.render('admin/details', {recipe});
-        });
+        return res.render('admin/index', {recipes});
     },
-    edit(req, res) {
-        Admin.find(req.params.id, (recipe) => {
-            if(!recipe) return res.send("Recipe not found!");
+    async create(req, res) {
+        const results = await Admin.chefsSelectOptions();
+        const options = results.rows;
+        
+        return res.render('admin/create', {chefsOptions: options});
 
-            Admin.chefsSelectOptions((options) => {
-                return res.render('admin/edit', {recipe, chefsOptions: options});
-            });
-        });
+        // Admin.chefsSelectOptions((options) => {
+        //     return res.render('admin/create', {chefsOptions: options});
+        // });
+    },
+    async details(req, res) {
+        let results = await Admin.find(req.params.id);
+        const recipe = results.rows[0];
+
+        if(!recipe) return res.send("Recipe not found!");
+
+        return res.render('admin/details', {recipe});
+
+        // Admin.find(req.params.id, (recipe) => {
+        //     if(!recipe) return res.send("Recipe not found!");
+
+        //     return res.render('admin/details', {recipe});
+        // });
+    },
+    async edit(req, res) {
+        let results = await Admin.find(req.params.id);
+        const recipe = results.rows[0];
+
+        if(!recipe) return res.send("Recipe not found!");
+
+        results = await Admin.chefsSelectOptions();
+        const options = results.rows;
+
+        return res.render('admin/edit', {recipe, chefsOptions: options});
+
+        // Admin.chefsSelectOptions((options) => {
+        //     return res.render('admin/edit', {recipe, chefsOptions: options});
+        // });
+
+
+        // Admin.find(req.params.id, (recipe) => {
+        //     if(!recipe) return res.send("Recipe not found!");
+
+        //     Admin.chefsSelectOptions((options) => {
+        //         return res.render('admin/edit', {recipe, chefsOptions: options});
+        //     });
+        // });
     },
     // METHODS HTTP
     async post(req, res) {
@@ -73,7 +101,7 @@ module.exports = {
         //     return res.redirect(`/admin/recipes/${recipe.id}`);
         // });
     },
-    put(req, res) {
+    async put(req, res) {
         const keys = Object.keys(req.body);
         
         for(key of keys) {
@@ -82,13 +110,19 @@ module.exports = {
             };
         };
 
-        Admin.update(req.body, () => {
-            return res.redirect(`/admin/recipes/${req.body.id}`);
-        });
+        await Admin.update(req.body);
+        return res.redirect(`/admin/recipes/${req.body.id}`);
+        
+        // Admin.update(req.body, () => {
+        //     return res.redirect(`/admin/recipes/${req.body.id}`);
+        // });
     },
-    delete(req, res) {
-        Admin.delete(req.body.id, () => {
-            return res.redirect('/admin/recipes');
-        });
+    async delete(req, res) {
+        await Admin.delete(req.body.id);
+        return res.redirect('/admin/recipes');
+        
+        // Admin.delete(req.body.id, () => {
+        //     return res.redirect('/admin/recipes');
+        // });
     }
 }

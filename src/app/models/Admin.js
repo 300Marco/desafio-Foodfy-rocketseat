@@ -2,17 +2,24 @@ const db = require('../../config/db');
 const { date } = require('../../lib/utils');
 
 module.exports = {
-    all(callback) {
-        db.query(`
+    all() {
+        return db.query(`
             SELECT recipes.*, chefs.name AS chefs_name
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-        `, (err, results) => {
-                if(err) throw `Database Error! ${err}`;
-
-                callback(results.rows);
-        });
+        `);
     },
+    // all(callback) {
+    //     db.query(`
+    //         SELECT recipes.*, chefs.name AS chefs_name
+    //         FROM recipes
+    //         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+    //     `, (err, results) => {
+    //             if(err) throw `Database Error! ${err}`;
+
+    //             callback(results.rows);
+    //     });
+    // },
     create(data) {
         const query = `
             INSERT INTO recipes (
@@ -71,18 +78,26 @@ module.exports = {
         //     callback(results.rows[0]);
         // });
     },
-    find(id, callback) {
-        db.query(`
+    find(id) {
+        return db.query(`
             SELECT recipes.*, chefs.name AS chefs_name
             FROM recipes
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            WHERE recipes.id = $1`, [id], (err, results) => {
-                if(err) throw `Database Error! ${err}`;
-
-                callback(results.rows[0]);
-        });
+            WHERE recipes.id = $1`, [id]
+        );
     },
-    update(data, callback) {
+    // find(id, callback) {
+    //     db.query(`
+    //         SELECT recipes.*, chefs.name AS chefs_name
+    //         FROM recipes
+    //         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+    //         WHERE recipes.id = $1`, [id], (err, results) => {
+    //             if(err) throw `Database Error! ${err}`;
+
+    //             callback(results.rows[0]);
+    //     });
+    // },
+    update(data) {
         const query = `
             UPDATE recipes SET
                 image=($1),
@@ -104,28 +119,58 @@ module.exports = {
             data.id
         ];
 
-        db.query(query, values, (err, results) => {
-            if(err) throw `Database Error! ${err}`;
-
-            callback();
-        });
+        return db.query(query, values);
     }, 
-    delete(id, callback) {
-        db.query(`
-            DELETE FROM recipes
-            WHERE id = $1`, [id], (err, results) => {
-                if(err) throw `Database Error! ${err}`;
+    // update(data, callback) {
+    //     const query = `
+    //         UPDATE recipes SET
+    //             image=($1),
+    //             title=($2),
+    //             ingredients=($3),
+    //             preparation=($4),
+    //             information=($5),
+    //             chef_id=($6)
+    //         WHERE id = $7
+    //     `;
 
-                return callback();
-        });
+    //     const values = [
+    //         data.image,
+    //         data.title,
+    //         data.ingredients,
+    //         data.preparation,
+    //         data.information,
+    //         data.chef,
+    //         data.id
+    //     ];
+
+    //     db.query(query, values, (err, results) => {
+    //         if(err) throw `Database Error! ${err}`;
+
+    //         callback();
+    //     });
+    // }, 
+    delete(id) {
+        db.query(`DELETE FROM recipes WHERE id = $1`, [id])
     },
-    chefsSelectOptions(callback) {
-        db.query(`
-            SELECT name, id
-            FROM chefs`, (err, results) => {
-                if(err) throw `Database Error! ${err}`;
+    // delete(id, callback) {
+    //     db.query(`
+    //         DELETE FROM recipes
+    //         WHERE id = $1`, [id], (err, results) => {
+    //             if(err) throw `Database Error! ${err}`;
 
-                callback(results.rows);
-            });
+    //             return callback();
+    //     });
+    // },
+    chefsSelectOptions() {
+        return db.query(`SELECT name, id FROM chefs`);
     }
+    // chefsSelectOptions(callback) {
+    //     db.query(`
+    //         SELECT name, id
+    //         FROM chefs`, (err, results) => {
+    //             if(err) throw `Database Error! ${err}`;
+
+    //             callback(results.rows);
+    //         });
+    // }
 }
