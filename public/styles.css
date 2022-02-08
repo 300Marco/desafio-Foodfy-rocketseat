@@ -788,10 +788,12 @@ footer span {
 #photos-preview .photo .fa-times {
     background-color: rgb(255, 255, 255, .8);
     color: var(--color-red-close);
+    cursor: pointer;
+
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 40px;
+    font-size: 48px;
     width: 100%;
     height: 100%;
     opacity: 0;
@@ -804,5 +806,4 @@ footer span {
 
 #photos-preview .photo .fa-times:hover {
     opacity: 1;
-    cursor: pointer;
 }
