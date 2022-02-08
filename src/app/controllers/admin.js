@@ -42,12 +42,36 @@ module.exports = {
             return res.send('Please, send at least one image');
         }
 
+        // Admin.create(req.body, (recipe) => {}
+        const results = await Admin.create(req.body);
+        const recipeId = results.rows[0].id;
+
+        // Send image
         const filesPromise = req.files.map(file => File.create({...file}))
         await Promise.all(filesPromise);
 
-        Admin.create(req.body, (recipe) => {
-            return res.redirect(`/admin/recipes/${recipe.id}`);
-        });
+        return res.redirect(`/admin/recipes/${recipeId}`);
+
+        // sem async
+        // const keys = Object.keys(req.body);
+        
+        // for(key of keys) {
+        //     if(req.body[key] == "" && key != 'information') {
+        //         return res.send("Please fill in all fields");
+        //     };
+        // };
+
+        // // if(req.files.length == 0) {
+        // //     return res.send('Please, send at least one image');
+        // // }
+
+        // // Send image
+        // // const filesPromise = req.files.map(file => File.create({...file}))
+        // // await Promise.all(filesPromise);
+
+        // Admin.create(req.body, (recipe) => {
+        //     return res.redirect(`/admin/recipes/${recipe.id}`);
+        // });
     },
     put(req, res) {
         const keys = Object.keys(req.body);
