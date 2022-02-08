@@ -2,6 +2,7 @@ const express = require('express');
 const recipes = require('./app/controllers/recipes');
 const adminRecipes = require('./app/controllers/admin');
 const adminChefs = require('./app/controllers/chefs');
+const multer = require('./app/middlewares/multer');
 const routes = express.Router();
 
 // WEB PAGE
@@ -26,9 +27,9 @@ routes.get('/admin/recipes/:id', adminRecipes.details);
 
 routes.get('/admin/recipes/:id/edit', adminRecipes.edit);
 
-routes.post("/admin/recipes", adminRecipes.post);
+routes.post("/admin/recipes", multer.array("photos", 5), adminRecipes.post);
 
-routes.put('/admin/recipes', adminRecipes.put);
+routes.put('/admin/recipes', multer.array("photos", 5), adminRecipes.put);
 
 routes.delete('/admin/recipes', adminRecipes.delete);
 
