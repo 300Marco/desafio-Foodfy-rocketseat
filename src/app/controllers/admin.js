@@ -1,4 +1,5 @@
 const Admin = require('../models/Admin');
+const File = require('../models/File');
 
 module.exports = {
     show(req, res) {
@@ -28,7 +29,7 @@ module.exports = {
         });
     },
     // METHODS HTTP
-    post(req, res) {
+    async post(req, res) {
         const keys = Object.keys(req.body);
         
         for(key of keys) {
@@ -36,6 +37,13 @@ module.exports = {
                 return res.send("Please fill in all fields");
             };
         };
+
+        if(req.files.length == 0) {
+            return res.send('Please, send at least one image');
+        }
+
+        const filesPromise = req.files.map(file => File.create({...file}))
+        await Promise.all(filesPromise);
 
         Admin.create(req.body, (recipe) => {
             return res.redirect(`/admin/recipes/${recipe.id}`);
