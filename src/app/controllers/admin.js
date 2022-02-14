@@ -38,10 +38,19 @@ module.exports = {
 
         if(!recipe) return res.send("Recipe not found!");
 
+        // get chefs
         results = await Admin.chefsSelectOptions();
         const options = results.rows;
 
-        return res.render('admin/edit', {recipe, chefsOptions: options});
+        // get images
+        results = await Admin.files(recipe.id);
+        let files = results.rows;
+        files = files.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+        }));
+
+        return res.render('admin/edit', {recipe, chefsOptions: options, files});
 
         // Admin.chefsSelectOptions((options) => {
         //     return res.render('admin/edit', {recipe, chefsOptions: options});

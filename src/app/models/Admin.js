@@ -218,7 +218,7 @@ module.exports = {
     // },
     chefsSelectOptions() {
         return db.query(`SELECT name, id FROM chefs`);
-    }
+    },
     // chefsSelectOptions(callback) {
     //     db.query(`
     //         SELECT name, id
@@ -228,4 +228,11 @@ module.exports = {
     //             callback(results.rows);
     //         });
     // }
+    files(id) {
+        return db.query(`
+            SELECT files.*
+            FROM files
+            LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+            WHERE recipe_files.recipe_id = $1`, [id]);
+    }
 }

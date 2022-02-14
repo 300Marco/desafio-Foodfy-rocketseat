@@ -16,6 +16,16 @@
                 </div>
             </div>
             <div id="photos-preview">
+                {% if files %}
+                    {% for image in files %}
+                        <div class="photo" id="image.id">
+                            <img src="{{image.src}}" alt="{{image.name}}">
+                            <i 
+                                class="fas fa-times"
+                            ></i>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 {# <div class="photo" id="">
                     <img src="/assets/asinhas.png" alt="">
                     <i class="fas fa-times"></i>
