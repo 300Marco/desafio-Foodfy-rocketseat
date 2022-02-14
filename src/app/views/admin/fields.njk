@@ -18,14 +18,16 @@
             <div id="photos-preview">
                 {% if files %}
                     {% for image in files %}
-                        <div class="photo" id="image.id">
+                        <div class="photo" id="{{image.id}}">
                             <img src="{{image.src}}" alt="{{image.name}}">
                             <i 
                                 class="fas fa-times"
+                                onclick="PhotosUpload.removeOldPhoto(event)"
                             ></i>
                         </div>
                     {% endfor %}
                 {% endif %}
+                <input type="hidden" name="removed_files">
                 {# <div class="photo" id="">
                     <img src="/assets/asinhas.png" alt="">
                     <i class="fas fa-times"></i>

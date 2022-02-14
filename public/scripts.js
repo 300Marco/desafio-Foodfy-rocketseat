@@ -413,6 +413,19 @@ const PhotosUpload = {
         PhotosUpload.input.files = PhotosUpload.getAllFiles();
 
         photoDiv.remove();
+    },
+    removeOldPhoto(event) {
+        const photoDiv = event.target.parentNode;
+        console.log(photoDiv.id)
+
+        if(photoDiv.id) {
+            const removedFiles = document.querySelector('input[name="removed_files"]');
+            if(removedFiles) {
+                removedFiles.value += `${photoDiv.id},`;
+            };
+        };
+
+        photoDiv.remove();
     }
 };
 
