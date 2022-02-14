@@ -75,7 +75,7 @@ module.exports = {
         const recipeId = results.rows[0].id;
 
         // Send image
-        const filesPromise = req.files.map(file => File.create({...file}))
+        const filesPromise = req.files.map(file => File.create({...file, recipeId}))
         await Promise.all(filesPromise);
 
         return res.redirect(`/admin/recipes/${recipeId}`);
