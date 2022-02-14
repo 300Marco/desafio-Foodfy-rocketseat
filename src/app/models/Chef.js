@@ -73,7 +73,7 @@ module.exports = {
     },
     chefRecipes(id, callback) {
         db.query(`
-            SELECT chefs.*, recipes.title, recipes.image, recipes.id AS recipes_id
+            SELECT chefs.*, recipes.title, recipes.id AS recipes_id
             FROM chefs
             LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
             WHERE chefs.id = $1`, [id], (err, results) => {
@@ -81,6 +81,17 @@ module.exports = {
 
                 callback(results.rows);
         });
+
+        // NÃO EXISTE MAIS O CAMPO DE IMAGEM E RECIPE
+        // db.query(`
+        //     SELECT chefs.*, recipes.title, recipes.image, recipes.id AS recipes_id
+        //     FROM chefs
+        //     LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
+        //     WHERE chefs.id = $1`, [id], (err, results) => {
+        //         if(err) throw `Database Error! ${err}`;
+
+        //         callback(results.rows);
+        // });
 
         // Não remover no momento.
         // db.query(`
