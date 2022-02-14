@@ -114,7 +114,7 @@ module.exports = {
         const keys = Object.keys(req.body);
         
         for(key of keys) {
-            if(req.body[key] == "" && key != 'information' && key != removed_files) {
+            if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
                 return res.send("Please fill in all fields");
             };
         };
