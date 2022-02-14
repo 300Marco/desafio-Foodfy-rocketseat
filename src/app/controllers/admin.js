@@ -24,7 +24,16 @@ module.exports = {
 
         if(!recipe) return res.send("Recipe not found!");
 
-        return res.render('admin/details', {recipe});
+        results = await Admin.files(recipe.id);
+        const files = results.rows.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+        }));
+
+        console.log(req.protocol)
+        console.log(req.headers.host)
+
+        return res.render('admin/details', {recipe, files});
 
         // Admin.find(req.params.id, (recipe) => {
         //     if(!recipe) return res.send("Recipe not found!");
