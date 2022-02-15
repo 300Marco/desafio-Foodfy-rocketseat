@@ -1,18 +1,31 @@
 const Recipe = require('../models/Recipe');
 
 module.exports = {
-    index(req, res) {
+    async index(req, res) {
         const { search } = req.query;
 
+        // console.log(search)
+
         if(search) {
-            Recipe.findBy(search, (recipes) => {
-                return res.render('recipes/index', {recipes});
-            });
+            let results = await Recipe.findBy(search);
+            let recipes = results.rows;
+
+            return res.render('recipes/index', {recipes});
         } else {
-            Recipe.all((recipes) => {
-                return res.render('recipes/index', {recipes});
-            });
+            results = await Recipe.all();
+            recipes = results.rows;
+
+            return res.render('recipes/index', {recipes});
         };
+        // if(search) {
+        //     Recipe.findBy(search, (recipes) => {
+        //         return res.render('recipes/index', {recipes});
+        //     });
+        // } else {
+        //     Recipe.all((recipes) => {
+        //         return res.render('recipes/index', {recipes});
+        //     });
+        // };
     },
     about(req, res) {
         return res.render('recipes/about');
@@ -65,21 +78,38 @@ module.exports = {
 
         Recipe.paginate(params);
     },
-    details(req, res) {
+    async details(req, res) {
         const recipeIndex = req.params.index;
         
-        Recipe.find(recipeIndex, (recipe) => {
+        const results = await Recipe.find(recipeIndex);
+        const recipe = results.rows;
 
-            if(recipe == undefined) {
-                return res.render('recipes/not-found');
-            };
+        if(recipe == undefined) {
+            return res.render('recipes/not-found');
+        };
 
-            return res.render('recipes/details', {recipe});
-        });
+        return res.render('recipes/details', {recipe});
     },
-    chefs(req, res) {
-        Recipe.totalRecipes((chefs) => {
-            return res.render('recipes/chefs', {chefs});
-        });
+    // details(req, res) {
+    //     const recipeIndex = req.params.index;
+        
+    //     Recipe.find(recipeIndex, (recipe) => {
+
+    //         if(recipe == undefined) {
+    //             return res.render('recipes/not-found');
+    //         };
+
+    //         return res.render('recipes/details', {recipe});
+    //     });
+    // },
+    async chefs(req, res) {
+        const results = await Recipe.totalRecipes();
+        const chefs = results.rows;
+
+        return res.render('recipes/chefs', {chefs});
+
+        // Recipe.totalRecipes((chefs) => {
+        //     return res.render('recipes/chefs', {chefs});
+        // });
     }
 }
