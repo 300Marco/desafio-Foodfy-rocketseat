@@ -3,11 +3,15 @@ const { date } = require('../../lib/utils');
 
 module.exports = {
     all() {
-        return db.query(`
-            SELECT recipes.*, chefs.name AS chefs_name
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-        `);
+        try {
+            return db.query(`
+                SELECT recipes.*, chefs.name AS chefs_name
+                FROM recipes
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            `);
+        } catch(err) {
+            console.error(err);
+        }
     },
     // all(callback) {
     //     db.query(`
@@ -21,30 +25,32 @@ module.exports = {
     //     });
     // },
     create(data) {
-        const query = `
-            INSERT INTO recipes (
-                chef_id,
-                title,
-                ingredients,
-                preparation,
-                information,
-                created_at
-            ) VALUES ($1, $2, $3, $4, $5, $6)
-            RETURNING id
-        `;
+        try {
+            const query = `
+                INSERT INTO recipes (
+                    chef_id,
+                    title,
+                    ingredients,
+                    preparation,
+                    information,
+                    created_at
+                ) VALUES ($1, $2, $3, $4, $5, $6)
+                RETURNING id
+            `;
 
-        const values = [
-            data.chef,
-            data.title,
-            data.ingredients,
-            data.preparation,
-            data.information,
-            date(Date.now()).iso
-        ];
+            const values = [
+                data.chef,
+                data.title,
+                data.ingredients,
+                data.preparation,
+                data.information,
+                date(Date.now()).iso
+            ];
 
-        return db.query(query, values);
-
-
+            return db.query(query, values);
+        } catch(err) {
+            console.error(err);
+        }
 
         // Conceito antigo
         // const query = `
@@ -134,12 +140,16 @@ module.exports = {
     //     // });
     // },
     find(id) {
-        return db.query(`
-            SELECT recipes.*, chefs.name AS chefs_name
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            WHERE recipes.id = $1`, [id]
-        );
+        try {
+            return db.query(`
+                SELECT recipes.*, chefs.name AS chefs_name
+                FROM recipes
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                WHERE recipes.id = $1`, [id]
+            );
+        } catch(err) {
+            console.error(err);
+        }
     },
     // find(id, callback) {
     //     db.query(`
@@ -207,7 +217,11 @@ module.exports = {
     //     });
     // }, 
     delete(id) {
-        db.query(`DELETE FROM recipes WHERE id = $1`, [id])
+        try {
+            db.query(`DELETE FROM recipes WHERE id = $1`, [id])
+        } catch(err) {
+            console.error(err);
+        }
     },
     // delete(id, callback) {
     //     db.query(`
@@ -219,7 +233,11 @@ module.exports = {
     //     });
     // },
     chefsSelectOptions() {
-        return db.query(`SELECT name, id FROM chefs`);
+        try {
+            return db.query(`SELECT name, id FROM chefs`);
+        } catch(err) {
+            console.error(err);
+        }
     },
     // chefsSelectOptions(callback) {
     //     db.query(`
@@ -231,10 +249,14 @@ module.exports = {
     //         });
     // }
     files(id) {
-        return db.query(`
-            SELECT files.*
-            FROM files
-            LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
-            WHERE recipe_files.recipe_id = $1`, [id]);
+        try {
+            return db.query(`
+                SELECT files.*
+                FROM files
+                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+                WHERE recipe_files.recipe_id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
     }
 }
