@@ -215,7 +215,7 @@ module.exports = {
 
     //         callback();
     //     });
-    // }, 
+    // },
     delete(id) {
         try {
             db.query(`DELETE FROM recipes WHERE id = $1`, [id])

@@ -1,5 +1,6 @@
 const Admin = require('../models/Admin');
 const File = require('../models/File');
+const fs = require('fs');
 
 module.exports = {
     async show(req, res) {
@@ -29,9 +30,6 @@ module.exports = {
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
         }));
-
-        console.log(req.protocol)
-        console.log(req.headers.host)
 
         return res.render('admin/details', {recipe, files});
 
@@ -153,12 +151,12 @@ module.exports = {
         //     return res.redirect(`/admin/recipes/${req.body.id}`);
         // });
     },
-    async delete(req, res) {
-        await Admin.delete(req.body.id);
-        return res.redirect('/admin/recipes');
-        
-        // Admin.delete(req.body.id, () => {
-        //     return res.redirect('/admin/recipes');
-        // });
+    delete(req, res) {
+        // await Admin.delete(req.body.id);
+        // return res.redirect('/admin/recipes');
+
+        Admin.delete(req.body.id, () => {
+            return res.redirect('/admin/recipes');
+        });
     }
 }
