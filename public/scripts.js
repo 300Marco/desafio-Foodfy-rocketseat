@@ -429,4 +429,18 @@ const PhotosUpload = {
     }
 };
 
+const ImageGallery = {
+    highlight: document.querySelector('.gallery .highlight > img'),
+    preview: document.querySelectorAll('.viewImages img'),
+    setImage(event){
+        const { target } = event;
+
+        ImageGallery.preview.forEach(preview => 
+            preview.classList.remove('active'));
+        target.classList.add('active');
+
+        ImageGallery.highlight.src = target.src;
+    }
+}
+
 
