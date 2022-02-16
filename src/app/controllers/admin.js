@@ -1,14 +1,45 @@
 const Admin = require('../models/Admin');
 const File = require('../models/File');
-const fs = require('fs');
 
 module.exports = {
     async show(req, res) {
-        const results = await Admin.all();
-        const recipes = results.rows;
+        try {
+            let files = [];
+            let results = await Admin.all();
+            const recipes = results.rows;
 
-        return res.render('admin/index', {recipes});
+            results = recipes.map(recipe => 
+                Admin.findRecipeId(recipe.id)
+            );
+            const promiseRecipeAndFiles = await Promise.all(results);
+
+            for (file of promiseRecipeAndFiles) {
+                results = await Admin.findFileForId(file.rows[0].file_id);
+                files.push(results.rows[0]);
+            };
+
+            files.map(file => 
+                file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+            
+            for(index in recipes) {
+                recipes[index] = {
+                    ...recipes[index],
+                    path: files[index].path,
+                    src: files[index].src
+                };
+            };
+
+            return res.render('admin/index', {recipes});
+        } catch (err) {
+            console.error(err);
+        }
     },
+    // async show(req, res) {
+    //     const results = await Admin.all();
+    //     const recipes = results.rows;
+
+    //     return res.render('admin/index', {recipes});
+    // },
     async create(req, res) {
         const results = await Admin.chefsSelectOptions();
         const options = results.rows;

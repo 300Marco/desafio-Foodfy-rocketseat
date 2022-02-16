@@ -3,15 +3,11 @@ const { date } = require('../../lib/utils');
 
 module.exports = {
     all() {
-        try {
-            return db.query(`
-                SELECT recipes.*, chefs.name AS chefs_name
-                FROM recipes
-                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            `);
-        } catch(err) {
-            console.error(err);
-        }
+        return db.query(`
+            SELECT recipes.*, chefs.name AS chefs_name
+            FROM recipes
+            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        `);
     },
     // all(callback) {
     //     db.query(`
@@ -24,6 +20,70 @@ module.exports = {
     //             callback(results.rows);
     //     });
     // },
+    find(id) {
+        try {
+            return db.query(`
+                SELECT recipes.*, chefs.name AS chefs_name
+                FROM recipes
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                WHERE recipes.id = $1`, [id]
+            );
+        } catch(err) {
+            console.error(err);
+        }
+    },
+    // find(id, callback) {
+    //     db.query(`
+    //         SELECT recipes.*, chefs.name AS chefs_name
+    //         FROM recipes
+    //         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+    //         WHERE recipes.id = $1`, [id], (err, results) => {
+    //             if(err) throw `Database Error! ${err}`;
+
+    //             callback(results.rows[0]);
+    //     });
+    // },
+    chefsSelectOptions() {
+        try {
+            return db.query(`SELECT name, id FROM chefs`);
+        } catch(err) {
+            console.error(err);
+        }
+    },
+    // chefsSelectOptions(callback) {
+    //     db.query(`
+    //         SELECT name, id
+    //         FROM chefs`, (err, results) => {
+    //             if(err) throw `Database Error! ${err}`;
+
+    //             callback(results.rows);
+    //         });
+    // }
+    files(id) {
+        try {
+            return db.query(`
+                SELECT files.*
+                FROM files
+                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+                WHERE recipe_files.recipe_id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
+    },
+    findRecipeId(id) {
+        try {
+            return db.query(`SELECT * FROM recipe_files WHERE recipe_id = $1`, [id]);
+        } catch (err) {
+            console.error(err)
+        }
+    },
+    findFileForId(id) {
+        try {
+            return db.query(`SELECT * FROM files WHERE id = $1`, [id])
+        } catch (error) {
+            console.log(error)
+        }
+    },
     create(data) {
         try {
             const query = `
@@ -139,29 +199,6 @@ module.exports = {
     //     //     callback(results.rows[0]);
     //     // });
     // },
-    find(id) {
-        try {
-            return db.query(`
-                SELECT recipes.*, chefs.name AS chefs_name
-                FROM recipes
-                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-                WHERE recipes.id = $1`, [id]
-            );
-        } catch(err) {
-            console.error(err);
-        }
-    },
-    // find(id, callback) {
-    //     db.query(`
-    //         SELECT recipes.*, chefs.name AS chefs_name
-    //         FROM recipes
-    //         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-    //         WHERE recipes.id = $1`, [id], (err, results) => {
-    //             if(err) throw `Database Error! ${err}`;
-
-    //             callback(results.rows[0]);
-    //     });
-    // },
     update(data) {
         try {
             const query = `
@@ -222,7 +259,7 @@ module.exports = {
         } catch(err) {
             console.error(err);
         }
-    },
+    }
     // delete(id, callback) {
     //     db.query(`
     //         DELETE FROM recipes
@@ -231,32 +268,5 @@ module.exports = {
 
     //             return callback();
     //     });
-    // },
-    chefsSelectOptions() {
-        try {
-            return db.query(`SELECT name, id FROM chefs`);
-        } catch(err) {
-            console.error(err);
-        }
-    },
-    // chefsSelectOptions(callback) {
-    //     db.query(`
-    //         SELECT name, id
-    //         FROM chefs`, (err, results) => {
-    //             if(err) throw `Database Error! ${err}`;
-
-    //             callback(results.rows);
-    //         });
     // }
-    files(id) {
-        try {
-            return db.query(`
-                SELECT files.*
-                FROM files
-                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
-                WHERE recipe_files.recipe_id = $1`, [id]);
-        } catch(err) {
-            console.error(err);
-        }
-    }
 }
