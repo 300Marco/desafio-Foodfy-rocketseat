@@ -9,12 +9,12 @@ module.exports = {
             const recipes = results.rows;
 
             results = recipes.map(recipe => 
-                Admin.findRecipeId(recipe.id)
+                File.findRecipeId(recipe.id)
             );
             const promiseRecipeAndFiles = await Promise.all(results);
 
             for (file of promiseRecipeAndFiles) {
-                results = await Admin.findFileForId(file.rows[0].file_id);
+                results = await File.findFileForId(file.rows[0].file_id);
                 files.push(results.rows[0]);
             };
 

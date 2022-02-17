@@ -66,5 +66,19 @@ module.exports = {
         } catch(err) {
             console.error(err);
         }
+    },
+    findRecipeId(id) {
+        try {
+            return db.query(`SELECT * FROM recipe_files WHERE recipe_id = $1`, [id]);
+        } catch (err) {
+            console.error(err);
+        }
+    },
+    findFileForId(id) {
+        try {
+            return db.query(`SELECT * FROM files WHERE id = $1`, [id]);
+        } catch (err) {
+            console.error(err);
+        }
     }
 }
