@@ -1,19 +1,66 @@
 const Recipe = require('../models/Recipe');
+const File = require('../models/File');
 
 module.exports = {
     async index(req, res) {
         const { search } = req.query;
 
-        // console.log(search)
-
         if(search) {
+            let files = [];
             let results = await Recipe.findBy(search);
             let recipes = results.rows;
 
+            results = recipes.map(recipe => 
+                File.findRecipeId(recipe.id)
+            );
+            let promiseRecipeAndFiles = await Promise.all(results);
+
+            for (file of promiseRecipeAndFiles) {
+                results = await File.findFileForId(file.rows[0].file_id);
+                files.push(results.rows[0]);
+            };
+
+            files.map(file => 
+                file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+            
+            for(index in recipes) {
+                recipes[index] = {
+                    ...recipes[index],
+                    path: files[index].path,
+                    src: files[index].src
+                };
+            };
+            // let results = await Recipe.findBy(search);
+            // let recipes = results.rows;
+
             return res.render('recipes/index', {recipes});
         } else {
-            results = await Recipe.all();
-            recipes = results.rows;
+            let files = [];
+            let results = await Recipe.all();
+            let recipes = results.rows;
+
+            results = recipes.map(recipe => 
+                File.findRecipeId(recipe.id)
+            );
+            promiseRecipeAndFiles = await Promise.all(results);
+
+            for (file of promiseRecipeAndFiles) {
+                results = await File.findFileForId(file.rows[0].file_id);
+                files.push(results.rows[0]);
+            };
+
+            files.map(file => 
+                file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+            
+            for(index in recipes) {
+                recipes[index] = {
+                    ...recipes[index],
+                    path: files[index].path,
+                    src: files[index].src
+                };
+            };
+            // results = await Recipe.all();
+            // recipes = results.rows;
 
             return res.render('recipes/index', {recipes});
         };
@@ -27,6 +74,30 @@ module.exports = {
         //     });
         // };
     },
+    // async index(req, res) {
+    //     const { search } = req.query;
+
+    //     if(search) {
+    //         let results = await Recipe.findBy(search);
+    //         let recipes = results.rows;
+
+    //         return res.render('recipes/index', {recipes});
+    //     } else {
+    //         results = await Recipe.all();
+    //         recipes = results.rows;
+
+    //         return res.render('recipes/index', {recipes});
+    //     };
+    //     // if(search) {
+    //     //     Recipe.findBy(search, (recipes) => {
+    //     //         return res.render('recipes/index', {recipes});
+    //     //     });
+    //     // } else {
+    //     //     Recipe.all((recipes) => {
+    //     //         return res.render('recipes/index', {recipes});
+    //     //     });
+    //     // };
+    // },
     about(req, res) {
         return res.render('recipes/about');
     },
