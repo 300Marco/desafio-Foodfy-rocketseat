@@ -152,15 +152,33 @@ module.exports = {
     async details(req, res) {
         const recipeIndex = req.params.index;
         
-        const results = await Recipe.find(recipeIndex);
+        let results = await Recipe.find(recipeIndex);
         const recipe = results.rows;
 
         if(recipe == undefined) {
             return res.render('recipes/not-found');
         };
 
-        return res.render('recipes/details', {recipe});
+        results = await Recipe.files(recipeIndex);
+        const files = results.rows.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+        }));
+
+        return res.render('recipes/details', {recipe, files});
     },
+    // async details(req, res) {
+    //     const recipeIndex = req.params.index;
+        
+    //     const results = await Recipe.find(recipeIndex);
+    //     const recipe = results.rows;
+
+    //     if(recipe == undefined) {
+    //         return res.render('recipes/not-found');
+    //     };
+
+    //     return res.render('recipes/details', {recipe});
+    // },
     // details(req, res) {
     //     const recipeIndex = req.params.index;
         

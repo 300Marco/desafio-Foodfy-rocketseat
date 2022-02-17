@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block contents %}
-    <div class="recipe-image" style="background: url({{recipe[0].image}})"></div>
+    {# <div class="recipe-image" style="background: url('{{files[0].src}}')"></div> #}
+    <img class="recipe-image" src="{{files[0].src}}" alt="">
 
     <div class="recipe-title">
         <h2>{{recipe[0].title}}</h2>

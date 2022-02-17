@@ -110,5 +110,16 @@ module.exports = {
 
             callback(results.rows);
         });
+    },
+    files(id) {
+        try {
+            return db.query(`
+                SELECT files.*
+                FROM files
+                LEFT JOIN recipe_files ON (recipe_files.file_id = files.id)
+                WHERE recipe_files.recipe_id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
     }
 }
