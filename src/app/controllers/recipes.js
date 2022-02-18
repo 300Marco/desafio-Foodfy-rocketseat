@@ -30,8 +30,6 @@ module.exports = {
                     src: files[index].src
                 };
             };
-            // let results = await Recipe.findBy(search);
-            // let recipes = results.rows;
 
             return res.render('recipes/index', {recipes});
         } else {
@@ -59,20 +57,9 @@ module.exports = {
                     src: files[index].src
                 };
             };
-            // results = await Recipe.all();
-            // recipes = results.rows;
 
             return res.render('recipes/index', {recipes});
         };
-        // if(search) {
-        //     Recipe.findBy(search, (recipes) => {
-        //         return res.render('recipes/index', {recipes});
-        //     });
-        // } else {
-        //     Recipe.all((recipes) => {
-        //         return res.render('recipes/index', {recipes});
-        //     });
-        // };
     },
     // async index(req, res) {
     //     const { search } = req.query;
@@ -101,7 +88,78 @@ module.exports = {
     about(req, res) {
         return res.render('recipes/about');
     },
-    recipes(req, res) {
+    async recipes(req, res) {
+        let { page, limit } = req.query;
+
+        page = page || 1;
+        limit = limit || 6;
+        let offset = limit * (page -1);
+
+        const params = {
+            page,
+            limit,
+            offset
+        };
+
+        let files = [];
+        let results = await Recipe.paginate(params);
+        let recipes = results.rows;
+
+        results = recipes.map(recipe => 
+            File.findRecipeId(recipe.id)
+        );
+
+        let promiseRecipeAndFiles = await Promise.all(results);
+
+        for (file of promiseRecipeAndFiles) {
+            results = await File.findFileForId(file.rows[0].file_id);
+            files.push(results.rows[0]);
+        };
+
+        files.map(file => 
+            file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        );
+        
+        for(index in recipes) {
+            recipes[index] = {
+                ...recipes[index],
+                path: files[index].path,
+                src: files[index].src
+            };
+        };
+
+        const pagination = {
+            total: Math.ceil(recipes[0].total / limit),
+            page
+        };
+
+        return res.render('recipes/recipes', {recipes, pagination});
+    },
+    // recipes(req, res) {
+    //     let { search, page, limit } = req.query;
+
+    //     page = page || 1;
+    //     limit = limit || 6;
+    //     let offset = limit * (page -1);
+
+    //     const params = {
+    //         search,
+    //         page,
+    //         limit,
+    //         offset,
+    //         callback(recipes) {
+    //             const pagination = {
+    //                 total: Math.ceil(recipes[0].total / limit),
+    //                 page
+    //             };
+
+    //             return res.render('recipes/recipes', {recipes, pagination, search});
+    //         }
+    //     };
+
+    //     Recipe.paginate(params);
+    // },
+    async search(req,res) {
         let { search, page, limit } = req.query;
 
         page = page || 1;
@@ -112,43 +170,67 @@ module.exports = {
             search,
             page,
             limit,
-            offset,
-            callback(recipes) {
-                const pagination = {
-                    total: Math.ceil(recipes[0].total / limit),
-                    page
-                };
-
-                return res.render('recipes/recipes', {recipes, pagination, search});
-            }
+            offset
         };
 
-        Recipe.paginate(params);
-    },
-    search(req,res) {
-        let { search, page, limit } = req.query;
+        let files = [];
+        let results = await Recipe.paginate(params);
+        let recipes = results.rows;
 
-        page = page || 1;
-        limit = limit || 6;
-        let offset = limit * (page -1);
+        results = recipes.map(recipe => 
+            File.findRecipeId(recipe.id)
+        );
 
-        const params = {
-            search,
-            page,
-            limit,
-            offset,
-            callback(recipes) {
-                const pagination = {
-                    total: Math.ceil(recipes[0].total / limit),
-                    page
-                };
+        let promiseRecipeAndFiles = await Promise.all(results);
 
-                return res.render('recipes/search', {recipes, pagination, search});
-            }
+        for(file of promiseRecipeAndFiles) {
+            results = await File.findFileForId(file.rows[0].file_id);
+            files.push(results.rows[0]);
         };
 
-        Recipe.paginate(params);
+        files.map(file =>
+            file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        );
+
+        for(index in recipes) {
+            recipes[index] = {
+                ...recipes[index],
+                path: files[index].path,
+                src: files[index].src
+            };
+        };
+
+        const pagination = {
+            total: Math.ceil(recipes[0].total / limit),
+            page
+        }
+
+        return res.render('recipes/search', {recipes, pagination, search});
     },
+    // search(req,res) {
+    //     let { search, page, limit } = req.query;
+
+    //     page = page || 1;
+    //     limit = limit || 6;
+    //     let offset = limit * (page -1);
+
+    //     const params = {
+    //         search,
+    //         page,
+    //         limit,
+    //         offset,
+    //         callback(recipes) {
+    //             const pagination = {
+    //                 total: Math.ceil(recipes[0].total / limit),
+    //                 page
+    //             };
+
+    //             return res.render('recipes/search', {recipes, pagination, search});
+    //         }
+    //     };
+
+    //     Recipe.paginate(params);
+    // },
     async details(req, res) {
         const recipeIndex = req.params.index;
         
