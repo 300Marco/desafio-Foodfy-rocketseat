@@ -6,6 +6,23 @@
 
     <div class="recipe">
         <div class="name-input">Avatar</div>
-        <input type="url" name="avatar_url" value="{{chef.avatar_url}}">
+        <div id="chefs-photos-upload">
+            <input 
+                id="photos-input"
+                type="file" 
+                name="photos"
+                multiple 
+                accept="image/*"
+                value="{{chef.avatar_url}}"
+            >
+            <div class="add-chef-image-button">
+                Enviar Avatar
+            </div>
+        </div>
+
+
+
+
+        {# <input type="url" name="avatar_url" value="{{chef.avatar_url}}"> #}
     </div>
 </div>

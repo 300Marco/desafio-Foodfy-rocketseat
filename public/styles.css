@@ -761,7 +761,6 @@ footer span {
 
 #photos-upload input {
     position: absolute;
-    border: 1px solid red;
     height: 149px;
     width: 149px;
     cursor: pointer;
@@ -844,4 +843,36 @@ footer span {
 .viewImages img:hover,
 .viewImages img.active { 
     opacity: 1;
+}
+
+
+/* ========== CHEFS - ADMIN CREATE CHEFS ========== */
+#chefs-photos-upload {
+    /* border: 1px solid red; */
+    position: relative;
+    width: 140px;
+}
+
+#chefs-photos-upload input {
+    background-color: red;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 60px;
+    cursor: pointer !important;
+
+    position: absolute;
+    top: -24px;
+    left: 0;
+
+    opacity: 0;
+}
+
+.add-chef-image-button {
+    background-color: var(--color-purple);
+    color: white;
+    border-radius: 4px;
+    width: 140px;
+    padding: 9px 19px;
+    font-size: 1.6rem;
 }
