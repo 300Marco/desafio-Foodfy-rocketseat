@@ -847,10 +847,40 @@ footer span {
 
 
 /* ========== CHEFS - ADMIN CREATE CHEFS ========== */
+/* ========== CHEFS - View Image */
+#chef-photos-preview {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.delete-avatar-button {
+    background-color: var(--color-red);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-left: 8px;
+    border: none;
+    padding: 18px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 300ms;
+}
+
+.delete-avatar-button:hover {
+    background-color: var(--color-red-dark);
+}
+
+.disabled-chef-button {
+    background-color: var(--black-footer) !important;
+    color: var(--black-about) !important;
+    transition: 400ms;
+}
+
+/* ========== CHEFS - Send Image */
 #chefs-photos-upload {
-    /* border: 1px solid red; */
     position: relative;
     width: 140px;
+    margin-top: 15px;
 }
 
 #chefs-photos-upload input {
@@ -871,6 +901,7 @@ footer span {
 .add-chef-image-button {
     background-color: var(--color-purple);
     color: white;
+    font-weight: bold;
     border-radius: 4px;
     width: 140px;
     padding: 9px 19px;
