@@ -494,16 +494,16 @@ const ChefsPhotosUpload = {
             return true;
         }
 
-        const avatarDiv = 0;
+        const photoDiv = 0;
         preview.childNodes.forEach(item => {
             if(item.classList && item.classList.value == "chef-avatar") {
-                avatarDiv.push(item);
+                photoDiv.push(item);
             };
         });
 
-        const totalAvatar = fileList.length + avatarDiv.length;
-        if(totalAvatar > uploadLimit) {
-            alert('Não é permitido enviar mais fotos');
+        const totalPhotos = fileList.length + photoDiv.length;
+        if(totalPhotos > uploadLimit) {
+            alert('Não é permitido enviar mais de 1 foto');
             event.preventDefault();
             return true;
         }
@@ -562,7 +562,7 @@ const ChefsPhotosUpload = {
 
         avatarInput.remove();
         avatarButton.remove();
-        
+
         ChefsPhotosUpload.activateButton();
     }
 };
