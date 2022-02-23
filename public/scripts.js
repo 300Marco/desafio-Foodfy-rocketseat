@@ -532,12 +532,19 @@ const ChefsPhotosUpload = {
         return input;
     },
     disabledButton() {
-        ChefsPhotosUpload.inputImageButton.setAttribute('disabled', 'disabled');
+        // ChefsPhotosUpload.inputImageButton.setAttribute('disabled', 'disabled');
         ChefsPhotosUpload.sendImageButton.classList.add('disabled-chef-button');
+
+        ChefsPhotosUpload.inputImageButton.style.position = "fixed"
+        ChefsPhotosUpload.inputImageButton.style.left = "-100%"
+        // Lightbox.target.style.opacity = 1;
     },
     activateButton() {
-        ChefsPhotosUpload.inputImageButton.removeAttribute('disabled', 'disabled');
+        // ChefsPhotosUpload.inputImageButton.removeAttribute('disabled', 'disabled');
         ChefsPhotosUpload.sendImageButton.classList.remove('disabled-chef-button');
+
+        ChefsPhotosUpload.inputImageButton.style.position = "absolute"
+        ChefsPhotosUpload.inputImageButton.style.left = 0;
     },
     getRemoveButton() {
         const button = document.createElement('button');

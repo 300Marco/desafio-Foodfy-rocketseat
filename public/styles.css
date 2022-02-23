@@ -884,7 +884,7 @@ footer span {
 }
 
 #chefs-photos-upload input {
-    background-color: red;
+    /* background-color: red; */
     padding: 0;
     margin: 0;
     width: 100%;
@@ -906,4 +906,5 @@ footer span {
     width: 140px;
     padding: 9px 19px;
     font-size: 1.6rem;
+    cursor: no-drop;
 }
