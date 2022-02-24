@@ -1,4 +1,5 @@
 const Chef = require('../models/Chef');
+const FileChef = require('../models/FileChef');
 
 module.exports = {
     async show(req, res) {
@@ -73,18 +74,48 @@ module.exports = {
             };
         };
 
+        if(req.files.length == 0) {
+            return res.send('Please, send at last one image');
+        }
+
         const results = await Chef.create(req.body);
         const chefId = results.rows[0].id;
 
-        console.log(results);
-        console.log(chefId);
+        // Send Image
+        const filesPromise = req.files.map(file => FileChef.create({
+            ...file,
+            chefId
+        }));
+        await Promise.all(filesPromise);
 
-        return res.redirect(`/admin/chefs/${chefId}`);
+        return res.redirect(`/admin/chefs/create`);
+        // return res.redirect(`/admin/chefs/${chefId}`);
 
         // Chef.create(req.body, (chef) => {
         //     return res.redirect(`/admin/chefs/${chef.id}`);
         // });
     }, 
+    // async post(req, res) {
+    //     const keys = Object.keys(req.body);
+        
+    //     for(key of keys) {
+    //         if(req.body[key] == "") {
+    //             return res.send("Please fill in all fields");
+    //         };
+    //     };
+
+    //     const results = await Chef.create(req.body);
+    //     const chefId = results.rows[0].id;
+
+    //     console.log(results);
+    //     console.log(chefId);
+
+    //     return res.redirect(`/admin/chefs/${chefId}`);
+
+    //     // Chef.create(req.body, (chef) => {
+    //     //     return res.redirect(`/admin/chefs/${chef.id}`);
+    //     // });
+    // }, 
     async put(req, res) {
         await Chef.update(req.body);
         return res.redirect(`/admin/chefs/${req.body.id}`);

@@ -18,7 +18,7 @@ routes.get('/chefs', recipes.chefs);
 
 routes.get('/details/:index', recipes.details);
 
-// ADMIN
+// ADMIN - RECIPES
 routes.get('/admin/recipes', adminRecipes.show);
 
 routes.get('/admin/recipes/create', adminRecipes.create);
@@ -42,9 +42,9 @@ routes.get('/admin/chefs/:id', adminChefs.details);
 
 routes.get('/admin/chefs/:id/edit', adminChefs.edit);
 
-routes.post('/admin/chefs', adminChefs.post);
+routes.post('/admin/chefs', multer.array("avatar", 1), adminChefs.post);
 
-routes.put('/admin/chefs', adminChefs.put);
+routes.put('/admin/chefs', multer.array("avatar", 1), adminChefs.put);
 
 routes.delete('/admin/chefs', adminChefs.delete);
 

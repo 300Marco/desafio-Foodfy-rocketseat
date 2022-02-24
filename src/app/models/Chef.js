@@ -13,16 +13,16 @@ module.exports = {
         try {
             const query = `
                 INSERT INTO chefs (
+                    file_id,
                     name,
-                    avatar_url,
                     created_at
                 ) VALUES ($1, $2, $3)
                 RETURNING id
             `;
 
             const values = [
+                data.fileId,
                 data.name,
-                data.avatar_url,
                 date(Date.now()).iso
             ];
 
