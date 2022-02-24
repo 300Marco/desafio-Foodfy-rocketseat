@@ -51,12 +51,24 @@ module.exports = {
     //     });
     // },
     async edit(req, res) {
-        const results = await Chef.find(req.params.id);
+        let results = await Chef.find(req.params.id);
         const chef = results.rows[0];
 
         if(!chef) return res.send("Chef not found!");
+
+        // get images
+        results = await Chef.files(chef.id);
+        let files = results.rows;
+        files = files.map(file => ({
+            ...file,
+            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+        }));
+
+        for(image of files) {
+            console.log(image.id);
+        }
         
-        return res.render('chefs/edit', {chef});
+        return res.render('chefs/edit', {chef, files});
 
         // Chef.find(req.params.id, (chef) => {
         //     if(!chef) return res.send("Chef not found!");

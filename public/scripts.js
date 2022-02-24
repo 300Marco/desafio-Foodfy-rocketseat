@@ -2,7 +2,7 @@ const cards = document.querySelectorAll('.card');
 
 for(let card of cards) {
     card.addEventListener('click', () => { 
-        const revenueId = card.getAttribute('id'); 
+        const revenueId = card.getAttribute('id');
         window.location.href = `/details/${revenueId}`; 
     });
 }
@@ -79,7 +79,11 @@ function displayInput() {
 
     let href = String(currentPage);
 
-    if(href != '/admin/recipes/create' && href != '/admin/chefs/create') {
+    // get id chef
+    const getInputName = document.querySelector('.preparation');
+    const chefId = getInputName.getAttribute('id');
+
+    if(href != '/admin/recipes/create' && href != '/admin/chefs/create' && href != `/admin/chefs/${chefId}/edit`) {
         inputIngredient.classList.add('hide-input');
         inputPreparation.classList.add('hide-input');
 
@@ -521,8 +525,9 @@ const ChefsPhotosUpload = {
         const input = document.createElement('input');
         input.classList.add('chef-avatar');
         input.setAttribute('disabled', 'disabled');
+        input.setAttribute('value', `${imageSrc}`);
 
-        input.value = imageSrc;
+        // input.value = imageSrc;
         // input.value = image;
 
         const div = document.querySelector('#chef-photos-preview');

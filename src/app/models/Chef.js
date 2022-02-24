@@ -170,4 +170,15 @@ module.exports = {
     //     //         callback(results.rows);
     //     // });
     // }
+    files(id) {
+        try {
+            return db.query(`
+                SELECT chefs.*, files.path
+                FROM chefs
+                LEFT JOIN files ON (chefs.file_id = files.id)
+                WHERE chefs.id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
+    }
 }

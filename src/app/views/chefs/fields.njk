@@ -1,5 +1,5 @@
 <div class="recipe-fields">
-    <div class="preparation">
+    <div class="preparation" id="{{chef.id}}">
         <div class="name-input">Nome</div>
         <input name="name" value="{{chef.name}}">
     </div>
@@ -7,6 +7,15 @@
     <div class="recipe">
         <div class="name-input">Avatar</div>
         <div id="chef-photos-preview">
+            {% if files %}
+                    <button class="delete-avatar-button" type="button">x</button>
+                    <input 
+                        id={{files[0].id}}
+                        class="chef-avatar" 
+                        disabled="disabled"
+                        value="{{files[0].src}}"
+                    >
+            {% endif %}
         </div>
         <div id="chefs-photos-upload">
             <input 
