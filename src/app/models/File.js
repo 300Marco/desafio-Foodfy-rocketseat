@@ -10,26 +10,28 @@ module.exports = {
                     path
                 ) VALUES ($1, $2)
                 RETURNING id
-            `
+            `;
 
             let values = [
                 filename,
                 path
-            ]
+            ];
 
             const results = await db.query(query, values);
             const fileId = results.rows[0].id;
             if(recipeId) {
                 query = `
                     INSERT INTO recipe_files (
-                        recipe_id, file_id
+                        recipe_id, 
+                        file_id
                     ) VALUES ($1, $2)
-                    RETURNING id`
+                    RETURNING id
+                `;
                 
                 values = [
-                    recipeId, 
+                    recipeId,
                     fileId
-                ]
+                ];
             }
 
             return db.query(query, values);
