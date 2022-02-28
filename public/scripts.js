@@ -563,7 +563,7 @@ const ChefsPhotosUpload = {
     },
     removeAvatar(event) {
         // const avatarInput = event.target.parentNode;
-        const avatarInput = document.querySelector('#chef-photos-preview input');
+        const avatarInput = document.querySelector('.chef-avatar');
         const avatarButton = document.querySelector('.delete-avatar-button');
         // const avatarArray = Array.from(ChefsPhotosUpload.preview.children);
         // const index = avatarArray.indexOf(avatarInput);
@@ -576,5 +576,20 @@ const ChefsPhotosUpload = {
         avatarButton.remove();
 
         ChefsPhotosUpload.activateButton();
+    },
+    removeOldAvatar(event) {
+        const avatarInput = document.querySelector('.chef-avatar');
+        const avatarButton = document.querySelector('.delete-avatar-button');
+
+        if(avatarInput.id) {
+            const removedAvatar = document.querySelector('input[name="removed_avatar"]');
+
+            if(removedAvatar) {
+                removedAvatar.value = `${avatarInput.id}`;
+
+                avatarInput.remove();
+                avatarButton.remove();
+            }
+        }
     }
 };

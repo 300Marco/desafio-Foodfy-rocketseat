@@ -98,10 +98,6 @@ module.exports = {
             ...file,
             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
         }));
-
-        for(image of files) {
-            console.log(image.id);
-        }
         
         return res.render('chefs/edit', {chef, files});
 

@@ -1,5 +1,7 @@
 <div class="recipe-fields">
-    <div class="preparation" id="{{chef.id}}">
+    {# Verifique direito, se aqui é mesmo ID de cheff.. #}
+    {# <div class="preparation" id="{{chef.id}}"> #}
+    <div class="preparation" id="{{files[0].file_id}}">
         <div class="name-input">Nome</div>
         <input name="name" value="{{chef.name}}">
     </div>
@@ -8,13 +10,18 @@
         <div class="name-input">Avatar</div>
         <div id="chef-photos-preview">
             {% if files %}
-                    <button class="delete-avatar-button" type="button">x</button>
+                    <button 
+                        class="delete-avatar-button" 
+                        type="button"
+                        onclick="ChefsPhotosUpload.removeOldAvatar(event)"
+                    >x</button>
                     <input 
-                        id={{files[0].id}}
-                        class="chef-avatar" 
+                        id={{files[0].file_id}}
+                        class="chef-avatar"
                         disabled="disabled"
                         value="{{files[0].src}}"
                     >
+                    <input type="hidden" name="removed_avatar">
             {% endif %}
         </div>
         <div id="chefs-photos-upload">
