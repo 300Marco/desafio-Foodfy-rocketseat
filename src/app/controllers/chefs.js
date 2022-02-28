@@ -3,8 +3,33 @@ const FileChef = require('../models/FileChef');
 
 module.exports = {
     async show(req, res) {
-        const results = await Chef.all();
+        let files = [];
+        let results = await Chef.all();
         const chefs = results.rows;
+
+        results = chefs.map(chef => {
+            FileChef.findChefId(chef.id);
+        });
+        const promiseChefAndFiles = await Promise.all(chefs);
+
+        for(file of promiseChefAndFiles) {
+            results = await FileChef.findFileForId(file.id);
+            files.push(results.rows[0]);
+
+            // console.log(results.rows[0])
+            // console.log(file.rows[0].id)
+        };
+
+        files.map(file => 
+            file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+        );
+
+        for(index in chefs) {
+            chefs[index] = {
+                ...chefs[index],
+                src: files[index].src
+            };
+        };
 
         return res.render('chefs/index', {chefs});
 
@@ -12,6 +37,16 @@ module.exports = {
         //     return res.render('chefs/index', {chefs});
         // });
     },
+    // async show(req, res) {
+    //     const results = await Chef.all();
+    //     const chefs = results.rows;
+
+    //     return res.render('chefs/index', {chefs});
+
+    //     // Chef.all((chefs) => {
+    //     //     return res.render('chefs/index', {chefs});
+    //     // });
+    // },
     create(req, res) {
         return res.render('chefs/create');
     },
