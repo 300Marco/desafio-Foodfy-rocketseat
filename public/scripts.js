@@ -80,7 +80,7 @@ function displayInput() {
     let href = String(currentPage);
 
     // get id chef
-    const getInputName = document.querySelector('.preparation');
+    const getInputName = document.querySelector('.name-input');
     const chefId = getInputName.getAttribute('id');
 
     if(href != '/admin/recipes/create' && href != '/admin/chefs/create' && href != `/admin/chefs/${chefId}/edit`) {
@@ -524,7 +524,7 @@ const ChefsPhotosUpload = {
     getInput(imageSrc) {
         const input = document.createElement('input');
         input.classList.add('chef-avatar');
-        input.setAttribute('disabled', 'disabled');
+        // input.setAttribute('disabled', 'disabled');
         input.setAttribute('value', `${imageSrc}`);
 
         // input.value = imageSrc;
