@@ -157,14 +157,6 @@ module.exports = {
             };
         };
 
-        // get new edit images
-        if(req.files.length != 0) {
-            const newFilesPromise = req.files.map(file => 
-                File.create({...file, recipeId: req.body.id}));
-
-            await Promise.all(newFilesPromise)
-        }
-
         // remove image from database
         if(req.body.removed_files) {
             const removedFiles = req.body.removed_files.split(',');
@@ -174,6 +166,19 @@ module.exports = {
             const removedFilesPromise = removedFiles.map(id => File.delete(id))
             await Promise.all(removedFilesPromise);
         }
+
+        // get new edit images
+        if(req.files.length != 0) {
+            const oldFiles = await Admin.files(req.body.id);
+            const totalFiles = oldFiles.rows.length + req.files.length;
+
+            if(totalFiles <= 5) {
+                const newFilesPromise = req.files.map(file => 
+                    File.create({...file, recipeId: req.body.id}));
+    
+                await Promise.all(newFilesPromise);
+            };
+        };
 
         await Admin.update(req.body);
         return res.redirect(`/admin/recipes/${req.body.id}`);
