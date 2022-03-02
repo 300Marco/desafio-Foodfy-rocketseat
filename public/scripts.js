@@ -338,7 +338,10 @@ const PhotosUpload = {
         const { files: fileList } = event.target;
         PhotosUpload.input = event.target;
 
-        if(PhotosUpload.hasLimit(event)) return; 
+        if(PhotosUpload.hasLimit(event)) {
+            PhotosUpload.updateInputFiles();
+            return
+        }; 
 
         Array.from(fileList).forEach(file => {
             PhotosUpload.files.push(file);
@@ -357,7 +360,7 @@ const PhotosUpload = {
             reader.readAsDataURL(file);
         });
 
-        PhotosUpload.input.files = PhotosUpload.getAllFiles();
+        PhotosUpload.updateInputFiles();
     },
     hasLimit(event) {
         const { uploadLimit, input, preview } = PhotosUpload;
@@ -411,11 +414,17 @@ const PhotosUpload = {
     },
     removePhoto(event) {
         const photoDiv = event.target.parentNode;
-        const photosArray = Array.from(PhotosUpload.preview.children);
-        const index = photosArray.indexOf(photoDiv);
+        const newFiles = Array.from(PhotosUpload.preview.children)
+            .filter(file => {
+                if(file.classList.contains('photo') && !file.getAttribute('id'))
+                    return true;
+            }
+        );
 
+        const index = newFiles.indexOf(photoDiv);
         PhotosUpload.files.splice(index, 1);
-        PhotosUpload.input.files = PhotosUpload.getAllFiles();
+        
+        PhotosUpload.updateInputFiles();
 
         photoDiv.remove();
     },
@@ -431,6 +440,9 @@ const PhotosUpload = {
         };
 
         photoDiv.remove();
+    },
+    updateInputFiles() {
+        PhotosUpload.input.files = PhotosUpload.getAllFiles();
     }
 };
 
@@ -449,147 +461,147 @@ const ImageGallery = {
 }
 
 // Upload photos chefs
-const ChefsPhotosUpload = {
-    input: "",
-    inputImageButton: document.querySelector('#chefs-photos-upload input'),
-    sendImageButton: document.querySelector('.add-chef-image-button'),
-    preview: document.querySelector('#chef-photos-preview'),
-    uploadLimit: 1,
-    files: [],
-    handleFileInput(event) {
-        const { files: fileList } = event.target;
-        ChefsPhotosUpload.input = event.target;
+// const ChefsPhotosUpload = {
+//     input: "",
+//     inputImageButton: document.querySelector('#chefs-photos-upload input'),
+//     sendImageButton: document.querySelector('.add-chef-image-button'),
+//     preview: document.querySelector('#chef-photos-preview'),
+//     uploadLimit: 1,
+//     files: [],
+//     handleFileInput(event) {
+//         const { files: fileList } = event.target;
+//         ChefsPhotosUpload.input = event.target;
 
-        if(ChefsPhotosUpload.hasLimit(event)) return;
+//         if(ChefsPhotosUpload.hasLimit(event)) return;
 
-        Array.from(fileList).forEach(file => {
-            ChefsPhotosUpload.files.push(file);
+//         Array.from(fileList).forEach(file => {
+//             ChefsPhotosUpload.files.push(file);
 
-            const reader = new FileReader();
+//             const reader = new FileReader();
 
-            reader.onload = () => {
-                const image = new Image();
-                const imageSrc = image.src = String(reader.result);
+//             reader.onload = () => {
+//                 const image = new Image();
+//                 const imageSrc = image.src = String(reader.result);
 
-                const input = ChefsPhotosUpload.getInput(imageSrc);
+//                 const input = ChefsPhotosUpload.getInput(imageSrc);
 
-                ChefsPhotosUpload.preview.appendChild(input);
+//                 ChefsPhotosUpload.preview.appendChild(input);
 
-                // disabled button send image
-                ChefsPhotosUpload.disabledButton();
-            };
+//                 // disabled button send image
+//                 ChefsPhotosUpload.disabledButton();
+//             };
 
-            reader.readAsDataURL(file);
-        });
+//             reader.readAsDataURL(file);
+//         });
 
-        ChefsPhotosUpload.input.files = ChefsPhotosUpload.getAvatarFiles();
-    },
-    hasLimit(event) {
-        // const { uploadLimit } = ChefsPhotosUpload;
-        // const { files: fileList } = event.target;
-        // const { uploadLimit, input: fileList, preview } = ChefsPhotosUpload;
-        const { uploadLimit, input, preview } = ChefsPhotosUpload;
-        const { files: fileList } = input;
+//         ChefsPhotosUpload.input.files = ChefsPhotosUpload.getAvatarFiles();
+//     },
+//     hasLimit(event) {
+//         // const { uploadLimit } = ChefsPhotosUpload;
+//         // const { files: fileList } = event.target;
+//         // const { uploadLimit, input: fileList, preview } = ChefsPhotosUpload;
+//         const { uploadLimit, input, preview } = ChefsPhotosUpload;
+//         const { files: fileList } = input;
 
-        if(fileList.length > uploadLimit) {
-            alert(`Envia apenas ${uploadLimit} foto`);
+//         if(fileList.length > uploadLimit) {
+//             alert(`Envia apenas ${uploadLimit} foto`);
 
-            event.preventDefault();
-            return true;
-        }
+//             event.preventDefault();
+//             return true;
+//         }
 
-        const photoDiv = 0;
-        preview.childNodes.forEach(item => {
-            if(item.classList && item.classList.value == "chef-avatar") {
-                photoDiv.push(item);
-            };
-        });
+//         const photoDiv = 0;
+//         preview.childNodes.forEach(item => {
+//             if(item.classList && item.classList.value == "chef-avatar") {
+//                 photoDiv.push(item);
+//             };
+//         });
 
-        const totalPhotos = fileList.length + photoDiv.length;
-        if(totalPhotos > uploadLimit) {
-            alert('Não é permitido enviar mais de 1 foto');
-            event.preventDefault();
-            return true;
-        }
+//         const totalPhotos = fileList.length + photoDiv.length;
+//         if(totalPhotos > uploadLimit) {
+//             alert('Não é permitido enviar mais de 1 foto');
+//             event.preventDefault();
+//             return true;
+//         }
 
-        return false;
-    },
-    getAvatarFiles() {
-        const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer();
+//         return false;
+//     },
+//     getAvatarFiles() {
+//         const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer();
 
-        ChefsPhotosUpload.files.forEach(file => dataTransfer.items.add(file));
+//         ChefsPhotosUpload.files.forEach(file => dataTransfer.items.add(file));
 
-        return dataTransfer.files;
-    },
-    getInput(imageSrc) {
-        const input = document.createElement('input');
-        input.classList.add('chef-avatar');
-        // input.setAttribute('disabled', 'disabled');
-        input.setAttribute('value', `${imageSrc}`);
+//         return dataTransfer.files;
+//     },
+//     getInput(imageSrc) {
+//         const input = document.createElement('input');
+//         input.classList.add('chef-avatar');
+//         // input.setAttribute('disabled', 'disabled');
+//         input.setAttribute('value', `${imageSrc}`);
 
-        // input.value = imageSrc;
-        // input.value = image;
+//         // input.value = imageSrc;
+//         // input.value = image;
 
-        const div = document.querySelector('#chef-photos-preview');
+//         const div = document.querySelector('#chef-photos-preview');
 
-        div.appendChild(ChefsPhotosUpload.getRemoveButton());
+//         div.appendChild(ChefsPhotosUpload.getRemoveButton());
 
-        return input;
-    },
-    disabledButton() {
-        // ChefsPhotosUpload.inputImageButton.setAttribute('disabled', 'disabled');
-        ChefsPhotosUpload.sendImageButton.classList.add('disabled-chef-button');
+//         return input;
+//     },
+//     disabledButton() {
+//         // ChefsPhotosUpload.inputImageButton.setAttribute('disabled', 'disabled');
+//         ChefsPhotosUpload.sendImageButton.classList.add('disabled-chef-button');
 
-        ChefsPhotosUpload.inputImageButton.style.position = "fixed"
-        ChefsPhotosUpload.inputImageButton.style.left = "-100%"
-        // Lightbox.target.style.opacity = 1;
-    },
-    activateButton() {
-        // ChefsPhotosUpload.inputImageButton.removeAttribute('disabled', 'disabled');
-        ChefsPhotosUpload.sendImageButton.classList.remove('disabled-chef-button');
+//         ChefsPhotosUpload.inputImageButton.style.position = "fixed"
+//         ChefsPhotosUpload.inputImageButton.style.left = "-100%"
+//         // Lightbox.target.style.opacity = 1;
+//     },
+//     activateButton() {
+//         // ChefsPhotosUpload.inputImageButton.removeAttribute('disabled', 'disabled');
+//         ChefsPhotosUpload.sendImageButton.classList.remove('disabled-chef-button');
 
-        ChefsPhotosUpload.inputImageButton.style.position = "absolute"
-        ChefsPhotosUpload.inputImageButton.style.left = 0;
-    },
-    getRemoveButton() {
-        const button = document.createElement('button');
-        button.classList.add('delete-avatar-button');
-        button.setAttribute('type', 'button');
-        button.innerHTML = "x";
+//         ChefsPhotosUpload.inputImageButton.style.position = "absolute"
+//         ChefsPhotosUpload.inputImageButton.style.left = 0;
+//     },
+//     getRemoveButton() {
+//         const button = document.createElement('button');
+//         button.classList.add('delete-avatar-button');
+//         button.setAttribute('type', 'button');
+//         button.innerHTML = "x";
 
-        button.onclick = ChefsPhotosUpload.removeAvatar;
+//         button.onclick = ChefsPhotosUpload.removeAvatar;
 
-        return button;
-    },
-    removeAvatar(event) {
-        // const avatarInput = event.target.parentNode;
-        const avatarInput = document.querySelector('.chef-avatar');
-        const avatarButton = document.querySelector('.delete-avatar-button');
-        // const avatarArray = Array.from(ChefsPhotosUpload.preview.children);
-        // const index = avatarArray.indexOf(avatarInput);
-        const index = 0;
+//         return button;
+//     },
+//     removeAvatar(event) {
+//         // const avatarInput = event.target.parentNode;
+//         const avatarInput = document.querySelector('.chef-avatar');
+//         const avatarButton = document.querySelector('.delete-avatar-button');
+//         // const avatarArray = Array.from(ChefsPhotosUpload.preview.children);
+//         // const index = avatarArray.indexOf(avatarInput);
+//         const index = 0;
 
-        ChefsPhotosUpload.files.splice(index, 1);
-        ChefsPhotosUpload.input.files = ChefsPhotosUpload.getAvatarFiles();
+//         ChefsPhotosUpload.files.splice(index, 1);
+//         ChefsPhotosUpload.input.files = ChefsPhotosUpload.getAvatarFiles();
 
-        avatarInput.remove();
-        avatarButton.remove();
+//         avatarInput.remove();
+//         avatarButton.remove();
 
-        ChefsPhotosUpload.activateButton();
-    },
-    removeOldAvatar(event) {
-        const avatarInput = document.querySelector('.chef-avatar');
-        const avatarButton = document.querySelector('.delete-avatar-button');
+//         ChefsPhotosUpload.activateButton();
+//     },
+//     removeOldAvatar(event) {
+//         const avatarInput = document.querySelector('.chef-avatar');
+//         const avatarButton = document.querySelector('.delete-avatar-button');
 
-        if(avatarInput.id) {
-            const removedAvatar = document.querySelector('input[name="removed_avatar"]');
+//         if(avatarInput.id) {
+//             const removedAvatar = document.querySelector('input[name="removed_avatar"]');
 
-            if(removedAvatar) {
-                removedAvatar.value = `${avatarInput.id}`;
+//             if(removedAvatar) {
+//                 removedAvatar.value = `${avatarInput.id}`;
 
-                avatarInput.remove();
-                avatarButton.remove();
-            }
-        }
-    }
-};
+//                 avatarInput.remove();
+//                 avatarButton.remove();
+//             }
+//         }
+//     }
+// };
