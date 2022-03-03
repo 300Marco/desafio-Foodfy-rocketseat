@@ -847,7 +847,7 @@ footer span {
 
 /* ========== CHEFS - ADMIN CREATE CHEFS ========== */
 /* ========== CHEFS - View Image */
-#chef-photos-preview {
+/* #chef-photos-preview {
     display: flex;
     flex-direction: row-reverse;
 }
@@ -873,17 +873,16 @@ footer span {
     background-color: var(--black-footer) !important;
     color: var(--black-about) !important;
     transition: 400ms;
-}
+} */
 
 /* ========== CHEFS - Send Image */
-#chefs-photos-upload {
+/* #chefs-photos-upload {
     position: relative;
     width: 140px;
     margin-top: 15px;
 }
 
 #chefs-photos-upload input {
-    /* background-color: red; */
     padding: 0;
     margin: 0;
     width: 100%;
@@ -906,4 +905,45 @@ footer span {
     padding: 9px 19px;
     font-size: 1.6rem;
     cursor: no-drop;
+} */
+
+
+/* ========== CHEFS - ADMIN CREATE CHEFS ========== */
+/* ========== CHEFS - AVATAR UPLOAD */
+form .recipe #avatar-upload {
+    /* border: 1px solid red; */
+
+    display: inline-block;
+
+    padding: 0;
+    position: relative;
 }
+
+form .recipe #avatar-input {
+    /* background-color: blue; */
+
+    position: absolute;
+    top: -26px;
+    left: 0;
+    padding: 0;
+
+    display: block;
+    width: 100%;
+    height: 63px;
+
+    cursor: pointer;
+    opacity: 0;
+}
+
+form .recipe #avatar-upload p {
+    background-color: var(--color-purple);
+    color: white;
+    padding: 9px 19px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.6rem;
+
+    display: inline-block;
+}
+

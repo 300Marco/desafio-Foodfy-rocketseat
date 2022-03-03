@@ -8,6 +8,78 @@
 
     <div class="recipe">
         <div class="name-input">Avatar</div>
+        
+        <div>
+            <div id="avatar-upload">
+                <input 
+                    id="avatar-input"
+                    type="file" 
+                    name="avatar" 
+                    multiple
+                    accept="image/*"
+                >
+                <p>Enviar Avatar</p>
+            </div>
+            
+            <div id="avatar-preview"></div>
+        </div>
+        
+        
+        <!--<div id="chef-photos-preview">
+            {% if files %}
+                    <button 
+                        class="delete-avatar-button" 
+                        type="button"
+                        onclick="ChefsPhotosUpload.removeOldAvatar(event)"
+                    >x</button>
+                    <input 
+                        id={{files[0].file_id}}
+                        class="chef-avatar"
+                        value="{{files[0].src}}"
+                    >
+                    {# <input 
+                        id={{files[0].file_id}}
+                        class="chef-avatar"
+                        disabled="disabled"
+                        value="{{files[0].src}}"
+                    > #}
+                    <input type="hidden" name="removed_avatar">
+            {% endif %}
+        </div> -->
+        
+        
+        <!-- 
+        <div id="chefs-photos-upload">
+            <input 
+                id="photos-input"
+                type="file" 
+                name="avatar"
+                multiple 
+                accept="image/*"
+                onChange="ChefsPhotosUpload.handleFileInput(event)"
+            >
+
+            <div class="add-chef-image-button">
+                Enviar Avatar
+            </div>
+        </div>
+        -->
+        {# <input type="url" name="avatar_url" value="{{chef.avatar_url}}"> #}
+    </div>
+</div>
+
+
+
+<!-- <div class="recipe-fields">
+    {# Verifique direito, se aqui é mesmo ID de cheff.. #}
+    {# <div class="preparation" id="{{chef.id}}"> #}
+    <div class="preparation" id="{{files[0].file_id}}">
+        <div class="name-input" id="{{chef.id}}">Nome</div>
+        <input name="name" value="{{chef.name}}">
+    </div>
+
+    <div class="recipe">
+        <div class="name-input">Avatar</div>
         <div id="chef-photos-preview">
             {% if files %}
                     <button 
@@ -46,4 +118,4 @@
 
         {# <input type="url" name="avatar_url" value="{{chef.avatar_url}}"> #}
     </div>
-</div>
+</div> -->
