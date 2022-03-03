@@ -462,14 +462,19 @@ const ImageGallery = {
 
 // Upload chef files
 const avatarUpload = {
+    input: "",
     preview: document.querySelector('#avatar-preview'),
     uploadLimit: 1,
+    files: [],
     handleFileInput(event) {
         const { files: fileList } = event.target;
+        avatarUpload.input = event.target;
 
         if(avatarUpload.hasLimit(event)) return;
 
         Array.from(fileList).forEach(file => {
+            avatarUpload.files.push(file);
+
             const reader = new FileReader();
 
             reader.onload = () => {
@@ -487,10 +492,12 @@ const avatarUpload = {
 
             reader.readAsDataURL(file);
         });
+
+        avatarUpload.input.files = avatarUpload.getAllFiles();
     },
     hasLimit(event) {
-        const { uploadLimit } = avatarUpload;
-        const { files: fileList } = event.target;
+        const { uploadLimit, input, preview } = avatarUpload;
+        const { files: fileList } = input;
 
         if(fileList.length > uploadLimit) {
             alert(`Envia no máximo ${uploadLimit} foto`);
@@ -498,7 +505,29 @@ const avatarUpload = {
             return true;
         };
 
+        const avatarDiv = [];
+        preview.childNodes.forEach(item => {
+            if(item.classList && item.classList.value == "avatar-box") {
+                // console.log('adicionado ao array');
+                avatarDiv.push(item);
+            }
+        });
+
+        const totalPhotos = fileList.length + avatarDiv.length;
+        if(totalPhotos > uploadLimit) {
+            alert('Não é permitido mais de 1 foto');
+            event.preventDefault()
+            return true;
+        }
+
         return false;
+    },
+    getAllFiles() {
+        const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer();
+
+        avatarUpload.files.forEach(file => dataTransfer.items.add(file));
+
+        return dataTransfer.files;
     },
     getContainer(linkAvatar) {
         const div = document.createElement('div');
@@ -534,8 +563,10 @@ const avatarUpload = {
         const avatarArray = Array.from(avatarUpload.preview.children);
         const index = avatarArray.indexOf(avatarDiv);
 
-        avatarDiv.remove();
+        avatarUpload.files.splice(index, 1);
+        avatarUpload.input.files = avatarUpload.getAllFiles();
 
+        avatarDiv.remove();
     }
 }
 
