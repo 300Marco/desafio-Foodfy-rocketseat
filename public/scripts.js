@@ -328,7 +328,7 @@ function paginate(selectedPage, totalPages) {
     return pages;
 }
 
-// Upload photos recipes
+// Upload recipe files
 const PhotosUpload = {
     input: "",
     preview: document.querySelector('#photos-preview'),
@@ -457,6 +457,85 @@ const ImageGallery = {
         target.classList.add('active');
 
         ImageGallery.highlight.src = target.src;
+    }
+}
+
+// Upload chef files
+const avatarUpload = {
+    preview: document.querySelector('#avatar-preview'),
+    uploadLimit: 1,
+    handleFileInput(event) {
+        const { files: fileList } = event.target;
+
+        if(avatarUpload.hasLimit(event)) return;
+
+        Array.from(fileList).forEach(file => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                const image = new Image();
+                image.src = String(reader.result);
+
+                const linkAvatar = image.src;
+
+                // const input = avatarUpload.getContainer(linkAvatar);
+                const div = avatarUpload.getContainer(linkAvatar);
+
+                // avatarUpload.preview.appendChild(input);
+                avatarUpload.preview.appendChild(div);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    },
+    hasLimit(event) {
+        const { uploadLimit } = avatarUpload;
+        const { files: fileList } = event.target;
+
+        if(fileList.length > uploadLimit) {
+            alert(`Envia no máximo ${uploadLimit} foto`);
+            event.preventDefault();
+            return true;
+        };
+
+        return false;
+    },
+    getContainer(linkAvatar) {
+        const div = document.createElement('div');
+        const input = document.createElement('input');
+        div.classList.add('avatar-box');
+        input.classList.add('avatar');
+
+        input.value = linkAvatar;
+        
+        div.appendChild(input);
+        div.appendChild(avatarUpload.getRemoveButton());
+        div.onclick = avatarUpload.removeAvatar;
+
+        return div;
+        // const div = document.querySelector('#avatar-preview');
+        // const input = document.createElement('input');
+        // input.classList.add('avatar');
+
+        // input.value = linkAvatar;
+        
+        // div.appendChild(avatarUpload.getRemoveButton());
+        // div.onclick = avatarUpload.removeAvatar;
+
+        // return input;
+    },
+    getRemoveButton() {
+        const button = document.createElement('span');
+        button.innerText = 'x';
+        return button;
+    },
+    removeAvatar(event) {
+        const avatarDiv = event.target.parentNode;
+        const avatarArray = Array.from(avatarUpload.preview.children);
+        const index = avatarArray.indexOf(avatarDiv);
+
+        avatarDiv.remove();
+
     }
 }
 
