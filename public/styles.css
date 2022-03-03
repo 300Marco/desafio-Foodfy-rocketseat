@@ -947,3 +947,39 @@ form .recipe #avatar-upload p {
     display: inline-block;
 }
 
+/* ========== CHEFS - AVATAR PREVIEW */
+#avatar-preview {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+#avatar-preview .avatar {
+    color: #00000070;
+}
+
+#avatar-preview span {
+    background-color: #5a5a5a20;
+    /* border: 1px solid green; */
+    color: var(--color-red-dark);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    font-size: 3.8rem;
+    font-weight: bold;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+
+    transition: 300ms;
+}
+
+#avatar-preview span:hover {
+    opacity: 1;
+}
+

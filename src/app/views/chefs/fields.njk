@@ -10,6 +10,11 @@
         <div class="name-input">Avatar</div>
         
         <div>
+            <div id="avatar-preview">
+                {# <input class="avatar" value="sdff"> #}
+                {# <span>x</span> #}
+            </div>
+
             <div id="avatar-upload">
                 <input 
                     id="avatar-input"
@@ -17,11 +22,11 @@
                     name="avatar" 
                     multiple
                     accept="image/*"
+                    onchange="avatarUpload.handleFileInput(event)"
                 >
                 <p>Enviar Avatar</p>
             </div>
             
-            <div id="avatar-preview"></div>
         </div>
         
         
@@ -67,7 +72,6 @@
         {# <input type="url" name="avatar_url" value="{{chef.avatar_url}}"> #}
     </div>
 </div>
-
 
 
 <!-- <div class="recipe-fields">
