@@ -9,16 +9,16 @@ const storage = multer.diskStorage({
     }
 });
 
-    const fileFilter = (req, file, callback) => {
-        const isAccepted = ['image/png', 'image/jpg', 'image/jpeg']
-        .find(acceptedFormat => acceptedFormat == file.mimetype);
+const fileFilter = (req, file, callback) => {
+    const isAccepted = ['image/png', 'image/jpg', 'image/jpeg']
+    .find(acceptedFormat => acceptedFormat == file.mimetype);
 
-        if(isAccepted) {
-            return callback(null, true);
-        }
+    if(isAccepted) {
+        return callback(null, true);
+    }
 
-        return callback(null, false);
-    };
+    return callback(null, false);
+};
 
 module.exports = multer({
     storage,

@@ -131,8 +131,8 @@ module.exports = {
         }));
         await Promise.all(filesPromise);
 
-        // return res.redirect(`/admin/chefs/create`);
         return res.redirect(`/admin/chefs/${chefId}`);
+        // return res.redirect(`/admin/chefs/create`);
 
         // Chef.create(req.body, (chef) => {
         //     return res.redirect(`/admin/chefs/${chef.id}`);
