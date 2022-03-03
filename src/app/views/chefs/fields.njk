@@ -13,6 +13,20 @@
             <div id="avatar-preview">
                 {# <input class="avatar" value="sdff"> #}
                 {# <span>x</span> #}
+
+                {% if files %}
+                    {% for link in files %}
+                        <div class="avatar-box" id="{{link.file_id}}">
+                            <input class="avatar" value="{{link.src}}">
+                            <span>x</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {# <div class="avatar-box">
+                    <input class="avatar">
+                    <span>x</span>
+                </div> #}
             </div>
 
             <div id="avatar-upload">
