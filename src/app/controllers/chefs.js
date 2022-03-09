@@ -3,40 +3,69 @@ const FileChef = require('../models/FileChef');
 
 module.exports = {
     async show(req, res) {
-        let files = [];
         let results = await Chef.all();
         const chefs = results.rows;
 
-        results = chefs.map(chef => {
-            FileChef.findChefId(chef.id);
+        if(!chefs) return res.send("Nenhum chef encontrado!");
+
+        async function getAvatar(chefId) {
+            let results = await Chef.files(chefId);
+            const files = results.rows.map(
+                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            );
+
+            return files[0];
+        }
+
+        const chefsPromise = chefs.map(async chef => {
+            chef.img = await getAvatar(chef.id);
+
+            return chef;
         });
-        const promiseChefAndFiles = await Promise.all(chefs);
 
-        for(file of promiseChefAndFiles) {
-            results = await FileChef.findFileForId(file.id);
-            files.push(results.rows[0]);
+        const lastAdded = await Promise.all(chefsPromise);
 
-            // console.log(results.rows[0])
-            // console.log(file.rows[0].id)
-        };
-
-        files.map(file => 
-            file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
-        );
-
-        for(index in chefs) {
-            chefs[index] = {
-                ...chefs[index],
-                src: files[index].src
-            };
-        };
-
-        return res.render('chefs/index', {chefs});
+        return res.render('chefs/index', {chefs: lastAdded});
 
         // Chef.all((chefs) => {
         //     return res.render('chefs/index', {chefs});
         // });
     },
+    // async show(req, res) {
+    //     let files = [];
+    //     let results = await Chef.all();
+    //     const chefs = results.rows;
+
+    //     results = chefs.map(chef => {
+    //         FileChef.findChefId(chef.id);
+    //     });
+    //     const promiseChefAndFiles = await Promise.all(chefs);
+
+    //     for(file of promiseChefAndFiles) {
+    //         results = await FileChef.findFileForId(file.id);
+    //         files.push(results.rows[0]);
+
+    //         // console.log(results.rows[0])
+    //         // console.log(file.rows[0].id)
+    //     };
+
+    //     files.map(file => 
+    //         file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`
+    //     );
+
+    //     for(index in chefs) {
+    //         chefs[index] = {
+    //             ...chefs[index],
+    //             src: files[index].src
+    //         };
+    //     };
+
+    //     return res.render('chefs/index', {chefs});
+
+    //     // Chef.all((chefs) => {
+    //     //     return res.render('chefs/index', {chefs});
+    //     // });
+    // },
     // async show(req, res) {
     //     const results = await Chef.all();
     //     const chefs = results.rows;
