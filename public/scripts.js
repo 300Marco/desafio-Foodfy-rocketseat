@@ -567,6 +567,19 @@ const avatarUpload = {
         avatarUpload.input.files = avatarUpload.getAllFiles();
 
         avatarDiv.remove();
+    },
+    removedOldAvatar(event) {
+        const avatarDiv = event.target.parentNode;
+
+        if(avatarDiv.id) {
+            const removedAvatar = document.querySelector('input[name="removed_avatar"]');
+
+            if(removedAvatar) {
+                removedAvatar.value += `${avatarDiv.id}`;
+            }
+        }
+
+        avatarDiv.remove();
     }
 }
 
