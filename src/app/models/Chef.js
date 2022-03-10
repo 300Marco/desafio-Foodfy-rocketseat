@@ -74,14 +74,14 @@ module.exports = {
         try {
             const query = `
                 UPDATE chefs SET
-                    name=($1),
-                    avatar_url=($2)
+                    file_id=($1),
+                    name=($2),
                 WHERE id = $3
             `;
 
             const values = [
+                data.file_id,
                 data.name,
-                data.avatar_url,
                 data.id
             ];
 
@@ -177,6 +177,54 @@ module.exports = {
                 FROM chefs
                 LEFT JOIN files ON (chefs.file_id = files.id)
                 WHERE chefs.id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
+    },
+    // filesRecipes(id) {
+    //     try {
+    //         return db.query(`
+    //             SELECT files.*
+    //             FROM files
+    //             LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+    //             WHERE recipe_files.recipe_id = $1`, [id]);
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    // },
+    // findRecipe(id) {
+    //     try {
+    //         return db.query(`
+    //             SELECT recipes.title, recipes.id AS
+    //             recipes_id
+    //             FROM recipes
+    //             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+    //             WHERE recipes.chef_id = $1`, [id]);
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    // },
+
+
+    //TESTES
+    findRecipe(id) {
+        try {
+            return db.query(`
+            SELECT recipes.*, chefs.name AS chefs_name
+            FROM recipes
+            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            WHERE recipes.chef_id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
+    },
+    filesRecipe(id) {
+        try {
+            return db.query(`
+                SELECT files.*
+                FROM files
+                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+                WHERE recipe_files.recipe_id = $1`, [id]);
         } catch(err) {
             console.error(err);
         }

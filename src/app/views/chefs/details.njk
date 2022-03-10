@@ -11,17 +11,18 @@
 {% block contents %}
     <section>
         <div class="recipe-detail">
-            <span class="detail-title">Chef: {{detail[0].name}}</span>
+            {# <span class="detail-title">Chef: {{detail[0].name}}</span> #}
+            <span class="detail-title">Chef: {{chef[0].name}}</span>
 
             <a class="edit-button" href="/admin/chefs/{{detail[0].id}}/edit">Editar chef</a>
         </div>
 
         <div class="box-chef-image">
-            <div class="chef-image" style="background: url({{detail[0].avatar_url}})"></div>
+            <div class="chef-image" style="background: url('{{chef[0].img}}')"></div>
         </div>
 
         <div class="recipe-title">
-            <h2>{{detail[0].name}}</h2>
+            <h2>{{chef[0].name}}</h2>
             <span>
                 {{recipesCount}}
                 {% if recipesCount == '1' %}
@@ -36,11 +37,22 @@
     <section class="cards-food cards-food-admin">
         <h3>Receitas</h3>
             <div class="cards cards-admin-recipes">
-                {% for recipe in detail %}
+                {% for recipe in recipes %}
                     {% if recipe.title == null %}
                         <span>Sem receitas para mostar</span>
                     {% else %}
                         <div class="card-admin-recipes">
+                            <div class="card-img-admin-recipes" style="background-image: url('{{recipe.img}}')">
+                            {# <div class="card-img-admin-recipes" style="background-image: url('{{recipe.src}}')"> #}
+                            </div>
+
+                            <div class="card-info-admin-recipes">
+                                <h4>{{recipe.title}}</h4>
+                                <p>por {{recipe.chefs_name}}</p>
+                                <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                            </div>
+                        </div>
+                        {# <div class="card-admin-recipes">
                             <div class="card-img-admin-recipes" style="background-image: url({{recipe.image}})">
                             </div>
 
@@ -49,7 +61,7 @@
                                 <p>por {{recipe.name}}</p>
                                 <a href="/admin/recipes/{{recipe.recipes_id}}">Visualizar</a>
                             </div>
-                        </div>
+                        </div> #}
                     {% endif %}
                 {% endfor %}
             </div>
