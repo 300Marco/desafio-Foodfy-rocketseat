@@ -14,7 +14,7 @@
             {# <span class="detail-title">Chef: {{detail[0].name}}</span> #}
             <span class="detail-title">Chef: {{chef[0].name}}</span>
 
-            <a class="edit-button" href="/admin/chefs/{{detail[0].id}}/edit">Editar chef</a>
+            <a class="edit-button" href="/admin/chefs/{{chef[0].id}}/edit">Editar chef</a>
         </div>
 
         <div class="box-chef-image">
@@ -38,31 +38,27 @@
         <h3>Receitas</h3>
             <div class="cards cards-admin-recipes">
                 {% for recipe in recipes %}
-                    {% if recipe.title == null %}
-                        <span>Sem receitas para mostar</span>
-                    {% else %}
-                        <div class="card-admin-recipes">
-                            <div class="card-img-admin-recipes" style="background-image: url('{{recipe.img}}')">
-                            {# <div class="card-img-admin-recipes" style="background-image: url('{{recipe.src}}')"> #}
-                            </div>
-
-                            <div class="card-info-admin-recipes">
-                                <h4>{{recipe.title}}</h4>
-                                <p>por {{recipe.chefs_name}}</p>
-                                <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
-                            </div>
+                    <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url('{{recipe.img}}')">
+                        {# <div class="card-img-admin-recipes" style="background-image: url('{{recipe.src}}')"> #}
                         </div>
-                        {# <div class="card-admin-recipes">
-                            <div class="card-img-admin-recipes" style="background-image: url({{recipe.image}})">
-                            </div>
 
-                            <div class="card-info-admin-recipes">
-                                <h4>{{recipe.title}}</h4>
-                                <p>por {{recipe.name}}</p>
-                                <a href="/admin/recipes/{{recipe.recipes_id}}">Visualizar</a>
-                            </div>
-                        </div> #}
-                    {% endif %}
+                        <div class="card-info-admin-recipes">
+                            <h4>{{recipe.title}}</h4>
+                            <p>por {{recipe.chefs_name}}</p>
+                            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+                        </div>
+                    </div>
+                    {# <div class="card-admin-recipes">
+                        <div class="card-img-admin-recipes" style="background-image: url({{recipe.image}})">
+                        </div>
+
+                        <div class="card-info-admin-recipes">
+                            <h4>{{recipe.title}}</h4>
+                            <p>por {{recipe.name}}</p>
+                            <a href="/admin/recipes/{{recipe.recipes_id}}">Visualizar</a>
+                        </div>
+                    </div> #}
                 {% endfor %}
             </div>
     </section>

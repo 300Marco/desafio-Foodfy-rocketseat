@@ -107,6 +107,15 @@ module.exports = {
         results = await Chef.findRecipe(chef[0].id);
         const recipes = results.rows;
 
+        let recipesCount = 0;
+        
+        for(let count of recipes) {
+            if(count.title != null) {
+                recipesCount = recipes.length;
+            } else {
+                recipesCount;
+            }
+        }
 
         async function getImageRecipe(recipeId) {
             let results = await Chef.filesRecipe(recipeId);
@@ -125,7 +134,7 @@ module.exports = {
 
         const lastRecipeAdded = await Promise.all(recipePromise);
 
-        return res.render('chefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded});
+        return res.render('chefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount});
     },
     // async details(req, res) {
     //     const results = await Chef.chefRecipes(req.params.id);
