@@ -106,16 +106,14 @@ module.exports = {
         // get image Recipes
         results = await Chef.findRecipe(chef[0].id);
         const recipes = results.rows;
-
-        let recipesCount = 0;
         
-        for(let count of recipes) {
-            if(count.title != null) {
-                recipesCount = recipes.length;
-            } else {
-                recipesCount;
-            }
-        }
+        // for(let count of recipes) {
+        //     if(count.title != null) {
+        //         recipesCount = recipes.length;
+        //     } else {
+        //         recipesCount;
+        //     }
+        // }
 
         async function getImageRecipe(recipeId) {
             let results = await Chef.filesRecipe(recipeId);
@@ -133,6 +131,14 @@ module.exports = {
         });
 
         const lastRecipeAdded = await Promise.all(recipePromise);
+
+        let recipesCount = 0;
+
+        if(lastRecipeAdded.length == 0) {
+            recipesCount;
+        } else {
+            recipesCount = lastRecipeAdded.length;
+        }
 
         return res.render('chefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount});
     },
