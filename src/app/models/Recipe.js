@@ -45,17 +45,18 @@ module.exports = {
     //             callback(results.rows);
     //     });
     // },
-    findBy(search) {
-        try {
-            return db.query(`
-                SELECT recipes.*, chefs.name AS chefs_name
-                FROM recipes
-                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-                WHERE recipes.title ILIKE '%${search}%'`);   
-        } catch (err) {
-            console.error(err);
-        };
-    },
+    // NÃO ESTAMOS USANDO POR ENQUANTO
+    // findBy(search) {
+    //     try {
+    //         return db.query(`
+    //             SELECT recipes.*, chefs.name AS chefs_name
+    //             FROM recipes
+    //             LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+    //             WHERE recipes.title ILIKE '%${search}%'`);   
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     // findBy(search, callback) {
     //     db.query(`
     //         SELECT recipes.*, chefs.name AS chefs_name

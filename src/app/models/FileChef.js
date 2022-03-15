@@ -51,19 +51,5 @@ module.exports = {
     //     ];
 
     //     return db.query(query, values);
-    // },
-    findChefId(id) {
-        try {
-            return db.query(`SELECT * FROM chefs WHERE chefs.file_id = $1`, [id]);
-        } catch (err) {
-            console.error(err);
-        };
-    },
-    findFileForId(id) {
-        try {
-            return db.query(`SELECT * FROM files WHERE id = $1`, [id]);
-        } catch (err) {
-            console.error(err);
-        };
-    }
+    // }
 };
