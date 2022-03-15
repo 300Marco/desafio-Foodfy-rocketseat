@@ -1,66 +1,150 @@
 const Recipe = require('../models/Recipe');
 const File = require('../models/File');
+const { ParameterDescriptionMessage } = require('pg-protocol/dist/messages');
 
 module.exports = {
     async index(req, res) {
         const { search } = req.query;
 
-        if(search) {
-            let files = [];
-            let results = await Recipe.findBy(search);
-            let recipes = results.rows;
+        let results = await Recipe.all();
+        let recipes = results.rows;
 
-            results = recipes.map(recipe => 
-                File.findRecipeId(recipe.id)
+        async function getImage(recipeId) {
+            let results = await Recipe.files(recipeId);
+            const files = results.rows.map(
+                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             );
-            let promiseRecipeAndFiles = await Promise.all(results);
 
-            for (file of promiseRecipeAndFiles) {
-                results = await File.findFileForId(file.rows[0].file_id);
-                files.push(results.rows[0]);
-            };
-
-            files.map(file => 
-                file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
-            
-            for(index in recipes) {
-                recipes[index] = {
-                    ...recipes[index],
-                    path: files[index].path,
-                    src: files[index].src
-                };
-            };
-
-            return res.render('recipes/index', {recipes});
-        } else {
-            let files = [];
-            let results = await Recipe.all();
-            let recipes = results.rows;
-
-            results = recipes.map(recipe => 
-                File.findRecipeId(recipe.id)
-            );
-            promiseRecipeAndFiles = await Promise.all(results);
-
-            for (file of promiseRecipeAndFiles) {
-                results = await File.findFileForId(file.rows[0].file_id);
-                files.push(results.rows[0]);
-            };
-
-            files.map(file => 
-                file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
-            
-            for(index in recipes) {
-                recipes[index] = {
-                    ...recipes[index],
-                    path: files[index].path,
-                    src: files[index].src
-                };
-            };
-
-            return res.render('recipes/index', {recipes});
+            return files[0];
         };
+
+        const recipesPromise = recipes.map(async recipe => {
+            recipe.img = await getImage(recipe.id);
+
+            return recipe;
+        });
+
+        const lastAdded = await Promise.all(recipesPromise);
+
+        return res.render('recipes/index', {recipes: lastAdded});
+
+        // Caso ocorra erro, ai verificar se tem search ou não..
+        // aqui tem uma condição IF, que ficou irrelevante
+        //          if(search) {
+            //         let files = [];
+            //         let results = await Recipe.findBy(search);
+            //         let recipes = results.rows;
+        
+            //         results = recipes.map(recipe => 
+            //             File.findRecipeId(recipe.id)
+            //         );
+            //         let promiseRecipeAndFiles = await Promise.all(results);
+        
+            //         for (file of promiseRecipeAndFiles) {
+            //             results = await File.findFileForId(file.rows[0].file_id);
+            //             files.push(results.rows[0]);
+            //         };
+        
+            //         files.map(file => 
+            //             file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+                    
+            //         for(index in recipes) {
+            //             recipes[index] = {
+            //                 ...recipes[index],
+            //                 path: files[index].path,
+            //                 src: files[index].src
+            //             };
+            //         };
+        
+            //         return res.render('recipes/index', {recipes});
+            //     } else {
+            //         let files = [];
+            //         let results = await Recipe.all();
+            //         let recipes = results.rows;
+        
+            //         results = recipes.map(recipe => 
+            //             File.findRecipeId(recipe.id)
+            //         );
+            //         promiseRecipeAndFiles = await Promise.all(results);
+        
+            //         for (file of promiseRecipeAndFiles) {
+            //             results = await File.findFileForId(file.rows[0].file_id);
+            //             files.push(results.rows[0]);
+            //         };
+        
+            //         files.map(file => 
+            //             file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+                    
+            //         for(index in recipes) {
+            //             recipes[index] = {
+            //                 ...recipes[index],
+            //                 path: files[index].path,
+            //                 src: files[index].src
+            //             };
+            //         };
+        
+            //         return res.render('recipes/index', {recipes});
+            //     };
     },
+    // async index(req, res) {
+    //     const { search } = req.query;
+
+    //     if(search) {
+    //         let files = [];
+    //         let results = await Recipe.findBy(search);
+    //         let recipes = results.rows;
+
+    //         results = recipes.map(recipe => 
+    //             File.findRecipeId(recipe.id)
+    //         );
+    //         let promiseRecipeAndFiles = await Promise.all(results);
+
+    //         for (file of promiseRecipeAndFiles) {
+    //             results = await File.findFileForId(file.rows[0].file_id);
+    //             files.push(results.rows[0]);
+    //         };
+
+    //         files.map(file => 
+    //             file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+            
+    //         for(index in recipes) {
+    //             recipes[index] = {
+    //                 ...recipes[index],
+    //                 path: files[index].path,
+    //                 src: files[index].src
+    //             };
+    //         };
+
+    //         return res.render('recipes/index', {recipes});
+    //     } else {
+    //         let files = [];
+    //         let results = await Recipe.all();
+    //         let recipes = results.rows;
+
+    //         results = recipes.map(recipe => 
+    //             File.findRecipeId(recipe.id)
+    //         );
+    //         promiseRecipeAndFiles = await Promise.all(results);
+
+    //         for (file of promiseRecipeAndFiles) {
+    //             results = await File.findFileForId(file.rows[0].file_id);
+    //             files.push(results.rows[0]);
+    //         };
+
+    //         files.map(file => 
+    //             file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+            
+    //         for(index in recipes) {
+    //             recipes[index] = {
+    //                 ...recipes[index],
+    //                 path: files[index].path,
+    //                 src: files[index].src
+    //             };
+    //         };
+
+    //         return res.render('recipes/index', {recipes});
+    //     };
+    // },
     // async index(req, res) {
     //     const { search } = req.query;
 
