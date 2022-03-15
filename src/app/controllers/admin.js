@@ -4,36 +4,64 @@ const File = require('../models/File');
 module.exports = {
     async show(req, res) {
         try {
-            let files = [];
             let results = await Admin.all();
             const recipes = results.rows;
 
-            results = recipes.map(recipe => 
-                File.findRecipeId(recipe.id)
-            );
-            const promiseRecipeAndFiles = await Promise.all(results);
+            // get image
+            async function getImage(recipeId) {
+                let results = await Admin.files(recipeId);
+                const files = results.rows.map(
+                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                );
 
-            for (file of promiseRecipeAndFiles) {
-                results = await File.findFileForId(file.rows[0].file_id);
-                files.push(results.rows[0]);
+                return files[0];
             };
 
-            files.map(file => 
-                file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
-            
-            for(index in recipes) {
-                recipes[index] = {
-                    ...recipes[index],
-                    path: files[index].path,
-                    src: files[index].src
-                };
-            };
+            const recipesPromise = recipes.map(async recipe => {
+                recipe.img = await getImage(recipe.id);
 
-            return res.render('admin/index', {recipes});
+                return recipe;
+            });
+
+            const lastAdded = await Promise.all(recipesPromise);
+
+            return res.render('admin/index', {recipes: lastAdded});
         } catch (err) {
             console.error(err);
         }
     },
+    // async show(req, res) {
+    //     try {
+    //         let files = [];
+    //         let results = await Admin.all();
+    //         const recipes = results.rows;
+
+    //         results = recipes.map(recipe => 
+    //             File.findRecipeId(recipe.id)
+    //         );
+    //         const promiseRecipeAndFiles = await Promise.all(results);
+
+    //         for (file of promiseRecipeAndFiles) {
+    //             results = await File.findFileForId(file.rows[0].file_id);
+    //             files.push(results.rows[0]);
+    //         };
+
+    //         files.map(file => 
+    //             file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
+            
+    //         for(index in recipes) {
+    //             recipes[index] = {
+    //                 ...recipes[index],
+    //                 path: files[index].path,
+    //                 src: files[index].src
+    //             };
+    //         };
+
+    //         return res.render('admin/index', {recipes});
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // },
     // async show(req, res) {
     //     const results = await Admin.all();
     //     const recipes = results.rows;
