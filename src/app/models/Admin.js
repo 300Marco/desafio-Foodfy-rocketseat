@@ -3,11 +3,15 @@ const { date } = require('../../lib/utils');
 
 module.exports = {
     all() {
-        return db.query(`
-            SELECT recipes.*, chefs.name AS chefs_name
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-        `);
+        try {
+            return db.query(`
+                SELECT recipes.*, chefs.name AS chefs_name
+                FROM recipes
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            `);
+        } catch (err) {
+            console.error(err);
+        };
     },
     // all(callback) {
     //     db.query(`
@@ -30,7 +34,7 @@ module.exports = {
             );
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     // find(id, callback) {
     //     db.query(`
@@ -48,7 +52,7 @@ module.exports = {
             return db.query(`SELECT name, id FROM chefs`);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     // chefsSelectOptions(callback) {
     //     db.query(`
@@ -68,7 +72,7 @@ module.exports = {
                 WHERE recipe_files.recipe_id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     create(data) {
         try {
@@ -96,7 +100,7 @@ module.exports = {
             return db.query(query, values);
         } catch(err) {
             console.error(err);
-        }
+        };
 
         // Conceito antigo
         // const query = `
@@ -209,7 +213,7 @@ module.exports = {
             return db.query(query, values);
         } catch(err) {
             console.error(err);
-        }
+        };
     }, 
     // update(data, callback) {
     //     const query = `
@@ -241,10 +245,10 @@ module.exports = {
     // },
     delete(id) {
         try {
-            db.query(`DELETE FROM recipes WHERE id = $1`, [id])
+            db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     }
     // delete(id, callback) {
     //     db.query(`

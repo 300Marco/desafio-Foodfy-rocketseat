@@ -7,7 +7,7 @@ module.exports = {
             return db.query(`SELECT * FROM chefs`);
         } catch (err) {
             console.error(err);
-        }
+        };
     },
     create(data) {
         try {
@@ -29,9 +29,8 @@ module.exports = {
             return db.query(query, values);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
-
     // create(data, callback) {
     //     const query = `
     //         INSERT INTO chefs (
@@ -55,10 +54,14 @@ module.exports = {
     //     });
     // },
     find(id) {
-        return db.query(`
-            SELECT *
-            FROM chefs
-            WHERE id = $1`, [id]);
+        try {
+            return db.query(`
+                SELECT *
+                FROM chefs
+                WHERE id = $1`, [id]);
+        } catch (err) {
+            console.error(err);
+        };
     },
     // find(id, callback) {
     //     db.query(`
@@ -88,7 +91,7 @@ module.exports = {
             return db.query(query, values);
         } catch (err) {
             console.error(err);
-        }
+        };
     },
     // update(data, callback) {
     //     const query = `
@@ -111,9 +114,13 @@ module.exports = {
     //     });
     // },
     delete(id) {
-        return db.query(`
-            DELETE FROM chefs
-            WHERE id = $1`, [id]);
+        try {
+            return db.query(`
+                DELETE FROM chefs
+                WHERE id = $1`, [id]);  
+        } catch (err) {
+            console.error(err);
+        };
     },
     // delete(id, callback) {
     //     db.query(`
@@ -134,7 +141,7 @@ module.exports = {
                 WHERE chefs.id = $1`, [id]);
         } catch (err) {
             console.error(err);
-        }
+        };
     },
     // chefRecipes(id, callback) {
         
@@ -179,7 +186,7 @@ module.exports = {
                 WHERE chefs.id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     // filesRecipes(id) {
     //     try {
@@ -210,13 +217,13 @@ module.exports = {
     findRecipe(id) {
         try {
             return db.query(`
-            SELECT recipes.*, chefs.name AS chefs_name
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            WHERE recipes.chef_id = $1`, [id]);
+                SELECT recipes.*, chefs.name AS chefs_name
+                FROM recipes
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                WHERE recipes.chef_id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     filesRecipe(id) {
         try {
@@ -227,6 +234,6 @@ module.exports = {
                 WHERE recipe_files.recipe_id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     }
 }

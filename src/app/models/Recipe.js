@@ -10,7 +10,7 @@ module.exports = {
             `);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     // all(callback) {
     //     db.query(`
@@ -32,7 +32,7 @@ module.exports = {
                 WHERE recipes.id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     // find(id, callback) {
     //     db.query(`
@@ -54,7 +54,7 @@ module.exports = {
                 WHERE recipes.title ILIKE '%${search}%'`);   
         } catch (err) {
             console.error(err);
-        }
+        };
     },
     // findBy(search, callback) {
     //     db.query(`
@@ -77,35 +77,39 @@ module.exports = {
                 ORDER BY total_recipes DESC`);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     paginate(params) {
-        const { search, limit, offset } = params;
+        try {
+            const { search, limit, offset } = params;
 
-        let query = "",
-            filterQuery = "",
-            totalQuery = `(
-                SELECT count(*) FROM recipes
-            ) AS total`
-        
-        if(search) {
-            filterQuery = `
-                WHERE recipes.title ILIKE '%${search}%'`
+            let query = "",
+                filterQuery = "",
+                totalQuery = `(
+                    SELECT count(*) FROM recipes
+                ) AS total`;
             
-            totalQuery = `(
-                SELECT count(*) FROM recipes
+            if(search) {
+                filterQuery = `
+                    WHERE recipes.title ILIKE '%${search}%'`
+                
+                totalQuery = `(
+                    SELECT count(*) FROM recipes
+                    ${filterQuery}
+                ) AS total`
+            };
+
+            query = `
+                SELECT recipes.*, chefs.name AS chefs_name, ${totalQuery}
+                FROM recipes
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
                 ${filterQuery}
-            ) AS total`
+                GROUP BY recipes.id, chefs.name LIMIT $1 OFFSET $2`;
+
+            return db.query(query, [limit, offset]);
+        } catch (err) {
+            console.error(err);
         };
-
-        query = `
-            SELECT recipes.*, chefs.name AS chefs_name, ${totalQuery}
-            FROM recipes
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            ${filterQuery}
-            GROUP BY recipes.id, chefs.name LIMIT $1 OFFSET $2`;
-
-        return db.query(query, [limit, offset]);
     },
     // paginate(params) {
     //     const { search, limit, offset, callback } = params;
@@ -148,7 +152,7 @@ module.exports = {
                 WHERE recipe_files.recipe_id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     chefFiles(id) {
         try {
@@ -159,6 +163,6 @@ module.exports = {
                 WHERE chefs.id = $1`, [id]);
         } catch (err) {
             console.error(err);
-        }
+        };
     }
 }

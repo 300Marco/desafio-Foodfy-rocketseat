@@ -28,7 +28,7 @@ module.exports = {
             return res.render('admin/index', {recipes: lastAdded});
         } catch (err) {
             console.error(err);
-        }
+        };
     },
     // async show(req, res) {
     //     try {
@@ -69,28 +69,36 @@ module.exports = {
     //     return res.render('admin/index', {recipes});
     // },
     async create(req, res) {
-        const results = await Admin.chefsSelectOptions();
-        const options = results.rows;
-        
-        return res.render('admin/create', {chefsOptions: options});
+        try {
+            const results = await Admin.chefsSelectOptions();
+            const options = results.rows;
+            
+            return res.render('admin/create', {chefsOptions: options});
+        } catch (err) {
+            console.log(err);
+        };
 
         // Admin.chefsSelectOptions((options) => {
         //     return res.render('admin/create', {chefsOptions: options});
         // });
     },
     async details(req, res) {
-        let results = await Admin.find(req.params.id);
-        const recipe = results.rows[0];
+        try {
+            let results = await Admin.find(req.params.id);
+            const recipe = results.rows[0];
 
-        if(!recipe) return res.send("Recipe not found!");
+            if(!recipe) return res.send("Recipe not found!");
 
-        results = await Admin.files(recipe.id);
-        const files = results.rows.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-        }));
+            results = await Admin.files(recipe.id);
+            const files = results.rows.map(file => ({
+                ...file,
+                src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            }));
 
-        return res.render('admin/details', {recipe, files});
+            return res.render('admin/details', {recipe, files});
+        } catch (err) {
+            console.error(err);
+        };
 
         // Admin.find(req.params.id, (recipe) => {
         //     if(!recipe) return res.send("Recipe not found!");
@@ -99,24 +107,28 @@ module.exports = {
         // });
     },
     async edit(req, res) {
-        let results = await Admin.find(req.params.id);
-        const recipe = results.rows[0];
+        try {
+            let results = await Admin.find(req.params.id);
+            const recipe = results.rows[0];
 
-        if(!recipe) return res.send("Recipe not found!");
+            if(!recipe) return res.send("Recipe not found!");
 
-        // get chefs
-        results = await Admin.chefsSelectOptions();
-        const options = results.rows;
+            // get chefs
+            results = await Admin.chefsSelectOptions();
+            const options = results.rows;
 
-        // get images
-        results = await Admin.files(recipe.id);
-        let files = results.rows;
-        files = files.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-        }));
+            // get images
+            results = await Admin.files(recipe.id);
+            let files = results.rows;
+            files = files.map(file => ({
+                ...file,
+                src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            }));
 
-        return res.render('admin/edit', {recipe, chefsOptions: options, files});
+            return res.render('admin/edit', {recipe, chefsOptions: options, files});
+        } catch (err) {
+            console.error(err);
+        };
 
         // Admin.chefsSelectOptions((options) => {
         //     return res.render('admin/edit', {recipe, chefsOptions: options});
@@ -133,27 +145,31 @@ module.exports = {
     },
     // METHODS HTTP
     async post(req, res) {
-        const keys = Object.keys(req.body);
+        try {
+            const keys = Object.keys(req.body);
         
-        for(key of keys) {
-            if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
-                return res.send("Please fill in all fields");
+            for(key of keys) {
+                if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+                    return res.send("Please fill in all fields");
+                };
             };
+
+            if(req.files.length == 0) {
+                return res.send('Please, send at least one image');
+            };
+
+            // Admin.create(req.body, (recipe) => {}
+            const results = await Admin.create(req.body);
+            const recipeId = results.rows[0].id;
+
+            // Send image
+            const filesPromise = req.files.map(file => File.create({...file, recipeId}))
+            await Promise.all(filesPromise);
+
+            return res.redirect(`/admin/recipes/${recipeId}`);
+        } catch (err) {
+            console.error(err);
         };
-
-        if(req.files.length == 0) {
-            return res.send('Please, send at least one image');
-        }
-
-        // Admin.create(req.body, (recipe) => {}
-        const results = await Admin.create(req.body);
-        const recipeId = results.rows[0].id;
-
-        // Send image
-        const filesPromise = req.files.map(file => File.create({...file, recipeId}))
-        await Promise.all(filesPromise);
-
-        return res.redirect(`/admin/recipes/${recipeId}`);
 
         // sem async
         // const keys = Object.keys(req.body);
@@ -177,50 +193,58 @@ module.exports = {
         // });
     },
     async put(req, res) {
-        const keys = Object.keys(req.body);
+        try {
+            const keys = Object.keys(req.body);
         
-        for(key of keys) {
-            if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
-                return res.send("Please fill in all fields");
+            for(key of keys) {
+                if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+                    return res.send("Please fill in all fields");
+                };
             };
-        };
 
-        // remove image from database
-        if(req.body.removed_files) {
-            const removedFiles = req.body.removed_files.split(',');
-            const lastIndex = removedFiles.length - 1;
-            removedFiles.splice(lastIndex, 1);
+            // remove image from database
+            if(req.body.removed_files) {
+                const removedFiles = req.body.removed_files.split(',');
+                const lastIndex = removedFiles.length - 1;
+                removedFiles.splice(lastIndex, 1);
 
-            const removedFilesPromise = removedFiles.map(id => File.delete(id))
-            await Promise.all(removedFilesPromise);
+                const removedFilesPromise = removedFiles.map(id => File.delete(id))
+                await Promise.all(removedFilesPromise);
+            };
+
+            // get new edit images
+            if(req.files.length != 0) {
+                const oldFiles = await Admin.files(req.body.id);
+                const totalFiles = oldFiles.rows.length + req.files.length;
+
+                if(totalFiles <= 5) {
+                    const newFilesPromise = req.files.map(file => 
+                        File.create({...file, recipeId: req.body.id}));
+        
+                    await Promise.all(newFilesPromise);
+                };
+            };
+
+            await Admin.update(req.body);
+            return res.redirect(`/admin/recipes/${req.body.id}`);
+        } catch (err) {
+            console.error(err);
         }
-
-        // get new edit images
-        if(req.files.length != 0) {
-            const oldFiles = await Admin.files(req.body.id);
-            const totalFiles = oldFiles.rows.length + req.files.length;
-
-            if(totalFiles <= 5) {
-                const newFilesPromise = req.files.map(file => 
-                    File.create({...file, recipeId: req.body.id}));
-    
-                await Promise.all(newFilesPromise);
-            };
-        };
-
-        await Admin.update(req.body);
-        return res.redirect(`/admin/recipes/${req.body.id}`);
         
         // Admin.update(req.body, () => {
         //     return res.redirect(`/admin/recipes/${req.body.id}`);
         // });
     },
     delete(req, res) {
+        try {
+            Admin.delete(req.body.id, () => {
+                return res.redirect('/admin/recipes');
+            });
+        } catch (err) {
+            console.error(err);
+        };
+
         // await Admin.delete(req.body.id);
         // return res.redirect('/admin/recipes');
-
-        Admin.delete(req.body.id, () => {
-            return res.redirect('/admin/recipes');
-        });
     }
 }
