@@ -277,7 +277,26 @@ module.exports = {
         const results = await Recipe.totalRecipes();
         const chefs = results.rows;
 
-        return res.render('recipes/chefs', {chefs});
+        // get avatar
+        async function getAvatar(chefsId) {
+            let results = await Recipe.chefFiles(chefsId);
+            const files = results.rows.map(
+                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            );
+
+            return files[0];
+        };
+
+
+        const avatarPromise = chefs.map(async chef => {
+            chef.img = await getAvatar(chef.id);
+
+            return chef;
+        });
+
+        const lastAvatarAdded = await Promise.all(avatarPromise);
+
+        return res.render('recipes/chefs', {chefs: lastAvatarAdded});
 
         // Recipe.totalRecipes((chefs) => {
         //     return res.render('recipes/chefs', {chefs});
