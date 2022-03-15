@@ -30,44 +30,6 @@ module.exports = {
             console.error(err);
         };
     },
-    // async show(req, res) {
-    //     try {
-    //         let files = [];
-    //         let results = await Admin.all();
-    //         const recipes = results.rows;
-
-    //         results = recipes.map(recipe => 
-    //             File.findRecipeId(recipe.id)
-    //         );
-    //         const promiseRecipeAndFiles = await Promise.all(results);
-
-    //         for (file of promiseRecipeAndFiles) {
-    //             results = await File.findFileForId(file.rows[0].file_id);
-    //             files.push(results.rows[0]);
-    //         };
-
-    //         files.map(file => 
-    //             file.src = `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`);
-            
-    //         for(index in recipes) {
-    //             recipes[index] = {
-    //                 ...recipes[index],
-    //                 path: files[index].path,
-    //                 src: files[index].src
-    //             };
-    //         };
-
-    //         return res.render('admin/index', {recipes});
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // },
-    // async show(req, res) {
-    //     const results = await Admin.all();
-    //     const recipes = results.rows;
-
-    //     return res.render('admin/index', {recipes});
-    // },
     async create(req, res) {
         try {
             const results = await Admin.chefsSelectOptions();
@@ -77,10 +39,6 @@ module.exports = {
         } catch (err) {
             console.log(err);
         };
-
-        // Admin.chefsSelectOptions((options) => {
-        //     return res.render('admin/create', {chefsOptions: options});
-        // });
     },
     async details(req, res) {
         try {
@@ -99,12 +57,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
         };
-
-        // Admin.find(req.params.id, (recipe) => {
-        //     if(!recipe) return res.send("Recipe not found!");
-
-        //     return res.render('admin/details', {recipe});
-        // });
     },
     async edit(req, res) {
         try {
@@ -129,19 +81,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
         };
-
-        // Admin.chefsSelectOptions((options) => {
-        //     return res.render('admin/edit', {recipe, chefsOptions: options});
-        // });
-
-
-        // Admin.find(req.params.id, (recipe) => {
-        //     if(!recipe) return res.send("Recipe not found!");
-
-        //     Admin.chefsSelectOptions((options) => {
-        //         return res.render('admin/edit', {recipe, chefsOptions: options});
-        //     });
-        // });
     },
     // METHODS HTTP
     async post(req, res) {
@@ -170,27 +109,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
         };
-
-        // sem async
-        // const keys = Object.keys(req.body);
-        
-        // for(key of keys) {
-        //     if(req.body[key] == "" && key != 'information') {
-        //         return res.send("Please fill in all fields");
-        //     };
-        // };
-
-        // // if(req.files.length == 0) {
-        // //     return res.send('Please, send at least one image');
-        // // }
-
-        // // Send image
-        // // const filesPromise = req.files.map(file => File.create({...file}))
-        // // await Promise.all(filesPromise);
-
-        // Admin.create(req.body, (recipe) => {
-        //     return res.redirect(`/admin/recipes/${recipe.id}`);
-        // });
     },
     async put(req, res) {
         try {
@@ -229,11 +147,7 @@ module.exports = {
             return res.redirect(`/admin/recipes/${req.body.id}`);
         } catch (err) {
             console.error(err);
-        }
-        
-        // Admin.update(req.body, () => {
-        //     return res.redirect(`/admin/recipes/${req.body.id}`);
-        // });
+        };
     },
     delete(req, res) {
         try {
@@ -243,8 +157,5 @@ module.exports = {
         } catch (err) {
             console.error(err);
         };
-
-        // await Admin.delete(req.body.id);
-        // return res.redirect('/admin/recipes');
     }
 }
