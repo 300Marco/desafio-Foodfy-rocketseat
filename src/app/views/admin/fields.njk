@@ -28,20 +28,9 @@
                     {% endfor %}
                 {% endif %}
                 <input type="hidden" name="removed_files">
-                {# <div class="photo" id="">
-                    <img src="/assets/asinhas.png" alt="">
-                    <i class="fas fa-times"></i>
-                </div>
-                <input type="hidden" name="removed_files"> #}
             </div>
         </div>
     </div>
-
-
-    {# <div class="recipe">
-        <div class="name-input">Imagem da receita</div>
-        <input type="url" name="image" value="{{recipe.image}}">
-    </div> #}
 
     <div class="preparation">
         <div class="name-input">Título da receita</div>
@@ -84,21 +73,6 @@
             <button class="add-button add-ingredient" type="button">
                 Adicionar novo ingrediente
             </button>
-
-            {# Não remover por enquanto #}
-            {# <div class="name-input">Ingredientes</div>
-            
-            <input name="ingredients[]" class="first-input">
-
-            {% for ingredient in recipe.ingredients %}
-                <input name="ingredients[]" value="{{ingredient}}">
-            {% endfor %}
-
-            <div class="box-ingredients"></div>
-            
-            <button class="add-button add-ingredient" type="button">
-                Adicionar novo ingrediente
-            </button> #}
         </div>
     </div>
 
@@ -119,21 +93,6 @@
         <button class="add-button add-preparation" type="button">
             Adicionar novo passo
         </button>
-
-        {# Não remover por enquanto #}
-        {# <div class="name-input">Modo de preparo</div>
-
-        <input class="input-script" name="preparation[]">
-
-        {% for preparation in recipe.preparation %}
-            <input name="preparation[]" value="{{preparation}}">
-        {% endfor %}
-
-        <div class="box-preparation"></div>
-
-        <button class="add-button add-preparation" type="button">
-            Adicionar novo passo
-        </button> #}
     </div>
 
     <div class="information">
