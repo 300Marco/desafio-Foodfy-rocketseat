@@ -30,7 +30,7 @@
             >
         </form>
 
-        <form id="form-delete" method="POST" action="/admin/recipes?_method=delete">
+        <form id="form-delete" method="POST" action="/admin/recipes?_method=delete" enctype="multipart/form-data">
             <input type="hidden" name="id" value="{{recipe.id}}">
         </form>
     </div>
