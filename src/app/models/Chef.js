@@ -14,16 +14,14 @@ module.exports = {
             const query = `
                 INSERT INTO chefs (
                     file_id,
-                    name,
-                    created_at
-                ) VALUES ($1, $2, $3)
+                    name
+                ) VALUES ($1, $2)
                 RETURNING id
             `;
 
             const values = [
                 data.fileId,
-                data.name,
-                date(Date.now()).iso
+                data.name
             ];
 
             return db.query(query, values);
