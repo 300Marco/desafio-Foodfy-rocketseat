@@ -25,7 +25,7 @@ module.exports = {
 
             const lastAdded = await Promise.all(recipesPromise);
 
-            return res.render('admin/index', {recipes: lastAdded});
+            return res.render('adminRecipes/index', {recipes: lastAdded});
         } catch (err) {
             console.error(err);
         };
@@ -35,7 +35,7 @@ module.exports = {
             const results = await Admin.chefsSelectOptions();
             const options = results.rows;
             
-            return res.render('admin/create', {chefsOptions: options});
+            return res.render('adminRecipes/create', {chefsOptions: options});
         } catch (err) {
             console.log(err);
         };
@@ -53,7 +53,7 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-            return res.render('admin/details', {recipe, files});
+            return res.render('adminRecipes/details', {recipe, files});
         } catch (err) {
             console.error(err);
         };
@@ -77,7 +77,7 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-            return res.render('admin/edit', {recipe, chefsOptions: options, files});
+            return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files});
         } catch (err) {
             console.error(err);
         };
