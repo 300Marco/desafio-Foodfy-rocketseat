@@ -2,7 +2,7 @@ const express = require('express');
 const HomeController = require('./app/controllers/HomeController');
 const RecipesController = require('./app/controllers/RecipesController');
 const adminRecipes = require('./app/controllers/admin');
-const adminChefs = require('./app/controllers/chefs');
+const ChefsController = require('./app/controllers/ChefsController');
 const multer = require('./app/middlewares/multer');
 const routes = express.Router();
 
@@ -36,19 +36,19 @@ routes.put('/admin/recipes', multer.array("photos", 5), adminRecipes.put);
 routes.delete('/admin/recipes', adminRecipes.delete);
 
 // ADMIN - CHEFS
-routes.get('/admin/chefs', adminChefs.show);
+routes.get('/admin/chefs', ChefsController.show);
 
-routes.get('/admin/chefs/create', adminChefs.create);
+routes.get('/admin/chefs/create', ChefsController.create);
 
-routes.get('/admin/chefs/:id', adminChefs.details);
+routes.get('/admin/chefs/:id', ChefsController.details);
 
-routes.get('/admin/chefs/:id/edit', adminChefs.edit);
+routes.get('/admin/chefs/:id/edit', ChefsController.edit);
 
-routes.post('/admin/chefs', multer.array("avatar", 1), adminChefs.post);
+routes.post('/admin/chefs', multer.array("avatar", 1), ChefsController.post);
 
-routes.put('/admin/chefs', multer.array("avatar", 1), adminChefs.put);
+routes.put('/admin/chefs', multer.array("avatar", 1), ChefsController.put);
 
-routes.delete('/admin/chefs', adminChefs.delete);
+routes.delete('/admin/chefs', ChefsController.delete);
 
 routes.use((req, res) => {
     return res.status(404).render('not-found');
