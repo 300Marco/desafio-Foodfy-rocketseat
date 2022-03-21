@@ -1,6 +1,6 @@
 const express = require('express');
 const HomeController = require('./app/controllers/HomeController');
-const recipes = require('./app/controllers/recipes');
+const RecipesController = require('./app/controllers/RecipesController');
 const adminRecipes = require('./app/controllers/admin');
 const adminChefs = require('./app/controllers/chefs');
 const multer = require('./app/middlewares/multer');
@@ -10,15 +10,15 @@ const routes = express.Router();
 routes.get('/', HomeController.index);
 // routes.get('/', recipes.index);
 
-routes.get('/about', recipes.about);
+routes.get('/about', RecipesController.about);
 
-routes.get('/recipes', recipes.recipes);
+routes.get('/recipes', RecipesController.recipes);
 
-routes.get('/search', recipes.search);
+routes.get('/search', RecipesController.search);
 
-routes.get('/chefs', recipes.chefs);
+routes.get('/chefs', RecipesController.chefs);
 
-routes.get('/details/:index', recipes.details);
+routes.get('/details/:index', RecipesController.details);
 
 // ADMIN - RECIPES
 routes.get('/admin/recipes', adminRecipes.show);
