@@ -1,15 +1,15 @@
-const Admin = require('../models/Admin');
+const AdminRecipe = require('../models/AdminRecipe');
 const File = require('../models/File');
 
 module.exports = {
     async show(req, res) {
         try {
-            let results = await Admin.all();
+            let results = await AdminRecipe.all();
             const recipes = results.rows;
 
             // get image
             async function getImage(recipeId) {
-                let results = await Admin.files(recipeId);
+                let results = await AdminRecipe.files(recipeId);
                 const files = results.rows.map(
                     file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
                 );
@@ -32,7 +32,7 @@ module.exports = {
     },
     async create(req, res) {
         try {
-            const results = await Admin.chefsSelectOptions();
+            const results = await AdminRecipe.chefsSelectOptions();
             const options = results.rows;
             
             return res.render('adminRecipes/create', {chefsOptions: options});
@@ -42,12 +42,12 @@ module.exports = {
     },
     async details(req, res) {
         try {
-            let results = await Admin.find(req.params.id);
+            let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
 
             if(!recipe) return res.send("Recipe not found!");
 
-            results = await Admin.files(recipe.id);
+            results = await AdminRecipe.files(recipe.id);
             const files = results.rows.map(file => ({
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
@@ -60,17 +60,17 @@ module.exports = {
     },
     async edit(req, res) {
         try {
-            let results = await Admin.find(req.params.id);
+            let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
 
             if(!recipe) return res.send("Recipe not found!");
 
             // get chefs
-            results = await Admin.chefsSelectOptions();
+            results = await AdminRecipe.chefsSelectOptions();
             const options = results.rows;
 
             // get images
-            results = await Admin.files(recipe.id);
+            results = await AdminRecipe.files(recipe.id);
             let files = results.rows;
             files = files.map(file => ({
                 ...file,
@@ -97,8 +97,8 @@ module.exports = {
                 return res.send('Please, send at least one image');
             };
 
-            // Admin.create(req.body, (recipe) => {}
-            const results = await Admin.create(req.body);
+            // AdminRecipe.create(req.body, (recipe) => {}
+            const results = await AdminRecipe.create(req.body);
             const recipeId = results.rows[0].id;
 
             // Send image
@@ -132,7 +132,7 @@ module.exports = {
 
             // get new edit images
             if(req.files.length != 0) {
-                const oldFiles = await Admin.files(req.body.id);
+                const oldFiles = await AdminRecipe.files(req.body.id);
                 const totalFiles = oldFiles.rows.length + req.files.length;
 
                 if(totalFiles <= 5) {
@@ -143,7 +143,7 @@ module.exports = {
                 };
             };
 
-            await Admin.update(req.body);
+            await AdminRecipe.update(req.body);
             return res.redirect(`/admin/recipes/${req.body.id}`);
         } catch (err) {
             console.error(err);
@@ -151,7 +151,7 @@ module.exports = {
     },
     delete(req, res) {
         try {
-            Admin.delete(req.body.id, () => {
+            AdminRecipe.delete(req.body.id, () => {
                 return res.redirect('/admin/recipes');
             });
         } catch (err) {
