@@ -1,15 +1,16 @@
 const express = require('express');
-const HomeController = require('./app/controllers/HomeController');
-const RecipesController = require('./app/controllers/RecipesController');
-const AdminRecipesController = require('./app/controllers/AdminRecipesController');
-const ChefsController = require('./app/controllers/ChefsController');
-const multer = require('./app/middlewares/multer');
+const HomeController = require('../app/controllers/HomeController');
+const RecipesController = require('../app/controllers/RecipesController');
+const AdminRecipesController = require('../app/controllers/AdminRecipesController');
+const ChefsController = require('../app/controllers/ChefsController');
+const multer = require('../app/middlewares/multer');
 const routes = express.Router();
 
 // WEB PAGE
 routes.get('/', HomeController.index);
 // routes.get('/', recipes.index);
 
+// RECIPES
 routes.get('/about', RecipesController.about);
 
 routes.get('/recipes', RecipesController.recipes);
