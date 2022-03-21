@@ -1,16 +1,16 @@
-const Chef = require('../models/Chef');
-const FileChef = require('../models/FileChef');
+const AdminChef = require('../models/AdminChef');
+const FileAdminChef = require('../models/FileChef');
 
 module.exports = {
     async show(req, res) {
         try {
-            let results = await Chef.all();
+            let results = await AdminChef.all();
             const chefs = results.rows;
     
             if(!chefs) return res.send("Nenhum chef encontrado!");
     
             async function getImageAvatar(chefId) {
-                let results = await Chef.files(chefId);
+                let results = await AdminChef.files(chefId);
                 const files = results.rows.map(
                     file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
                 );
@@ -36,14 +36,14 @@ module.exports = {
     },
     async details(req, res) {
         try {
-            let results = await Chef.find(req.params.id);
+            let results = await AdminChef.find(req.params.id);
             const chef = results.rows;
 
             if(!chef) return res.send("Nenhum chef encontrado!");
 
             // get image avatar
             async function getImageAvatar(chefId) {
-                let results = await Chef.files(chefId);
+                let results = await AdminChef.files(chefId);
                 const files = results.rows.map(
                     file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
                 );
@@ -60,11 +60,11 @@ module.exports = {
             const lastAvatarAdded = await Promise.all(avatarPromise);
 
             // get image Recipes
-            results = await Chef.findRecipe(chef[0].id);
+            results = await AdminChef.findRecipe(chef[0].id);
             const recipes = results.rows;
 
             async function getImageRecipe(recipeId) {
-                let results = await Chef.filesRecipe(recipeId);
+                let results = await AdminChef.filesRecipe(recipeId);
                 const files = results.rows.map(
                     file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
                 );
@@ -95,13 +95,13 @@ module.exports = {
     },
     async edit(req, res) {
         try {
-            let results = await Chef.find(req.params.id);
+            let results = await AdminChef.find(req.params.id);
             const chef = results.rows[0];
 
-            if(!chef) return res.send("Chef not found!");
+            if(!chef) return res.send("AdminChef not found!");
 
             // get images
-            results = await Chef.files(chef.id);
+            results = await AdminChef.files(chef.id);
             let files = results.rows;
             files = files.map(file => ({
                 ...file,
@@ -128,11 +128,11 @@ module.exports = {
                 return res.send('Please, send at last one image');
             };
     
-            const results = await Chef.create(req.body);
+            const results = await AdminChef.create(req.body);
             const chefId = results.rows[0].id;
     
             // Send Image
-            const filesPromise = req.files.map(file => FileChef.create({
+            const filesPromise = req.files.map(file => FileAdminChef.create({
                 ...file,
                 chefId
             }));
@@ -145,7 +145,7 @@ module.exports = {
     },
     async put(req, res) {
         try {
-            await Chef.update(req.body);
+            await AdminChef.update(req.body);
             return res.redirect(`/admin/chefs/${req.body.id}`);  
         } catch (err) {
             console.error(err);
@@ -153,18 +153,18 @@ module.exports = {
     },
     async delete(req, res) {
         try {
-            const results = await Chef.chefRecipes(req.body.id);
+            const results = await AdminChef.chefRecipes(req.body.id);
             const chef = results.rows;
 
-            if(!chef) return res.send("Chef not found!");
+            if(!chef) return res.send("AdminChef not found!");
 
             const [ {title, recipes_id} ] = chef;
 
             if(title == null && recipes_id == null) {
-                await Chef.delete(req.body.id);
+                await AdminChef.delete(req.body.id);
                 return res.redirect('/admin/chefs');
             } else {
-                return res.send('Chefes que possuem receitas, não podem ser deletados');
+                return res.send('AdminChefes que possuem receitas, não podem ser deletados');
             };
         } catch (err) {
             console.error(err);
