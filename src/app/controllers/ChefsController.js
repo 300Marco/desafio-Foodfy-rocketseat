@@ -26,13 +26,13 @@ module.exports = {
     
             const lastAdded = await Promise.all(chefsPromise);
     
-            return res.render('chefs/index', {chefs: lastAdded});  
+            return res.render('adminChefs/index', {chefs: lastAdded});
         } catch (err) {
             console.error(err);
         };
     },
     create(req, res) {
-        return res.render('chefs/create');
+        return res.render('adminChefs/create');
     },
     async details(req, res) {
         try {
@@ -88,7 +88,7 @@ module.exports = {
                 recipesCount = lastRecipeAdded.length;
             };
 
-            return res.render('chefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount});
+            return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount});
         } catch (err) {
             console.error(err);
         };
@@ -108,7 +108,7 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
             
-            return res.render('chefs/edit', {chef, files});
+            return res.render('adminChefs/edit', {chef, files});
         } catch (err) {
             console.error(err);
         };
