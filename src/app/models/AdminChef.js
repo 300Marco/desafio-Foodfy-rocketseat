@@ -9,19 +9,39 @@ module.exports = {
             console.error(err);
         };
     },
-    create(data) {
+    // create(data) {
+    //     try {
+    //         const query = `
+    //             INSERT INTO chefs (
+    //                 file_id,
+    //                 name
+    //             ) VALUES ($1, $2)
+    //             RETURNING id
+    //         `;
+
+    //         const values = [
+    //             data.fileId,
+    //             data.name
+    //         ];
+
+    //         return db.query(query, values);
+    //     } catch(err) {
+    //         console.error(err);
+    //     };
+    // },
+    create(data, file_id) {
         try {
             const query = `
                 INSERT INTO chefs (
-                    file_id,
-                    name
+                    name,
+                    file_id
                 ) VALUES ($1, $2)
                 RETURNING id
             `;
 
             const values = [
-                data.fileId,
-                data.name
+                data.name,
+                file_id
             ];
 
             return db.query(query, values);

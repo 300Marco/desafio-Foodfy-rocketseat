@@ -1,8 +1,8 @@
 const db = require('../../config/db');
-// const fs = require('fs');
+const fs = require('fs');
 
 module.exports = {
-    async create({ filename, path, chefId }) {
+    async create({ filename, path }) {
         try {
             let query = `
                 INSERT INTO files (
@@ -17,19 +17,19 @@ module.exports = {
                 path
             ];
 
-            const results = await db.query(query, values);
-            const fileId = results.rows[0].id;
-            if(chefId) {
-                query = `
-                    UPDATE chefs SET 
-                        file_id=($1)
-                    WHERE id = $2
-                `
-                values = [
-                    fileId,
-                    chefId
-                ]
-            };
+            // const results = await db.query(query, values);
+            // const fileId = results.rows[0].id;
+            // if(chefId) {
+            //     query = `
+            //         UPDATE chefs SET 
+            //             file_id=($1)
+            //         WHERE id = $2
+            //     `
+            //     values = [
+            //         fileId,
+            //         chefId
+            //     ]
+            // };
 
             return db.query(query, values);  
         } catch (err) {

@@ -114,6 +114,35 @@ module.exports = {
         };
     },
     // METHODS HTTP
+    // async post(req, res) {
+    //     try {
+    //         const keys = Object.keys(req.body);
+        
+    //         for(key of keys) {
+    //             if(req.body[key] == "") {
+    //                 return res.send("Please fill in all fields");
+    //             };
+    //         };
+    
+    //         if(req.files.length == 0) {
+    //             return res.send('Please, send at last one image');
+    //         };
+    
+    //         const results = await AdminChef.create(req.body);
+    //         const chefId = results.rows[0].id;
+    
+    //         // Send Image
+    //         const filesPromise = req.files.map(file => FileAdminChef.create({
+    //             ...file,
+    //             chefId
+    //         }));
+    //         await Promise.all(filesPromise);
+    
+    //         return res.redirect(`/admin/chefs/${chefId}`);  
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     async post(req, res) {
         try {
             const keys = Object.keys(req.body);
@@ -128,25 +157,24 @@ module.exports = {
                 return res.send('Please, send at last one image');
             };
     
-            const results = await AdminChef.create(req.body);
+            // Create Image
+            const filesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
+            let results = await filesPromise[0];
+            const fileId = results.rows[0].id;
+            // await Promise.all(filesPromise);
+
+            // create chef
+            results = await AdminChef.create(req.body, fileId);
             const chefId = results.rows[0].id;
     
-            // Send Image
-            const filesPromise = req.files.map(file => FileAdminChef.create({
-                ...file,
-                chefId
-            }));
-            await Promise.all(filesPromise);
-    
-            return res.redirect(`/admin/chefs/${chefId}`);  
+            return res.redirect(`/admin/chefs/${chefId}`);
         } catch (err) {
             console.error(err);
         };
     },
     async put(req, res) {
         try {
-            await AdminChef.update(req.body);
-            return res.redirect(`/admin/chefs/${req.body.id}`);  
+            
         } catch (err) {
             console.error(err);
         };
