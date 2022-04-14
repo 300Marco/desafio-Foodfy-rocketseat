@@ -174,7 +174,58 @@ module.exports = {
     },
     async put(req, res) {
         try {
-            
+            const keys = Object.keys(req.body);
+
+            for(key of keys) {
+                if(req.body[key] == "" && key != 'removed_avatar') {
+                    return res.send("Please fill in all fields");
+                };
+            };
+
+            // Find Files
+            let results = await AdminChef.files(req.body.id);
+            let fileId = results.rows[0].file_id;
+
+            // Create nem Image
+            if(req.files.length != 0) {
+                console.log('Adicionar imagem');
+
+                const oldFiles = await AdminChef.files(fileId);
+
+                const totalFiles = oldFiles.rows.length + (req.files.length - 1);
+
+                // console.log(`${oldFiles.rows.length} + ${req.files.length - 1}`);
+
+                if(totalFiles <= 1) {
+                    console.log(totalFiles + ' Envia imagem para o banco de dados')
+                    const newFilesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
+
+                    const results = await newFilesPromise[0];
+                    fileId = results.rows[0].id;
+                }
+            };
+
+            // removed image
+            if(req.body.removed_avatar) {
+                console.log('Remover imagem')
+
+                const removedFiles = req.body.removed_avatar.split(',');
+                // const lastIndex = removedFiles.length - 1;
+                const lastIndex = removedFiles.length;
+
+                removedFiles.splice(lastIndex, 1);
+
+                if(req.files.length == 0) {
+                    return res.send("Please send one image");
+                } 
+
+                await AdminChef.update(req.body, fileId);
+                await removedFiles.map(id => FileAdminChef.delete(id));
+            };
+
+            await AdminChef.update(req.body, fileId);
+
+            return res.redirect(`/admin/chefs/${req.body.id}`);
         } catch (err) {
             console.error(err);
         };
