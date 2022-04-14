@@ -461,6 +461,127 @@ const ImageGallery = {
 }
 
 // Upload chef files
+// const avatarUpload = {
+//     input: "",
+//     preview: document.querySelector('#avatar-preview'),
+//     uploadLimit: 1,
+//     files: [],
+//     handleFileInput(event) {
+//         const { files: fileList } = event.target;
+//         avatarUpload.input = event.target;
+
+//         if(avatarUpload.hasLimit(event)) return;
+
+//         Array.from(fileList).forEach(file => {
+//             avatarUpload.files.push(file);
+
+//             const reader = new FileReader();
+
+//             reader.onload = () => {
+//                 const image = new Image();
+//                 image.src = String(reader.result);
+
+//                 const linkAvatar = image.src;
+
+//                 // const input = avatarUpload.getContainer(linkAvatar);
+//                 const div = avatarUpload.getContainer(linkAvatar);
+
+//                 // avatarUpload.preview.appendChild(input);
+//                 avatarUpload.preview.appendChild(div);
+//             };
+
+//             reader.readAsDataURL(file);
+//         });
+
+//         avatarUpload.input.files = avatarUpload.getAllFiles();
+//     },
+//     hasLimit(event) {
+//         const { uploadLimit, input, preview } = avatarUpload;
+//         const { files: fileList } = input;
+
+//         if(fileList.length > uploadLimit) {
+//             alert(`Envia no máximo ${uploadLimit} foto`);
+//             event.preventDefault();
+//             return true;
+//         };
+
+//         const avatarDiv = [];
+//         preview.childNodes.forEach(item => {
+//             if(item.classList && item.classList.value == "avatar-box") {
+//                 // console.log('adicionado ao array');
+//                 avatarDiv.push(item);
+//             }
+//         });
+
+//         const totalPhotos = fileList.length + avatarDiv.length;
+//         if(totalPhotos > uploadLimit) {
+//             alert('Não é permitido mais de 1 foto');
+//             event.preventDefault()
+//             return true;
+//         }
+
+//         return false;
+//     },
+//     getAllFiles() {
+//         const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer();
+
+//         avatarUpload.files.forEach(file => dataTransfer.items.add(file));
+
+//         return dataTransfer.files;
+//     },
+//     getContainer(linkAvatar) {
+//         const div = document.createElement('div');
+//         const input = document.createElement('input');
+//         div.classList.add('avatar-box');
+//         input.classList.add('avatar');
+
+//         input.value = linkAvatar;
+        
+//         div.appendChild(input);
+//         div.appendChild(avatarUpload.getRemoveButton());
+//         div.onclick = avatarUpload.removeAvatar;
+
+//         return div;
+//         // const div = document.querySelector('#avatar-preview');
+//         // const input = document.createElement('input');
+//         // input.classList.add('avatar');
+
+//         // input.value = linkAvatar;
+        
+//         // div.appendChild(avatarUpload.getRemoveButton());
+//         // div.onclick = avatarUpload.removeAvatar;
+
+//         // return input;
+//     },
+//     getRemoveButton() {
+//         const button = document.createElement('span');
+//         button.innerText = 'x';
+//         return button;
+//     },
+//     removeAvatar(event) {
+//         const avatarDiv = event.target.parentNode;
+//         const avatarArray = Array.from(avatarUpload.preview.children);
+//         const index = avatarArray.indexOf(avatarDiv);
+
+//         avatarUpload.files.splice(index, 1);
+//         avatarUpload.input.files = avatarUpload.getAllFiles();
+
+//         avatarDiv.remove();
+//     },
+//     removedOldAvatar(event) {
+//         const avatarDiv = event.target.parentNode;
+
+//         if(avatarDiv.id) {
+//             const removedAvatar = document.querySelector('input[name="removed_avatar"]');
+
+//             if(removedAvatar) {
+//                 removedAvatar.value += `${avatarDiv.id}`;
+//             }
+//         }
+
+//         avatarDiv.remove();
+//     }
+// }
 const avatarUpload = {
     input: "",
     preview: document.querySelector('#avatar-preview'),
@@ -470,7 +591,10 @@ const avatarUpload = {
         const { files: fileList } = event.target;
         avatarUpload.input = event.target;
 
-        if(avatarUpload.hasLimit(event)) return;
+        if(avatarUpload.hasLimit(event)) {
+            avatarUpload.updateInputFiles();
+            return;
+        };
 
         Array.from(fileList).forEach(file => {
             avatarUpload.files.push(file);
@@ -493,7 +617,7 @@ const avatarUpload = {
             reader.readAsDataURL(file);
         });
 
-        avatarUpload.input.files = avatarUpload.getAllFiles();
+        avatarUpload.updateInputFiles();
     },
     hasLimit(event) {
         const { uploadLimit, input, preview } = avatarUpload;
@@ -559,12 +683,25 @@ const avatarUpload = {
         return button;
     },
     removeAvatar(event) {
+        // const avatarDiv = event.target.parentNode;
+        // const avatarArray = Array.from(avatarUpload.preview.children);
+        // const index = avatarArray.indexOf(avatarDiv);
+
+        // avatarUpload.files.splice(index, 1);
+        // avatarUpload.updateInputFiles();
+
+        // avatarDiv.remove();
+        
         const avatarDiv = event.target.parentNode;
-        const avatarArray = Array.from(avatarUpload.preview.children);
-        const index = avatarArray.indexOf(avatarDiv);
+        const newFiles = Array.from(avatarUpload.preview.children).filter(file => {
+            if(file.classList.contains('avatar-box') && !file.getAttribute('id')) return true;
+        });
+
+
+        const index = newFiles.indexOf(avatarDiv);
 
         avatarUpload.files.splice(index, 1);
-        avatarUpload.input.files = avatarUpload.getAllFiles();
+        avatarUpload.updateInputFiles();
 
         avatarDiv.remove();
     },
@@ -580,6 +717,9 @@ const avatarUpload = {
         }
 
         avatarDiv.remove();
+    },
+    updateInputFiles() {
+        avatarUpload.input.files = avatarUpload.getAllFiles();
     }
 }
 
