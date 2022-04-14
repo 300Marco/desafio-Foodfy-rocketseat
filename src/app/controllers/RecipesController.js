@@ -47,7 +47,6 @@ module.exports = {
                 offset
             };
 
-            // let files = [];
             let results = await Recipe.paginate(params);
             let recipes = results.rows;
 

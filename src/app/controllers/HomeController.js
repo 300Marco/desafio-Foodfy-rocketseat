@@ -4,7 +4,6 @@ const Recipe = require('../models/Recipe');
 module.exports = {
     async index(req, res) {
         try {
-            // const { search } = req.query;
             let results = await Recipe.all();
             let recipes = results.rows;
 

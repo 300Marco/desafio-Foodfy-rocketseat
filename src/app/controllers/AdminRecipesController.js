@@ -37,7 +37,7 @@ module.exports = {
             
             return res.render('adminRecipes/create', {chefsOptions: options});
         } catch (err) {
-            console.log(err);
+            console.error(err);
         };
     },
     async details(req, res) {
@@ -96,8 +96,7 @@ module.exports = {
             if(req.files.length == 0) {
                 return res.send('Please, send at least one image');
             };
-
-            // AdminRecipe.create(req.body, (recipe) => {}
+            
             const results = await AdminRecipe.create(req.body);
             const recipeId = results.rows[0].id;
 

@@ -161,7 +161,6 @@ module.exports = {
             const filesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
             let results = await filesPromise[0];
             const fileId = results.rows[0].id;
-            // await Promise.all(filesPromise);
 
             // create chef
             results = await AdminChef.create(req.body, fileId);
@@ -194,8 +193,6 @@ module.exports = {
 
                 const totalFiles = oldFiles.rows.length + (req.files.length - 1);
 
-                // console.log(`${oldFiles.rows.length} + ${req.files.length - 1}`);
-
                 if(totalFiles <= 1) {
                     console.log(totalFiles + ' Envia imagem para o banco de dados')
                     const newFilesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
@@ -210,7 +207,6 @@ module.exports = {
                 console.log('Remover imagem')
 
                 const removedFiles = req.body.removed_avatar.split(',');
-                // const lastIndex = removedFiles.length - 1;
                 const lastIndex = removedFiles.length;
 
                 removedFiles.splice(lastIndex, 1);
