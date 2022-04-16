@@ -1,5 +1,4 @@
 const db = require('../../config/db');
-const { date } = require('../../lib/utils');
 
 module.exports = {
     all() {
@@ -52,9 +51,7 @@ module.exports = {
     find(id) {
         try {
             return db.query(`
-                SELECT *
-                FROM chefs
-                WHERE id = $1`, [id]);
+                SELECT * FROM chefs WHERE id = $1`, [id]);
         } catch (err) {
             console.error(err);
         };
@@ -95,15 +92,6 @@ module.exports = {
             ];
 
             return db.query(query, values);
-        } catch (err) {
-            console.error(err);
-        };
-    },
-    delete(id) {
-        try {
-            return db.query(`
-                DELETE FROM chefs
-                WHERE id = $1`, [id]);  
         } catch (err) {
             console.error(err);
         };
@@ -150,6 +138,14 @@ module.exports = {
                 LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
                 WHERE recipe_files.recipe_id = $1`, [id]);
         } catch(err) {
+            console.error(err);
+        };
+    },
+    delete(id) {
+        try {
+            return db.query(`
+                DELETE FROM chefs WHERE id = $1`, [id]);  
+        } catch (err) {
             console.error(err);
         };
     }

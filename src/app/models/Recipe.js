@@ -30,7 +30,8 @@ module.exports = {
                 FROM chefs 
                 LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
                 GROUP BY chefs.id
-                ORDER BY total_recipes DESC`);
+                ORDER BY total_recipes DESC
+            `);
         } catch(err) {
             console.error(err);
         };
@@ -47,12 +48,12 @@ module.exports = {
             
             if(search) {
                 filterQuery = `
-                    WHERE recipes.title ILIKE '%${search}%'`
+                    WHERE recipes.title ILIKE '%${search}%'`;
                 
                 totalQuery = `(
                     SELECT count(*) FROM recipes
                     ${filterQuery}
-                ) AS total`
+                ) AS total`;
             };
 
             query = `

@@ -1,5 +1,4 @@
 const db = require('../../config/db');
-const { date } = require('../../lib/utils');
 
 module.exports = {
     all() {
@@ -19,8 +18,7 @@ module.exports = {
                 SELECT recipes.*, chefs.name AS chefs_name
                 FROM recipes
                 LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-                WHERE recipes.id = $1`, [id]
-            );
+                WHERE recipes.id = $1`, [id]);
         } catch(err) {
             console.error(err);
         };
