@@ -7,59 +7,100 @@ for(let card of cards) {
     });
 }
 
-// Show and hide
-const ingredients = document.querySelector('.ingredients');
-const preparation = document.querySelector('.method-of-preparation');
-const information = document.querySelector(".additional-information");
+// // Show and hide
+// const ingredients = document.querySelector('.ingredients');
+// const preparation = document.querySelector('.method-of-preparation');
+// const information = document.querySelector(".additional-information");
 
-if(ingredients || preparation || information) {
-    hideIngredients();
-    hidePreparation();
-    hideInformation();
-}
+// if(ingredients || preparation || information) {
+//     hideIngredients();
+//     hidePreparation();
+//     hideInformation();
+// }
 
-function hideIngredients() {
-    const ingredientsSpan = document.querySelector('.ingredients span');
+// function hideIngredients() {
+//     const ingredientsSpan = document.querySelector('.ingredients span');
     
-    ingredientsSpan.addEventListener('click', () => {
+//     ingredientsSpan.addEventListener('click', () => {
+//         if(ingredientsSpan.innerHTML == "Esconder") {
+//             ingredientsSpan.innerHTML = "Mostrar";
+//             ingredients.className += " hide";
+//         } else {
+//             ingredientsSpan.innerHTML = "Esconder";
+//             ingredients.className = "ingredients";
+//         }
+//     });
+// }
+
+
+// function hidePreparation() {
+//     const preparationSpan = document.querySelector('.method-of-preparation span');
+    
+//     preparationSpan.addEventListener('click', () => {
+//         if(preparationSpan.innerHTML == "Esconder") {
+//             preparationSpan.innerHTML = "Mostrar";
+//             preparation.className += " hide";
+//         } else {
+//             preparationSpan.innerHTML = "Esconder";
+//             preparation.className = "method-of-preparation";
+//         }
+//     });
+// }
+
+// function hideInformation() {
+//     const informationSpan = document.querySelector('.additional-information span');
+
+//     information.addEventListener('click', () => {
+//         if(informationSpan.innerHTML == "Esconder") {
+//             informationSpan.innerHTML = "Mostrar";
+//             information.className += " hide";
+//         } else {
+//             informationSpan.innerHTML = "Esconder";
+//             information.className = "method-of-preparation";
+//         }
+//     });
+// }
+
+// Show and hide -- TESTES
+const showAndHide = {
+    hideIngredients() {
+        const ingredients = document.querySelector('.ingredients');
+        const ingredientsSpan = document.querySelector('.ingredients span');
+
+        
         if(ingredientsSpan.innerHTML == "Esconder") {
             ingredientsSpan.innerHTML = "Mostrar";
             ingredients.className += " hide";
         } else {
             ingredientsSpan.innerHTML = "Esconder";
             ingredients.className = "ingredients";
-        }
-    });
-}
+        };
+    },
+    hidePreparation() {
+        const preparation = document.querySelector('.method-of-preparation');
+        const preparationSpan = document.querySelector('.method-of-preparation span');
 
-
-function hidePreparation() {
-    const preparationSpan = document.querySelector('.method-of-preparation span');
-    
-    preparationSpan.addEventListener('click', () => {
         if(preparationSpan.innerHTML == "Esconder") {
             preparationSpan.innerHTML = "Mostrar";
             preparation.className += " hide";
         } else {
             preparationSpan.innerHTML = "Esconder";
             preparation.className = "method-of-preparation";
-        }
-    });
-}
+        };
+    },
+    hideInformation() {
+        const information = document.querySelector(".additional-information");
+        const informationSpan = document.querySelector('.additional-information span');
 
-function hideInformation() {
-    const informationSpan = document.querySelector('.additional-information span');
-
-    information.addEventListener('click', () => {
         if(informationSpan.innerHTML == "Esconder") {
             informationSpan.innerHTML = "Mostrar";
             information.className += " hide";
         } else {
             informationSpan.innerHTML = "Esconder";
             information.className = "method-of-preparation";
-        }
-    });
-}
+        };
+    }
+};
 
 // Logic for removing input 
 // on pages other than the create page
@@ -278,6 +319,7 @@ function addPreparation() {
     // });
 }
 
+// Pagination
 const pagination = document.querySelector('.pagination');
 const search = pagination.dataset.search;
 const page = +pagination.dataset.page;

@@ -22,6 +22,66 @@
         <section class="ingredients">
             <h3>
                 Ingredientes
+                <span onclick="showAndHide.hideIngredients()">Esconder</span>
+            </h3>
+
+            <ul>
+                {% for ingredient in recipe[0].ingredients %}
+                    <li>{{ingredient}}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="method-of-preparation">
+            <h3>
+                Modo de preparo
+                <span onclick="showAndHide.hidePreparation()">Esconder</span>
+            </h3>
+            
+            <ul>
+                {% for preparation in recipe[0].preparation %}
+                    <li>{{preparation}}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="additional-information">
+            <h3>
+                Informações adicionais
+                <span onclick="showAndHide.hideInformation()">Esconder</span>
+            </h3>
+            
+            <ul>
+                <li>{{recipe[0].information}}</li>
+            </ul>
+        </section>
+    </div>
+{% endblock %}
+
+{# {% extends "layout.njk" %}
+
+{% block title %}
+    <title>{{recipe[0].title}}</title>
+{% endblock %}
+
+{% block links %}
+    <li><a href="/about">Sobre</a></li>
+    <li><a href="/recipes" class="active">Receitas</a></li>
+    <li><a href="/chefs">Chefs</a></li>
+{% endblock %}
+
+{% block contents %}
+    <img class="recipe-image" src="{{files[0].src}}" alt="">
+
+    <div class="recipe-title">
+        <h2>{{recipe[0].title}}</h2>
+        <span>por {{recipe[0].name}}</span>
+    </div>
+
+    <div class="recipe-info">
+        <section class="ingredients">
+            <h3>
+                Ingredientes
                 <span>Esconder</span>
             </h3>
 
@@ -56,4 +116,4 @@
             </ul>
         </section>
     </div>
-{% endblock %}
+{% endblock %} #}
