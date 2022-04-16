@@ -7,6 +7,7 @@ module.exports = {
                 SELECT recipes.*, chefs.name AS chefs_name
                 FROM recipes
                 LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                GROUP BY recipes.id, chefs.name LIMIT 6 OFFSET 1;
             `);
         } catch(err) {
             console.error(err);
