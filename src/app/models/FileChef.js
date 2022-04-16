@@ -17,20 +17,6 @@ module.exports = {
                 path
             ];
 
-            // const results = await db.query(query, values);
-            // const fileId = results.rows[0].id;
-            // if(chefId) {
-            //     query = `
-            //         UPDATE chefs SET 
-            //             file_id=($1)
-            //         WHERE id = $2
-            //     `
-            //     values = [
-            //         fileId,
-            //         chefId
-            //     ]
-            // };
-
             return db.query(query, values);  
         } catch (err) {
             console.error(err);

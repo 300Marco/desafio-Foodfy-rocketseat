@@ -8,26 +8,6 @@ module.exports = {
             console.error(err);
         };
     },
-    // create(data) {
-    //     try {
-    //         const query = `
-    //             INSERT INTO chefs (
-    //                 file_id,
-    //                 name
-    //             ) VALUES ($1, $2)
-    //             RETURNING id
-    //         `;
-
-    //         const values = [
-    //             data.fileId,
-    //             data.name
-    //         ];
-
-    //         return db.query(query, values);
-    //     } catch(err) {
-    //         console.error(err);
-    //     };
-    // },
     create(data, file_id) {
         try {
             const query = `
@@ -56,26 +36,6 @@ module.exports = {
             console.error(err);
         };
     },
-    // update(data) {
-    //     try {
-    //         const query = `
-    //             UPDATE chefs SET
-    //                 name=($1),
-    //                 file_id=($2)
-    //             WHERE id = $3
-    //         `;
-
-    //         const values = [
-    //             data.name,
-    //             data.file_id,
-    //             data.id
-    //         ];
-
-    //         return db.query(query, values);
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // },
     update(data, file_id) {
         try {
             const query = `

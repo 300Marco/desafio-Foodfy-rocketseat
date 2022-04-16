@@ -47,7 +47,7 @@ module.exports = {
             `, [id]);
 
             if(result.rows[0]) {
-                // recebe o id de recipe_files
+                // get the id from recipe_files
                 const recipeFilesTableId = result.rows[0].id;
 
                 await db.query(`
