@@ -113,36 +113,6 @@ module.exports = {
             console.error(err);
         };
     },
-    // METHODS HTTP
-    // async post(req, res) {
-    //     try {
-    //         const keys = Object.keys(req.body);
-        
-    //         for(key of keys) {
-    //             if(req.body[key] == "") {
-    //                 return res.send("Please fill in all fields");
-    //             };
-    //         };
-    
-    //         if(req.files.length == 0) {
-    //             return res.send('Please, send at last one image');
-    //         };
-    
-    //         const results = await AdminChef.create(req.body);
-    //         const chefId = results.rows[0].id;
-    
-    //         // Send Image
-    //         const filesPromise = req.files.map(file => FileAdminChef.create({
-    //             ...file,
-    //             chefId
-    //         }));
-    //         await Promise.all(filesPromise);
-    
-    //         return res.redirect(`/admin/chefs/${chefId}`);  
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // },
     async post(req, res) {
         try {
             const keys = Object.keys(req.body);
