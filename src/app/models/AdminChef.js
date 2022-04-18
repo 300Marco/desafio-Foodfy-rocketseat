@@ -85,7 +85,9 @@ module.exports = {
                 SELECT recipes.*, chefs.name AS chefs_name
                 FROM recipes
                 LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-                WHERE recipes.chef_id = $1`, [id]);
+                WHERE recipes.chef_id = $1
+                ORDER BY created_at DESC
+            `, [id]);
         } catch(err) {
             console.error(err);
         };

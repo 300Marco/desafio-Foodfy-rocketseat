@@ -7,6 +7,7 @@ module.exports = {
                 SELECT recipes.*, chefs.name AS chefs_name
                 FROM recipes
                 LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                ORDER BY created_at DESC
             `);
         } catch (err) {
             console.error(err);

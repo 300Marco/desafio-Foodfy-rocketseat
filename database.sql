@@ -2,7 +2,8 @@ CREATE TABLE "chefs" (
   "id" SERIAL PRIMARY KEY,
   "name" text,
   "file_id" int,
-  "created_at" timestamp DEFAULT (now())
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE "recipes" (
@@ -35,3 +36,25 @@ ALTER TABLE "recipe_files" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id")
 ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");
 
 ALTER TABLE "chefs" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
+
+-- Precisamos que o campo update, atualize o dia e hora de quando algo for alterado, esta função SQL.
+CREATE FUNCTION trigger_set_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+	NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- CHEFS
+-- Execute este comando após executar o primeiro. Este comando executa a função acima:
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON chefs
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- RECIPES
+CREATE TRIGGER set_timestamp
+BEFORE UPDATE ON recipes
+FOR EACH ROW
+EXECUTE PROCEDURE trigger_set_timestamp();
