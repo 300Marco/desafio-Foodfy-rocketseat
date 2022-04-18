@@ -1,7 +1,7 @@
 {% extends "layout.njk" %}
 
 {% block title %}
-    <title>Editar - {{chef.name}}</title>
+    <title>Editar chefe - {{chef.name}}</title>
 {% endblock %}
 
 {% block header %}
@@ -12,7 +12,7 @@
     <div class="recipe-form">
         <form method="POST" action="/admin/chefs?_method=put" enctype="multipart/form-data">
             <div class="recipe-detail">
-                <span class="detail-title">Editando chef</span>
+                <span class="detail-title">Editando chefe</span>
 
                 <div class="buttons">
                     <button class="delete-button" form="form-delete">Deletar</button>
