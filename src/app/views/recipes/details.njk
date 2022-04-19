@@ -77,9 +77,13 @@
                 Informações adicionais
                 <span onclick="showAndHide.hideInformation()">Esconder</span>
             </h3>
-            
+
             <ul>
-                <li>{{recipe[0].information}}</li>
+                {% if recipe[0].information %}
+                    <li>{{recipe[0].information}}</li>
+                {% else %}
+                    <li>Sem informações adicionais</li>
+                {% endif %}
             </ul>
         </section>
     </div>

@@ -43,7 +43,7 @@ const showAndHide = {
             information.className += " hide";
         } else {
             informationSpan.innerHTML = "Esconder";
-            information.className = "method-of-preparation";
+            information.className = "additional-information";
         };
     }
 };
