@@ -391,6 +391,10 @@ footer span {
     font-size: 20px;
 }
 
+.cards-admin-recipes span a {
+    font-size: 20px;
+}
+
 .recipe-info {
     margin-bottom: 50px;
 }

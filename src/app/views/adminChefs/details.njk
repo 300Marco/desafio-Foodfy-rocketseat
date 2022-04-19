@@ -41,7 +41,9 @@
         <h3>Receitas</h3>
             <div class="cards cards-admin-recipes">
                 {% if recipesCount == '0' %}
-                    <span>Sem receitas para mostrar</span>
+                    <span>
+                        Sem receitas para mostrar. <a href="/admin/recipes/create">Criar receita</a>
+                    </span>
                 {% else %}
                     {% for recipe in recipes %}
                         <div class="card-admin-recipes">
