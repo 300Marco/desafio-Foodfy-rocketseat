@@ -419,6 +419,7 @@ footer span {
 
 .additional-information ul li {
     list-style: none;
+    margin: 0;
 }
 
 /* ========== PAGE RECIPE - show/hide action ========== */
@@ -655,7 +656,7 @@ footer span {
 .cards-admin-chefs {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr !important;
-    gap: 30px 61px;
+    gap: 30px 25px;
 }
 
 .card-admin-chefs {
