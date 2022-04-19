@@ -37,7 +37,7 @@ ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");
 
 ALTER TABLE "chefs" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
 
--- Precisamos que o campo update, atualize o dia e hora de quando algo for alterado, esta função SQL.
+-- Precisamos que o campo update, atualize o dia e hora de quando algo for alterado.
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -47,7 +47,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- CHEFS
--- Execute este comando após executar o primeiro. Este comando executa a função acima:
+-- Execute este comando após executar o primeiro. Este comando executa a função acima para chefs e recipes:
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON chefs
 FOR EACH ROW
