@@ -7,6 +7,38 @@ for(let card of cards) {
     });
 }
 
+// Dynamic admin header
+const boxAdminHeader = document.querySelector('.box-admin-header-menu');
+
+if(boxAdminHeader) {
+    dynamicAdminHeader();
+};
+
+function dynamicAdminHeader() {
+    const currentPage = location.pathname;
+    const logoLink = document.querySelector('.title a');
+    const li = document.querySelectorAll('nav ul li');
+    
+    if(currentPage == "/admin/recipes") {
+        logoLink.href = '/admin/recipes';
+        
+        for(let link of li) {
+            if(link.firstChild.pathname == '/admin/recipes') {
+                link.firstChild.className = 'admin-active'
+            }
+        }
+    } else if(currentPage == "/admin/chefs") {
+        logoLink.href = '/admin/chefs';
+    
+        for(let link of li) {
+            if(link.firstChild.pathname == '/admin/chefs') {
+                link.firstChild.className = 'admin-active'
+            }
+        }
+    };
+}
+
+
 // Show and hide -- TESTES
 const showAndHide = {
     hideIngredients() {
