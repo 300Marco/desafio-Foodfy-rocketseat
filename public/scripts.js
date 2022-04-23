@@ -45,24 +45,24 @@ function dynamicAdminHeader() {
     const currentPage = location.pathname;
     const logoLink = document.querySelector('.title a');
     const li = document.querySelectorAll('nav ul li');
-    
-    if(currentPage == "/admin/recipes") {
-        logoLink.href = '/admin/recipes';
+
+    for(let link of li) {
+        // index page
+        if(currentPage == '/admin/recipes' && link.firstChild.pathname == '/admin/recipes') {
+            link.firstChild.className = 'admin-active';
+        } else if(currentPage == '/admin/chefs' && link.firstChild.pathname == '/admin/chefs') {
+            logoLink.href = '/admin/chefs';
+            link.firstChild.className = 'admin-active';
+        };
         
-        for(let link of li) {
-            if(link.firstChild.pathname == '/admin/recipes') {
-                link.firstChild.className = 'admin-active'
-            }
+        // detail page and edit - recipes and chefs
+        if(currentPage.indexOf('/admin/recipes') == 0 && link.firstChild.pathname == '/admin/recipes') {
+            link.firstChild.className = 'admin-active';
+        } else if(currentPage.indexOf('/admin/chefs') == 0 && link.firstChild.pathname == '/admin/chefs') {
+            logoLink.href = '/admin/chefs';
+            link.firstChild.className = 'admin-active';
         }
-    } else if(currentPage == "/admin/chefs") {
-        logoLink.href = '/admin/chefs';
-    
-        for(let link of li) {
-            if(link.firstChild.pathname == '/admin/chefs') {
-                link.firstChild.className = 'admin-active'
-            }
-        }
-    };
+    }
 }
 
 
