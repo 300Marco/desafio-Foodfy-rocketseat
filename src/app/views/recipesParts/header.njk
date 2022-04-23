@@ -1,0 +1,36 @@
+<header>
+    <div class="page-foodfy">
+        <div class="title">
+        <h1 class="sr-only">Foodfy</h1>
+
+        <a href="/">
+            <img src="/assets/logo.png" alt="Foodfy">
+        </a>
+        </div>
+
+        <nav>
+            <ul>
+                {# {% block links %} #}
+                    <li><a href="/about">Sobre</a></li>
+                    <li><a href="/recipes">Receitas</a></li>
+                    <li><a href="/chefs">Chefs</a></li>
+                {# {% endblock %} #}
+            </ul>
+        </nav>
+
+    </div>
+    
+    {% block search %}
+        <div class="input-search">
+            <form action="/search" method="GET">
+                <input 
+                    type="text" 
+                    name="search"
+                    value="{{search}}"
+                    placeholder="Buscar uma receita"
+                >
+                <button>Buscar</button>
+            </form>
+        </div>
+    {% endblock %}
+</header>

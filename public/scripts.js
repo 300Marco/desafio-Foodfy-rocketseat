@@ -27,8 +27,10 @@ function dynamicVisitorHeader() {
             link.firstChild.className = 'active';
         } else if(currentPage.indexOf('/details') == 0 && link.firstChild.pathname == '/recipes') {
             link.firstChild.className = 'active';
+        } else if(currentPage.indexOf('/search') == 0 && link.firstChild.pathname == '/recipes') {
+            link.firstChild.className = 'active';
         };
-    }
+    };
 }
 
 
