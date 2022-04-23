@@ -7,6 +7,31 @@ for(let card of cards) {
     });
 }
 
+// Dynamic visitor header
+const pageFoodfy = document.querySelector('.page-foodfy');
+
+if(pageFoodfy) {
+    dynamicVisitorHeader();
+}
+
+function dynamicVisitorHeader() {
+    const currentPage = location.pathname;
+    const li = document.querySelectorAll('nav ul li');
+
+    for(let link of li) {
+        if(currentPage == '/about' && link.firstChild.pathname == '/about') {
+            link.firstChild.className = 'active';
+        } else if(currentPage == '/recipes' && link.firstChild.pathname == '/recipes') {
+            link.firstChild.className = 'active';
+        } else if(currentPage == '/chefs' && link.firstChild.pathname == '/chefs') {
+            link.firstChild.className = 'active';
+        } else if(currentPage.indexOf('/details') == 0 && link.firstChild.pathname == '/recipes') {
+            link.firstChild.className = 'active';
+        };
+    }
+}
+
+
 // Dynamic admin header
 const boxAdminHeader = document.querySelector('.box-admin-header-menu');
 
