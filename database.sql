@@ -8,6 +8,7 @@ CREATE TABLE "chefs" (
 
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
+  "user_id" int,
   "chef_id" int,
   "title" text,
   "ingredients" text[],
@@ -29,6 +30,16 @@ CREATE TABLE "recipe_files" (
   "file_id" int
 );
 
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "name" text not null,
+  "email" text unique not null,
+  "password" text not null,
+  "is_admin" boolean default false,
+  "created_at" timestamp DEFAULT (now()),
+  "updated_at" timestamp DEFAULT (now())
+)
+
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
 
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
@@ -36,6 +47,8 @@ ALTER TABLE "recipe_files" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id")
 ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");
 
 ALTER TABLE "chefs" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
+
+ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 -- Precisamos que o campo update, atualize o dia e hora de quando algo for alterado.
 CREATE FUNCTION trigger_set_timestamp()
