@@ -53,6 +53,9 @@ function dynamicAdminHeader() {
         } else if(currentPage == '/admin/chefs' && link.firstChild.pathname == '/admin/chefs') {
             logoLink.href = '/admin/chefs';
             link.firstChild.className = 'admin-active';
+        } else if(currentPage == '/admin/users/create' && link.firstChild.pathname == '/admin/users/create') {
+            logoLink.href = '/admin/users/create';
+            link.firstChild.className = 'admin-active';
         };
         
         // detail page and edit - recipes and chefs
@@ -129,7 +132,7 @@ function displayInput() {
     const getInputName = document.querySelector('.name-input');
     const chefId = getInputName.getAttribute('id');
 
-    if(href != '/admin/recipes/create' && href != '/admin/chefs/create' && href != `/admin/chefs/${chefId}/edit`) {
+    if(href != '/admin/recipes/create' && href != '/admin/chefs/create' && href != `/admin/chefs/${chefId}/edit` && href != '/admin/users/create') {
         inputIngredient.classList.add('hide-input');
         inputPreparation.classList.add('hide-input');
 

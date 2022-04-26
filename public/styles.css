@@ -60,6 +60,10 @@ header .page-foodfy {
     display: flex;
 }
 
+.header-background nav {
+    width: 300px;
+}
+
 /* ========== LOGO ========== */
 .sr-only {
     position: absolute;
@@ -448,6 +452,7 @@ footer span {
 
 .box-admin-header-menu nav ul {
     display: flex;
+    justify-content: space-between;
 }
 
 .box-admin-header-menu ul li a {
@@ -459,9 +464,9 @@ footer span {
     font-weight: bold;
 }
 
-.box-admin-header-menu nav ul li:nth-child(1) {
+/* .box-admin-header-menu nav ul li:nth-child(1) {
     margin-right: 30px;
-}
+} */
 
 .admin-active {
     font-weight: bold;
