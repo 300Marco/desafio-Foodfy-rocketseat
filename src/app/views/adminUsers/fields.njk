@@ -6,6 +6,7 @@
                 name="name" 
                 {# value="{{}}" #}
                 placeholder="Digite o nome completo"
+                required
             >
         </div>
 
@@ -16,6 +17,7 @@
                 name="email" 
                 {# value="{{}}" #}
                 placeholder="Digite o email"
+                onblur="Validate.apply(this, 'isEmail')"
             >
         </div>
     </div>
