@@ -10,7 +10,7 @@ const UserController = require('../app/controllers/UserController');
 
 // user register UserController
 routes.get('/users/create', UserController.create) // Formulário de Criação
-// routes.post('/users', UserController.post) // Método de cadastro
+routes.post('/users', UserController.post) // Método de cadastro
 
 // routes.get('/users/:id/edit', UserController.edit) // ou (UserController.show) formulário de edição do usuário
 // routes.get('/users', UserController.list) // Mostrar a lista de usuários cadastrados

@@ -605,6 +605,7 @@ const avatarUpload = {
     }
 }
 
+// Validation in the email field
 const Validate = {
     apply(input, func) {
         Validate.clearErrors(input);
