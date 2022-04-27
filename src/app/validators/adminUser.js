@@ -3,25 +3,28 @@ const User = require('../models/AdminUser');
 async function post(req, res, next) {
     const data = req.body;
 
+    if(data.is_admin) data.is_admin = 'true';
+    console.log(data)
+
     // checar se todos os campos estão preenchidos
     const keys = Object.keys(data);
     
         for(key of keys) {
             if(data[key] == "") {
-                return res.send("Please fill in all fields");
+                return res.render('adminUsers/create', {
+                    user: data,
+                    error: "Por favor, preencha todos os campos"
+                });
             };
         };
 
     // Checar se usuário já existe [email]
     const { email } = req.body;
     const user = await User.findOne({ where: {email} });
-    
-    if(data.is_admin) data.is_admin = 'true';
-    console.log(data)
 
     if(user) return res.render('adminUsers/create', {
         user: data,
-        error: "Usuário já cadastrado"
+        error: "Email já cadastrado"
     });
 
     next();
