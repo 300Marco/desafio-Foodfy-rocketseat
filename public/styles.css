@@ -1106,3 +1106,11 @@ form .recipe #avatar-upload p {
     display: block;
 }
 /* ========== END CHECKBOX */
+
+/* ========== VALIDATE ERRORS */
+.admin-email .error {
+    background-color: var(--color-red);
+    color: white;
+    padding: 6px;
+    border-radius: 0 0px 4px 4px;
+}
