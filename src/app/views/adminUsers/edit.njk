@@ -1,0 +1,27 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Editar Usuário</title>
+{% endblock %}
+
+{% block header %}
+    {% include "adminParts/header.njk" %}
+{% endblock %}
+
+{% block contents %}
+    <form method="POST" action="/admin/users">
+        <div class="recipe-detail admin-form">
+            <span class="detail-title">Criar Usuário</span>
+
+            <div class="buttons">
+                <button class="edit-button admin-button" type="submit">Salvar</button>
+
+                <a class="cancel-button" href="#">Cancelar</a>
+            </div>
+        </div>
+
+        {% include "adminUsers/fields.njk" %}
+    </form>
+{% endblock %}
+
+{% block footer %} {% endblock %}

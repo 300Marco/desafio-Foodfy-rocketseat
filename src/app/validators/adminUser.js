@@ -3,8 +3,12 @@ const User = require('../models/AdminUser');
 async function post(req, res, next) {
     const data = req.body;
 
-    if(data.is_admin) data.is_admin = 'true';
-    console.log(data)
+    if(data.is_admin) {
+        data.is_admin = 'true';
+    } else {
+        data.is_admin = 'false';
+    };
+    // console.log(data);
 
     // checar se todos os campos estão preenchidos
     const keys = Object.keys(data);
