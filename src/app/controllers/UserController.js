@@ -9,6 +9,8 @@ module.exports = {
     },
     async post(req, res) {
         const userId = await AdminUser.create(req.body);
+
+        req.session.userId = userId;
         
         // return res.send('Ok: Crie uma rota para edição');
         return res.redirect(`/admin/users/:${userId}/edit`);
