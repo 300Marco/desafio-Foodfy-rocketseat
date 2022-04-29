@@ -9,18 +9,29 @@
 {% endblock %}
 
 {% block contents %}
-    <form method="POST" action="/admin/users">
+    <form method="POST" action="/admin/users?_method=put">
         <div class="recipe-detail admin-form">
-            <span class="detail-title">Criar Usuário</span>
+            <span class="detail-title">Atualizar Usuário</span>
 
             <div class="buttons">
-                <button class="edit-button admin-button" type="submit">Salvar</button>
+                <button class="delete-button" form="form-delete">Deletar</button>
 
-                <a class="cancel-button" href="#">Cancelar</a>
+                <button class="edit-button" type="submit">Salvar</button>
             </div>
         </div>
 
         {% include "adminUsers/fields.njk" %}
+
+        <input 
+                type="hidden"
+                name="id"
+                value="{{user.id}}"
+        >
+    </form>
+
+    <form id="form-delete" method="POST" action="/admin/users?_method=delete">
+            {# <input type="hidden" name="id" value="{{user.id}}"> #}
+            <input type="hidden" name="id" value="{{user.id}}">
     </form>
 {% endblock %}
 

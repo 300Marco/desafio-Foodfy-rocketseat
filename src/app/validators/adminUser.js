@@ -1,18 +1,18 @@
 const User = require('../models/AdminUser');
 
 async function post(req, res, next) {
-    const data = req.body;
+    try {
+        const data = req.body;
 
-    if(data.is_admin) {
-        data.is_admin = 'true';
-    } else {
-        data.is_admin = 'false';
-    };
-    // console.log(data);
+        if(data.is_admin) {
+            data.is_admin = 'true';
+        } else {
+            data.is_admin = 'false';
+        };
 
-    // checar se todos os campos estão preenchidos
-    const keys = Object.keys(data);
-    
+        // checar se todos os campos estão preenchidos
+        const keys = Object.keys(data);
+        
         for(key of keys) {
             if(data[key] == "") {
                 return res.render('adminUsers/create', {
@@ -22,16 +22,19 @@ async function post(req, res, next) {
             };
         };
 
-    // Checar se usuário já existe [email]
-    const { email } = req.body;
-    const user = await User.findOne({ where: {email} });
+        // Checar se usuário já existe [email]
+        const { email } = req.body;
+        const user = await User.findOne({ where: {email} });
 
-    if(user) return res.render('adminUsers/create', {
-        user: data,
-        error: "Email já cadastrado"
-    });
+        if(user) return res.render('adminUsers/create', {
+            user: data,
+            error: "Email já cadastrado"
+        });
 
-    next();
+        next();
+    } catch(err) {
+        console.error(err);
+    };
 }
 
 module.exports = {

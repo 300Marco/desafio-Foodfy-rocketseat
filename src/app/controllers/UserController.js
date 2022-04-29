@@ -1,6 +1,5 @@
 // const AdminChef = require('../models/AdminChef');
 const AdminUser = require('../models/AdminUser');
-const User = require('../models/AdminUser');
 
 module.exports = {
     create(req, res) {
@@ -8,14 +7,31 @@ module.exports = {
         return res.render('adminUsers/create');
     },
     async post(req, res) {
-        const userId = await AdminUser.create(req.body);
+        try {
+            const userId = await AdminUser.create(req.body);
 
-        req.session.userId = userId;
-        
-        // return res.send('Ok: Crie uma rota para edição');
-        return res.redirect(`/admin/users/:${userId}/edit`);
+            req.session.userId = userId;
+            
+            // return res.send('Ok: Crie uma rota para edição');
+            return res.redirect(`/admin/users/${userId}/edit`);
+        } catch(err) {
+            console.error(err);
+        }
     },
     async edit(req, res) {
-        return res.send('Usuário criado com sucesso');
+        try {
+            const { userId: id } = req.session; // pegando o id de session
+
+            // busca o usuário que iremos editar
+            const user = await AdminUser.findOne({ where: {id} });
+
+            if(!user) return res.render('adminUsers/create', {
+                error: "Usuário não encontrado",
+            });
+
+            return res.render('adminUsers/edit', { user });
+        } catch(err) {
+            console.error(err);
+        };
     }
 }
