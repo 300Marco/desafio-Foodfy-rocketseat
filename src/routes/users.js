@@ -14,9 +14,9 @@ const Validator = require('../app/validators/adminUser');
 routes.get('/users/create', UserController.create) // Formulário de Criação
 routes.post('/users', Validator.post, UserController.post) // Método de cadastro
 
-routes.get('/users/:id/edit', UserController.edit) // ou (UserController.show) formulário de edição do usuário
+routes.get('/users/:id/edit', Validator.edit, UserController.edit) // ou (UserController.show) formulário de edição do usuário
 // routes.get('/users', UserController.list) // Mostrar a lista de usuários cadastrados
-// routes.put('/users/:id', UserController.put) // Editar um usuário
+routes.put('/users/:id', Validator.update, UserController.update) // Editar um usuário
 // routes.delete('/users/:id', UserController.delete) // Deletar um usuário
 
 module.exports = routes;

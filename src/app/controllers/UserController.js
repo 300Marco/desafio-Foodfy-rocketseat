@@ -20,18 +20,33 @@ module.exports = {
     },
     async edit(req, res) {
         try {
-            const { userId: id } = req.session; // pegando o id de session
-
-            // busca o usuário que iremos editar
-            const user = await AdminUser.findOne({ where: {id} });
-
-            if(!user) return res.render('adminUsers/create', {
-                error: "Usuário não encontrado",
-            });
+            const { user } = req;
 
             return res.render('adminUsers/edit', { user });
         } catch(err) {
             console.error(err);
         };
+    },
+    async update(req, res) {
+        try {
+            const { user } = req;
+            let { name, email, is_admin } = req.body;
+
+            await AdminUser.update(user.id, {
+                name, 
+                email, 
+                is_admin
+            });
+
+            return res.render(`adminUsers/edit`, {
+                user: req.body,
+                success: 'Conta atualizada com sucesso!' 
+            });
+        } catch(err) {
+            console.error(err);
+            return res.render('AdminUser/edit', {
+                error: 'Houve um erro inesperado!'
+            })
+        }
     }
 }
