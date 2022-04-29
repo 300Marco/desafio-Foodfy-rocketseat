@@ -23,3 +23,8 @@
     background-color: var(--color-red);
     color: white;
 }
+
+.success {
+    background-color: var(--color-success);
+    color: white;
+}
