@@ -1,0 +1,21 @@
+<div class="recipe-fields session-fields">
+    <div class="admin-email">
+        <div class="name-input">Email</div>
+        <input 
+            type="email"
+            name="email" 
+            value="{{user.email}}"
+            placeholder="Digite seu email"
+            onblur="Validate.apply(this, 'isEmail')"
+        >
+    </div>
+
+    <div class="admin-password">
+        <div class="name-input">Senha</div>
+        <input 
+            type="password" 
+            name="password"
+            placeholder="Digite sua senha"
+        >
+    </div>
+</div>

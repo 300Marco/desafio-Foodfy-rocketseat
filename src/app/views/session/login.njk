@@ -1,0 +1,30 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+{% block header %}
+    {% include "adminParts/sessionHeader.njk" %}
+{% endblock %}
+
+{% block contents %}
+    <div class="container-session">
+        <div class="session-form">
+            <h3> Iniciar Sessão </h3>
+            <form method="POST" action="/admin/users/login">
+                {% include "session/fields.njk" %}
+
+                <div class="session-login">
+                    <a class="#">Perdeu a senha?</a>
+
+                    <div class="buttons">
+                        <button class="edit-button admin-button" type="submit">Acessar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %} {% endblock %}

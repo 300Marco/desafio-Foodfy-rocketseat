@@ -8,9 +8,10 @@ const Validator = require('../app/validators/adminUser');
 
 
 // login/logout
+routes.get('/users/login', SessionController.login); // login do usuário
+routes.post('/users/logout', SessionController.logout); // logout do usuário
 
 // reset password / forgot
-routes.post('/users/logout', SessionController.logout);
 
 // user register UserController
 routes.get('/users/create', UserController.create) // Formulário de Criação

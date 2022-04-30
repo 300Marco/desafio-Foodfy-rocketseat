@@ -1,0 +1,62 @@
+/* ========== HEADER ========== */
+.session-header {
+    background-color: white;
+    padding: 35px 0 0 0;
+
+    display: flex;
+    justify-content: center;
+}
+
+.session-header .title {
+    margin: 0;
+}
+
+/* ========== CONTAINER-FORM ========== */
+.container-session {
+    height: calc(80vh);
+
+    display: flex;
+    align-items: center;
+}
+
+/* ========== FORM ========== */
+.session-form {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.session-form h3 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 35px;
+}
+
+.session-fields {
+    margin-bottom: 45px;
+}
+
+.session-fields .admin-email {
+    margin-bottom: 35px;
+}
+
+.session-login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.session-login a {
+    color: var(--color-session);
+    font-weight: bold;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.session-login a:hover {
+    filter: brightness(80%);
+}
+
+.session-login button {
+    padding: 9px 36px;
+}
