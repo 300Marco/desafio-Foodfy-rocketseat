@@ -46,6 +46,12 @@ function dynamicAdminHeader() {
     const logoLink = document.querySelector('.title a');
     const li = document.querySelectorAll('nav ul li');
 
+    // /admin/users/create
+    // Voltar aqui.. Funciona para edit, mais não em create
+    // porque create não enxerga esse input.
+    // const getInputHidden = document.querySelector('input[class="input-edit"]');
+    // const userId = getInputHidden.getAttribute('value');
+
     for(let link of li) {
         // index page
         if(currentPage == '/admin/recipes' && link.firstChild.pathname == '/admin/recipes') {
@@ -53,10 +59,11 @@ function dynamicAdminHeader() {
         } else if(currentPage == '/admin/chefs' && link.firstChild.pathname == '/admin/chefs') {
             logoLink.href = '/admin/chefs';
             link.firstChild.className = 'admin-active';
-        } else if(currentPage == '/admin/users/create' && link.firstChild.pathname == '/admin/users/create') {
-            logoLink.href = '/admin/users/create';
-            link.firstChild.className = 'admin-active';
-        };
+        }
+        // else if(currentPage == '/admin/users/create' && link.firstChild.pathname == '/admin/users/create') {
+        //     logoLink.href = '/admin/users/create';
+        //     link.firstChild.className = 'admin-active';
+        // };
         
         // detail page and edit - recipes and chefs
         if(currentPage.indexOf('/admin/recipes') == 0 && link.firstChild.pathname == '/admin/recipes') {
@@ -65,6 +72,15 @@ function dynamicAdminHeader() {
             logoLink.href = '/admin/chefs';
             link.firstChild.className = 'admin-active';
         }
+
+        // continue posteriormente...    
+        // // page edit user
+        // if(currentPage.indexOf(`/admin/users/${userId}`) == 0) {
+        //     const userLink =  document.querySelector('.accounts a');
+
+        //     // logoLink.href = ''
+        //     userLink.className = 'admin-active';
+        // };
     }
 }
 
@@ -131,8 +147,18 @@ function displayInput() {
     // get id chef
     const getInputName = document.querySelector('.name-input');
     const chefId = getInputName.getAttribute('id');
+    
+    // get id user
+    const getInputHidden = document.querySelector('input[class="input-edit"]');
+    const userId = getInputHidden.getAttribute('value');
 
-    if(href != '/admin/recipes/create' && href != '/admin/chefs/create' && href != `/admin/chefs/${chefId}/edit` && href != '/admin/users/create') {
+    if(
+        href != '/admin/recipes/create' && 
+        href != '/admin/chefs/create' && 
+        href != `/admin/chefs/${chefId}/edit` && 
+        href != '/admin/users/create' &&
+        href != `/admin/users/${userId}`
+    ) {
         inputIngredient.classList.add('hide-input');
         inputPreparation.classList.add('hide-input');
 
