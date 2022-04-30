@@ -37,8 +37,10 @@ module.exports = {
                 RETURNING id
             `;
             
-            let random = Math.random().toString(36).substring(0, 8);
-            let password = random.replace(/^../, "");
+            // let random = Math.random().toString(36).substring(0, 8);
+            // let password = random.replace(/^../, "");
+
+            let password = '123';
 
             // hash of password
             const passwordHash = await hash(password, 8);
