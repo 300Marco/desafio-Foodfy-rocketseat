@@ -1,0 +1,97 @@
+.accounts {
+    position: relative;
+}
+
+.arrow {
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    
+    transform: rotate(45deg);
+
+    position: absolute;
+    top: -10px;
+    left: 20px;
+}
+
+.accounts .submenu {
+    /* border: 1px solid blue; */
+    background-color: white;
+    width: 220px;
+    padding: 16px 0px;
+
+    margin-top: 10px;
+    /* width: 150px; */
+    border-radius: 12px;
+    box-shadow: 5px 5px 3px -3px rgb(0 0 0 / 30%);
+
+    position: absolute;
+    top: 50px;
+    left: 0;
+
+    transition: all 300ms;
+    
+    opacity: 0;
+    visibility: hidden;
+
+
+    display: block;
+}
+
+.accounts:hover .submenu {
+    top: 32px;
+    opacity: 1;
+    visibility: initial;
+}
+
+.accounts .submenu li a,
+.accounts .submenu li button {
+    text-transform: none;
+    /* border: 1px solid red; */
+    /* background-color: white; */
+    color: var(--black);
+    padding: 15px 18px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    border-radius: 4px;
+    width: 100%;
+    /* border-top: 1px solid #eee; */
+    transition: all 300ms;
+    
+    /* display: inline-block; */
+    display: flex;
+    align-items: center;
+}
+
+.accounts .submenu li button {
+    background-color: white;
+    border: none;
+    text-align: left;
+}
+
+/* .accounts .submenu li a:hover, */
+.accounts .submenu li a:hover,
+.accounts .submenu li button:hover {
+    font-weight: normal;
+    color: var(--color-purple);
+    /* background-color: #aba0ff20; */
+    background-color: #c2baff25;
+}
+
+/* ========== SYMBOLS */
+.accounts .submenu li a span,
+.accounts .submenu li button span {
+    margin-right: 10px;
+}
+
+.accounts-hover {
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    
+    /* background-color: red; */
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+}

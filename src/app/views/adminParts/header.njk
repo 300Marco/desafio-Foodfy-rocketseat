@@ -9,10 +9,44 @@
         </div>
 
         <nav>
-            <ul>
+            <ul class="links">
                 <li><a href="/admin/recipes">Receitas</a></li>
                 <li><a href="/admin/chefs">Chefs</a></li>
-                <li><a href="/admin/users/create">Usuários</a></li>
+                <li class="accounts">
+                    <a href="/admin/users/create">Usuários</a>
+                    {% if user %}
+                        <span class="accounts-hover"></span>
+                        <ul class="submenu">
+                            <span class="arrow"></span>
+                            <li>
+                                <a href="#">
+                                    <span class="material-icons md-18">face</span>
+                                    Alguma coisa
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="material-icons">check_circle</span>
+                                    Alguma coisa 2
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="material-icons">check_circle</span>
+                                    Alguma coisa 3
+                                </a>
+                            </li>
+                            <li>
+                                <form action="/admin/users/logout" method="POST">
+                                    <button>
+                                        <span class="material-icons">logout</span>
+                                        Sair
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </li>
             </ul>
         </nav>
     </div>
