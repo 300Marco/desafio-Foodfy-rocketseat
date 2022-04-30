@@ -2,6 +2,7 @@ const express = require('express');
 const routes = express.Router();
 
 const UserController = require('../app/controllers/UserController');
+const SessionController = require('../app/controllers/SessionController');
 
 const Validator = require('../app/validators/adminUser');
 
@@ -9,6 +10,7 @@ const Validator = require('../app/validators/adminUser');
 // login/logout
 
 // reset password / forgot
+routes.post('/users/logout', SessionController.logout);
 
 // user register UserController
 routes.get('/users/create', UserController.create) // Formulário de Criação
