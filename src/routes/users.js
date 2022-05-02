@@ -7,6 +7,7 @@ const ProfileController = require('../app/controllers/ProfileController');
 
 const UserValidator = require('../app/validators/adminUser');
 const SessionValidator = require('../app/validators/session');
+const ProfileValidator = require('../app/validators/adminProfile');
 
 const { onlyUsers } = require('../app/middlewares/session');
 
@@ -19,7 +20,7 @@ routes.post('/users/logout', SessionController.logout); // logout do usuário
 // reset password / forgot
 
 // logged in user profile
-routes.get('/profile', ProfileController.edit);
+routes.get('/profile', onlyUsers, ProfileValidator.edit, ProfileController.edit);
 // routes.put('/user/profile', ProfileController, update);
 
 // user register UserController
