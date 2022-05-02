@@ -1,0 +1,33 @@
+<div class="recipe-fields">
+    <div class="name-email">
+        <div class="admin-name">
+            <div class="name-input">Nome</div>
+            <input 
+                name="name" 
+                value="{{user.name}}"
+                placeholder="Digite o nome completo"
+                required
+            >
+        </div>
+
+        <div class="admin-email">
+            <div class="name-input">Email</div>
+            <input 
+                type="email"
+                name="email" 
+                value="{{user.email}}"
+                placeholder="Digite o email"
+                onblur="Validate.apply(this, 'isEmail')"
+            >
+        </div>
+    </div>
+
+    <div class="admin-password">
+        <div class="name-input">Senha</div>
+        <input 
+            type="password" 
+            name="password"
+            placeholder="Digite sua senha"
+        >
+    </div>
+</div>

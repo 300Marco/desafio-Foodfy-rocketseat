@@ -3,6 +3,7 @@ const routes = express.Router();
 
 const UserController = require('../app/controllers/UserController');
 const SessionController = require('../app/controllers/SessionController');
+const ProfileController = require('../app/controllers/ProfileController');
 
 const UserValidator = require('../app/validators/adminUser');
 const SessionValidator = require('../app/validators/session');
@@ -16,6 +17,10 @@ routes.post('/users/login', SessionValidator.login, SessionController.login); //
 routes.post('/users/logout', SessionController.logout); // logout do usuário
 
 // reset password / forgot
+
+// logged in user profile
+routes.get('/profile', ProfileController.edit);
+// routes.put('/user/profile', ProfileController, update);
 
 // user register UserController
 routes.get('/users/create', onlyUsers, UserController.create) // Formulário de Criação

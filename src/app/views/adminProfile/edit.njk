@@ -1,0 +1,31 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>{{user.name}}</title>
+{% endblock %}
+
+{% block header %}
+    {% include "adminParts/header.njk" %}
+{% endblock %}
+
+{% block contents %}
+    <form method="POST" action="/admin/profile?_method=put">
+        <div class="recipe-detail admin-form">
+            <span class="detail-title">Bem vindo {{user.name}}</span>
+
+            <div class="buttons">
+                <button class="edit-button profile-button" type="submit">Salvar</button>
+            </div>
+        </div>
+
+        {% include "adminProfile/fields.njk" %}
+
+        <input 
+                type="hidden"
+                name="id"
+                value="{{user.id}}"
+        >
+    </form>
+{% endblock %}
+
+{% block footer %} {% endblock %}
