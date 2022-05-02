@@ -2,15 +2,17 @@ const express = require('express');
 const routes = express.Router();
 
 const ChefsController = require('../app/controllers/ChefsController');
+
 const multer = require('../app/middlewares/multer');
+const { onlyUsers } = require('../app/middlewares/session');
 
-routes.get('/chefs', ChefsController.show);
+routes.get('/chefs', onlyUsers, ChefsController.show);
 
-routes.get('/chefs/create', ChefsController.create);
+routes.get('/chefs/create', onlyUsers, ChefsController.create);
 
-routes.get('/chefs/:id', ChefsController.details);
+routes.get('/chefs/:id', onlyUsers, ChefsController.details);
 
-routes.get('/chefs/:id/edit', ChefsController.edit);
+routes.get('/chefs/:id/edit', onlyUsers, ChefsController.edit);
 
 routes.post('/chefs', multer.array("avatar", 1), ChefsController.post);
 
