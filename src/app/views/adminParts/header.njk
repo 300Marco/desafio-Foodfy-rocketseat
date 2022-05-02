@@ -13,27 +13,31 @@
                 <li><a href="/admin/recipes">Receitas</a></li>
                 <li><a href="/admin/chefs">Chefs</a></li>
                 <li class="accounts">
-                    <a href="/admin/users/create">Usuários</a>
-                    {% if user %}
+                    {# quando criar a página profile, coloque a rota neste link #}
+                    <a href="#">Usuários</a>
+                    {% if session.userId %}
                         <span class="accounts-hover"></span>
                         <ul class="submenu">
                             <span class="arrow"></span>
                             <li>
+                                {# quando criar a página profile, coloque a rota neste link #}
                                 <a href="#">
-                                    <span class="material-icons md-18">face</span>
-                                    Alguma coisa
+                                    {# <span class="material-icons md-18">face</span> #}
+                                    <span class="material-icons md-18">account_circle</span>
+                                    Minha conta
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <span class="material-icons">check_circle</span>
-                                    Alguma coisa 2
+                                <a href="/admin/users/create">
+                                    <span class="material-icons">person_add</span>
+                                    Criar usuário
                                 </a>
                             </li>
                             <li>
+                                {# quando criar a página com a listagem de usuários, colocar o link aqui #}
                                 <a href="#">
-                                    <span class="material-icons">check_circle</span>
-                                    Alguma coisa 3
+                                    <span class="material-icons">supervisor_account</span>
+                                    Usuários Cadastrados
                                 </a>
                             </li>
                             <li>
