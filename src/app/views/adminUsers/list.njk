@@ -1,0 +1,28 @@
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Usuários</title>
+{% endblock %}
+
+{% block header %}
+    {% include "adminParts/header.njk" %}
+{% endblock %}
+
+{% block contents %}
+    <section class="cards-food cards-food-admin">
+        <h3>Usuários</h3>
+            <div class="cards cards-admin-chefs">
+                {% for user in users %}
+                    <div class="card-admin-chefs">
+                        <div class="card-info-admin">
+                            <p>{{user.name}}</p>
+                            <a href="/admin/users/{{user.id}}/edit">Editar</a>
+                            <a href="#">Remover</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    </section>
+{% endblock %}
+
+{% block footer %} {% endblock %}

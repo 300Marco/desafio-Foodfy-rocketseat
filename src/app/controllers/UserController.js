@@ -2,6 +2,20 @@
 const AdminUser = require('../models/AdminUser');
 
 module.exports = {
+    async list(req, res) {
+        try {
+            let results = await AdminUser.all();
+            const users = results.rows;
+
+            if(!users) return res.render('/admin/users', {
+                error: "Nenhum usuário encontrado"
+            })
+
+            return res.render('adminUsers/list', { users });
+        } catch(err) {
+            console.error(err);
+        }
+    },
     create(req, res) {
         // return res.render('adminChefs/create');
         return res.render('adminUsers/create');
