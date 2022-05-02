@@ -14,15 +14,14 @@ module.exports = {
     async update(req, res) {
         try {
             const { user } = req;
-            let { name, email, password } = req.body;
+            let { name, email } = req.body;
 
             await AdminUser.update(user.id, {
                 name, 
-                email, 
-                is_admin
+                email
             });
 
-            return res.render(`adminUsers/edit`, {
+            return res.render(`adminProfile/edit`, {
                 user: req.body,
                 success: 'Conta atualizada com sucesso!' 
             });

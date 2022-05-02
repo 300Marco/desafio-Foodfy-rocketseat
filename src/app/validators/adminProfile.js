@@ -5,7 +5,7 @@ function checkAllFields(body) {
     const keys = Object.keys(body);
         
     for(key of keys) {
-        if(body[key] == "" && key) {
+        if(body[key] == "" && key != 'is_admin') {
             return {
                 user: body,
                 error: "Por favor, preencha todos os campos"
@@ -32,30 +32,39 @@ async function edit(req, res, next) {
     };
 }
 
-// async function update(req, res, next) {
-//     const data = req.body;
+async function update(req, res, next) {
+    const data = req.body;
 
-//     if(data.is_admin) {
-//         data.is_admin = true;
-//     } else {
-//         data.is_admin = false;
-//     };
+    if(data.is_admin) {
+        data.is_admin = true;
+    } else {
+        data.is_admin = false;
+    };
 
-//     // checar se todos os campos estão preenchidos
-//     const fillAllFields = checkAllFields(req.body);
-//     if(fillAllFields) {
-//         return res.render('adminUsers/edit', fillAllFields);
-//     };
+    // checar se todos os campos estão preenchidos
+    const fillAllFields = checkAllFields(req.body);
+    if(fillAllFields) {
+        return res.render('adminProfile/edit', fillAllFields);
+        // return res.render('adminUsers/edit', fillAllFields);
+    };
 
-//     const { id } = req.body;
+    const { id, password } = req.body;
 
-//     const user = await AdminUser.findOne({ where: {id} })
+    const user = await AdminUser.findOne({ where: {id} });
+    
+    const passed = await compare(password, user.password);
 
-//     req.user = user;
+    if(!passed) return res.render('adminProfile/edit', {
+        user: req.body,
+        error: "Senha incorreta"
+    });
 
-//     next();
-// }
+    req.user = user;
+
+    next();
+}
 
 module.exports = {
-    edit
+    edit,
+    update
 };

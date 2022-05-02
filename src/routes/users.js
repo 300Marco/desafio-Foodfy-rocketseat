@@ -21,7 +21,7 @@ routes.post('/users/logout', SessionController.logout); // logout do usuário
 
 // logged in user profile
 routes.get('/profile', onlyUsers, ProfileValidator.edit, ProfileController.edit);
-// routes.put('/user/profile', ProfileController, update);
+routes.put('/profile', ProfileValidator.update, ProfileController.update);
 
 // user register UserController
 routes.get('/users/create', onlyUsers, UserController.create) // Formulário de Criação
