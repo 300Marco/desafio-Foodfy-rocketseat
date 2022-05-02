@@ -1,0 +1,56 @@
+.users-cards {
+    margin-bottom: 50px;
+}
+
+.title-button {
+    margin-bottom: 64px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-button h3 {
+    font-size: 2.4rem;
+}
+
+.title-button a {
+    padding: 9px 42px;
+}
+
+.name-user {
+    color: var(--black);
+    margin-bottom: 4px;
+}
+
+.email-user {
+    color: var(--black-light);
+    font-size: 1.4rem;
+}
+
+.user-button {
+    margin-top: 16px;
+}
+
+.edit-user,
+.remove-user {
+    font-weight: bold;
+    transition: 300ms;
+    font-size: 1.4rem;
+}
+
+.edit-user {
+    color: var(--color-purple);
+    margin-right: 16px;
+}
+.edit-user:hover {
+    color: var(--color-purple-dark);
+}
+
+.remove-user {
+    color: var(--color-red);
+}
+
+.remove-user:hover {
+    color: var(--color-red-dark);
+}

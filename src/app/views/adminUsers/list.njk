@@ -9,15 +9,19 @@
 {% endblock %}
 
 {% block contents %}
-    <section class="cards-food cards-food-admin">
-        <h3>Usuários</h3>
-            <div class="cards cards-admin-chefs">
+    <section class="users-cards">
+        <div class="title-button">
+            <h3>Usuários</h3>
+            <a href="/admin/users/create" class="edit-button">Novo</a>
+        </div>
+            <div class="cards">
                 {% for user in users %}
-                    <div class="card-admin-chefs">
-                        <div class="card-info-admin">
-                            <p>{{user.name}}</p>
-                            <a href="/admin/users/{{user.id}}/edit">Editar</a>
-                            <a href="#">Remover</a>
+                    <div class="card-content">
+                        <p class="name-user">{{user.name}}</p>
+                        <p class="email-user">{{user.email}}</p>
+                        <div class="user-button">
+                            <a class="edit-user" href="/admin/users/{{user.id}}/edit">Editar</a>
+                            <a class="remove-user" href="#">Remover</a>
                         </div>
                     </div>
                 {% endfor %}
