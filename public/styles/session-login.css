@@ -60,3 +60,8 @@
 .session-login button {
     padding: 9px 36px;
 }
+
+/* ========== LOGIN ERROR ========== */
+.login-error {
+    border: 1px solid red !important;
+}

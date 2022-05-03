@@ -126,6 +126,7 @@ header .page-foodfy {
     padding: 10px 15px;
     border-radius: 4px;
     margin-right: 8px;
+    transition: 300ms;
 }
 
 /* ========== BOX CHEF ========== */
@@ -627,6 +628,15 @@ footer span {
     margin-bottom: 15px;
     padding: 16px;
     width: 100%;
+    transition: 300ms;
+}
+
+.input-search input:focus,
+.recipe-fields input:focus,
+.recipe-fields select:focus,
+.recipe-fields textarea:focus {
+    outline: none !important;
+    border: 1px solid var(--color-purple);
 }
 
 .recipe-fields input {

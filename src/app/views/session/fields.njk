@@ -2,6 +2,9 @@
     <div class="admin-email">
         <div class="name-input">Email</div>
         <input 
+            {% if error %}
+                class="login-error"
+            {% endif %}
             type="email"
             name="email" 
             value="{{user.email}}"
@@ -12,7 +15,10 @@
 
     <div class="admin-password">
         <div class="name-input">Senha</div>
-        <input 
+        <input
+            {% if error %}
+                class="login-error"
+            {% endif %}
             type="password" 
             name="password"
             placeholder="Digite sua senha"
