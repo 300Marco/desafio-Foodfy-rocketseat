@@ -15,10 +15,10 @@ routes.get('/recipes/:id', onlyUsers, AdminRecipesController.details);
 
 routes.get('/recipes/:id/edit', onlyUsers, AdminRecipesController.edit);
 
-routes.post("/recipes", multer.array("photos", 5), AdminRecipesController.post);
+routes.post("/recipes", multer.array("photos", 5), onlyUsers, AdminRecipesController.post);
 
-routes.put('/recipes', multer.array("photos", 5), AdminRecipesController.put);
+routes.put('/recipes', multer.array("photos", 5), onlyUsers, AdminRecipesController.put);
 
-routes.delete('/recipes', AdminRecipesController.delete);
+routes.delete('/recipes', onlyUsers, AdminRecipesController.delete);
 
 module.exports = routes;

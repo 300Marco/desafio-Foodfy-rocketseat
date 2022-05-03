@@ -14,10 +14,10 @@ routes.get('/chefs/:id', onlyUsers, ChefsController.details);
 
 routes.get('/chefs/:id/edit', onlyUsers, ChefsController.edit);
 
-routes.post('/chefs', multer.array("avatar", 1), ChefsController.post);
+routes.post('/chefs', multer.array("avatar", 1), onlyUsers, ChefsController.post);
 
-routes.put('/chefs', multer.array("avatar", 1), ChefsController.put);
+routes.put('/chefs', multer.array("avatar", 1), onlyUsers, ChefsController.put);
 
-routes.delete('/chefs', ChefsController.delete);
+routes.delete('/chefs', onlyUsers, ChefsController.delete);
 
 module.exports = routes;
