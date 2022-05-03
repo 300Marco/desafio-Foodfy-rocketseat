@@ -41,7 +41,7 @@ module.exports = {
             console.error(err);
         };
     },
-    async update(req, res) {
+    async put(req, res) {
         try {
             const { user } = req;
             let { name, email, is_admin } = req.body;

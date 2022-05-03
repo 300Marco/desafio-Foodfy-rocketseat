@@ -46,7 +46,8 @@ async function post(req, res, next) {
 
 async function edit(req, res, next) {
     try {
-        const { userId: id } = req.session; // pegando o id de session
+        // const { userId: id } = req.session; // pegando o id de session
+        const id = req.params.id;
 
         // busca o usuário que iremos editar
         const user = await AdminUser.findOne({ where: {id} });
@@ -63,7 +64,7 @@ async function edit(req, res, next) {
     }
 }
 
-async function update(req, res, next) {
+async function put(req, res, next) {
     const data = req.body;
 
     if(data.is_admin) {
@@ -90,5 +91,5 @@ async function update(req, res, next) {
 module.exports = {
     post,
     edit,
-    update
+    put
 };

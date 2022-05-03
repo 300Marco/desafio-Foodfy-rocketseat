@@ -29,7 +29,7 @@ routes.post('/users', UserValidator.post, UserController.post) // Método de cad
 
 routes.get('/users/:id/edit', onlyUsers, UserValidator.edit, UserController.edit) // ou (UserController.show) formulário de edição do usuário
 routes.get('/users', UserController.list) // Mostrar a lista de usuários cadastrados
-routes.put('/users/:id', UserValidator.update, UserController.update) // Editar um usuário
+routes.put('/users/:id', UserValidator.put, UserController.put) // Editar um usuário
 // routes.delete('/users/:id', UserController.delete) // Deletar um usuário
 
 module.exports = routes;
