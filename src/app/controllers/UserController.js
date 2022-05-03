@@ -9,13 +9,39 @@ module.exports = {
 
             if(!users) return res.render('/admin/users', {
                 error: "Nenhum usuário encontrado"
-            })
+            });
 
             return res.render('adminUsers/list', { users });
         } catch(err) {
             console.error(err);
         }
     },
+    // async list(req, res) {
+    //     // 1° teste de estratégia para acessar apenas quem é admin -- DESCARTADO, EM MIDDLEWARES DE SESSION É MELHOR
+    //     try {
+    //         const { userId: id } = req.session
+
+    //         // busca o usuário que iremos editar
+    //         const user = await AdminUser.findOne({ where: {id} });
+            
+    //         if(!user.is_admin) {
+    //             return res.render('adminProfile/edit', {
+    //                 error: "Você não tem permissão para acessar esta página!"
+    //             });
+    //         };
+
+    //         let results = await AdminUser.all();
+    //         const users = results.rows;
+
+    //         if(!users) return res.render('/admin/users', {
+    //             error: "Nenhum usuário encontrado"
+    //         });
+
+    //         return res.render('adminUsers/list', { users });
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    // },
     create(req, res) {
         // return res.render('adminChefs/create');
         return res.render('adminUsers/create');
