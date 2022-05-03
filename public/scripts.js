@@ -149,15 +149,21 @@ function displayInput() {
     const chefId = getInputName.getAttribute('id');
     
     // get id user
-    const getInputHidden = document.querySelector('input[class="input-edit"]');
-    const userId = getInputHidden.getAttribute('value');
+    // const getInputHidden = document.querySelector('input[class="input-edit"]');
+    // const userId = getInputHidden.getAttribute('value');
 
+    // if(
+    //     href != '/admin/recipes/create' && 
+    //     href != '/admin/chefs/create' && 
+    //     href != `/admin/chefs/${chefId}/edit` && 
+    //     href != '/admin/users/create' &&
+    //     href != `/admin/users/${userId}`
+    // ) {
     if(
         href != '/admin/recipes/create' && 
         href != '/admin/chefs/create' && 
         href != `/admin/chefs/${chefId}/edit` && 
-        href != '/admin/users/create' &&
-        href != `/admin/users/${userId}`
+        href != '/admin/users/create'
     ) {
         inputIngredient.classList.add('hide-input');
         inputPreparation.classList.add('hide-input');
