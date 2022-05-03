@@ -5,3 +5,24 @@
 .profile-button {
     padding: 9px 42px;
 }
+
+.welcome {
+    display: flex;
+    align-items: flex-start;
+}
+
+.welcome span {
+    display: block;
+}
+
+.is_admin {
+    background-color: var(--color-success);
+    color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    margin-left: 15px;
+}

@@ -11,7 +11,13 @@
 {% block contents %}
     <form method="POST" action="/admin/profile?_method=put">
         <div class="recipe-detail admin-form">
-            <span class="detail-title">Bem vindo {{user.name}}</span>
+            <div class="welcome">
+                <span class="detail-title">Bem vindo {{user.name}}</span>
+
+                {% if user.is_admin == true %}
+                    <span class="is_admin">Administrador</span>
+                {% endif %}
+            </div>
 
             <div class="buttons">
                 <button class="edit-button profile-button" type="submit">Salvar</button>
