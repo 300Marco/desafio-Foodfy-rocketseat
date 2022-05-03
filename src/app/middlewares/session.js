@@ -6,7 +6,12 @@ function onlyUsers(req, res, next) {
     next();
 }
 
+function isLoggedRedirectToProfile(req, res, next) {
+    if(req.session.userId) return res.redirect('/admin/profile');
+}
+
 module.exports = {
-    onlyUsers
+    onlyUsers,
+    isLoggedRedirectToProfile
 }
 
