@@ -17,9 +17,20 @@
                 {# {% endblock %} #}
             </ul>
         </nav>
+    </div>
 
+    <div class="button-admin-page">
+        <a href="/admin/profile">
+            <span class="material-icons md-18">person</span>
+            {% if session.userId %}
+                Perfil
+            {% else %}
+                Entrar
+            {% endif %}
+        </a>
     </div>
     
+
     {% block search %}
         <div class="input-search">
             <form action="/search" method="GET">
