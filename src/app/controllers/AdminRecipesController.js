@@ -1,6 +1,8 @@
 const AdminRecipe = require('../models/AdminRecipe');
 const File = require('../models/File');
 
+const AdminUser = require('../models/AdminUser');
+
 module.exports = {
     async show(req, res) {
         try {
@@ -58,10 +60,48 @@ module.exports = {
             console.error(err);
         };
     },
+    // async edit(req, res) {
+    //     try {
+    //         let results = await AdminRecipe.find(req.params.id);
+    //         const recipe = results.rows[0];
+
+    //         if(!recipe) return res.send("Recipe not found!");
+
+    //         // get chefs
+    //         results = await AdminRecipe.chefsSelectOptions();
+    //         const options = results.rows;
+
+    //         // get images
+    //         results = await AdminRecipe.files(recipe.id);
+    //         let files = results.rows;
+    //         files = files.map(file => ({
+    //             ...file,
+    //             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+    //         }));
+
+    //         return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files});
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     async edit(req, res) {
         try {
             let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
+
+            // let testResults = await AdminRecipe.test(recipe.user_id);
+            // const recipeUser = testResults.rows[0];
+
+            const { userId: id } = req.session;
+            const isUserRecipes = recipe.user_id == req.session.userId;
+
+            const user = await AdminUser.findOne({ where: {id} });
+
+            // if(recipe.user_id == req.session.userId) {
+            //     console.log('é receita deste cara');
+            // } else {
+            //     console.log('não é receita');
+            // }
 
             if(!recipe) return res.send("Recipe not found!");
 
@@ -77,6 +117,16 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
+            // PERMISÃO PARA EDITAR RECEITA
+            if(user.is_admin == false && isUserRecipes == false) {
+                return res.render('adminRecipes/details', {
+                    recipe,
+                    chefsOptions: options,
+                    files,
+                    error: 'Você não tem permissão para editar esta receita!'
+                });
+            };
+            
             return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files});
         } catch (err) {
             console.error(err);
