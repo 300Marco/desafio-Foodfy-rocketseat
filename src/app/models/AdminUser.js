@@ -4,7 +4,7 @@ const { hash } = require('bcryptjs');
 module.exports = {
     async all() {
         try {
-            return db.query(`SELECT * FROM users`);
+            return db.query(`SELECT * FROM users ORDER BY users.created_at DESC`);
         } catch(err) {
             console.error(err);
         }
