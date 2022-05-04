@@ -12,7 +12,7 @@ routes.get('/chefs/create', onlyUsers, checkIsAdmin, ChefsController.create);
 
 routes.get('/chefs/:id', onlyUsers, ChefsController.details);
 
-routes.get('/chefs/:id/edit', onlyUsers, checkIsAdmin, ChefsController.edit);
+routes.get('/chefs/:id/edit', onlyUsers, ChefsController.edit);
 
 routes.post('/chefs', multer.array("avatar", 1), onlyUsers, ChefsController.post);
 
