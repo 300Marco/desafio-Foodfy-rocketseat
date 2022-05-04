@@ -11,6 +11,6 @@ module.exports = {
         req.session.destroy();
 
         // mudar essa rota, posteriormente
-        return res.redirect('/admin/chefs');
+        return res.redirect('/');
     }
 }
