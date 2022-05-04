@@ -89,20 +89,6 @@ module.exports = {
             let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
 
-            // let testResults = await AdminRecipe.test(recipe.user_id);
-            // const recipeUser = testResults.rows[0];
-
-            const { userId: id } = req.session;
-            const isUserRecipes = recipe.user_id == req.session.userId;
-
-            const user = await AdminUser.findOne({ where: {id} });
-
-            // if(recipe.user_id == req.session.userId) {
-            //     console.log('é receita deste cara');
-            // } else {
-            //     console.log('não é receita');
-            // }
-
             if(!recipe) return res.send("Recipe not found!");
 
             // get chefs
@@ -117,7 +103,16 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-            // PERMISÃO PARA EDITAR RECEITA
+            // BLOQUEIO DE USUÁRIOS SEM PERMISSÃO
+            // PEGA ID DE USUÁRIO LOGADO
+            const { userId: id } = req.session;
+
+            // VERIFICA SE OS ID BATEM
+            const isUserRecipes = recipe.user_id == req.session.userId;
+
+            const user = await AdminUser.findOne({ where: {id} });
+
+            // PERMISSÃO PARA EDITAR RECEITA
             if(user.is_admin == false && isUserRecipes == false) {
                 return res.render('adminRecipes/details', {
                     recipe,
