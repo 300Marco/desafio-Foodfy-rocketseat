@@ -42,6 +42,32 @@ module.exports = {
             console.error(err);
         };
     },
+    // create(data) {
+    //     try {
+    //         const query = `
+    //             INSERT INTO recipes (
+    //                 chef_id,
+    //                 title,
+    //                 ingredients,
+    //                 preparation,
+    //                 information
+    //             ) VALUES ($1, $2, $3, $4, $5)
+    //             RETURNING id
+    //         `;
+
+    //         const values = [
+    //             data.chef,
+    //             data.title,
+    //             data.ingredients,
+    //             data.preparation,
+    //             data.information
+    //         ];
+
+    //         return db.query(query, values);
+    //     } catch(err) {
+    //         console.error(err);
+    //     };
+    // },
     create(data) {
         try {
             const query = `
@@ -50,8 +76,9 @@ module.exports = {
                     title,
                     ingredients,
                     preparation,
-                    information
-                ) VALUES ($1, $2, $3, $4, $5)
+                    information,
+                    user_id
+                ) VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id
             `;
 
@@ -60,7 +87,8 @@ module.exports = {
                 data.title,
                 data.ingredients,
                 data.preparation,
-                data.information
+                data.information,
+                data.user_id
             ];
 
             return db.query(query, values);
