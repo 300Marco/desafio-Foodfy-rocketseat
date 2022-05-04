@@ -27,19 +27,25 @@
                                     Minha conta
                                 </a>
                             </li>
-                            <li>
-                                <a href="/admin/users/create">
-                                    <span class="material-icons">person_add</span>
-                                    Criar usuário
-                                </a>
-                            </li>
-                            <li>
-                                {# quando criar a página com a listagem de usuários, colocar o link aqui #}
-                                <a href="/admin/users">
-                                    <span class="material-icons">supervisor_account</span>
-                                    Usuários Cadastrados
-                                </a>
-                            </li>
+                            {# {% if user.is_admin == true %} #}
+                                <li>
+                                    <a href="/admin/users/create">
+                                        <span class="material-icons">person_add</span>
+                                        Criar usuário
+                                    </a>
+                                </li>
+                            {# {% endif %} #}
+
+                            {# {% if user.is_admin %} #}
+                                <li>
+                                    {# quando criar a página com a listagem de usuários, colocar o link aqui #}
+                                    <a href="/admin/users">
+                                        <span class="material-icons">supervisor_account</span>
+                                        Usuários Cadastrados
+                                    </a>
+                                </li>
+                            {# {% endif %} #}
+                            
                             <li>
                                 {# quando criar a página com a listagem de usuários, colocar o link aqui #}
                                 <a href="/">

@@ -99,3 +99,18 @@
     top: 0;
     left: 0;
 }
+
+/* ========== DISABLED */
+/* .accounts .submenu .disabled {
+    background-color: var(--gray);
+}
+
+.accounts .submenu .disabled {
+    color: var(--black-footer);
+    cursor: no-drop;
+}
+
+.accounts .submenu .disabled:hover {
+    background-color: var(--gray);
+    color: var(--black-footer);
+} */
