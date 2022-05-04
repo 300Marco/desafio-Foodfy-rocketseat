@@ -83,5 +83,13 @@ module.exports = {
 
         await db.query(query);
         return;
+    },
+    delete(id) {
+        try {
+            return db.query(`
+                DELETE FROM users WHERE id = $1`, [id]);
+        } catch(err) {
+            console.error(err);
+        }
     }
 }

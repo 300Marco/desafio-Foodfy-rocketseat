@@ -88,5 +88,18 @@ module.exports = {
                 error: 'Houve um erro inesperado!'
             })
         }
+    },
+    async delete(req, res) {
+        const { id } = req.body;
+        const user = await AdminUser.findOne({ where: {id} });
+        const checkIsUser = req.body.id == req.session.userId;
+
+        if(checkIsUser == true) return res.render('adminUsers/edit', {
+            user,
+            error: 'Não é permitido excluir sua própria conta!'
+        });
+
+        AdminUser.delete(req.body.id);
+        return res.redirect('/admin/users');
     }
 }
