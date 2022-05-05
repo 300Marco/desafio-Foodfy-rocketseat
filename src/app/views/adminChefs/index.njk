@@ -10,7 +10,12 @@
 
 {% block contents %}
     <section class="cards-food cards-food-admin">
-        <h3>Gerenciar chefs</h3>
+        <div class="chef-list-title">
+            <h3>Gerenciar chefs</h3>
+            {% if user.is_admin == true %}
+                <a href="/admin/chefs/create" class="edit-button">Criar chefe</a>
+            {% endif %}
+        </div>
             <div class="cards cards-admin-chefs">
                 {% for chef in chefs %}
                     <div class="card-admin-chefs">

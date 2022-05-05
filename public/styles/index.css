@@ -329,6 +329,18 @@ header .button-admin-page a:hover {
     margin-top: 5px;
 }
 
+.chef-list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.chef-list-title h3 {
+    margin: 0 !important;
+}
+
 .chefs-footer {
     position: absolute;
     bottom: 0;

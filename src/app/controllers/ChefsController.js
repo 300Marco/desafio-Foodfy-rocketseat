@@ -27,8 +27,12 @@ module.exports = {
             });
     
             const lastAdded = await Promise.all(chefsPromise);
+
+            // get user
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
     
-            return res.render('adminChefs/index', {chefs: lastAdded});
+            return res.render('adminChefs/index', {chefs: lastAdded, user});
         } catch (err) {
             console.error(err);
         };

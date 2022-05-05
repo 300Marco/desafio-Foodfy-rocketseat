@@ -10,7 +10,10 @@
 
 {% block contents %}
     <section class="cards-food cards-food-admin">
-        <h3>Minhas receitas</h3>
+        <div class="recipe-list-title">
+            <h3>Minhas receitas</h3>
+            <a href="/admin/recipes/create" class="edit-button">Criar receita</a>
+        </div>
             <div class="cards cards-admin-recipes">
                 {% for recipe in recipes %}
                     <div class="card-admin-recipes">
