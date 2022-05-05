@@ -21,4 +21,8 @@ routes.put('/recipes', multer.array("photos", 5), onlyUsers, AdminRecipesControl
 
 routes.delete('/recipes', onlyUsers, AdminRecipesController.delete);
 
+// User Recipes
+routes.get('/user/recipes', onlyUsers, AdminRecipesController.showUserRecipe);
+
+
 module.exports = routes;

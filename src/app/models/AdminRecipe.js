@@ -1,13 +1,15 @@
 const db = require('../../config/db');
 
 module.exports = {
-    // test(id) {
-    //     return db.query(`
-    //         SELECT recipes.*, users.name AS user_name
-    //         FROM recipes
-    //         LEFT JOIN users ON (recipes.user_id = users.id)
-    //         WHERE users.id = $1`, [id]);
-    // },
+    allUserRecipes(id) {
+        return db.query(`
+            SELECT recipes.*, chefs.name AS chefs_name
+            FROM recipes
+            LEFT JOIN users ON (recipes.user_id = users.id)
+            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+            WHERE recipes.user_id = $1
+            ORDER BY created_at DESC`, [id]);
+    },
     all() {
         try {
             return db.query(`

@@ -4,6 +4,38 @@ const File = require('../models/File');
 const AdminUser = require('../models/AdminUser');
 
 module.exports = {
+    async showUserRecipe(req, res) {
+        try {
+            const { userId: id } = req.session
+
+            let results = await AdminRecipe.allUserRecipes(id);
+            const recipes = results.rows;
+
+            if(!recipes) return res.send("Nenhuma receita encontrada!");
+
+            // get image
+            async function getImage(recipeId) {
+                let results = await AdminRecipe.files(recipeId);
+                const files = results.rows.map(
+                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                );
+
+                return files[0];
+            };
+
+            const recipesPromise = recipes.map(async recipe => {
+                recipe.img = await getImage(recipe.id);
+
+                return recipe;
+            });
+
+            const lastAdded = await Promise.all(recipesPromise);
+
+            return res.render('adminRecipes/userRecipe', {recipes: lastAdded});
+        } catch (err) {
+            console.error(err);
+        };
+    },
     async show(req, res) {
         try {
             let results = await AdminRecipe.all();
