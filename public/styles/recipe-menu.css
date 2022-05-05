@@ -1,0 +1,114 @@
+.recipes {
+    position: relative;
+}
+
+.recipe-arrow {
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    
+    transform: rotate(45deg);
+
+    position: absolute;
+    top: -10px;
+    left: 68px;
+}
+
+.recipes .recipe-submenu {
+    /* border: 1px solid blue; */
+    background-color: white;
+    width: 160px;
+    padding: 16px 0px;
+
+    margin-top: 10px;
+    /* width: 150px; */
+    border-radius: 12px;
+    box-shadow: 5px 5px 3px -3px rgb(0 0 0 / 30%);
+
+    position: absolute;
+    top: 50px;
+    left: -42px;
+
+    transition: all 300ms;
+    
+    opacity: 0;
+    visibility: hidden;
+
+
+    display: block;
+}
+
+.recipes:hover .recipe-submenu {
+    top: 32px;
+    opacity: 1;
+    visibility: initial;
+}
+
+.recipes .recipe-submenu li a,
+.recipes .recipe-submenu li button {
+    text-transform: none;
+    /* border: 1px solid red; */
+    /* background-color: white; */
+    color: var(--black);
+    padding: 15px 18px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    /* border-radius: 4px; */
+    width: 100%;
+    /* border-top: 1px solid #eee; */
+    transition: all 300ms;
+    
+    /* display: inline-block; */
+    display: flex;
+    align-items: center;
+}
+
+.recipes .recipe-submenu li button {
+    background-color: #DC474725;
+    border: none;
+    text-align: left;
+}
+
+/* .accounts .submenu li a:hover, */
+.recipes .recipe-submenu li a:hover
+/* .accounts .submenu li button:hover { */{
+    font-weight: normal;
+    color: var(--color-purple);
+    /* background-color: #aba0ff20; */
+    background-color: #c2baff25;
+}
+
+.recipes .recipe-submenu li button:hover {
+    background-color: #DC474745;
+}
+
+/* ========== SYMBOLS */
+.recipes .recipe-submenu li a span,
+.recipes .recipe-submenu li button span {
+    margin-right: 10px;
+}
+
+.recipes-hover {
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* ========== DISABLED */
+/* .accounts .submenu .disabled {
+    background-color: var(--gray);
+}
+
+.accounts .submenu .disabled {
+    color: var(--black-footer);
+    cursor: no-drop;
+}
+
+.accounts .submenu .disabled:hover {
+    background-color: var(--gray);
+    color: var(--black-footer);
+} */

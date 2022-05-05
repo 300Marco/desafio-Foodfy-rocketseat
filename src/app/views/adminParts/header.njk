@@ -10,7 +10,28 @@
 
         <nav>
             <ul class="links">
-                <li><a href="/admin/recipes">Receitas</a></li>
+                <li class="recipes">
+                    {# quando criar a página profile, coloque a rota neste link #}
+                    <a href="#">Receitas</a>
+                    {% if session.userId %}
+                        <span class="recipes-hover"></span>
+                        <ul class="recipe-submenu">
+                            <span class="recipe-arrow"></span>
+                            <li>
+                                <a href="/admin/user/recipes">
+                                    {# <span class="material-icons md-18">account_circle</span> #}
+                                    Minhas receitas
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/recipes">
+                                    {# <span class="material-icons">person_add</span> #}
+                                    Gerenciar Receitas
+                                </a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                </li>
                 <li><a href="/admin/chefs">Chefs</a></li>
                 <li class="accounts">
                     {# quando criar a página profile, coloque a rota neste link #}
