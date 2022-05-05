@@ -22,7 +22,7 @@ module.exports = {
             });
 
             return res.render(`adminProfile/edit`, {
-                user,
+                user: req.body,
                 success: 'Conta atualizada com sucesso!'
             });
         } catch(err) {

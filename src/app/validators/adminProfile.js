@@ -64,26 +64,23 @@ async function edit(req, res, next) {
 //     next();
 // }
 async function update(req, res, next) {
-    const data = req.body;
-
-    if(data.is_admin) {
-        data.is_admin = true;
-    } else {
-        data.is_admin = false;
-    };
-
-    // checar se todos os campos estão preenchidos
-    const fillAllFields = checkAllFields(req.body);
-    if(fillAllFields) {
-        return res.render('adminProfile/edit', fillAllFields);
-    };
-
     const { id, email, password } = req.body;
-
     const user = await AdminUser.findOne({ where: {id} });
 
+    // Insert is_admin into req.body
+    if(user.is_admin == true) {
+        req.body.is_admin = true;
+    } else {
+        req.body.is_admin = false;
+    };
+
+    // Check if all fields are filled
+     const fillAllFields = checkAllFields(req.body);
+     if(fillAllFields) {
+         return res.render('adminProfile/edit', fillAllFields);
+     };
+
     // Check if email already exists
-    // Buscar todos os usuários
     const allUsers = await AdminUser.all();
     const users = allUsers.rows;
     
