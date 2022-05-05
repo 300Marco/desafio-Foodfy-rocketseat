@@ -41,23 +41,21 @@
                         <ul class="submenu">
                             <span class="arrow"></span>
                             <li>
-                                {# quando criar a página profile, coloque a rota neste link #}
                                 <a href="/admin/profile">
-                                    {# <span class="material-icons md-18">face</span> #}
                                     <span class="material-icons md-18">account_circle</span>
                                     Minha conta
                                 </a>
                             </li>
-                            {# {% if user.is_admin == true %} #}
+                            {% if user.is_admin == true %}
                                 <li>
                                     <a href="/admin/users/create">
                                         <span class="material-icons">person_add</span>
                                         Criar usuário
                                     </a>
                                 </li>
-                            {# {% endif %} #}
+                            {% endif %}
 
-                            {# {% if user.is_admin %} #}
+                            {% if user.is_admin %}
                                 <li>
                                     {# quando criar a página com a listagem de usuários, colocar o link aqui #}
                                     <a href="/admin/users">
@@ -65,7 +63,7 @@
                                         Usuários Cadastrados
                                     </a>
                                 </li>
-                            {# {% endif %} #}
+                            {% endif %}
                             
                             <li>
                                 {# quando criar a página com a listagem de usuários, colocar o link aqui #}

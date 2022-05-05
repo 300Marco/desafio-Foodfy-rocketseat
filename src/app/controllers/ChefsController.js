@@ -37,8 +37,11 @@ module.exports = {
             console.error(err);
         };
     },
-    create(req, res) {
-        return res.render('adminChefs/create');
+    async create(req, res) {
+        const { userId: id } = req.session;
+        const user = await AdminUser.findOne({ where: {id} });
+
+        return res.render('adminChefs/create', {user});
     },
     async details(req, res) {
         try {
@@ -203,7 +206,7 @@ module.exports = {
                 });
             };
             
-            return res.render('adminChefs/edit', {chef, files});
+            return res.render('adminChefs/edit', {chef, files, user});
         } catch (err) {
             console.error(err);
         };

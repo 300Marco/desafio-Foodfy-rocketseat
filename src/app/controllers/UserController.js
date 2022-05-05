@@ -11,7 +11,10 @@ module.exports = {
                 error: "Nenhum usuário encontrado"
             });
 
-            return res.render('adminUsers/list', { users });
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render('adminUsers/list', { users, user });
         } catch(err) {
             console.error(err);
         }
@@ -42,8 +45,7 @@ module.exports = {
     //         console.error(err);
     //     }
     // },
-    create(req, res) {
-        // return res.render('adminChefs/create');
+    async create(req, res) {
         return res.render('adminUsers/create');
     },
     async post(req, res) {

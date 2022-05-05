@@ -6,7 +6,7 @@ const AdminUser = require('../models/AdminUser');
 module.exports = {
     async showUserRecipe(req, res) {
         try {
-            const { userId: id } = req.session
+            const { userId: id } = req.session;
 
             let results = await AdminRecipe.allUserRecipes(id);
             const recipes = results.rows;
@@ -31,7 +31,10 @@ module.exports = {
 
             const lastAdded = await Promise.all(recipesPromise);
 
-            return res.render('adminRecipes/userRecipe', {recipes: lastAdded});
+            // PEGA USUÁRIO LOGADO
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render('adminRecipes/userRecipe', {recipes: lastAdded, user});
         } catch (err) {
             console.error(err);
         };
@@ -59,7 +62,10 @@ module.exports = {
 
             const lastAdded = await Promise.all(recipesPromise);
 
-            return res.render('adminRecipes/index', {recipes: lastAdded});
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render('adminRecipes/index', {recipes: lastAdded, user});
         } catch (err) {
             console.error(err);
         };
@@ -68,8 +74,11 @@ module.exports = {
         try {
             const results = await AdminRecipe.chefsSelectOptions();
             const options = results.rows;
+
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
             
-            return res.render('adminRecipes/create', {chefsOptions: options});
+            return res.render('adminRecipes/create', {chefsOptions: options, user});
         } catch (err) {
             console.error(err);
         };
@@ -162,7 +171,7 @@ module.exports = {
                 });
             };
             
-            return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files});
+            return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files, user});
         } catch (err) {
             console.error(err);
         };
