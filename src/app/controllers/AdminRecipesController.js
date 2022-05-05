@@ -87,7 +87,15 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-            return res.render('adminRecipes/details', {recipe, files});
+            
+            // PEGA ID DE USUÁRIO LOGADO
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            // VERIFICA SE OS ID BATEM
+            const isUserRecipes = recipe.user_id == id;
+
+            return res.render('adminRecipes/details', {recipe, files, isUserRecipes, user});
         } catch (err) {
             console.error(err);
         };
@@ -140,7 +148,7 @@ module.exports = {
             const { userId: id } = req.session;
 
             // VERIFICA SE OS ID BATEM
-            const isUserRecipes = recipe.user_id == req.session.userId;
+            const isUserRecipes = recipe.user_id == id;
 
             const user = await AdminUser.findOne({ where: {id} });
 

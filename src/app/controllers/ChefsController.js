@@ -94,7 +94,10 @@ module.exports = {
                 recipesCount = lastRecipeAdded.length;
             };
 
-            return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount});
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount, user});
         } catch (err) {
             console.error(err);
         };

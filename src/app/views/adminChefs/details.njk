@@ -13,7 +13,9 @@
         <div class="recipe-detail">
             <span class="detail-title">Chef: {{chef[0].name}}</span>
 
-            <a class="edit-button" href="/admin/chefs/{{chef[0].id}}/edit">Editar chef</a>
+            {% if user.is_admin == true %}
+                <a class="edit-button" href="/admin/chefs/{{chef[0].id}}/edit">Editar chef</a>
+            {% endif %}
         </div>
 
         <div class="box-chef-image">

@@ -12,7 +12,11 @@
     <div class="recipe-detail">
         <span class="detail-title">Receita: {{recipe.title}}</span>
 
-        <a class="edit-button" href="/admin/recipes/{{recipe.id}}/edit">Editar receita</a>
+        {% if isUserRecipes == true %}
+            <a class="edit-button" href="/admin/recipes/{{recipe.id}}/edit">Editar receita</a>
+        {% elif user.is_admin == true %}
+            <a class="edit-button" href="/admin/recipes/{{recipe.id}}/edit">Editar receita</a>
+        {% endif %}
     </div>
 
     <div class="gallery">
