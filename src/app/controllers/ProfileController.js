@@ -22,8 +22,8 @@ module.exports = {
             });
 
             return res.render(`adminProfile/edit`, {
-                user: req.body,
-                success: 'Conta atualizada com sucesso!' 
+                user,
+                success: 'Conta atualizada com sucesso!'
             });
         } catch(err) {
             console.error(err);
