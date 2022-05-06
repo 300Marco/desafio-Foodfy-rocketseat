@@ -28,6 +28,24 @@ async function login(req, res, next) {
     }
 }
 
+async function forgot(req, res, next) {
+    try {
+        const { email } = req.body;
+
+        let user = await AdminUser.findOne({ where: {email} });
+
+        if(!user) return res.render("session/forgot-password", {
+            user: req.body,
+            error: "Email não cadastrado!"
+        });
+
+        next();
+    } catch(err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
-    login
+    login,
+    forgot
 };
