@@ -9,8 +9,10 @@ module.exports = {
     },
     logout(req, res) {
         req.session.destroy();
-
-        // mudar essa rota, posteriormente
         return res.redirect('/');
+    },
+    forgotForm(req, res) {
+        return res.render('session/forgot-password');
+        // return res.send('session/forgot-password');
     }
 }

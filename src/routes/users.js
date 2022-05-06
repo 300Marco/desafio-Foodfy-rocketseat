@@ -11,13 +11,14 @@ const ProfileValidator = require('../app/validators/adminProfile');
 
 const { onlyUsers, isLoggedRedirectToProfile, checkIsAdmin } = require('../app/middlewares/session');
 
-
 // login/logout
 routes.get('/users/login', isLoggedRedirectToProfile, SessionController.loginForm); // login do usuário
 routes.post('/users/login', SessionValidator.login, SessionController.login); // logout do usuário
 routes.post('/users/logout', SessionController.logout); // logout do usuário
 
 // reset password / forgot
+routes.get('/forgot-password', SessionController.forgotForm);
+// routes.post('/forgot-password', SessionController.forgot);
 
 // logged in user profile
 routes.get('/profile', onlyUsers, ProfileValidator.edit, ProfileController.edit);
