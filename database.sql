@@ -37,8 +37,14 @@ CREATE TABLE "users" (
   "password" text not null,
   "is_admin" boolean default false,
   "created_at" timestamp DEFAULT (now()),
-  "updated_at" timestamp DEFAULT (now())
+  "updated_at" timestamp DEFAULT (now()),
+  "reset_token" text,
+  "reset_token_expires" text
 )
+
+-- token password recovey
+--ALTER TABLE "users" ADD COLUMN reset_token text;
+--ALTER TABLE "users" ADD COLUMN reset_token_expires text;
 
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
 
