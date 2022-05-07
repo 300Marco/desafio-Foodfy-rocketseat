@@ -117,5 +117,35 @@ module.exports = {
 
         AdminUser.delete(req.body.id);
         return res.redirect('/admin/users');
+    },
+    async deleteUserList(req, res) {
+        try {
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            const checkIsUser = req.body.id == req.session.userId;
+
+            if(checkIsUser == true) return res.render('adminUsers/list', {
+                users,
+                user,
+                error: 'Não é permitido excluir sua própria conta!'
+            });
+
+            await AdminUser.delete(req.body.id);
+
+            let results = await AdminUser.all();
+            const users = results.rows;
+            if(!users) return res.render('/admin/users', {
+                error: "Nenhum usuário encontrado"
+            });
+            // return res.redirect('/admin/users');
+            return res.render('adminUsers/list', {
+                users,
+                user,
+                error: 'Usuário deletado com sucesso'
+            });
+        } catch(err) {
+            console.error(err);
+        };
     }
 }

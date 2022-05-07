@@ -30,13 +30,19 @@
 
 .user-button {
     margin-top: 16px;
+
+    display: flex;
+    align-items: center;
 }
 
 .edit-user,
 .remove-user {
+    background: none;
+    border: none;
     font-weight: bold;
     transition: 300ms;
     font-size: 1.4rem;
+    cursor: pointer;
 }
 
 .edit-user {

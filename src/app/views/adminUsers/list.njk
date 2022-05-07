@@ -1,4 +1,4 @@
-{% extends "layout.njk" %}
+{# {% extends "layout.njk" %}
 
 {% block title %}
     <title>Usuários</title>
@@ -22,6 +22,46 @@
                         <div class="user-button">
                             <a class="edit-user" href="/admin/users/{{user.id}}/edit">Editar</a>
                             <a class="remove-user" href="#">Remover</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    </section>
+{% endblock %}
+
+{% block footer %} {% endblock %} #}
+{% extends "layout.njk" %}
+
+{% block title %}
+    <title>Usuários</title>
+{% endblock %}
+
+{% block header %}
+    {% include "adminParts/header.njk" %}
+{% endblock %}
+
+{% block contents %}
+    <section class="users-cards">
+        <div class="title-button">
+            <h3>Usuários</h3>
+            <a href="/admin/users/create" class="edit-button">Novo</a>
+        </div>
+            <div class="cards">
+                {% for user in users %}
+                    <div class="card-content">
+                        <p class="name-user">{{user.name}}</p>
+                        <p class="email-user">{{user.email}}</p>
+                        <div class="user-button">
+                            <a class="edit-user" href="/admin/users/{{user.id}}/edit">Editar</a>
+                            {# <a class="remove-user" href="#">Remover</a> #}
+                            <form id="form-delete" method="POST" action="/admin/users?_method=delete">
+                                <button class="remove-user" href="#">Remover</button>
+                                <input 
+                                    type="hidden" 
+                                    name="id" 
+                                    value="{{user.id}}"
+                                >
+                            </form>
                         </div>
                     </div>
                 {% endfor %}
