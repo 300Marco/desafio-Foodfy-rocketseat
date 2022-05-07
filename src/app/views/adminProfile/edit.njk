@@ -12,7 +12,7 @@
     <form method="POST" action="/admin/profile?_method=put">
         <div class="recipe-detail admin-form">
             <div class="welcome">
-                <span class="detail-title">Bem vindo {{user.name}}</span>
+                <span class="detail-title">Bem vindo, {{user.name}}</span>
 
                 {% if user.is_admin == true %}
                     <span class="is_admin">Administrador</span>

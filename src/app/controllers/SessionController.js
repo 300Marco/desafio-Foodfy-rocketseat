@@ -77,10 +77,7 @@ module.exports = {
             // avisa o usuário que ele tem uma nova senha
             return res.render('session/login', {
                 user: req.body,
-                success: `
-                <span style="display:block;text-align:center;">Senha atualizada!</span>
-                Faça seu login.
-                `,
+                success: `Senha atualizada! Faça seu login.`,
             });
 
         } catch(err) {
