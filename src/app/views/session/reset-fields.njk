@@ -1,0 +1,41 @@
+<div class="recipe-fields session-fields">
+    <div class="admin-email">
+        <div class="name-input">Email</div>
+        <input 
+            {% if error %}
+                class="login-error"
+            {% endif %}
+            type="email"
+            name="email" 
+            value="{{user.email}}"
+            placeholder="Digite seu email"
+            onblur="Validate.apply(this, 'isEmail')"
+        >
+    </div>
+
+    <div class="admin-password">
+        <div class="name-input">Senha</div>
+        <input
+            {% if error %}
+                class="login-error"
+            {% endif %}
+            type="password" 
+            name="password"
+            placeholder="Digite sua nova senha"
+        >
+    </div>
+
+    <div class="admin-password">
+        <div class="name-input">Repetição da Senha</div>
+        <input
+            {% if error %}
+                class="login-error"
+            {% endif %}
+            type="password" 
+            name="passwordRepeat"
+            placeholder="Repita a nova senha"
+        >
+    </div>
+</div>
+
+<input type="hidden" name="token" value="{{token}}">

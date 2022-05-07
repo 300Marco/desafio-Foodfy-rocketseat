@@ -84,3 +84,8 @@
 .session-forgot-password button {
     padding: 9px 26px;
 }
+
+/* ========== SESSION - PASSWORD RESET ========== */
+.session-fields .admin-password {
+    margin-bottom: 35px;
+}

@@ -19,6 +19,8 @@ routes.post('/users/logout', SessionController.logout); // logout do usuário
 // reset password / forgot
 routes.get('/forgot-password', SessionController.forgotForm);
 routes.post('/forgot-password', SessionValidator.forgot, SessionController.forgot);
+routes.get('/password-reset', SessionController.resetForm);
+routes.post('/password-reset', SessionController.reset);
 
 // logged in user profile
 routes.get('/profile', onlyUsers, ProfileValidator.edit, ProfileController.edit);
