@@ -125,6 +125,9 @@ module.exports = {
 
             const checkIsUser = req.body.id == req.session.userId;
 
+            let results = await AdminUser.all();
+            let users = results.rows;
+
             if(checkIsUser == true) return res.render('adminUsers/list', {
                 users,
                 user,
@@ -133,8 +136,8 @@ module.exports = {
 
             await AdminUser.delete(req.body.id);
 
-            let results = await AdminUser.all();
-            const users = results.rows;
+            results = await AdminUser.all();
+            users = results.rows;
             if(!users) return res.render('/admin/users', {
                 error: "Nenhum usuário encontrado"
             });
@@ -142,7 +145,7 @@ module.exports = {
             return res.render('adminUsers/list', {
                 users,
                 user,
-                error: 'Usuário deletado com sucesso'
+                success: 'Usuário deletado com sucesso'
             });
         } catch(err) {
             console.error(err);
