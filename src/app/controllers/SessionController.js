@@ -1,7 +1,8 @@
 const crypto = require('crypto');
+const { hash } = require('bcryptjs');
 const AdminUser = require('../models/AdminUser');
 const mailer = require('../../lib/mailer');
-const { passwordResetEmail } = require('../../lib/utils')
+const { passwordResetEmail } = require('../../lib/utils');
 
 module.exports = {
     loginForm(req, res) {
@@ -58,19 +59,35 @@ module.exports = {
             token: req.query.token
         });
     },
-    reset(req, res) {
+    async reset(req, res) {
         try {
-            const { email, password, passwordRepeat, token } = req.body;
+            const { user } = req;
+            const { password, token } = req.body;
 
             // cria um novo hash de senha
+            const newPassword = await hash(password, 8);
 
             // atualiza o usuário
+            await AdminUser.update(user.id, {
+                password: newPassword,
+                reset_token: "",
+                reset_token_expires: ""
+            });
 
             // avisa o usuário que ele tem uma nova senha
+            return res.render('session/login', {
+                user: req.body,
+                success: `
+                <span style="display:block;text-align:center;">Senha atualizada!</span>
+                Faça seu login.
+                `,
+            });
 
         } catch(err) {
             console.error(err);
             return res.render('session/password-reset', {
+                user: req.body,
+                token,
                 error: "Erro inesperado, tente novamente"
             });
         };
