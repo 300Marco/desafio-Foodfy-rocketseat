@@ -32,7 +32,7 @@ module.exports = {
             console.error(err);
         };
     },
-    async create(data) {
+    async create(data, password) {
         try {
             const query = `
                 INSERT INTO users (
@@ -43,11 +43,6 @@ module.exports = {
                 ) VALUES ($1, $2, $3, $4)
                 RETURNING id
             `;
-            
-            // let random = Math.random().toString(36).substring(0, 8);
-            // let password = random.replace(/^../, "");
-
-            let password = '123';
 
             // hash of password
             const passwordHash = await hash(password, 8);

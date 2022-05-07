@@ -1,5 +1,7 @@
 // const AdminChef = require('../models/AdminChef');
 const AdminUser = require('../models/AdminUser');
+const mailer = require('../../lib/mailer');
+const { sendAccessEmail } = require('../../lib/utils');
 
 module.exports = {
     async list(req, res) {
@@ -50,7 +52,19 @@ module.exports = {
     },
     async post(req, res) {
         try {
-            const userId = await AdminUser.create(req.body);
+            let random = Math.random().toString(36).substring(0, 8);
+            let password = random.replace(/^../, "");
+
+            await mailer.sendMail({
+                to: req.body.email,
+                from: 'no-reply@foodfy.com.br',
+                subject: 'Acesso ao Foodfy',
+                html: sendAccessEmail(req.body.name, password),
+            });
+
+            // let password = '123';
+
+            const userId = await AdminUser.create(req.body, password);
 
             // req.session.userId = userId;
             

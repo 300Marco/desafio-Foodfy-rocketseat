@@ -924,7 +924,7 @@ module.exports = {
         </div>
         `;
     },
-    sendAccessEmail(token, name, senha) {
+    sendAccessEmail(name, senha) {
         return `
         <div class="">
         <div class="aHl"></div>
@@ -2012,7 +2012,7 @@ module.exports = {
                                                                                                         <tr>
                                                                                                             <td
                                                                                                                 align="center">
-                                                                                                                <a href="http://localhost:3000/admin/password-reset?token=${token}"
+                                                                                                                <a href="http://localhost:3000/admin/users/login"
                                                                                                                     target="_blank"
                                                                                                                     style="text-decoration:none;">
                                                                                                                     <p
