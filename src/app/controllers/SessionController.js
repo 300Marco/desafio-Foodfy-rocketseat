@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const AdminUser = require('../models/AdminUser');
 const mailer = require('../../lib/mailer');
+const { passwordResetEmail } = require('../../lib/utils')
 
 module.exports = {
     loginForm(req, res) {
@@ -34,20 +35,11 @@ module.exports = {
                 reset_token_expires: now
             });
 
-            // enviar email com link de recuperação de senha
             await mailer.sendMail({
                 to: user.email,
                 from: 'no-reply@foodfy.com.br',
-                subject: 'Solicitação de recuperação de senha',
-                html: `
-                    <h2>Esqueceu sua senha?</h2>
-                    <p>
-                        Não se preocupe, clique no link abaixo para recuperar sua senha!
-                    </p>
-                    <a href="http://localhost:3000/admin/password-reset?token=${token}" target="_blank">
-                        RECUPERAR SENHA
-                    </a>
-                `,
+                subject: 'Solicitação para recuperação de senha',
+                html: passwordResetEmail(token, user.name),
             });
 
             // avisar o suário que enviamos o email
