@@ -4,7 +4,7 @@
             <div class="name-input">Nome</div>
             <input 
                 name="name" 
-                value="{{user.name}}"
+                value="{{user_data.name}}"
                 placeholder="Digite o nome completo"
                 required
             >
@@ -15,7 +15,7 @@
             <input 
                 type="email"
                 name="email" 
-                value="{{user.email}}"
+                value="{{user_data.email}}"
                 placeholder="Digite o email"
                 onblur="Validate.apply(this, 'isEmail')"
             >
@@ -27,7 +27,7 @@
             <input 
                 type="checkbox"
                 name="is_admin"
-                {% if user.is_admin == true %}
+                {% if user_data.is_admin == true %}
                     checked
                 {% endif %}
                 placeholder="Digite o email"

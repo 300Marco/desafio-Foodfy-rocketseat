@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block contents %}
-    <form method="POST" action="/admin/users/{{user.id}}?_method=put">
+    <form method="POST" action="/admin/users/{{user_data.id}}?_method=put">
         <div class="recipe-detail admin-form">
             <span class="detail-title">Atualizar Usuário</span>
 
@@ -25,13 +25,13 @@
         <input 
                 type="hidden"
                 name="id"
-                value="{{user.id}}"
+                value="{{user_data.id}}"
         >
     </form>
 
-    <form id="form-delete" method="POST" action="/admin/users/{{user.id}}?_method=delete">
+    <form id="form-delete" method="POST" action="/admin/users/{{user_data.id}}?_method=delete">
             {# <input type="hidden" name="id" value="{{user.id}}"> #}
-            <input type="hidden" name="id" value="{{user.id}}">
+            <input type="hidden" name="id" value="{{user_data.id}}">
     </form>
 {% endblock %}
 

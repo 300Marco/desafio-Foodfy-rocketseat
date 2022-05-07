@@ -56,7 +56,7 @@ async function edit(req, res, next) {
             error: "Usuário não encontrado",
         });
 
-        req.user = user;
+        req.user_data = user;
 
         next();
     } catch(err) {
@@ -81,9 +81,9 @@ async function put(req, res, next) {
 
     const { id } = req.body;
 
-    const user = await AdminUser.findOne({ where: {id} })
+    const user = await AdminUser.findOne({ where: {id} });
 
-    req.user = user;
+    req.user_data = user;
 
     next();
 }

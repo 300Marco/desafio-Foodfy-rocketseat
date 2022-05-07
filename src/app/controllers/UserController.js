@@ -48,7 +48,10 @@ module.exports = {
     //     }
     // },
     async create(req, res) {
-        return res.render('adminUsers/create');
+        const { userId: id } = req.session;
+        const user = await AdminUser.findOne({ where: {id} });
+
+        return res.render('adminUsers/create', { user });
     },
     async post(req, res) {
         try {
@@ -74,28 +77,66 @@ module.exports = {
             console.error(err);
         }
     },
+    // async edit(req, res) {
+    //     try {
+    //         const { user } = req;
+
+    //         return res.render('adminUsers/edit', { user });
+    //     } catch(err) {
+    //         console.error(err);
+    //     };
+    // },
     async edit(req, res) {
         try {
-            const { user } = req;
+            const { user_data } = req;
 
-            return res.render('adminUsers/edit', { user });
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render('adminUsers/edit', { user_data, user });
         } catch(err) {
             console.error(err);
         };
     },
+    // async put(req, res) {
+    //     try {
+    //         const { user } = req;
+    //         let { name, email, is_admin } = req.body;
+
+    //         await AdminUser.update(user.id, {
+    //             name, 
+    //             email, 
+    //             is_admin
+    //         });
+
+    //         return res.render(`adminUsers/edit`, {
+    //             user: req.body,
+    //             success: 'Conta atualizada com sucesso!' 
+    //         });
+    //     } catch(err) {
+    //         console.error(err);
+    //         return res.render('AdminUser/edit', {
+    //             error: 'Houve um erro inesperado!'
+    //         })
+    //     }
+    // },
     async put(req, res) {
         try {
-            const { user } = req;
+            const { user_data } = req;
             let { name, email, is_admin } = req.body;
 
-            await AdminUser.update(user.id, {
+            await AdminUser.update(user_data.id, {
                 name, 
                 email, 
                 is_admin
             });
 
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
             return res.render(`adminUsers/edit`, {
-                user: req.body,
+                user_data: req.body,
+                user,
                 success: 'Conta atualizada com sucesso!' 
             });
         } catch(err) {
