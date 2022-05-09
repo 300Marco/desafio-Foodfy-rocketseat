@@ -144,9 +144,13 @@ function displayInput() {
 
     let href = String(currentPage);
 
-    // get id chef
+    // get chef id
     const getInputName = document.querySelector('.name-input');
     const chefId = getInputName.getAttribute('id');
+
+    // ger user id
+    const getInputUser = document.querySelector('.name-input');
+    const userId = getInputUser.getAttribute('id');
     
     // get id user
     // const getInputHidden = document.querySelector('input[class="input-edit"]');
@@ -163,7 +167,13 @@ function displayInput() {
         href != '/admin/recipes/create' && 
         href != '/admin/chefs/create' && 
         href != `/admin/chefs/${chefId}/edit` && 
-        href != '/admin/users/create'
+        href != `/admin/users/${userId}/edit` && 
+        href != '/admin/users/create' &&
+        href != '/admin/profile' &&
+        href != '/admin/users/login' &&
+        href != '/admin/forgot-password' &&
+        href != '/admin/password-reset'
+
     ) {
         inputIngredient.classList.add('hide-input');
         inputPreparation.classList.add('hide-input');
@@ -172,7 +182,7 @@ function displayInput() {
             inputIngredient.parentNode.removeChild(inputIngredient);
             inputPreparation.parentNode.removeChild(inputPreparation);
         });
-    }
+    };
 }
 
 

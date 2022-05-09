@@ -13,10 +13,13 @@
 
 /* ========== CONTAINER-FORM ========== */
 .container-session {
-    height: calc(80vh);
-
+    height: calc(85vh);
     display: flex;
     align-items: center;
+}
+
+.container-session .pagination {
+    margin: 0;
 }
 
 /* ========== FORM ========== */
@@ -61,6 +64,11 @@
     padding: 9px 36px;
 }
 
+/* ========== PASSWORD RESET */
+.session-fields .admin-password {
+    margin-bottom: 35px;
+}
+
 /* ========== LOGIN ERROR ========== */
 .login-error {
     border: 1px solid red !important;
@@ -73,7 +81,7 @@
     margin-bottom: 10px;
 }
 
-.forgot-password input {
+.forgot-password {
     margin-bottom: 40px;
 }
 
@@ -85,7 +93,10 @@
     padding: 9px 26px;
 }
 
-/* ========== SESSION - PASSWORD RESET ========== */
-.session-fields .admin-password {
-    margin-bottom: 35px;
+/* ========== MESSAGES */
+.forgot-password .error {
+    background-color: var(--color-red);
+    color: white;
+    padding: 6px;
+    border-radius: 0 0px 4px 4px;
 }
