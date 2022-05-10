@@ -48,6 +48,7 @@ module.exports = {
             return res.render('recipes/recipes', {recipes: lastAdded, pagination});
         } catch (err) {
             console.error(err);
+            return res.render('recipes/not-found');
         };
     },
     async search(req,res) {
@@ -95,16 +96,41 @@ module.exports = {
             console.error(err);
         };
     },
+    // async details(req, res) {
+    //     try {
+    //         const recipeIndex = req.params.index;
+        
+    //         let results = await Recipe.find(recipeIndex);
+    //         const recipe = results.rows;
+
+    //         if(!recipe) return res.render('recipes/not-found');
+    
+    //         // if(recipe == undefined) {
+    //         //     return res.render('recipes/not-found');
+    //         // };
+    
+    //         results = await Recipe.files(recipeIndex);
+    //         const files = results.rows.map(file => ({
+    //             ...file,
+    //             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+    //         }));
+    
+    //         return res.render('recipes/details', {recipe, files});  
+    //     } catch (err) {
+    //         console.error(err);
+    //         return res.render('recipes/not-found');
+    //     };
+    // },
     async details(req, res) {
         try {
             const recipeIndex = req.params.index;
         
             let results = await Recipe.find(recipeIndex);
             const recipe = results.rows;
-    
-            if(recipe == undefined) {
-                return res.render('recipes/not-found');
-            };
+
+            const haveRecipe = results.rows[0];
+
+            if(!haveRecipe) return res.render('recipes/recipe-not-found');
     
             results = await Recipe.files(recipeIndex);
             const files = results.rows.map(file => ({
@@ -115,6 +141,7 @@ module.exports = {
             return res.render('recipes/details', {recipe, files});  
         } catch (err) {
             console.error(err);
+            return res.render('recipes/recipe-not-found');
         };
     },
     async chefs(req, res) {

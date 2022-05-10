@@ -103,6 +103,7 @@ module.exports = {
             return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount, user});
         } catch (err) {
             console.error(err);
+            return res.render('adminChefs/not-found');
         };
     },
     // async edit(req, res) {
@@ -130,7 +131,8 @@ module.exports = {
             let results = await AdminChef.find(req.params.id);
             const chef = results.rows[0];
 
-            if(!chef) return res.send("AdminChef not found!");
+            // if(!chef) return res.send("AdminChef not found!");
+            if(!chef) return res.render('adminChefs/not-found');
 
             // get images
             results = await AdminChef.files(chef.id);
@@ -209,6 +211,7 @@ module.exports = {
             return res.render('adminChefs/edit', {chef, files, user});
         } catch (err) {
             console.error(err);
+            return res.render('adminChefs/not-found');
         };
     },
     async post(req, res) {

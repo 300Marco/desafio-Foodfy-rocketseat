@@ -88,7 +88,8 @@ module.exports = {
             let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
 
-            if(!recipe) return res.send("Recipe not found!");
+            // if(!recipe) return res.send("Recipe not found!");
+            if(!recipe) return res.render("adminRecipes/not-found");
 
             results = await AdminRecipe.files(recipe.id);
             const files = results.rows.map(file => ({
@@ -107,6 +108,7 @@ module.exports = {
             return res.render('adminRecipes/details', {recipe, files, isUserRecipes, user});
         } catch (err) {
             console.error(err);
+            return res.render('adminRecipes/not-found');
         };
     },
     // async edit(req, res) {
@@ -138,7 +140,8 @@ module.exports = {
             let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
 
-            if(!recipe) return res.send("Recipe not found!");
+            // if(!recipe) return res.send("Recipe not found!");
+            if(!recipe) return res.render('adminRecipes/not-found');
 
             // get chefs
             results = await AdminRecipe.chefsSelectOptions();
@@ -174,6 +177,7 @@ module.exports = {
             return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files, user});
         } catch (err) {
             console.error(err);
+            return res.render('adminRecipes/not-found');
         };
     },
     // METHODS HTTP
