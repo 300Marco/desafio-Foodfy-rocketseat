@@ -242,11 +242,20 @@ module.exports = {
             console.error(err);
         };
     },
-    delete(req, res) {
+    // delete(req, res) {
+    //     try {
+    //         AdminRecipe.delete(req.body.id, () => {
+    //             return res.redirect('/admin/recipes');
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // }
+    async delete(req, res) {
         try {
-            AdminRecipe.delete(req.body.id, () => {
-                return res.redirect('/admin/recipes');
-            });
+            await AdminRecipe.delete(req.body.id);
+
+            return res.redirect('/admin/recipes');
         } catch (err) {
             console.error(err);
         };

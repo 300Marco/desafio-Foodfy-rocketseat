@@ -1,4 +1,5 @@
 const db = require('../../config/db');
+const fs = require('fs');
 
 module.exports = {
     allUserRecipes(id) {
@@ -131,9 +132,29 @@ module.exports = {
             console.error(err);
         };
     },
-    delete(id) {
+    // delete(id) {
+    //     try {
+    //         db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
+    //     } catch(err) {
+    //         console.error(err);
+    //     };
+    // }
+    async delete(id) {
         try {
-            db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
+            let results = await db.query(`
+                SELECT * FROM files 
+                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id )
+                WHERE recipe_id = $1`, [id]);
+        
+            let files = results.rows;
+    
+            for(let file of files) {
+                await db.query(`DELETE FROM files WHERE files.id = $1`, [file.file_id]);
+                fs.unlinkSync(file.path);
+            };
+
+            return db.query(`
+                DELETE FROM recipes WHERE recipes.id = $1`, [id]);
         } catch(err) {
             console.error(err);
         };
