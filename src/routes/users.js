@@ -37,4 +37,8 @@ routes.delete('/users/:id', UserController.delete) // Deletar um usuário
 
 routes.delete('/users', UserController.deleteUserList); // Deletar na lista de usuários
 
+routes.use((req, res) => {
+    return res.status(404).render('adminUsers/not-found');
+});
+
 module.exports = routes;

@@ -1,7 +1,21 @@
 {% extends "layout.njk" %}
 
 {% block title %}
-    <title>Page not found</title>
+    <title>Página não encontrada</title>
+{% endblock %}
+
+{% block header %}
+    <header class="header-background">
+        <div class="box-admin-header-menu">
+            <div class="title">
+                <h2 class="sr-only">Admin Foodfy</h2>
+
+                <a href="">
+                    <img src="/assets/admin-logo.png" alt="Foodfy">
+                </a>
+            </div>
+        </div>
+    </header>
 {% endblock %}
 
 {% block contents %}
@@ -14,10 +28,10 @@
             <div class="error-info">
                 <span>Ops... houve algum erro inesperado.</span>
                 <span>
-                    Parece que esta faltando algum ingrediente!
+                    Não se preocupe, navegue de volta para seu Perfil.
                 </span>
                 <span>
-                    Não fique aqui com fome, volte para a <a href="/">página inicial</a>.
+                    <a href="/admin/profile">Perfil</a>
                 </span>
             </div>
         </div>

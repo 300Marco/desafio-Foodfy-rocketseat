@@ -24,7 +24,7 @@ routes.use('/admin', adminChefs);
 routes.use('/admin', users);
 
 routes.use((req, res) => {
-    return res.status(404).render('not-found');
+    return res.status(404).render('recipes/not-found');
 });
 
 module.exports = routes;
