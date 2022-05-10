@@ -294,6 +294,41 @@ module.exports = {
             console.error(err);
         };
     },
+    // async delete(req, res) {
+    //     try {
+    //         const results = await AdminChef.chefRecipes(req.body.id);
+    //         const chef = results.rows;
+
+    //         if(!chef) return res.send("AdminChef not found!");
+
+    //         const [ {title, recipes_id} ] = chef;
+
+    //         if(title == null && recipes_id == null) {
+    //             await AdminChef.delete(req.body.id);
+    //             return res.redirect('/admin/chefs');
+    //         } else {
+    //             // return res.send('AdminChefes que possuem receitas, não podem ser deletados');
+    //             let results = await AdminChef.find(req.body.id);
+    //             const chef = results.rows[0];
+
+    //             // get images
+    //             results = await AdminChef.files(chef.id);
+    //             let files = results.rows;
+    //             files = files.map(file => ({
+    //                 ...file,
+    //                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+    //             }));
+                
+    //             return res.render('adminChefs/edit', {
+    //                 chef,
+    //                 files,
+    //                 error: "Chefes que possuem receitas, não podem ser deletados"
+    //             });
+    //         };
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // }
     async delete(req, res) {
         try {
             const results = await AdminChef.chefRecipes(req.body.id);
@@ -301,13 +336,13 @@ module.exports = {
 
             if(!chef) return res.send("AdminChef not found!");
 
-            const [ {title, recipes_id} ] = chef;
+            const [ {title, recipes_id, file_id} ] = chef;
 
             if(title == null && recipes_id == null) {
                 await AdminChef.delete(req.body.id);
+                await FileAdminChef.delete(file_id);
                 return res.redirect('/admin/chefs');
             } else {
-                // return res.send('AdminChefes que possuem receitas, não podem ser deletados');
                 let results = await AdminChef.find(req.body.id);
                 const chef = results.rows[0];
 
@@ -322,7 +357,7 @@ module.exports = {
                 return res.render('adminChefs/edit', {
                     chef,
                     files,
-                    error: "Chefes que possuem receitas, não podem ser deletados"
+                    error: "Chefes que possuem receitas, não podem ser deletados!"
                 });
             };
         } catch (err) {
