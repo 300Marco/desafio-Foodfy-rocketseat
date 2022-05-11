@@ -68,7 +68,11 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
 
-            return res.render('adminRecipes/index', {recipes: lastAdded, user});
+            return res.render('adminRecipes/index', {
+                recipes: 
+                lastAdded, 
+                user
+            });
         } catch (err) {
             console.error(err);
         };
@@ -298,16 +302,39 @@ module.exports = {
     //         console.error(err);
     //     };
     // },
+    // async put(req, res) {
+    //     try {
+    //         // remove image from database
+    //         if(req.body.removed_files) {
+    //             const removedFiles = req.body.removed_files.split(',');
+    //             const lastIndex = removedFiles.length - 1;
+    //             removedFiles.splice(lastIndex, 1);
+
+    //             const removedFilesPromise = removedFiles.map(id => File.delete(id))
+    //             await Promise.all(removedFilesPromise);
+    //         };
+
+    //         // get new edit images
+    //         if(req.files.length != 0) {
+    //             const oldFiles = await AdminRecipe.files(req.body.id);
+    //             const totalFiles = oldFiles.rows.length + req.files.length;
+
+    //             if(totalFiles <= 5) {
+    //                 const newFilesPromise = req.files.map(file => 
+    //                     File.create({...file, recipeId: req.body.id}));
+        
+    //                 await Promise.all(newFilesPromise);
+    //             };
+    //         };
+
+    //         await AdminRecipe.update(req.body);
+    //         return res.redirect(`/admin/recipes/${req.body.id}`);
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     async put(req, res) {
         try {
-            const keys = Object.keys(req.body);
-        
-            for(key of keys) {
-                if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
-                    return res.send("Please fill in all fields");
-                };
-            };
-
             // remove image from database
             if(req.body.removed_files) {
                 const removedFiles = req.body.removed_files.split(',');
@@ -331,8 +358,32 @@ module.exports = {
                 };
             };
 
+            // get recipe and image
+            // Pulling created recipe data, to render page with success message
+            let results = await AdminRecipe.find(req.body.id);
+            const recipe = results.rows[0];
+
+            results = await AdminRecipe.files(recipe.id);
+            const files = results.rows.map(file => ({
+                ...file,
+                src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            }));
+
+            // get id of logged in user
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            // Check if ID matches
+            const isUserRecipes = recipe.user_id == id;
+
             await AdminRecipe.update(req.body);
-            return res.redirect(`/admin/recipes/${req.body.id}`);
+            return res.render('adminRecipes/details', {
+                recipe: req.body,
+                files,
+                user,
+                isUserRecipes,
+                success: "Receita atualizada com sucesso!"
+            })
         } catch (err) {
             console.error(err);
         };
@@ -350,9 +401,46 @@ module.exports = {
         try {
             await AdminRecipe.delete(req.body.id);
 
-            return res.redirect('/admin/recipes');
+            let results = await AdminRecipe.all();
+            const recipes = results.rows;
+
+            // get image
+            async function getImage(recipeId) {
+                let results = await AdminRecipe.files(recipeId);
+                const files = results.rows.map(
+                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                );
+
+                return files[0];
+            };
+
+            const recipesPromise = recipes.map(async recipe => {
+                recipe.img = await getImage(recipe.id);
+
+                return recipe;
+            });
+
+            const lastAdded = await Promise.all(recipesPromise);
+
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render('adminRecipes/index', {
+                recipes: lastAdded,
+                user,
+                success: "Receita deletada com sucesso!"
+            });
         } catch (err) {
             console.error(err);
         };
     }
+    // async delete(req, res) {
+    //     try {
+    //         await AdminRecipe.delete(req.body.id);
+
+    //         return res.redirect('/admin/recipes');
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // }
 }

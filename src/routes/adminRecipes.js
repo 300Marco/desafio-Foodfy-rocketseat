@@ -18,7 +18,7 @@ routes.get('/recipes/:id/edit', onlyUsers, AdminRecipesController.edit);
 
 routes.post("/recipes", multer.array("photos", 5), onlyUsers, recipeValidator.post, AdminRecipesController.post);
 
-routes.put('/recipes', multer.array("photos", 5), onlyUsers, AdminRecipesController.put);
+routes.put('/recipes', multer.array("photos", 5), onlyUsers, recipeValidator.put, AdminRecipesController.put);
 
 routes.delete('/recipes', onlyUsers, AdminRecipesController.delete);
 
