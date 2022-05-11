@@ -53,6 +53,25 @@ module.exports = {
 
         return res.render('adminUsers/create', { user });
     },
+    // async post(req, res) {
+    //     try {
+    //         let random = Math.random().toString(36).substring(0, 8);
+    //         let password = random.replace(/^../, "");
+
+    //         await mailer.sendMail({
+    //             to: req.body.email,
+    //             from: 'no-reply@foodfy.com.br',
+    //             subject: 'Acesso ao Foodfy',
+    //             html: sendAccessEmail(req.body.name, password),
+    //         });
+
+    //         const userId = await AdminUser.create(req.body, password);
+
+    //         return res.redirect(`/admin/users/${userId}/edit`);
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    // },
     async post(req, res) {
         try {
             let random = Math.random().toString(36).substring(0, 8);
@@ -65,16 +84,27 @@ module.exports = {
                 html: sendAccessEmail(req.body.name, password),
             });
 
-            // let password = '123';
-
-            const userId = await AdminUser.create(req.body, password);
-
-            // req.session.userId = userId;
+            await AdminUser.create(req.body, password);
             
-            // return res.send('Ok: Crie uma rota para edição');
-            return res.redirect(`/admin/users/${userId}/edit`);
+            // Success message when registering
+            let results = await AdminUser.all();
+            const users = results.rows;
+
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            return res.render(`adminUsers/list`, {
+                users,
+                user,
+                success: "Usuário cadastrado com sucesso!"
+            });
         } catch(err) {
             console.error(err);
+            return res.render(`adminUsers/edit`, {
+                user_data: req.body,
+                user,
+                error: "Houve algum erro!"
+            });
         }
     },
     // async edit(req, res) {
@@ -146,6 +176,19 @@ module.exports = {
             })
         }
     },
+    // async delete(req, res) {
+    //     const { id } = req.body;
+    //     const user = await AdminUser.findOne({ where: {id} });
+    //     const checkIsUser = req.body.id == req.session.userId;
+
+    //     if(checkIsUser == true) return res.render('adminUsers/edit', {
+    //         user,
+    //         error: 'Não é permitido excluir sua própria conta!'
+    //     });
+
+    //     AdminUser.delete(req.body.id);
+    //     return res.redirect('/admin/users');
+    // },
     async delete(req, res) {
         const { id } = req.body;
         const user = await AdminUser.findOne({ where: {id} });
@@ -156,8 +199,17 @@ module.exports = {
             error: 'Não é permitido excluir sua própria conta!'
         });
 
-        AdminUser.delete(req.body.id);
-        return res.redirect('/admin/users');
+        await AdminUser.delete(req.body.id);
+        
+        // Success message when registering
+        let results = await AdminUser.all();
+        const users = results.rows;
+
+        return res.render(`adminUsers/list`, {
+            users,
+            user,
+            success: "Usuário deletado com sucesso!"
+        });
     },
     async deleteUserList(req, res) {
         try {

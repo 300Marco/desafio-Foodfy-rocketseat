@@ -34,7 +34,10 @@ module.exports = {
             // PEGA USUÁRIO LOGADO
             const user = await AdminUser.findOne({ where: {id} });
 
-            return res.render('adminRecipes/userRecipe', {recipes: lastAdded, user});
+            return res.render('adminRecipes/userRecipe', {
+                recipes: lastAdded, 
+                user
+            });
         } catch (err) {
             console.error(err);
         };
@@ -202,11 +205,61 @@ module.exports = {
             const filesPromise = req.files.map(file => File.create({...file, recipeId}))
             await Promise.all(filesPromise);
 
-            return res.redirect(`/admin/recipes/${recipeId}`);
+            // get recipe and image
+            // Pulling created recipe data, to render page with success message
+            let recipeResults = await AdminRecipe.find(recipeId);
+            const recipe = recipeResults.rows[0];
+
+            recipeResults = await AdminRecipe.files(recipe.id);
+            const files = recipeResults.rows.map(file => ({
+                ...file,
+                src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            }));
+
+             // get id of logged in user
+             const { userId: id } = req.session;
+             const user = await AdminUser.findOne({ where: {id} });
+ 
+             // Check if ID matches
+             const isUserRecipes = recipe.user_id == id;
+
+            return res.render('adminRecipes/details', {
+                recipe,
+                files,
+                user,
+                isUserRecipes,
+                success: "Receita cadastrada com sucesso"
+            });
         } catch (err) {
             console.error(err);
         };
     },
+    // async post(req, res) {
+    //     try {
+    //         const keys = Object.keys(req.body);
+        
+    //         for(key of keys) {
+    //             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+    //                 return res.send("Please fill in all fields");
+    //             };
+    //         };
+
+    //         if(req.files.length == 0) {
+    //             return res.send('Please, send at least one image');
+    //         };
+            
+    //         const results = await AdminRecipe.create(req.body);
+    //         const recipeId = results.rows[0].id;
+
+    //         // Send image
+    //         const filesPromise = req.files.map(file => File.create({...file, recipeId}))
+    //         await Promise.all(filesPromise);
+
+    //         return res.redirect(`/admin/recipes/${recipeId}`);
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     async put(req, res) {
         try {
             const keys = Object.keys(req.body);
