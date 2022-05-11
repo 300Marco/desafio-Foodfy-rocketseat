@@ -1,5 +1,6 @@
 const db = require('../../config/db');
 const { hash } = require('bcryptjs');
+const fs = require('fs');
 
 module.exports = {
     async all() {
@@ -79,8 +80,40 @@ module.exports = {
         await db.query(query);
         return;
     },
-    delete(id) {
+    // delete(id) {
+    //     try {
+    //         return db.query(`
+    //             DELETE FROM users WHERE id = $1`, [id]);
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    // }
+    async delete(id) {
         try {
+            let results = await db.query(`
+                SELECT recipes.*
+                FROM recipes 
+                LEFT JOIN users ON (users.id = recipes.user_id)
+                WHERE users.id = $1`, [id]);
+
+            let recipes = results.rows;
+            let files = '';
+
+            for(let recipe of recipes) {
+                results = await db.query(`
+                    SELECT * FROM files 
+                    LEFT JOIN recipe_files ON (files.id = recipe_files.file_id )
+                    WHERE recipe_id = $1
+                `, [recipe.id]);
+
+                files = results.rows;
+
+                for(let file of files) {
+                    await db.query(`DELETE FROM files WHERE files.id = $1`, [file.file_id]);
+                    fs.unlinkSync(file.path);
+                };
+            };
+
             return db.query(`
                 DELETE FROM users WHERE id = $1`, [id]);
         } catch(err) {

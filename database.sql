@@ -56,7 +56,7 @@ ALTER TABLE "chefs" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
 
 ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
--- Precisamos que o campo update, atualize o dia e hora de quando algo for alterado.
+-- We need the update field to update the day and time when something changes..
 CREATE FUNCTION trigger_set_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -66,7 +66,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- CHEFS
--- Execute este comando após executar o primeiro. Este comando executa a função acima para chefs e recipes:
+-- Run this command after running the first one. This command performs the above function for chefs and recipes:
 CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON chefs
 FOR EACH ROW
@@ -90,3 +90,20 @@ WITH (OIDS=FALSE);
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
 
 CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+
+-- Delete recipes and foreign keys from recipes and chefs
+-- RECIPES AND RECIPE_FILES
+ALTER TABLE recipe_files
+DROP CONSTRAINT recipe_files_recipe_id_fkey,
+ADD CONSTRAINT recipe_files_recipe_id_fkey
+FOREIGN KEY ("recipe_id")
+REFERENCES "recipes" ("id")
+ON DELETE CASCADE;
+
+-- USERS AND RECIPES
+ALTER TABLE recipes
+DROP CONSTRAINT recipes_user_id_fkey,
+ADD CONSTRAINT recipes_user_id_fkey
+FOREIGN KEY ("user_id")
+REFERENCES "users" ("id")
+ON DELETE CASCADE;
