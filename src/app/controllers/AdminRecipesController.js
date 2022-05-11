@@ -184,20 +184,58 @@ module.exports = {
         };
     },
     // METHODS HTTP
-    async post(req, res) {
-        try {
-            const keys = Object.keys(req.body);
+    // async post(req, res) {
+    //     try {
+    //         const keys = Object.keys(req.body);
         
-            for(key of keys) {
-                if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
-                    return res.send("Please fill in all fields");
-                };
-            };
+    //         for(key of keys) {
+    //             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+    //                 return res.send("Please fill in all fields");
+    //             };
+    //         };
 
-            if(req.files.length == 0) {
-                return res.send('Please, send at least one image');
-            };
+    //         if(req.files.length == 0) {
+    //             return res.send('Please, send at least one image');
+    //         };
             
+    //         const results = await AdminRecipe.create(req.body);
+    //         const recipeId = results.rows[0].id;
+
+    //         // Send image
+    //         const filesPromise = req.files.map(file => File.create({...file, recipeId}))
+    //         await Promise.all(filesPromise);
+
+    //         // get recipe and image
+    //         // Pulling created recipe data, to render page with success message
+    //         let recipeResults = await AdminRecipe.find(recipeId);
+    //         const recipe = recipeResults.rows[0];
+
+    //         recipeResults = await AdminRecipe.files(recipe.id);
+    //         const files = recipeResults.rows.map(file => ({
+    //             ...file,
+    //             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+    //         }));
+
+    //          // get id of logged in user
+    //          const { userId: id } = req.session;
+    //          const user = await AdminUser.findOne({ where: {id} });
+ 
+    //          // Check if ID matches
+    //          const isUserRecipes = recipe.user_id == id;
+
+    //         return res.render('adminRecipes/details', {
+    //             recipe,
+    //             files,
+    //             user,
+    //             isUserRecipes,
+    //             success: "Receita cadastrada com sucesso"
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
+    async post(req, res) {
+        try {            
             const results = await AdminRecipe.create(req.body);
             const recipeId = results.rows[0].id;
 
