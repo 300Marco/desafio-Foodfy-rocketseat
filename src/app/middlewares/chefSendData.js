@@ -1,0 +1,116 @@
+const AdminChef = require('../models/AdminChef');
+const AdminUser = require('../models/AdminUser');
+
+async function dataToUpdate(req, res, next) {
+    try {
+        // Data fetch to populate the rendered page, for success message
+        results = await AdminChef.find(req.body.id);
+        const chef = results.rows;
+
+        // get image avatar
+        async function getImageAvatar(chefId) {
+            let results = await AdminChef.files(chefId);
+            const files = results.rows.map(
+                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            );
+
+            return files[0];
+        }
+
+        const avatarPromise = chef.map(async avatar => {
+            avatar.img = await getImageAvatar(avatar.id);
+
+            return avatar;
+        });
+
+        const lastAvatarAdded = await Promise.all(avatarPromise);
+
+        // get image Recipes
+        results = await AdminChef.findRecipe(chef[0].id);
+        const recipes = results.rows;
+
+        async function getImageRecipe(recipeId) {
+            let results = await AdminChef.filesRecipe(recipeId);
+            const files = results.rows.map(
+                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            );
+
+            return files[0];
+        }
+
+        const recipePromise = recipes.map(async recipe => {
+            recipe.img = await getImageRecipe(recipe.id);
+
+            return recipe;
+        });
+
+        const lastRecipeAdded = await Promise.all(recipePromise);
+
+        let recipesCount = 0;
+
+        if(lastRecipeAdded.length == 0) {
+            recipesCount;
+        } else {
+            recipesCount = lastRecipeAdded.length;
+        };
+
+        const { userId: id } = req.session;
+        const user = await AdminUser.findOne({ where: {id} });
+
+        // send data
+        req.data = {
+            chef: lastAvatarAdded,
+            recipes: lastRecipeAdded,
+            recipesCount,
+            user
+        };
+
+        next();
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+async function dataToDelete(req, res, next) {
+    try {
+        let results = await AdminChef.all();
+        const chefs = results.rows;
+
+        if(!chefs) return res.send("Nenhum chef encontrado!");
+
+        async function getImageAvatar(chefId) {
+            let results = await AdminChef.files(chefId);
+            const files = results.rows.map(
+                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            );
+
+            return files[0];
+        }
+
+        const chefsPromise = chefs.map(async chef => {
+            chef.img = await getImageAvatar(chef.id);
+
+            return chef;
+        });
+
+        const lastAdded = await Promise.all(chefsPromise);
+
+        // get user
+        const { userId: id } = req.session;
+        const user = await AdminUser.findOne({ where: {id} });
+
+        req.data = {
+            chefs: lastAdded,
+            user
+        }
+
+        next();
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+module.exports = {
+    dataToUpdate,
+    dataToDelete
+};

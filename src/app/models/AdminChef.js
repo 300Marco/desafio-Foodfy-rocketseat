@@ -3,7 +3,7 @@ const db = require('../../config/db');
 module.exports = {
     all() {
         try {
-            return db.query(`SELECT * FROM chefs`);
+            return db.query(`SELECT * FROM chefs ORDER BY updated_at DESC`);
         } catch (err) {
             console.error(err);
         };
