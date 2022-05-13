@@ -1,6 +1,83 @@
 const AdminChef = require('../models/AdminChef');
 const AdminUser = require('../models/AdminUser');
 
+async function dataToEdit(req, res, next) {
+    try {
+        // BLOQUEIO DE USUÁRIOS SEM PERMISSÃO
+            // PEGA ID DE USUÁRIO LOGADO
+        const { userId: id } = req.session;
+
+        const user = await AdminUser.findOne({ where: {id} });
+
+        // PERMISSÃO PARA EDITAR RECEITA
+        if(user.is_admin == false) {
+            let results = await AdminChef.find(req.params.id);
+            const chef = results.rows;
+
+            if(!chef) return res.render('adminChefs/not-found');
+
+            // get image avatar
+            async function getImageAvatar(chefId) {
+                let results = await AdminChef.files(chefId);
+                const files = results.rows.map(
+                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                );
+
+                return files[0];
+            }
+
+            const avatarPromise = chef.map(async avatar => {
+                avatar.img = await getImageAvatar(avatar.id);
+
+                return avatar;
+            });
+
+            const lastAvatarAdded = await Promise.all(avatarPromise);
+
+            // get image Recipes
+            results = await AdminChef.findRecipe(chef[0].id);
+            const recipes = results.rows;
+
+            async function getImageRecipe(recipeId) {
+                let results = await AdminChef.filesRecipe(recipeId);
+                const files = results.rows.map(
+                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                );
+
+                return files[0];
+            }
+
+            const recipePromise = recipes.map(async recipe => {
+                recipe.img = await getImageRecipe(recipe.id);
+
+                return recipe;
+            });
+
+            const lastRecipeAdded = await Promise.all(recipePromise);
+
+            let recipesCount = 0;
+
+            if(lastRecipeAdded.length == 0) {
+                recipesCount;
+            } else {
+                recipesCount = lastRecipeAdded.length;
+            };
+
+            return res.render('adminChefs/details', {
+                chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount,
+                error: "Você não tem permissões de administrador!"
+            });
+        };
+
+        req.data = user;
+
+        next();
+    } catch(err) {
+        console.error(err);
+        return res.render('adminUsers/not-found');
+    }
+}
+
 async function dataToUpdate(req, res, next) {
     try {
         // Data fetch to populate the rendered page, for success message
@@ -111,6 +188,7 @@ async function dataToDelete(req, res, next) {
 }
 
 module.exports = {
+    dataToEdit,
     dataToUpdate,
     dataToDelete
 };

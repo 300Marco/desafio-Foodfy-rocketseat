@@ -7,7 +7,7 @@ const multer = require('../app/middlewares/multer');
 const { onlyUsers, checkIsAdmin } = require('../app/middlewares/session');
 
 // test
-const { dataToUpdate, dataToDelete } = require('../app/middlewares/chefSendData');
+const { dataToEdit, dataToUpdate, dataToDelete } = require('../app/middlewares/chefSendData');
 
 
 routes.get('/chefs', onlyUsers, ChefsController.show);
@@ -16,7 +16,7 @@ routes.get('/chefs/create', onlyUsers, checkIsAdmin, ChefsController.create);
 
 routes.get('/chefs/:id', onlyUsers, ChefsController.details);
 
-routes.get('/chefs/:id/edit', onlyUsers, ChefsController.edit);
+routes.get('/chefs/:id/edit', onlyUsers, dataToEdit, ChefsController.edit);
 
 routes.post('/chefs', multer.array("avatar", 1), onlyUsers, ChefsController.post);
 

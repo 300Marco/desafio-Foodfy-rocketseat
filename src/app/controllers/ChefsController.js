@@ -9,7 +9,7 @@ module.exports = {
             let results = await AdminChef.all();
             const chefs = results.rows;
     
-            if(!chefs) return res.send("Nenhum chef encontrado!");
+            if(!chefs) return res.render('adminChefs/not-found');
     
             async function getImageAvatar(chefId) {
                 let results = await AdminChef.files(chefId);
@@ -35,6 +35,7 @@ module.exports = {
             return res.render('adminChefs/index', {chefs: lastAdded, user});
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     async create(req, res) {
@@ -48,7 +49,7 @@ module.exports = {
             let results = await AdminChef.find(req.params.id);
             const chef = results.rows;
 
-            if(!chef) return res.send("Nenhum chef encontrado!");
+            if(!chef) return res.render('adminChefs/not-found');
 
             // get image avatar
             async function getImageAvatar(chefId) {
@@ -103,7 +104,7 @@ module.exports = {
             return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount, user});
         } catch (err) {
             console.error(err);
-            return res.render('adminChefs/not-found');
+            return res.render('adminUsers/not-found');
         };
     },
     // async edit(req, res) {
@@ -142,76 +143,13 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-            // BLOQUEIO DE USUÁRIOS SEM PERMISSÃO
-            // PEGA ID DE USUÁRIO LOGADO
-            const { userId: id } = req.session;
-
-            const user = await AdminUser.findOne({ where: {id} });
-
-            // PERMISSÃO PARA EDITAR RECEITA
-            if(user.is_admin == false) {
-                let results = await AdminChef.find(req.params.id);
-                const chef = results.rows;
-
-                if(!chef) return res.send("Nenhum chef encontrado!");
-
-                // get image avatar
-                async function getImageAvatar(chefId) {
-                    let results = await AdminChef.files(chefId);
-                    const files = results.rows.map(
-                        file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-                    );
-
-                    return files[0];
-                }
-
-                const avatarPromise = chef.map(async avatar => {
-                    avatar.img = await getImageAvatar(avatar.id);
-
-                    return avatar;
-                });
-
-                const lastAvatarAdded = await Promise.all(avatarPromise);
-
-                // get image Recipes
-                results = await AdminChef.findRecipe(chef[0].id);
-                const recipes = results.rows;
-
-                async function getImageRecipe(recipeId) {
-                    let results = await AdminChef.filesRecipe(recipeId);
-                    const files = results.rows.map(
-                        file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-                    );
-
-                    return files[0];
-                }
-
-                const recipePromise = recipes.map(async recipe => {
-                    recipe.img = await getImageRecipe(recipe.id);
-
-                    return recipe;
-                });
-
-                const lastRecipeAdded = await Promise.all(recipePromise);
-
-                let recipesCount = 0;
-
-                if(lastRecipeAdded.length == 0) {
-                    recipesCount;
-                } else {
-                    recipesCount = lastRecipeAdded.length;
-                };
-
-                return res.render('adminChefs/details', {
-                    chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount,
-                    error: "Você não tem permissões de administrador!"
-                });
-            };
+            // middleware
+            const user = req.data;
             
             return res.render('adminChefs/edit', {chef, files, user});
         } catch (err) {
             console.error(err);
-            return res.render('adminChefs/not-found');
+            return res.render('adminUsers/not-found');
         };
     },
     // async post(req, res) {
@@ -270,7 +208,7 @@ module.exports = {
             results = await AdminChef.find(chefId);
             const chef = results.rows;
 
-            if(!chef) return res.send("Nenhum chef encontrado!");
+            if(!chef) return res.render('adminChefs/not-found');
 
             // get image avatar
             async function getImageAvatar(chefId) {
@@ -311,6 +249,7 @@ module.exports = {
             });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     // async put(req, res) {
@@ -438,6 +377,7 @@ module.exports = {
             });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     // async delete(req, res) {
@@ -482,7 +422,7 @@ module.exports = {
             const results = await AdminChef.chefRecipes(req.body.id);
             const chef = results.rows;
 
-            if(!chef) return res.send("AdminChef not found!");
+            if(!chef) return res.render('adminChefs/not-found');
 
             const [ {title, recipes_id, file_id} ] = chef;
 
@@ -519,6 +459,7 @@ module.exports = {
             };
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     }
     // async delete(req, res) {
