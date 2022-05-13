@@ -22,7 +22,7 @@ routes.get('/chefs/:id/edit', onlyUsers, dataToEdit, ChefsController.edit);
 
 routes.post('/chefs', multer.array("avatar", 1), onlyUsers, ChefValidator.post, ChefsController.post);
 
-routes.put('/chefs', multer.array("avatar", 1), onlyUsers, dataToUpdate, ChefsController.put);
+routes.put('/chefs', multer.array("avatar", 1), onlyUsers, ChefValidator.put, dataToUpdate, ChefsController.put);
 
 routes.delete('/chefs', onlyUsers, dataToDelete, ChefsController.delete);
 

@@ -310,13 +310,13 @@ module.exports = {
     async put(req, res) {
         try {
             // ################ Send Validators
-            const keys = Object.keys(req.body);
+            // const keys = Object.keys(req.body);
 
-            for(key of keys) {
-                if(req.body[key] == "" && key != 'removed_avatar') {
-                    return res.send("Please fill in all fields");
-                };
-            };
+            // for(key of keys) {
+            //     if(req.body[key] == "" && key != 'removed_avatar') {
+            //         return res.send("Please fill in all fields");
+            //     };
+            // };
 
             // Find Files
             let results = await AdminChef.files(req.body.id);
@@ -341,7 +341,6 @@ module.exports = {
 
             // removed image
             if(req.body.removed_avatar) {
-                // console.log('Remover imagem')
 
                 const removedFiles = req.body.removed_avatar.split(',');
                 const lastIndex = removedFiles.length;
@@ -349,12 +348,42 @@ module.exports = {
                 removedFiles.splice(lastIndex, 1);
 
                 if(req.files.length == 0) {
-                    return res.send("Please send one image");
-                } 
+                    let result = await AdminChef.find(req.body.id);
+                    const chef = result.rows[0];
+
+                    // get images
+                    result = await AdminChef.files(chef.id);
+                    let files = result.rows;
+                    files = files.map(file => ({
+                        ...file,
+                        src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                    }));
+
+                    return res.render("adminChefs/edit", {
+                        chef: req.body,
+                        files,
+                        error: "Por favor, escolha um avatar!"
+                    });
+                };
 
                 await AdminChef.update(req.body, fileId);
                 await removedFiles.map(id => FileAdminChef.delete(id));
             };
+            // removed image
+            // if(req.body.removed_avatar) {
+
+            //     const removedFiles = req.body.removed_avatar.split(',');
+            //     const lastIndex = removedFiles.length;
+
+            //     removedFiles.splice(lastIndex, 1);
+
+            //     if(req.files.length == 0) {
+            //         return res.send(`Por favor, envie um avatar`);
+            //     };
+
+            //     await AdminChef.update(req.body, fileId);
+            //     await removedFiles.map(id => FileAdminChef.delete(id));
+            // };
 
             AdminChef.update(req.body, fileId);
             
