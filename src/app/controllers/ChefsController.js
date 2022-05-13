@@ -33,7 +33,7 @@ module.exports = {
             const user = await AdminUser.findOne({ where: {id} });
     
             return res.render('adminChefs/index', {chefs: lastAdded, user});
-        } catch (err) {
+        } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
         };
@@ -102,7 +102,7 @@ module.exports = {
             const user = await AdminUser.findOne({ where: {id} });
 
             return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount, user});
-        } catch (err) {
+        } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
         };
@@ -132,7 +132,6 @@ module.exports = {
             let results = await AdminChef.find(req.params.id);
             const chef = results.rows[0];
 
-            // if(!chef) return res.send("AdminChef not found!");
             if(!chef) return res.render('adminChefs/not-found');
 
             // get images
@@ -147,7 +146,7 @@ module.exports = {
             const user = req.data;
             
             return res.render('adminChefs/edit', {chef, files, user});
-        } catch (err) {
+        } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
         };
@@ -182,6 +181,7 @@ module.exports = {
     // },
     async post(req, res) {
         try {
+            // ################ Send Validators
             const keys = Object.keys(req.body);
         
             for(key of keys) {
@@ -247,7 +247,7 @@ module.exports = {
                 user,
                 success: "Chef criado com sucesso!"
             });
-        } catch (err) {
+        } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
         };
@@ -309,6 +309,7 @@ module.exports = {
     // },
     async put(req, res) {
         try {
+            // ################ Send Validators
             const keys = Object.keys(req.body);
 
             for(key of keys) {
@@ -375,7 +376,7 @@ module.exports = {
                 user,
                 success: "Chef atualizado com sucesso!"
             });
-        } catch (err) {
+        } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
         };
@@ -437,7 +438,7 @@ module.exports = {
                 return res.render('adminChefs/index', {
                     chefs,
                     user,
-                    success: "Chefe deletado com sucesso!"
+                    success: "Chef deletado com sucesso!"
                 });
             } else {
                 let results = await AdminChef.find(req.body.id);
@@ -454,7 +455,7 @@ module.exports = {
                 return res.render('adminChefs/edit', {
                     chef,
                     files,
-                    error: "Chefes que possuem receitas, não podem ser deletados!"
+                    error: "Chefs que possuem receitas, não podem ser deletados!"
                 });
             };
         } catch (err) {

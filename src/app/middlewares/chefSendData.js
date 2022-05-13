@@ -145,6 +145,7 @@ async function dataToUpdate(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     }
 }
 
@@ -153,7 +154,7 @@ async function dataToDelete(req, res, next) {
         let results = await AdminChef.all();
         const chefs = results.rows;
 
-        if(!chefs) return res.send("Nenhum chef encontrado!");
+        if(!chefs) res.render('adminChefs/not-found');
 
         async function getImageAvatar(chefId) {
             let results = await AdminChef.files(chefId);
@@ -184,6 +185,7 @@ async function dataToDelete(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     }
 }
 
