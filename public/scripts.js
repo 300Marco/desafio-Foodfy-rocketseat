@@ -165,6 +165,7 @@ function displayInput() {
     // ) {
     if(
         href != '/admin/recipes/create' && 
+        href != '/admin/chefs' && 
         href != '/admin/chefs/create' && 
         href != `/admin/chefs/${chefId}/edit` && 
         href != `/admin/users/${userId}/edit` && 

@@ -182,17 +182,17 @@ module.exports = {
     async post(req, res) {
         try {
             // ################ Send Validators
-            const keys = Object.keys(req.body);
+            // const keys = Object.keys(req.body);
         
-            for(key of keys) {
-                if(req.body[key] == "") {
-                    return res.send("Please fill in all fields");
-                };
-            };
+            // for(key of keys) {
+            //     if(req.body[key] == "") {
+            //         return res.send("Please fill in all fields");
+            //     };
+            // };
     
-            if(req.files.length == 0) {
-                return res.send('Please, send at last one image');
-            };
+            // if(req.files.length == 0) {
+            //     return res.send('Please, send at last one image');
+            // };
     
             // Create Image
             const filesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
