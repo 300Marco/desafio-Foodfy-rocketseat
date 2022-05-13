@@ -369,6 +369,10 @@ module.exports = {
             chef[0].name = req.body.name;
             chef[0].img = files;
 
+            for(let count in recipes) {
+                recipes[count].chefs_name = req.body.name;
+            };
+
             return res.render('adminChefs/details', {
                 chef,
                 recipes,
