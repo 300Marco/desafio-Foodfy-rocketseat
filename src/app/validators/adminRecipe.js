@@ -39,6 +39,7 @@ async function post(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     };
 }
 // async function post(req, res, next) {
@@ -109,6 +110,7 @@ async function put(req, res, next) {
         next();
     } catch(err) {
         console.log(err);
+        return res.render('adminUsers/not-found');
     }
 }
 

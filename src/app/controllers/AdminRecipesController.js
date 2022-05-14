@@ -40,6 +40,7 @@ module.exports = {
             });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     async show(req, res) {
@@ -69,12 +70,12 @@ module.exports = {
             const user = await AdminUser.findOne({ where: {id} });
 
             return res.render('adminRecipes/index', {
-                recipes: 
-                lastAdded, 
+                recipes: lastAdded, 
                 user
             });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     async create(req, res) {
@@ -85,9 +86,13 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
             
-            return res.render('adminRecipes/create', {chefsOptions: options, user});
+            return res.render('adminRecipes/create', {
+                chefsOptions: options, 
+                user
+            });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     async details(req, res) {
@@ -112,7 +117,12 @@ module.exports = {
             // VERIFICA SE OS ID BATEM
             const isUserRecipes = recipe.user_id == id;
 
-            return res.render('adminRecipes/details', {recipe, files, isUserRecipes, user});
+            return res.render('adminRecipes/details', {
+                recipe, 
+                files, 
+                isUserRecipes, 
+                user
+            });
         } catch (err) {
             console.error(err);
             return res.render('adminRecipes/not-found');
@@ -181,7 +191,12 @@ module.exports = {
                 });
             };
             
-            return res.render('adminRecipes/edit', {recipe, chefsOptions: options, files, user});
+            return res.render('adminRecipes/edit', {
+                recipe, 
+                chefsOptions: options, 
+                files, 
+                user
+            });
         } catch (err) {
             console.error(err);
             return res.render('adminRecipes/not-found');
@@ -273,6 +288,7 @@ module.exports = {
             });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     // async post(req, res) {
@@ -431,15 +447,7 @@ module.exports = {
             });
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     }
-    // async delete(req, res) {
-    //     try {
-    //         await AdminRecipe.delete(req.body.id);
-
-    //         return res.redirect('/admin/recipes');
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // }
 }
