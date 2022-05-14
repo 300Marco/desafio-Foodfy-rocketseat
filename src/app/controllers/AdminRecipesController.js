@@ -416,32 +416,12 @@ module.exports = {
         try {
             await AdminRecipe.delete(req.body.id);
 
-            let results = await AdminRecipe.all();
-            const recipes = results.rows;
+            let { recipes, user } = req.data;
 
-            // get image
-            async function getImage(recipeId) {
-                let results = await AdminRecipe.files(recipeId);
-                const files = results.rows.map(
-                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-                );
-
-                return files[0];
-            };
-
-            const recipesPromise = recipes.map(async recipe => {
-                recipe.img = await getImage(recipe.id);
-
-                return recipe;
-            });
-
-            const lastAdded = await Promise.all(recipesPromise);
-
-            const { userId: id } = req.session;
-            const user = await AdminUser.findOne({ where: {id} });
-
+            recipes = recipes.filter((recipe) => recipe.id != req.body.id);
+            
             return res.render('adminRecipes/index', {
-                recipes: lastAdded,
+                recipes,
                 user,
                 success: "Receita deletada com sucesso!"
             });
@@ -450,4 +430,42 @@ module.exports = {
             return res.render('adminUsers/not-found');
         };
     }
+    // async delete(req, res) {
+    //     try {
+    //         await AdminRecipe.delete(req.body.id);
+
+    //         let results = await AdminRecipe.all();
+    //         const recipes = results.rows;
+
+    //         // get image
+    //         async function getImage(recipeId) {
+    //             let results = await AdminRecipe.files(recipeId);
+    //             const files = results.rows.map(
+    //                 file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+    //             );
+
+    //             return files[0];
+    //         };
+
+    //         const recipesPromise = recipes.map(async recipe => {
+    //             recipe.img = await getImage(recipe.id);
+
+    //             return recipe;
+    //         });
+
+    //         const lastAdded = await Promise.all(recipesPromise);
+
+    //         const { userId: id } = req.session;
+    //         const user = await AdminUser.findOne({ where: {id} });
+
+    //         return res.render('adminRecipes/index', {
+    //             recipes: lastAdded,
+    //             user,
+    //             success: "Receita deletada com sucesso!"
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //         return res.render('adminUsers/not-found');
+    //     };
+    // }
 }

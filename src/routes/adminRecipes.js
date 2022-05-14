@@ -20,7 +20,7 @@ routes.post("/recipes", onlyUsers, multer.array("photos", 5), recipeValidator.po
 
 routes.put('/recipes', multer.array("photos", 5), onlyUsers, recipeValidator.put, AdminRecipesController.put);
 
-routes.delete('/recipes', onlyUsers, AdminRecipesController.delete);
+routes.delete('/recipes', onlyUsers, recipeValidator.removeRecipe, AdminRecipesController.delete);
 
 // User Recipes
 routes.get('/user/recipes', onlyUsers, AdminRecipesController.showUserRecipe);
