@@ -1,5 +1,7 @@
 const AdminChef = require('../models/AdminChef');
 
+const fs = require('fs');
+
 function checkAllFields(body) {
     const keys = Object.keys(body);
 
@@ -7,7 +9,7 @@ function checkAllFields(body) {
         if(body[key] == "" && key != 'removed_avatar') {
             return {
                 chef: body,
-                error: "Por favor, preencha o campo nome!"
+                error: "Por favor, preencha todos os campos!"
             }
         };
     };
@@ -17,6 +19,8 @@ async function post(req, res, next) {
     try {
         const fillAllFields = checkAllFields(req.body);
         if(fillAllFields) {
+            await fs.unlinkSync(req.files[0].path);
+
             return res.render('adminChefs/create', fillAllFields);
         }
 
