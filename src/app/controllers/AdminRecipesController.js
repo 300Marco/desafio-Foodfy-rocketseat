@@ -11,7 +11,9 @@ module.exports = {
             let results = await AdminRecipe.allUserRecipes(id);
             const recipes = results.rows;
 
-            if(!recipes) return res.send("Nenhuma receita encontrada!");
+            if(!recipes) return res.render('adminRecipes/userRecipe', {
+                error: "Desculpe, não encontramos nenhuma receita!"
+            });
 
             // get image
             async function getImage(recipeId) {
@@ -47,6 +49,10 @@ module.exports = {
         try {
             let results = await AdminRecipe.all();
             const recipes = results.rows;
+
+            if(!recipes) return res.render('adminRecipes/index', {
+                error: "Desculpe, não encontramos nenhuma receita!"
+            });
 
             // get image
             async function getImage(recipeId) {
@@ -100,8 +106,7 @@ module.exports = {
             let results = await AdminRecipe.find(req.params.id);
             const recipe = results.rows[0];
 
-            // if(!recipe) return res.send("Recipe not found!");
-            if(!recipe) return res.render("adminRecipes/not-found");
+            if(!recipe) return res.render('adminRecipes/not-found');
 
             results = await AdminRecipe.files(recipe.id);
             const files = results.rows.map(file => ({
