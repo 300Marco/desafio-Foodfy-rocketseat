@@ -1,34 +1,31 @@
 const AdminUser = require('../models/AdminUser');
 const AdminRecipe = require('../models/AdminRecipe');
 
-// async function checkAllFields(body) {
-//     const keys = Object.keys(body);
-        
-//     for(key of keys) {
-//         if(body[key] == "" && key != 'information' && key != 'removed_files') {
-//             return {
-//                 user: body,
-//                 error: "Por favor, preencha todos os campos"
-//             };
-//         };
-//     };
-// }
+const fs = require('fs');
 
 async function post(req, res, next) {
     try {
-        const keys = Object.keys(req.body);
-        
-        for(key of keys) {
-            if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
-                return res.send("Please fill in all fields");
-            };
-        };
+        const { userId: id } = req.session;
+        const user = await AdminUser.findOne({ where: {id} });
 
         const results = await AdminRecipe.chefsSelectOptions();
         const options = results.rows;
 
-        const { userId: id } = req.session;
-        const user = await AdminUser.findOne({ where: {id} });
+        const keys = Object.keys(req.body);
+
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+                for(let count in req.files) {
+                    await fs.unlinkSync(req.files[count].path);
+                }
+                return res.render('adminRecipes/create', {
+                    recipe: req.body,
+                    chefsOptions: options,
+                    user,
+                    error: "Por favor, preencha todos os campos!"
+                });
+            };
+        };
 
         if(req.files.length == 0) {
             return res.render('adminRecipes/create', {
@@ -44,6 +41,36 @@ async function post(req, res, next) {
         console.error(err);
     };
 }
+// async function post(req, res, next) {
+//     try {
+//         const keys = Object.keys(req.body);
+        
+//         for(key of keys) {
+//             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+//                 return res.send("Please fill in all fields");
+//             };
+//         };
+
+//         const results = await AdminRecipe.chefsSelectOptions();
+//         const options = results.rows;
+
+//         const { userId: id } = req.session;
+//         const user = await AdminUser.findOne({ where: {id} });
+
+//         if(req.files.length == 0) {
+//             return res.render('adminRecipes/create', {
+//                 recipe: req.body,
+//                 chefsOptions: options,
+//                 user,
+//                 error: "Por favor, envie pelo menos uma imagem!"
+//             });
+//         };
+
+//         next();
+//     } catch(err) {
+//         console.error(err);
+//     };
+// }
 
 async function put(req, res, next) {
     try {
@@ -64,6 +91,8 @@ async function put(req, res, next) {
         const user = await AdminUser.findOne({ where: {id} });
 
         const keys = Object.keys(req.body);
+
+        console.log(req.files)
         
         for(key of keys) {
             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {

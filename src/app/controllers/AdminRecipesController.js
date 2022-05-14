@@ -239,11 +239,10 @@ module.exports = {
     //     };
     // },
     async post(req, res) {
-        try {            
+        try {
             const results = await AdminRecipe.create(req.body);
             const recipeId = results.rows[0].id;
 
-            // Send image
             const filesPromise = req.files.map(file => File.create({...file, recipeId}))
             await Promise.all(filesPromise);
 
@@ -270,7 +269,7 @@ module.exports = {
                 files,
                 user,
                 isUserRecipes,
-                success: "Receita cadastrada com sucesso"
+                success: "Receita criada com sucesso!"
             });
         } catch (err) {
             console.error(err);

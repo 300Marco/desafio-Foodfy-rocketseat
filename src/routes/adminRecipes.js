@@ -16,7 +16,7 @@ routes.get('/recipes/:id', onlyUsers, AdminRecipesController.details);
 
 routes.get('/recipes/:id/edit', onlyUsers, AdminRecipesController.edit);
 
-routes.post("/recipes", multer.array("photos", 5), onlyUsers, recipeValidator.post, AdminRecipesController.post);
+routes.post("/recipes", onlyUsers, multer.array("photos", 5), recipeValidator.post, AdminRecipesController.post);
 
 routes.put('/recipes', multer.array("photos", 5), onlyUsers, recipeValidator.put, AdminRecipesController.put);
 
