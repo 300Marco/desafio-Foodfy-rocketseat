@@ -103,7 +103,7 @@ module.exports = {
             return res.render(`adminUsers/edit`, {
                 user_data: req.body,
                 user,
-                error: "Houve algum erro!"
+                error: "Ops... houve algum erro!"
             });
         }
     },
@@ -126,6 +126,7 @@ module.exports = {
             return res.render('adminUsers/edit', { user_data, user });
         } catch(err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     // async put(req, res) {
@@ -172,7 +173,9 @@ module.exports = {
         } catch(err) {
             console.error(err);
             return res.render('AdminUser/edit', {
-                error: 'Houve um erro inesperado!'
+                user_data: req.body,
+                user,
+                error: "Ops... houve algum erro!"
             })
         }
     },
@@ -190,26 +193,35 @@ module.exports = {
     //     return res.redirect('/admin/users');
     // },
     async delete(req, res) {
-        const { id } = req.body;
-        const user = await AdminUser.findOne({ where: {id} });
-        const checkIsUser = req.body.id == req.session.userId;
+        try {
+            const { id } = req.body;
+            const user = await AdminUser.findOne({ where: {id} });
+            const checkIsUser = req.body.id == req.session.userId;
 
-        if(checkIsUser == true) return res.render('adminUsers/edit', {
-            user,
-            error: 'Não é permitido excluir sua própria conta!'
-        });
+            if(checkIsUser == true) return res.render('adminUsers/edit', {
+                user,
+                error: 'Não é permitido excluir sua própria conta!'
+            });
 
-        await AdminUser.delete(req.body.id);
-        
-        // Success message when registering
-        let results = await AdminUser.all();
-        const users = results.rows;
+            await AdminUser.delete(req.body.id);
+            
+            // Error message when deleting
+            let results = await AdminUser.all();
+            const users = results.rows;
 
-        return res.render(`adminUsers/list`, {
-            users,
-            user,
-            success: "Usuário deletado com sucesso!"
-        });
+            return res.render(`adminUsers/list`, {
+                users,
+                user,
+                success: "Usuário deletado com sucesso!"
+            });
+        } catch(err) {
+            console.error(err);
+            return res.render(`adminUsers/edit`, {
+                users,
+                user,
+                error: "Ops... houve algum erro!"
+            });
+        }
     },
     async deleteUserList(req, res) {
         try {
@@ -242,6 +254,11 @@ module.exports = {
             });
         } catch(err) {
             console.error(err);
+            return res.render(`adminUsers/list`, {
+                users,
+                user,
+                error: "Ops... houve algum erro!"
+            });
         };
     }
 }
