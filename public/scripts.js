@@ -796,3 +796,43 @@ const Validate = {
         }
     }
 }
+
+// show password
+function passwordField() {
+    let password = document.querySelector('.password-input input');
+    let span = document.querySelector('.password-input span');
+
+    span.style.display = 'initial';
+
+    span.addEventListener('click', () => {
+        if(span.innerHTML == "Mostrar") {
+            span.innerHTML = "Ocultar";
+            password.type = "text";
+        } else {
+            span.innerHTML = "Mostrar";
+            password.type = "password";
+        }
+    });
+}
+
+function resetPasswordField() {
+    let password = document.querySelectorAll('.reset-password-input input');
+    let span = document.querySelector('.reset-password-input span:nth-child(2)');
+
+    span.style.display = 'initial';
+
+    span.addEventListener('click', () => {
+        if(span.innerHTML == "Mostrar senhas") {
+            span.innerHTML = "Ocultar";
+            for(pass of password) {
+                pass.type = "text";
+            }
+        } else {
+            span.innerHTML = "Mostrar senhas";
+            for(pass of password) {
+                pass.type = "password";
+            }
+        }
+    });
+}
+

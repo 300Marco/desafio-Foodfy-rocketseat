@@ -13,7 +13,7 @@
         >
     </div>
 
-    <div class="admin-password">
+    {# <div class="admin-password">
         <div class="name-input">Senha</div>
         <input
             {% if error %}
@@ -23,5 +23,22 @@
             name="password"
             placeholder="Digite sua senha"
         >
+    </div> #}
+
+    <div class="admin-password">
+        <div class="name-input">Senha</div>
+        <div class="password-input">
+            <input
+                {% if error %}
+                    class="login-error"
+                {% endif %}
+                type="password" 
+                name="password"
+                placeholder="Digite sua senha"
+                onfocus="passwordField()"
+            >
+
+            <span>Mostrar</span>
+        </div>
     </div>
 </div>

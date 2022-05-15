@@ -13,7 +13,7 @@
         >
     </div>
 
-    <div class="admin-password">
+    {# <div class="admin-password">
         <div class="name-input">Senha</div>
         <input
             {% if error %}
@@ -22,10 +22,26 @@
             type="password" 
             name="password"
             placeholder="Digite sua nova senha"
+            onfocus="passwordField()"
         >
+    </div> #}
+    <div class="admin-password">
+        <div class="name-input">Senha</div>
+        <div class="reset-password-input">
+            <input
+                {% if error %}
+                    class="login-error"
+                {% endif %}
+                type="password" 
+                name="password"
+                placeholder="Digite sua senha"
+            >
+
+            {# <span>Mostrar</span> #}
+        </div>
     </div>
 
-    <div class="admin-password">
+    {# <div class="admin-password">
         <div class="name-input">Repetição da Senha</div>
         <input
             {% if error %}
@@ -35,6 +51,23 @@
             name="passwordRepeat"
             placeholder="Repita a nova senha"
         >
+    </div> #}
+    <div class="admin-password">
+        <div class="name-input">Repetição da Senha</div>
+
+        <div class="reset-password-input">
+            <input
+                {% if error %}
+                    class="login-error"
+                {% endif %}
+                type="password" 
+                name="passwordRepeat"
+                placeholder="Repita a nova senha"
+                onfocus="resetPasswordField()"
+            >
+
+            <span>Mostrar senhas</span>
+        </div>
     </div>
 </div>
 
