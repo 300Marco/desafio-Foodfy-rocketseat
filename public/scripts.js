@@ -215,14 +215,35 @@ function addIngredient() {
         inputIngredients.focus();
     }
 
-    function createDeleteButton(div) {
-        const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'X';
-        deleteButton.setAttribute('class', 'delete-field-button');
-        deleteButton.setAttribute('type', 'button');
+    // function createDeleteButton(div) {
+    //     const deleteButton = document.createElement('button');
+    //     deleteButton.innerText = 'X';
+    //     deleteButton.setAttribute('class', 'delete-field-button');
+    //     deleteButton.setAttribute('type', 'button');
 
-        div.appendChild(deleteButton);
+    //     div.appendChild(deleteButton);
+    // }
+    function createDeleteButton(div) {
+        const icon = document.createElement('span');
+        icon.setAttribute('class', 'material-icons md delete-field-button');
+        icon.innerHTML = 'delete';
+
+        div.appendChild(icon);
     }
+    // function createDeleteButton(div) {
+    //     // Create google trash span tag
+    //     const icon = document.createElement('span');
+    //     icon.setAttribute('class', 'material-icons md');
+    //     icon.innerHTML = 'delete';
+
+    //     // Create button and add icon
+    //     const deleteButton = document.createElement('button');
+    //     deleteButton.appendChild(icon);
+    //     deleteButton.setAttribute('class', 'delete-field-button');
+    //     deleteButton.setAttribute('type', 'button');
+
+    //     div.appendChild(deleteButton);
+    // }
 
     function createRecipe(textoInput) {
         const input = createInput();
@@ -261,14 +282,45 @@ function addIngredient() {
     }
 
     insertButtonEdit();
+    
+    // document.addEventListener('click', (e) => {
+    //     const el = e.target;
 
+    //     if(el.classList.contains('delete-field-button')) {
+    //             el.parentElement.remove();
+    //         }
+    //     });
     document.addEventListener('click', (e) => {
         const el = e.target;
 
         if(el.classList.contains('delete-field-button')) {
             el.parentElement.remove();
-        }
+        };
     });
+
+
+    // const inputIngredient = document.querySelector('input[name="ingredients[]"]');
+    // document.addEventListener('click', (e) => {
+    //     const el = e.target;
+
+    //     if(el.classList.contains('delete-field-button') || el.classList.contains('material-icons')) {
+    //         console.log(el.parentElement)
+    //         if(el.parentElement.classList.contains('ingredients-input')) {
+                
+    //         }
+    //     } 
+    //     // else if(el.classList.contains('material-icons')) {
+    //     //     const div = document.querySelector('.ingredients-input');
+
+    //     //     console.log(div);
+
+    //     //     // if(div.parentElement.classList.contains('ingredients-input')) {
+    //     //     //     console.log('Ingredients');
+    //     //     // }
+    //     // }
+    // });
+
+    
 }
 
 function addPreparation() {
@@ -290,14 +342,53 @@ function addPreparation() {
         inputPreparation.focus();
     }
 
-    function createDeleteButton(div) {
-        const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'X';
-        deleteButton.setAttribute('class', 'delete-field-button');
-        deleteButton.setAttribute('type', 'button');
+    // function createDeleteButton(div) {
+    //     const deleteButton = document.createElement('button');
+    //     deleteButton.innerText = 'X';
+    //     deleteButton.setAttribute('class', 'delete-field-button');
+    //     deleteButton.setAttribute('type', 'button');
 
-        div.appendChild(deleteButton);
+    //     div.appendChild(deleteButton);
+    // }
+
+    // function createDeleteButton(div) {
+    //     // Create google trash span tag
+    //     const icon = document.createElement('span');
+    //     icon.setAttribute('class', 'material-icons md');
+    //     icon.innerHTML = 'delete';
+                
+    //     // Create button and add icon
+    //     const deleteButton = document.createElement('button');
+    //     // deleteButton.innerText = 'X';
+    //     deleteButton.appendChild(icon);
+    //     deleteButton.setAttribute('class', 'delete-field-button');
+    //     deleteButton.setAttribute('type', 'button');
+
+    //     div.appendChild(deleteButton);
+    // }
+
+    function createDeleteButton(div) {
+        const icon = document.createElement('span');
+        icon.setAttribute('class', 'material-icons md delete-field-button');
+        icon.innerHTML = 'delete';
+        
+        div.appendChild(icon);
     }
+    // function createDeleteButton(div) {
+    //     // Create google trash span tag
+    //     const icon = document.createElement('span');
+    //     icon.setAttribute('class', 'material-icons md');
+    //     icon.innerHTML = 'delete';
+                
+    //     // Create button and add icon
+    //     const deleteButton = document.createElement('button');
+    //     // deleteButton.innerText = 'X';
+    //     deleteButton.appendChild(icon);
+    //     deleteButton.setAttribute('class', 'delete-field-button');
+    //     deleteButton.setAttribute('type', 'button');
+
+    //     div.appendChild(deleteButton);
+    // }
 
     function createPreparation(textoInput) {
         const input = createInput();
@@ -318,7 +409,7 @@ function addPreparation() {
     btnPreparation.addEventListener('click', () => {
         const currentPage = location.pathname;
         let href = String(currentPage);
-        
+
         if(href == '/admin/recipes/create') {
             if(!inputPreparation.value) return;
             createPreparation(inputPreparation.value);
@@ -336,14 +427,30 @@ function addPreparation() {
     }
 
     insertButtonEdit();
+    // document.addEventListener('click', e => {
+    //     const el = e.target;
 
-    document.addEventListener('click', (e) => {
-        const el = e.target;
+    //     console.log(el.classList);
 
-        if(el.classList.contains('delete-field-button')) {
-            el.parentElement.remove();
-        }
-    });
+    //     if(el.classList.contains('delete-field-button')) {
+    //         el.parentElement.remove();
+    //     }
+    // });
+
+    // btnPreparation.addEventListener('click', e => {
+    //     console.log("Preparação")
+    // })
+
+    // document.addEventListener('click', e => {
+    //     const el = e.target;
+
+    //     if(el.classList.contains('delete-field-button')) {
+    //         el.parentElement.remove();
+    //     } else if(el.classList.contains('material-icons')) {
+    //         const div = document.querySelector('.delete-field-button');
+    //         div.parentElement.remove();
+    //     }
+    // });
 }
 
 // Pagination
