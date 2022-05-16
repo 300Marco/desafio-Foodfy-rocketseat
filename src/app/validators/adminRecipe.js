@@ -92,8 +92,6 @@ async function put(req, res, next) {
         const user = await AdminUser.findOne({ where: {id} });
 
         const keys = Object.keys(req.body);
-
-        console.log(req.files)
         
         for(key of keys) {
             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
@@ -109,7 +107,7 @@ async function put(req, res, next) {
 
         next();
     } catch(err) {
-        console.log(err);
+        console.error(err);
         return res.render('adminUsers/not-found');
     }
 }

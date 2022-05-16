@@ -128,6 +128,8 @@ module.exports = {
             let results = await Recipe.find(recipeIndex);
             const recipe = results.rows;
 
+            recipe[0].information = recipe[0].information.replace(/[\n]/g, "<br>");
+
             const haveRecipe = results.rows[0];
 
             if(!haveRecipe) return res.render('recipes/recipe-not-found');
@@ -138,7 +140,10 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
     
-            return res.render('recipes/details', {recipe, files});  
+            return res.render('recipes/details', {
+                recipe, 
+                files
+            });  
         } catch (err) {
             console.error(err);
             return res.render('recipes/recipe-not-found');

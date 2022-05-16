@@ -114,6 +114,7 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
+            recipe.information = recipe.information.replace(/[\n]/g, "<br>");
             
             // PEGA ID DE USUÁRIO LOGADO
             const { userId: id } = req.session;
@@ -271,6 +272,11 @@ module.exports = {
             let recipeResults = await AdminRecipe.find(recipeId);
             const recipe = recipeResults.rows[0];
 
+            let newData = {
+                ...recipe,
+                information: recipe.information.replace(/[\n]/g, "<br>")
+            };
+
             recipeResults = await AdminRecipe.files(recipe.id);
             const files = recipeResults.rows.map(file => ({
                 ...file,
@@ -285,7 +291,7 @@ module.exports = {
              const isUserRecipes = recipe.user_id == id;
 
             return res.render('adminRecipes/details', {
-                recipe,
+                recipe: newData,
                 files,
                 user,
                 isUserRecipes,
@@ -383,6 +389,15 @@ module.exports = {
             let results = await AdminRecipe.find(req.body.id);
             const recipe = results.rows[0];
 
+            // req.body.information = req.body.information.replace(/[\n]/g, "<br>");
+            // let {title} = req.body
+            // replace(/[\n]/g, "<br>");
+
+            let newData = {
+                ...req.body,
+                information: recipe.information.replace(/[\n]/g, "<br>")
+            };
+
             results = await AdminRecipe.files(recipe.id);
             const files = results.rows.map(file => ({
                 ...file,
@@ -398,7 +413,7 @@ module.exports = {
 
             await AdminRecipe.update(req.body);
             return res.render('adminRecipes/details', {
-                recipe: req.body,
+                recipe: newData,
                 files,
                 user,
                 isUserRecipes,
