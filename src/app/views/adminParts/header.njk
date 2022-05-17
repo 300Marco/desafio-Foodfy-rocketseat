@@ -85,5 +85,32 @@
                 </li>
             </ul>
         </nav>
+
+        {# <div class="is_admin_header">
+            <span class="material-icons ">admin_panel_settings</span>
+            {% if user.is_admin == true %}
+                <p>Administrador</p>
+            {% else %}
+                <p>Usuário</p>
+            {% endif %}
+        </div> #}
+        <div 
+            class="
+                profile-type 
+                {% if user.is_admin == true %}
+                    is_admin_header
+                {% else %}
+                    is_user_header
+                {% endif %}
+            "
+        >
+            {% if user.is_admin == true %}
+                <span class="material-icons ">admin_panel_settings</span>
+                <p>Administrador</p>
+            {% else %}
+                <span class="material-icons ">person</span>
+                <p>Usuário</p>
+            {% endif %}
+        </div>
     </div>
 </header>

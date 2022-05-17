@@ -15,7 +15,7 @@
     display: block;
 }
 
-.is_admin {
+/* .is_admin {
     background-color: var(--color-success);
     color: white;
     border-radius: 20px;
@@ -25,4 +25,47 @@
     font-weight: bold;
 
     margin-left: 15px;
+} */
+
+/* ========== STATUS ADMIN */
+/* .is_admin_header {
+    color: #00ff3c;
+    font-weight: bold;
+    margin-left: 50px;
+    font-size: 1.5rem;
+
+    display: flex;
+    align-items: center;
+} */
+
+.profile-type {
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: .5px;
+    margin-left: 50px;
+    border-radius: 20px;
+    padding: 2px 10px;
+    text-transform: uppercase;
+
+    display: flex;
+    align-items: center;
+}
+
+.is_admin_header {
+    background-color: var(--color-success);
+}
+
+.is_user_header {
+    background-color: var(--color-purple);
+}
+
+.profile-type span {
+    font-size: 2.0rem;
+    margin-right: 3px;
+}
+
+.is_user_header p {
+    margin-top: 2px;
+    /* font-size: 2.2rem; */
 }
