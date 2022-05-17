@@ -1,7 +1,7 @@
 {% extends "layout.njk" %}
 
 {% block title %}
-    <title>{{recipe[0].title}} - {{recipe[0].name}}</title>
+    <title>{{recipe.title}} - {{recipe.name}}</title>
 {% endblock %}
 
 {% block contents %}
@@ -9,7 +9,7 @@
 
     <div class="gallery">
         <div class="highlight">
-            {% if not files[0] %}
+            {% if not files %}
                 <img class="recipe-image" src="https://via.placeholder.com/1080x720?text=Receita sem imagem" alt="Receita sem Imagem">
             {% else %}
                 <img 
@@ -35,8 +35,8 @@
     </div>
 
     <div class="recipe-title">
-        <h2>{{recipe[0].title}}</h2>
-        <span>por {{recipe[0].name}}</span>
+        <h2>{{recipe.title}}</h2>
+        <span>por {{recipe.name}}</span>
     </div>
 
     <div class="recipe-info">
@@ -47,7 +47,7 @@
             </h3>
 
             <ul>
-                {% for ingredient in recipe[0].ingredients %}
+                {% for ingredient in recipe.ingredients %}
                     <li>{{ingredient}}</li>
                 {% endfor %}
             </ul>
@@ -60,7 +60,7 @@
             </h3>
             
             <ul>
-                {% for preparation in recipe[0].preparation %}
+                {% for preparation in recipe.preparation %}
                     <li>{{preparation}}</li>
                 {% endfor %}
             </ul>
@@ -73,8 +73,8 @@
             </h3>
 
             <ul>
-                {% if recipe[0].information %}
-                    <li>{{recipe[0].information}}</li>
+                {% if recipe.information %}
+                    <li>{{recipe.information}}</li>
                 {% else %}
                     <li>Sem informações adicionais</li>
                 {% endif %}

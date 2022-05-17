@@ -85,7 +85,11 @@
             </h3>
             
             <ul>
-                <li>{{recipe.information}}</li>
+                {% if recipe.information %}
+                    <li>{{recipe.information}}</li>
+                {% else %}
+                    <li>Sem informações adicionais</li>
+                {% endif %}
             </ul>
         </section>
     </div>

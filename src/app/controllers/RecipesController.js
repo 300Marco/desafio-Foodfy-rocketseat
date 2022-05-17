@@ -126,11 +126,11 @@ module.exports = {
             const recipeIndex = req.params.index;
         
             let results = await Recipe.find(recipeIndex);
-            const recipe = results.rows;
+            const recipe = results.rows[0];
 
-            recipe[0].information = recipe[0].information.replace(/[\n]/g, "<br>");
+            recipe.information = recipe.information.replace(/[\n]/g, "<br>");
 
-            const haveRecipe = results.rows[0];
+            const haveRecipe = results.rows;
 
             if(!haveRecipe) return res.render('recipes/recipe-not-found');
     
