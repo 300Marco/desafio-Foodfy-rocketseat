@@ -194,7 +194,7 @@ module.exports = {
     // },
     async delete(req, res) {
         try {
-            const { id } = req.body;
+            const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
             const checkIsUser = req.body.id == req.session.userId;
 
