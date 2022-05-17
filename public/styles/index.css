@@ -535,6 +535,7 @@ footer span {
 
 .header-background nav ul li a {
     text-transform: uppercase;
+    transition: 300ms;
 }
 
 .cards-food-admin h3{
