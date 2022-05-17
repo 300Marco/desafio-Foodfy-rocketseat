@@ -12,7 +12,7 @@
             <ul class="links">
                 <li class="recipes">
                     {# quando criar a página profile, coloque a rota neste link #}
-                    <a href="#">Receitas</a>
+                    <a href="/admin/recipes">Receitas</a>
                     {% if session.userId %}
                         <span class="recipes-hover"></span>
                         <ul class="recipe-submenu">
@@ -35,7 +35,7 @@
                 <li><a href="/admin/chefs">Chefs</a></li>
                 <li class="accounts">
                     {# quando criar a página profile, coloque a rota neste link #}
-                    <a href="#">Usuários</a>
+                    <a href="/admin/profile">Usuários</a>
                     {% if session.userId %}
                         <span class="accounts-hover"></span>
                         <ul class="submenu">

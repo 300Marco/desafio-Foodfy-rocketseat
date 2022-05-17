@@ -7,82 +7,150 @@ for(let card of cards) {
     });
 }
 
-// Dynamic visitor header
-const pageFoodfy = document.querySelector('.page-foodfy');
+dynamicNavigationMenu();
 
-if(pageFoodfy) {
-    dynamicVisitorHeader();
-}
+function dynamicNavigationMenu() {
+    const pageLink = location.pathname;
+    const menuItems = document.querySelectorAll('header nav ul a');
 
-function dynamicVisitorHeader() {
-    const currentPage = location.pathname;
-    const li = document.querySelectorAll('nav ul li');
-
-    for(let link of li) {
-        if(currentPage == '/about' && link.firstChild.pathname == '/about') {
-            link.firstChild.className = 'active';
-        } else if(currentPage == '/recipes' && link.firstChild.pathname == '/recipes') {
-            link.firstChild.className = 'active';
-        } else if(currentPage == '/chefs' && link.firstChild.pathname == '/chefs') {
-            link.firstChild.className = 'active';
-        } else if(currentPage.indexOf('/details') == 0 && link.firstChild.pathname == '/recipes') {
-            link.firstChild.className = 'active';
-        } else if(currentPage.indexOf('/search') == 0 && link.firstChild.pathname == '/recipes') {
-            link.firstChild.className = 'active';
-        };
-    };
-}
-
-
-// Dynamic admin header
-const boxAdminHeader = document.querySelector('.box-admin-header-menu');
-
-if(boxAdminHeader) {
-    dynamicAdminHeader();
-};
-
-function dynamicAdminHeader() {
-    const currentPage = location.pathname;
-    const logoLink = document.querySelector('.title a');
-    const li = document.querySelectorAll('nav ul li');
-
-    // /admin/users/create
-    // Voltar aqui.. Funciona para edit, mais não em create
-    // porque create não enxerga esse input.
-    // const getInputHidden = document.querySelector('input[class="input-edit"]');
-    // const userId = getInputHidden.getAttribute('value');
-
-    for(let link of li) {
-        // index page
-        if(currentPage == '/admin/recipes' && link.firstChild.pathname == '/admin/recipes') {
-            link.firstChild.className = 'admin-active';
-        } else if(currentPage == '/admin/chefs' && link.firstChild.pathname == '/admin/chefs') {
-            logoLink.href = '/admin/chefs';
-            link.firstChild.className = 'admin-active';
-        }
-        // else if(currentPage == '/admin/users/create' && link.firstChild.pathname == '/admin/users/create') {
-        //     logoLink.href = '/admin/users/create';
-        //     link.firstChild.className = 'admin-active';
-        // };
-        
-        // detail page and edit - recipes and chefs
-        if(currentPage.indexOf('/admin/recipes') == 0 && link.firstChild.pathname == '/admin/recipes') {
-            link.firstChild.className = 'admin-active';
-        } else if(currentPage.indexOf('/admin/chefs') == 0 && link.firstChild.pathname == '/admin/chefs') {
-            logoLink.href = '/admin/chefs';
-            link.firstChild.className = 'admin-active';
+    for(let item of menuItems) {
+        // site Foodfy
+        // website links
+        if(pageLink.includes(item.getAttribute('href'), /\w/g)) {
+            if(!pageLink.includes('/admin', /\w/g)) item.classList.add('active');
         }
 
-        // continue posteriormente...    
-        // // page edit user
-        // if(currentPage.indexOf(`/admin/users/${userId}`) == 0) {
-        //     const userLink =  document.querySelector('.accounts a');
+        // recipe details
+        if(pageLink.includes('/details', /\w/g) && item.href.includes('/recipes')) item.classList.add('active');
 
-        //     // logoLink.href = ''
-        //     userLink.className = 'admin-active';
-        // };
+        // recipe search
+        if(pageLink.includes('/search', /\w/g) && item.href.includes('/recipes')) item.classList.add('active');
+
+        if(item.getAttribute('href').includes('/admin')) {
+            if(pageLink.includes('/admin/chefs') && item.href.includes('/admin/chefs')) item.classList.add('admin-active');
+
+            if(pageLink.includes('/admin/recipes') && item.href.includes('/admin/recipes') || pageLink.includes('/admin/user/recipes')) {
+                item.classList.add('admin-active');
+
+                if(item.innerHTML != 'Receitas') item.classList.remove('admin-active');
+            }
+
+            if(pageLink.includes('/admin/profile') && item.href.includes('/admin/profile')) {
+                item.classList.add('admin-active');
+
+                if(item.includes('Minha conta')) item.classList.remove('admin-active');
+            }
+
+            if(pageLink.includes('/admin/users') && item.href.includes('/admin/profile')) {
+                item.classList.add('admin-active');
+
+                if(item.includes('Minha conta')) item.classList.remove('admin-active');
+            }
+        }
     }
 }
+
+// adminDynamicNavigationMenu();
+// function adminDynamicNavigationMenu() {
+//     const pageLink = location.pathname;
+//     const menuItems = document.querySelectorAll('header nav ul a');
+
+//     for(item of menuItems) {
+//         if(pageLink.includes(item.getAttribute('href'), /\w/g)) {
+//             item.classList.add('admin-active');
+//         }
+
+//         // console.log(item.getAttribute('href') == '/');
+//         if((item.getAttribute('href') == '/')) {
+//             item.classList.remove('admin-active')
+//         }
+//     }
+// }
+
+// const menuItems = document.querySelectorAll('header .links a');
+
+// for( item of menuItems ) {
+//     if(currentPage.includes(item.getAttribute('href'))) {
+//         item.classList.add("active");
+//     }
+// }
+
+// // Dynamic visitor header
+// const pageFoodfy = document.querySelector('.page-foodfy');
+
+// if(pageFoodfy) {
+//     dynamicVisitorHeader();
+// }
+
+// function dynamicVisitorHeader() {
+//     const currentPage = location.pathname;
+//     const li = document.querySelectorAll('nav ul li');
+
+//     for(let link of li) {
+//         if(currentPage == '/about' && link.firstChild.pathname == '/about') {
+//             link.firstChild.className = 'active';
+//         } else if(currentPage == '/recipes' && link.firstChild.pathname == '/recipes') {
+//             link.firstChild.className = 'active';
+//         } else if(currentPage == '/chefs' && link.firstChild.pathname == '/chefs') {
+//             link.firstChild.className = 'active';
+//         } else if(currentPage.indexOf('/details') == 0 && link.firstChild.pathname == '/recipes') {
+//             link.firstChild.className = 'active';
+//         } else if(currentPage.indexOf('/search') == 0 && link.firstChild.pathname == '/recipes') {
+//             link.firstChild.className = 'active';
+//         };
+//     };
+// }
+
+
+// // Dynamic admin header
+// const boxAdminHeader = document.querySelector('.box-admin-header-menu');
+
+// if(boxAdminHeader) {
+//     dynamicAdminHeader();
+// };
+
+// function dynamicAdminHeader() {
+//     const currentPage = location.pathname;
+//     const logoLink = document.querySelector('.title a');
+//     const li = document.querySelectorAll('nav ul li');
+
+//     // /admin/users/create
+//     // Voltar aqui.. Funciona para edit, mais não em create
+//     // porque create não enxerga esse input.
+//     // const getInputHidden = document.querySelector('input[class="input-edit"]');
+//     // const userId = getInputHidden.getAttribute('value');
+
+//     for(let link of li) {
+//         // index page
+//         if(currentPage == '/admin/recipes' && link.firstChild.pathname == '/admin/recipes') {
+//             link.firstChild.className = 'admin-active';
+//         } else if(currentPage == '/admin/chefs' && link.firstChild.pathname == '/admin/chefs') {
+//             logoLink.href = '/admin/chefs';
+//             link.firstChild.className = 'admin-active';
+//         }
+//         // else if(currentPage == '/admin/users/create' && link.firstChild.pathname == '/admin/users/create') {
+//         //     logoLink.href = '/admin/users/create';
+//         //     link.firstChild.className = 'admin-active';
+//         // };
+        
+//         // detail page and edit - recipes and chefs
+//         if(currentPage.indexOf('/admin/recipes') == 0 && link.firstChild.pathname == '/admin/recipes') {
+//             link.firstChild.className = 'admin-active';
+//         } else if(currentPage.indexOf('/admin/chefs') == 0 && link.firstChild.pathname == '/admin/chefs') {
+//             logoLink.href = '/admin/chefs';
+//             link.firstChild.className = 'admin-active';
+//         }
+
+//         // continue posteriormente...    
+//         // // page edit user
+//         // if(currentPage.indexOf(`/admin/users/${userId}`) == 0) {
+//         //     const userLink =  document.querySelector('.accounts a');
+
+//         //     // logoLink.href = ''
+//         //     userLink.className = 'admin-active';
+//         // };
+//     }
+// }
 
 
 // Show and hide -- TESTES
