@@ -12,7 +12,7 @@ module.exports = {
     },
     async recipes(req, res) {
         try {
-            let { page, limit } = req.quey;
+            let { page, limit } = req.query;
 
             page = page || 1;
             limit = limit || 6;

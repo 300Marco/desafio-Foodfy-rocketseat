@@ -161,15 +161,17 @@ async function put(req, res, next) {
 
         const { email } = req.body;
 
-        let findUser = await AdminUser.findOne({ where: { email } });
+        const findUser = await AdminUser.findOne({ where: {email} });
 
-        if(email == findUser.email && req.body.id != findUser.id) return res.render('adminUsers/edit', {
-            user_data: req.body,
-            user,
-            error: "Email já cadastrado"
-        });
+        if(findUser) {
+            if(email == findUser.email && req.body.id != findUser.id) return res.render('adminUsers/edit', {
+                user_data: req.body,
+                user,
+                error: "Este email já existe, use outro email!"
+            });
+        };
 
-        req.user_data = findUser;
+        req.user_data = req.body;
 
         next();
     } catch (err) {
