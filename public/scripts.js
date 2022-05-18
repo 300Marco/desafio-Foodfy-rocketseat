@@ -7,7 +7,9 @@ for(let card of cards) {
     });
 }
 
-dynamicNavigationMenu();
+try {
+    dynamicNavigationMenu();
+} catch(err){}
 
 function dynamicNavigationMenu() {
     const pageLink = location.pathname;
@@ -231,27 +233,29 @@ function displayInput() {
     //     href != '/admin/users/create' &&
     //     href != `/admin/users/${userId}`
     // ) {
-    if(
-        href != '/admin/recipes/create' && 
-        href != '/admin/chefs' && 
-        href != '/admin/chefs/create' && 
-        href != `/admin/chefs/${chefId}/edit` && 
-        href != `/admin/users/${userId}/edit` && 
-        href != '/admin/users/create' &&
-        href != '/admin/profile' &&
-        href != '/admin/users/login' &&
-        href != '/admin/forgot-password' &&
-        href != '/admin/password-reset'
-
-    ) {
-        inputIngredient.classList.add('hide-input');
-        inputPreparation.classList.add('hide-input');
-
-        btnSaveRecipe.addEventListener('click', () => {
-            inputIngredient.parentNode.removeChild(inputIngredient);
-            inputPreparation.parentNode.removeChild(inputPreparation);
-        });
-    };
+    try {
+        if(
+            href != '/admin/recipes/create' && 
+            href != '/admin/chefs' && 
+            href != '/admin/chefs/create' && 
+            href != `/admin/chefs/${chefId}/edit` && 
+            href != `/admin/users/${userId}/edit` &&
+            href != '/admin/users/create' &&
+            href != '/admin/profile' &&
+            href != '/admin/users/login' &&
+            href != '/admin/forgot-password' &&
+            href != '/admin/password-reset'
+    
+        ) {
+            inputIngredient.classList.add('hide-input');
+            inputPreparation.classList.add('hide-input');
+    
+            btnSaveRecipe.addEventListener('click', () => {
+                inputIngredient.parentNode.removeChild(inputIngredient);
+                inputPreparation.parentNode.removeChild(inputPreparation);
+            });
+        };
+    } catch(err){}
 }
 
 
@@ -904,3 +908,64 @@ function resetPasswordField() {
     });
 }
 
+
+
+
+
+
+const pageLink = location.pathname;
+
+if(pageLink.includes(`/edit`)) {
+    confirmDelete();
+}
+
+function confirmDelete() {
+    // edit user page
+    let deleteButton = document.querySelector('.delete-user');
+    let cancelButton = document.querySelector('.cancel-delete');
+    let confirmationContainer = document.querySelector('.confirmation-container');
+
+
+    deleteButton.addEventListener('click', e => {
+        e.preventDefault();
+
+        confirmationContainer.style.visibility = 'visible';
+        confirmationContainer.style.opacity = 1;
+    });
+
+    cancelButton.addEventListener('click', e => {
+        e.preventDefault();
+
+        confirmationContainer.style.visibility = 'hidden';
+        confirmationContainer.style.opacity = 0;
+    });
+}
+
+if(!pageLink.includes(`/edit`)) {
+    confirmListDelete();
+}
+function confirmListDelete() {
+    const deleteButton = document.querySelectorAll('.remove-user-list');
+    const cancelButton = document.querySelector('.cancel-delete');
+    const confirmationContainer = document.querySelector('.confirmation-container');
+    const inputHidden = document.querySelector('input[name="id"]');
+   
+    for(const deleteList of deleteButton ) {
+        
+        deleteList.addEventListener('click', () => {
+            let num = deleteList.querySelector('span').innerText;
+
+            inputHidden.value = num;
+
+            confirmationContainer.style.visibility = 'visible';
+            confirmationContainer.style.opacity = 1;
+        });
+    }
+
+    cancelButton.addEventListener('click', e => {
+        e.preventDefault();
+
+        confirmationContainer.style.visibility = 'hidden';
+        confirmationContainer.style.opacity = 0;
+    });
+}

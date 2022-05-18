@@ -77,12 +77,12 @@ module.exports = {
             let random = Math.random().toString(36).substring(0, 8);
             let password = random.replace(/^../, "");
 
-            await mailer.sendMail({
-                to: req.body.email,
-                from: 'no-reply@foodfy.com.br',
-                subject: 'Acesso ao Foodfy',
-                html: sendAccessEmail(req.body.name, password),
-            });
+            // await mailer.sendMail({
+            //     to: req.body.email,
+            //     from: 'no-reply@foodfy.com.br',
+            //     subject: 'Acesso ao Foodfy',
+            //     html: sendAccessEmail(req.body.name, password),
+            // });
 
             await AdminUser.create(req.body, password);
             
@@ -199,6 +199,7 @@ module.exports = {
             const checkIsUser = req.body.id == req.session.userId;
 
             if(checkIsUser == true) return res.render('adminUsers/edit', {
+                user_data: user,
                 user,
                 error: 'Não é permitido excluir sua própria conta!'
             });

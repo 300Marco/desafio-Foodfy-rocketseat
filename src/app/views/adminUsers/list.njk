@@ -41,6 +41,31 @@
 {% endblock %}
 
 {% block contents %}
+    {# <section class="users-cards">
+        <div class="title-button">
+            <h3>Usuários</h3>
+            <a href="/admin/users/create" class="edit-button">Novo</a>
+        </div>
+            <div class="cards">
+                {% for user in users %}
+                    <div class="card-content">
+                        <p class="name-user">{{user.name}}</p>
+                        <p class="email-user">{{user.email}}</p>
+                        <div class="user-button">
+                            <a class="edit-user" href="/admin/users/{{user.id}}/edit">Editar</a>
+                            <form id="form-delete" method="POST" action="/admin/users?_method=delete">
+                                <button class="remove-user" href="#">Remover</button>
+                                <input 
+                                    type="hidden" 
+                                    name="id" 
+                                    value="{{user.id}}"
+                                >
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+    </section> #}
     <section class="users-cards">
         <div class="title-button">
             <h3>Usuários</h3>
@@ -53,15 +78,40 @@
                         <p class="email-user">{{user.email}}</p>
                         <div class="user-button">
                             <a class="edit-user" href="/admin/users/{{user.id}}/edit">Editar</a>
-                            {# <a class="remove-user" href="#">Remover</a> #}
                             <form id="form-delete" method="POST" action="/admin/users?_method=delete">
-                                <button class="remove-user" href="#">Remover</button>
-                                <input 
-                                    type="hidden" 
-                                    name="id" 
-                                    value="{{user.id}}"
-                                >
+                                <a class="remove-user remove-user-list" href="#">
+                                    Remover
+                                    <span>{{user.id}}</span>
+                                </a>
+
+                                    {# <input 
+                                        type="hidden" 
+                                        name="id"
+                                        value={{user.id}}
+                                    > #}
+
+                                <div class="confirmation-container">
+                                    <div class="confirmation">
+                                        <p>
+                                            Você tem certeza que deseja deletar este usuário?<br>
+                                            Esta ação não poderá ser desfeita!
+                                        </p>
+
+                                        <input 
+                                            type="hidden" 
+                                            name="id"
+                                            value=''
+                                        >
+
+                                        <button class="confirm-delete">Sim, excluir</button>
+                                        <button class="cancel-delete">Cancelar</button>
+                                    </div>
+                                </div>
+
+                                
                             </form>
+
+                            
                         </div>
                     </div>
                 {% endfor %}
