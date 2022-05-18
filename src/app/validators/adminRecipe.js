@@ -146,6 +146,7 @@ async function removeRecipe(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     }
 }
 

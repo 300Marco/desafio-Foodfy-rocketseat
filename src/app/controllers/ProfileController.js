@@ -9,6 +9,7 @@ module.exports = {
             return res.render('adminProfile/edit', { user });
         } catch(err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     async update(req, res) {
@@ -27,9 +28,7 @@ module.exports = {
             });
         } catch(err) {
             console.error(err);
-            return res.render('AdminUser/edit', {
-                error: 'Houve um erro inesperado!'
-            })
-        }
+            return res.render('adminUsers/not-found');
+        };
     }
 }

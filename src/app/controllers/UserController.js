@@ -19,6 +19,7 @@ module.exports = {
             return res.render('adminUsers/list', { users, user });
         } catch(err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         }
     },
     // async list(req, res) {
@@ -48,10 +49,15 @@ module.exports = {
     //     }
     // },
     async create(req, res) {
-        const { userId: id } = req.session;
-        const user = await AdminUser.findOne({ where: {id} });
+        try {
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
 
-        return res.render('adminUsers/create', { user });
+            return res.render('adminUsers/create', { user });
+        } catch (err) {
+            console.error(err);
+            return res.render('adminUsers/not-found');
+        }
     },
     // async post(req, res) {
     //     try {

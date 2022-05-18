@@ -3,11 +3,16 @@ const Recipe = require('../models/Recipe');
 
 module.exports = {
     about(req, res) {
-        return res.render('recipes/about');
+        try {
+            return res.render('recipes/about');
+        } catch (err) {
+            console.error(err);
+            return res.render('recipes/not-found');
+        }
     },
     async recipes(req, res) {
         try {
-            let { page, limit } = req.query;
+            let { page, limit } = req.quey;
 
             page = page || 1;
             limit = limit || 6;
@@ -94,6 +99,7 @@ module.exports = {
             return res.render('recipes/search', {recipes: lastAdded, pagination, search});  
         } catch (err) {
             console.error(err);
+            return res.render('recipes/not-found');
         };
     },
     // async details(req, res) {
@@ -146,7 +152,7 @@ module.exports = {
             });  
         } catch (err) {
             console.error(err);
-            return res.render('recipes/recipe-not-found');
+            return res.render('recipes/not-found');
         };
     },
     async chefs(req, res) {
@@ -176,6 +182,7 @@ module.exports = {
             return res.render('recipes/chefs', {chefs: lastAvatarAdded});  
         } catch (err) {
             console.error(err);
+            return res.render('recipes/not-found');
         };
     }
 }

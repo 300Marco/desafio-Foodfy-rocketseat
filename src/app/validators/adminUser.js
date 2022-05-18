@@ -30,6 +30,7 @@ async function edit(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     }
 }
 
@@ -102,6 +103,7 @@ async function post(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     };
 }
 
@@ -129,52 +131,52 @@ async function post(req, res, next) {
 //     next();
 // // }
 
-
-
-
 async function put(req, res, next) {
-    // const data = req.body;
+    try {
+        // const data = req.body;
 
-    if(req.body.is_admin) {
-        req.body.is_admin = true;
-    } else {
-        req.body.is_admin = false;
-    };
-
-    // let user_data = user;
-
-    const { userId: id } = req.session;
-    const user = await AdminUser.findOne({ where: {id} });
-
-    // checar se todos os campos estão preenchidos
-    const keys = Object.keys(req.body);
-
-    for(key of keys) {
-        if(req.body[key] == "" && key != 'is_admin') {
-            return res.render('adminUsers/edit', {
-                user_data: req.body,
-                user,
-                error: "Por favor, preencha todos os campos"
-            });
+        if(req.body.is_admin) {
+            req.body.is_admin = true;
+        } else {
+            req.body.is_admin = false;
         };
-    };
 
-    const { email } = req.body;
+        // let user_data = user;
 
-    let findUser = await AdminUser.findOne({ where: { email } });
+        const { userId: id } = req.session;
+        const user = await AdminUser.findOne({ where: {id} });
 
-    if(email == findUser.email && req.body.id != findUser.id) return res.render('adminUsers/edit', {
-        user_data: req.body,
-        user,
-        error: "Email já cadastrado"
-    });
+        // checar se todos os campos estão preenchidos
+        const keys = Object.keys(req.body);
 
-    req.user_data = findUser;
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'is_admin') {
+                return res.render('adminUsers/edit', {
+                    user_data: req.body,
+                    user,
+                    error: "Por favor, preencha todos os campos"
+                });
+            };
+        };
 
-    next();
+        const { email } = req.body;
+
+        let findUser = await AdminUser.findOne({ where: { email } });
+
+        if(email == findUser.email && req.body.id != findUser.id) return res.render('adminUsers/edit', {
+            user_data: req.body,
+            user,
+            error: "Email já cadastrado"
+        });
+
+        req.user_data = findUser;
+
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.render('adminUsers/not-found');
+    }
 }
-
-
 
 // async function put(req, res, next) {
 //     const data = req.body;

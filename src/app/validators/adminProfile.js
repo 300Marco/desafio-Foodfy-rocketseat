@@ -29,6 +29,7 @@ async function edit(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
+        return res.render('adminUsers/not-found');
     };
 }
 
@@ -64,44 +65,49 @@ async function edit(req, res, next) {
 //     next();
 // }
 async function update(req, res, next) {
-    const { id, email, password } = req.body;
-    const user = await AdminUser.findOne({ where: {id} });
+    try {
+        const { id, email, password } = req.body;
+        const user = await AdminUser.findOne({ where: {id} });
 
-    // Insert is_admin into req.body
-    if(user.is_admin == true) {
-        req.body.is_admin = true;
-    } else {
-        req.body.is_admin = false;
-    };
+        // Insert is_admin into req.body
+        if(user.is_admin == true) {
+            req.body.is_admin = true;
+        } else {
+            req.body.is_admin = false;
+        };
 
-    // Check if all fields are filled
-     const fillAllFields = checkAllFields(req.body);
-     if(fillAllFields) {
-         return res.render('adminProfile/edit', fillAllFields);
-     };
+        // Check if all fields are filled
+        const fillAllFields = checkAllFields(req.body);
+        if(fillAllFields) {
+            return res.render('adminProfile/edit', fillAllFields);
+        };
 
-    // Check if email already exists
-    const allUsers = await AdminUser.all();
-    const users = allUsers.rows;
-    
-    for(let userEmail of users) {
-        if(email == userEmail.email && email != user.email)
-            return res.render('adminProfile/edit', {
-                user: req.body,
-                error: "Este email já existe, use outro email!"
-            });
-    };
+        // Check if email already exists
+        const allUsers = await AdminUser.all();
+        const users = allUsers.rows;
+        
+        for(let userEmail of users) {
+            if(email == userEmail.email && email != user.email)
+                return res.render('adminProfile/edit', {
+                    user: req.body,
+                    error: "Este email já existe, use outro email!"
+                });
+        };
 
-    const passed = await compare(password, user.password);
+        const passed = await compare(password, user.password);
 
-    if(!passed) return res.render('adminProfile/edit', {
-        user: req.body,
-        error: "Senha incorreta"
-    });
+        if(!passed) return res.render('adminProfile/edit', {
+            user: req.body,
+            error: "Senha incorreta"
+        });
 
-    req.user = user;
+        req.user = user;
 
-    next();
+        next();
+    } catch(err) {
+        console.error(err);
+        return res.render('adminUsers/not-found');
+    }
 }
 
 module.exports = {

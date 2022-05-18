@@ -39,10 +39,15 @@ module.exports = {
         };
     },
     async create(req, res) {
-        const { userId: id } = req.session;
-        const user = await AdminUser.findOne({ where: {id} });
+        try {
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
 
-        return res.render('adminChefs/create', {user});
+            return res.render('adminChefs/create', {user});
+        } catch(err) {
+            console.error(err);
+            return res.render('adminUsers/not-found');
+        }
     },
     async details(req, res) {
         try {

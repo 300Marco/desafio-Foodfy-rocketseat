@@ -27,6 +27,7 @@ module.exports = {
             return res.render('recipes/index', {recipes: lastAdded});
         } catch (err) {
             console.error(err);
+            return res.render('recipes/not-found');
         };
     }
 }

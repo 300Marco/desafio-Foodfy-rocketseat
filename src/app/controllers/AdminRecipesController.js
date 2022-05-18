@@ -421,6 +421,7 @@ module.exports = {
             })
         } catch (err) {
             console.error(err);
+            return res.render('adminUsers/not-found');
         };
     },
     // delete(req, res) {
