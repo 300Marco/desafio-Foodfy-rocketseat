@@ -36,6 +36,83 @@ async function post(req, res, next) {
             });
         };
 
+        
+        // Check the ingredients and method of preparation field, if the user, remove all fields
+        if(!req.body.ingredients && !req.body.preparation) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            }
+            
+            return res.render('adminRecipes/create', {
+                recipe: req.body,
+                chefsOptions: options,
+                user,
+                error: "Preencha os campos (Ingrediente e Modo de preparo)"
+            });
+        } else if(!req.body.ingredients) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            }
+            
+            return res.render('adminRecipes/create', {
+                recipe: req.body,
+                chefsOptions: options,
+                user,
+                error: "Preencha o campo (Ingrediente)"
+            });
+        } else if(!req.body.preparation) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            }
+            
+            return res.render('adminRecipes/create', {
+                recipe: req.body,
+                chefsOptions: options,
+                user,
+                error: "Preencha o campo (Modo de preparo)"
+            });
+        };
+
+        // let count = 0;
+        // for(let key of keys) {
+        //     count += 1;
+        // }
+
+        // if(count == 5) {
+        //     for(let count in req.files) {
+        //         await fs.unlinkSync(req.files[count].path);
+        //     }
+            
+        //     return res.render('adminRecipes/create', {
+        //         recipe: req.body,
+        //         chefsOptions: options,
+        //         user,
+        //         error: "Preencha os campos (Ingrediente e Modo de preparo)"
+        //     });
+        // } else if(count == 6 && !req.body.ingredients) {
+        //     for(let count in req.files) {
+        //         await fs.unlinkSync(req.files[count].path);
+        //     }
+            
+        //     return res.render('adminRecipes/create', {
+        //         recipe: req.body,
+        //         chefsOptions: options,
+        //         user,
+        //         error: "Preencha o campo (Ingrediente)"
+        //     });
+        // } else if(count == 6 && !req.body.preparation) {
+        //     for(let count in req.files) {
+        //         await fs.unlinkSync(req.files[count].path);
+        //     }
+            
+        //     return res.render('adminRecipes/create', {
+        //         recipe: req.body,
+        //         chefsOptions: options,
+        //         user,
+        //         error: "Preencha o campo (Modo de preparo)"
+        //     });
+        // }
+
         next();
     } catch(err) {
         console.error(err);
