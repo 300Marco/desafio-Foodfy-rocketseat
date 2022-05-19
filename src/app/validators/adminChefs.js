@@ -18,9 +18,9 @@ function checkAllFields(body) {
 async function post(req, res, next) {
     try {
         const fillAllFields = checkAllFields(req.body);
-        if(fillAllFields) {
-            await fs.unlinkSync(req.files[0].path);
 
+        if(fillAllFields) {
+            if(req.files.length > 0) await fs.unlinkSync(req.files[0].path);
             return res.render('adminChefs/create', fillAllFields);
         }
 
@@ -34,7 +34,7 @@ async function post(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
-        return res.render('adminUsers/not-found');
+        // return res.render('adminUsers/not-found');
     };
 }
 
