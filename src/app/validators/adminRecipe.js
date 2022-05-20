@@ -18,6 +18,7 @@ async function post(req, res, next) {
                 for(let count in req.files) {
                     await fs.unlinkSync(req.files[count].path);
                 }
+
                 return res.render('adminRecipes/create', {
                     recipe: req.body,
                     chefsOptions: options,
@@ -33,6 +34,20 @@ async function post(req, res, next) {
                 chefsOptions: options,
                 user,
                 error: "Por favor, envie pelo menos uma imagem!"
+            });
+        };
+
+        // Validates if there is a chef when registering a recipe
+        if(!req.body.chef) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            };
+
+            return res.render('adminRecipes/create', {
+                recipe: req.body,
+                chefsOptions: options,
+                user,
+                error: "Você precisa selecionar um chef, para cadastrar uma receita!"
             });
         };
 
@@ -72,6 +87,11 @@ async function post(req, res, next) {
             });
         };
 
+        // removes empty fields of ingredients and preparation method
+        req.body.ingredients = req.body.ingredients.filter((i) => {return i});
+        req.body.preparation = req.body.preparation.filter((i) => {return i});
+
+        next();
         // let count = 0;
         // for(let key of keys) {
         //     count += 1;
@@ -111,21 +131,6 @@ async function post(req, res, next) {
         //         error: "Preencha o campo (Modo de preparo)"
         //     });
         // }
-
-        if(!req.body.chef) {
-            for(let count in req.files) {
-                await fs.unlinkSync(req.files[count].path);
-            };
-
-            return res.render('adminRecipes/create', {
-                recipe: req.body,
-                chefsOptions: options,
-                user,
-                error: "Você precisa selecionar um chef, para cadastrar uma receita!"
-            });
-        };
-
-        next();
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
@@ -193,6 +198,10 @@ async function put(req, res, next) {
                 });
             };
         };
+
+        // removes empty fields of ingredients and preparation method
+        req.body.ingredients = req.body.ingredients.filter((i) => {return i});
+        req.body.preparation = req.body.preparation.filter((i) => {return i});
 
         next();
     } catch(err) {
