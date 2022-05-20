@@ -1,6 +1,6 @@
 CREATE TABLE "chefs" (
   "id" SERIAL PRIMARY KEY,
-  "name" text,
+  "name" text NOT NULL,
   "file_id" int,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
@@ -10,9 +10,9 @@ CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int,
   "chef_id" int,
-  "title" text,
-  "ingredients" text[],
-  "preparation" text[],
+  "title" text NOT NULL,
+  "ingredients" text[] NOT NULL,
+  "preparation" text[] NOT NULL,
   "information" text,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
@@ -32,23 +32,23 @@ CREATE TABLE "recipe_files" (
 
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
-  "name" text not null,
-  "email" text unique not null,
-  "password" text not null,
+  "name" text NOT NULL,
+  "email" text unique NOT NULL,
+  "password" text NOT NULL,
   "is_admin" boolean default false,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now()),
   "reset_token" text,
   "reset_token_expires" text
-)
+);
 
 -- token password recovey
 --ALTER TABLE "users" ADD COLUMN reset_token text;
 --ALTER TABLE "users" ADD COLUMN reset_token_expires text;
 
-ALTER TABLE "recipe_files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
-
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
+
+ALTER TABLE "recipe_files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
 
 ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");
 
@@ -98,6 +98,13 @@ DROP CONSTRAINT recipe_files_recipe_id_fkey,
 ADD CONSTRAINT recipe_files_recipe_id_fkey
 FOREIGN KEY ("recipe_id")
 REFERENCES "recipes" ("id")
+ON DELETE CASCADE;
+
+ALTER TABLE recipe_files
+DROP CONSTRAINT recipe_files_file_id_fkey,
+ADD CONSTRAINT recipe_files_file_id_fkey
+FOREIGN KEY ("file_id")
+REFERENCES "files" ("id")
 ON DELETE CASCADE;
 
 -- USERS AND RECIPES
