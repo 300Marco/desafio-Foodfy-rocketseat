@@ -199,6 +199,45 @@ async function put(req, res, next) {
             };
         };
 
+        // Check the ingredients and method of preparation field, if the user, remove all fields
+        if(!req.body.ingredients && !req.body.preparation) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            }
+            
+            return res.render('adminRecipes/edit', {
+                recipe: req.body,
+                files,
+                chefsOptions: options,
+                user,
+                error: "Preencha os campos (Ingrediente e Modo de preparo)"
+            });
+        } else if(!req.body.ingredients) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            }
+            
+            return res.render('adminRecipes/edit', {
+                recipe: req.body,
+                files,
+                chefsOptions: options,
+                user,
+                error: "Preencha o campo (Ingrediente)"
+            });
+        } else if(!req.body.preparation) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            }
+            
+            return res.render('adminRecipes/edit', {
+                recipe: req.body,
+                files,
+                chefsOptions: options,
+                user,
+                error: "Preencha o campo (Modo de preparo)"
+            });
+        };
+
         // removes empty fields of ingredients and preparation method
         req.body.ingredients = req.body.ingredients.filter((i) => {return i});
         req.body.preparation = req.body.preparation.filter((i) => {return i});

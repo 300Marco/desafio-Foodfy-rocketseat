@@ -396,7 +396,7 @@ module.exports = {
             let newData = {
                 ...req.body,
                 chefs_name: recipe.chefs_name,
-                information: recipe.information.replace(/[\n]/g, "<br>")
+                information: req.body.information.replace(/[\n]/g, "<br>")
             };
 
             results = await AdminRecipe.files(recipe.id);
