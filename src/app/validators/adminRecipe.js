@@ -36,7 +36,6 @@ async function post(req, res, next) {
             });
         };
 
-        
         // Check the ingredients and method of preparation field, if the user, remove all fields
         if(!req.body.ingredients && !req.body.preparation) {
             for(let count in req.files) {
@@ -112,6 +111,19 @@ async function post(req, res, next) {
         //         error: "Preencha o campo (Modo de preparo)"
         //     });
         // }
+
+        if(!req.body.chef) {
+            for(let count in req.files) {
+                await fs.unlinkSync(req.files[count].path);
+            };
+
+            return res.render('adminRecipes/create', {
+                recipe: req.body,
+                chefsOptions: options,
+                user,
+                error: "Você precisa selecionar um chef, para cadastrar uma receita!"
+            });
+        };
 
         next();
     } catch(err) {

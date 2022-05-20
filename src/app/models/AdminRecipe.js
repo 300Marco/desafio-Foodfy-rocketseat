@@ -143,7 +143,7 @@ module.exports = {
         try {
             let results = await db.query(`
                 SELECT * FROM files 
-                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id )
+                LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
                 WHERE recipe_id = $1`, [id]);
         
             let files = results.rows;

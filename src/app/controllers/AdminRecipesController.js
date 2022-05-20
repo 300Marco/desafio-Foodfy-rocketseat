@@ -395,6 +395,7 @@ module.exports = {
 
             let newData = {
                 ...req.body,
+                chefs_name: recipe.chefs_name,
                 information: recipe.information.replace(/[\n]/g, "<br>")
             };
 
