@@ -14,6 +14,16 @@ function checkAllFields(body) {
     };
 }
 
+function fieldFormatting(text) {
+    return text.toLowerCase().split(' ').map(word => {
+        return word[0].toUpperCase() + word.slice(1)
+    }).join(' ')
+}
+
+function emailFieldFormatting(text) {
+    return text.toLowerCase();
+}
+
 async function edit(req, res, next) {
     try {
         const { userId: id } = req.session; // pegando o id de session
@@ -66,8 +76,12 @@ async function edit(req, res, next) {
 // }
 async function update(req, res, next) {
     try {
-        const { id, email, password } = req.body;
+        let { id, email, password } = req.body;
         const user = await AdminUser.findOne({ where: {id} });
+
+        req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+        email = emailFieldFormatting(email);
+        req.body.email = emailFieldFormatting(email);
 
         // Insert is_admin into req.body
         if(user.is_admin == true) {
