@@ -1,9 +1,16 @@
 const AdminUser = require('../models/AdminUser');
 const { compare } = require('bcryptjs');
 
+function emailFieldFormatting(text) {
+    return text.toLowerCase();
+}
+
 async function login(req, res, next) {
     try {
-        const { email, password } = req.body;
+        let { email, password } = req.body;
+
+        req.body.email = emailFieldFormatting(req.body.email)
+        email = emailFieldFormatting(email);
 
         // busca o usuário que iremos editar
         const user = await AdminUser.findOne({ where: {email} });
@@ -30,7 +37,10 @@ async function login(req, res, next) {
 
 async function forgot(req, res, next) {
     try {
-        const { email } = req.body;
+        let { email } = req.body;
+
+        req.body.email = emailFieldFormatting(req.body.email)
+        email = emailFieldFormatting(email);
 
         let user = await AdminUser.findOne({ where: {email} });
 
@@ -50,7 +60,10 @@ async function forgot(req, res, next) {
 async function reset(req, res, next) {
     try {
         // procurar o usuário
-        const { email, password, passwordRepeat, token } = req.body;
+        let { email, password, passwordRepeat, token } = req.body;
+
+        req.body.email = emailFieldFormatting(req.body.email)
+        email = emailFieldFormatting(email);
 
         // busca o usuário que iremos editar
         const user = await AdminUser.findOne({ where: {email} });
