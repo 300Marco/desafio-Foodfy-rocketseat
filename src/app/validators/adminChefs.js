@@ -15,6 +15,12 @@ function checkAllFields(body) {
     };
 }
 
+function fieldFormatting(text) {
+    return text.toLowerCase().split(' ').map(word => {
+        return word[0].toUpperCase() + word.slice(1)
+    }).join(' ')
+}
+
 async function post(req, res, next) {
     try {
         const fillAllFields = checkAllFields(req.body);
@@ -31,10 +37,12 @@ async function post(req, res, next) {
             });
         };
 
+        req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+
         next();
     } catch(err) {
         console.error(err);
-        // return res.render('adminUsers/not-found');
+        return res.render('adminUsers/not-found');
     };
 }
 
@@ -59,6 +67,8 @@ async function put(req, res, next) {
                 error: "Por favor, preencha o campo nome!"
             });
         };
+
+        req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
 
         next();
     } catch(err) {
