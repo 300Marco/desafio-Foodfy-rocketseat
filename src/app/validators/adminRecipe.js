@@ -3,6 +3,16 @@ const AdminRecipe = require('../models/AdminRecipe');
 
 const fs = require('fs');
 
+function titleFieldFormatting(text) {
+    return text.toLowerCase().split(' ').map(word => {
+        return word[0].toUpperCase() + word.slice(1)
+    }).join(' ')
+}
+
+function fieldFormatting(text) {
+    return text[0].toUpperCase() + text.slice(1).toLowerCase();
+}
+
 async function post(req, res, next) {
     try {
         const { userId: id } = req.session;
@@ -90,6 +100,25 @@ async function post(req, res, next) {
         // removes empty fields of ingredients and preparation method
         req.body.ingredients = req.body.ingredients.filter((i) => {return i});
         req.body.preparation = req.body.preparation.filter((i) => {return i});
+
+        
+        // field formatting
+        req.body.title = titleFieldFormatting(req.body.title).replace(/De/g, 'de');
+
+        let newArrayIngredients = [];
+        for(let ingredient of req.body.ingredients) {
+            req.body.ingredients = fieldFormatting(ingredient);
+            newArrayIngredients.push(req.body.ingredients);
+        }
+        
+        let newArrayPreparation = [];
+        for(let preparation of req.body.preparation) {
+            req.body.preparation = fieldFormatting(preparation);
+            newArrayPreparation.push(req.body.preparation);
+        }
+
+        req.body.ingredients = newArrayIngredients;
+        req.body.preparation = newArrayPreparation;
 
         next();
         // let count = 0;
@@ -241,6 +270,24 @@ async function put(req, res, next) {
         // removes empty fields of ingredients and preparation method
         req.body.ingredients = req.body.ingredients.filter((i) => {return i});
         req.body.preparation = req.body.preparation.filter((i) => {return i});
+
+        // field formatting
+        req.body.title = titleFieldFormatting(req.body.title).replace(/De/g, 'de');
+
+        let newArrayIngredients = [];
+        for(let ingredient of req.body.ingredients) {
+            req.body.ingredients = fieldFormatting(ingredient);
+            newArrayIngredients.push(req.body.ingredients);
+        }
+        
+        let newArrayPreparation = [];
+        for(let preparation of req.body.preparation) {
+            req.body.preparation = fieldFormatting(preparation);
+            newArrayPreparation.push(req.body.preparation);
+        }
+
+        req.body.ingredients = newArrayIngredients;
+        req.body.preparation = newArrayPreparation;
 
         next();
     } catch(err) {
