@@ -101,7 +101,12 @@ async function post(req, res, next) {
         };
 
         // Checar se usuário já existe [email]
-        const { email } = req.body;
+        let { email } = req.body;
+
+        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        email = emailFieldFormatting(email);
+        req.body.email = emailFieldFormatting(req.body.email);
+
         const findUser = await AdminUser.findOne({ where: {email} });
 
         if(findUser) return res.render('adminUsers/create', {
@@ -109,9 +114,6 @@ async function post(req, res, next) {
             user,
             error: "Email já cadastrado"
         });
-
-        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
-        req.body.email = emailFieldFormatting(req.body.email);
 
         next();
     } catch(err) {
@@ -172,7 +174,11 @@ async function put(req, res, next) {
             };
         };
 
-        const { email } = req.body;
+        let { email } = req.body;
+
+        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        email = emailFieldFormatting(email);
+        req.body.email = emailFieldFormatting(req.body.email);
 
         const findUser = await AdminUser.findOne({ where: {email} });
 
@@ -183,9 +189,6 @@ async function put(req, res, next) {
                 error: "Este email já existe, use outro email!"
             });
         };
-
-        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
-        req.body.email = emailFieldFormatting(req.body.email);
 
         req.user_data = req.body;
 
