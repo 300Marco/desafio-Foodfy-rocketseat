@@ -13,6 +13,16 @@ const AdminUser = require('../models/AdminUser');
 //     };
 // }
 
+function fieldFormatting(text) {
+    return text.toLowerCase().split(' ').map(word => {
+        return word[0].toUpperCase() + word.slice(1)
+    }).join(' ')
+}
+
+function emailFieldFormatting(text) {
+    return text.toLowerCase();
+}
+
 async function edit(req, res, next) {
     try {
         // const { userId: id } = req.session; // pegando o id de session
@@ -100,6 +110,9 @@ async function post(req, res, next) {
             error: "Email já cadastrado"
         });
 
+        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        req.body.email = emailFieldFormatting(req.body.email);
+
         next();
     } catch(err) {
         console.error(err);
@@ -170,6 +183,9 @@ async function put(req, res, next) {
                 error: "Este email já existe, use outro email!"
             });
         };
+
+        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        req.body.email = emailFieldFormatting(req.body.email);
 
         req.user_data = req.body;
 
