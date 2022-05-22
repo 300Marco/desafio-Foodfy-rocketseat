@@ -101,6 +101,7 @@ header .button-admin-page a:hover {
     color: var(--color-purple-dark);
 }
 
+
 /* ========== LOGO ========== */
 .sr-only {
     position: absolute;
@@ -341,7 +342,8 @@ header .button-admin-page a:hover {
     margin: 0 !important;
 }
 
-.chefs-footer {
+.chefs-footer,
+.recipes-footer {
     position: absolute;
     bottom: 0;
 }
