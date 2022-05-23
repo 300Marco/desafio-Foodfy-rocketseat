@@ -24,10 +24,10 @@ module.exports = {
         try {
             const user = req.user;
 
-            // Criar token para o usuário
+            // create token for user
             const token = crypto.randomBytes(20).toString('hex');
 
-            // Criar tempo de expiração para o token
+            // create expiration time for token
             let now = new Date();
             now = now.setHours(now.getHours() + 1);
 
@@ -43,7 +43,7 @@ module.exports = {
                 html: passwordResetEmail(token, user.name),
             });
 
-            // avisar o suário que enviamos o email
+            // let the user know that we sent the email
             return res.render('session/forgot-password', {
                 success: "Verifique sua caixa de entrada no email informado!"
             });
@@ -64,17 +64,17 @@ module.exports = {
             const { user } = req;
             const { password, token } = req.body;
 
-            // cria um novo hash de senha
+            // create a new password hash
             const newPassword = await hash(password, 8);
 
-            // atualiza o usuário
+            // update the user
             await AdminUser.update(user.id, {
                 password: newPassword,
                 reset_token: "",
                 reset_token_expires: ""
             });
 
-            // avisa o usuário que ele tem uma nova senha
+            // notifies the user that he has a new password
             return res.render('session/login', {
                 user: req.body,
                 success: `Senha atualizada! Faça seu login.`,

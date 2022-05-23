@@ -3,13 +3,13 @@ const AdminUser = require('../models/AdminUser');
 
 async function dataToEdit(req, res, next) {
     try {
-        // BLOQUEIO DE USUÁRIOS SEM PERMISSÃO
-            // PEGA ID DE USUÁRIO LOGADO
+        // user lock without permission
+            // get logged user id
         const { userId: id } = req.session;
 
         const user = await AdminUser.findOne({ where: {id} });
 
-        // PERMISSÃO PARA EDITAR RECEITA
+        // permission to edit recipe
         if(user.is_admin == false) {
             let results = await AdminChef.find(req.params.id);
             const chef = results.rows;

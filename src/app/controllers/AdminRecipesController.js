@@ -33,7 +33,7 @@ module.exports = {
 
             const lastAdded = await Promise.all(recipesPromise);
 
-            // PEGA USUÁRIO LOGADO
+            // get logged in user
             const user = await AdminUser.findOne({ where: {id} });
 
             return res.render('adminRecipes/userRecipe', {
@@ -116,11 +116,11 @@ module.exports = {
 
             recipe.information = recipe.information.replace(/[\n]/g, "<br>");
             
-            // PEGA ID DE USUÁRIO LOGADO
+            // get logged in user
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
 
-            // VERIFICA SE OS ID BATEM
+            // check if ID match
             const isUserRecipes = recipe.user_id == id;
 
             return res.render('adminRecipes/details', {
@@ -153,16 +153,16 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-            // BLOQUEIO DE USUÁRIOS SEM PERMISSÃO
-            // PEGA ID DE USUÁRIO LOGADO
+            // block user without permissions
+            // get logged in user
             const { userId: id } = req.session;
 
-            // VERIFICA SE OS ID BATEM
+            // check if ID match
             const isUserRecipes = recipe.user_id == id;
 
             const user = await AdminUser.findOne({ where: {id} });
 
-            // PERMISSÃO PARA EDITAR RECEITA
+            // permission to edit recipe
             if(user.is_admin == false && isUserRecipes == false) {
                 return res.render('adminRecipes/details', {
                     recipe,

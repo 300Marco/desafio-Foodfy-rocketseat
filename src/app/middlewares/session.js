@@ -20,13 +20,12 @@ function isLoggedRedirectToProfile(req, res, next) {
     }
 }
 
-// TESTE - em andamento
 async function checkIsAdmin(req, res, next) {
     try {
         const { userId: id } = req.session;
         const AdminUser = require('../models/AdminUser');
 
-        // busca o usuário que iremos editar
+        // search user that we will edit
         const user = await AdminUser.findOne({ where: {id} });
         
         if(!user.is_admin) {

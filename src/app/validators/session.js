@@ -12,7 +12,7 @@ async function login(req, res, next) {
         req.body.email = emailFieldFormatting(req.body.email)
         email = emailFieldFormatting(email);
 
-        // busca o usuário que iremos editar
+        // search user that we will edit
         const user = await AdminUser.findOne({ where: {email} });
 
         if(!user) return res.render('session/login', {
@@ -59,13 +59,13 @@ async function forgot(req, res, next) {
 
 async function reset(req, res, next) {
     try {
-        // procurar o usuário
+        // search user
         let { email, password, passwordRepeat, token } = req.body;
 
         req.body.email = emailFieldFormatting(req.body.email)
         email = emailFieldFormatting(email);
 
-        // busca o usuário que iremos editar
+        // search user that we will edit
         const user = await AdminUser.findOne({ where: {email} });
 
         if(!user) return res.render('session/password-reset', {
@@ -74,15 +74,14 @@ async function reset(req, res, next) {
             error: "Email incorreto!",
         });
 
-        // verificar se a senha bate
+        // check if passwords match
         if(password != passwordRepeat) return res.render('session/password-reset', {
             user: req.body,
             token,
-            // error: "As senhas não conferem!",
             error: `As senhas não conferem!`,
         });
 
-        // verificar se o token bate
+        // check if token matches
         if(token != user.reset_token) return res.render('session/password-reset', {
             user: req.body,
             error: `
@@ -91,14 +90,13 @@ async function reset(req, res, next) {
             `,
         });
 
-        // verificar se o token não expirou
+        // check if token has not expired
         let now = new Date();
         now = now.setHours(now.getHours());
 
         if(now > user.reset_token.expires) return res.render('session/password-reset', {
             user: req.body,
             token,
-            // error: "As senhas não conferem!",
             error: `
                 <span style="display:block;text-align:center;">Token expirado!</span>
                 Por favor, solicite uma nova recuperação de senha.
