@@ -57,7 +57,7 @@ async function post(req, res, next) {
                 recipe: req.body,
                 chefsOptions: options,
                 user,
-                error: "Você precisa selecionar um chef, para cadastrar uma receita!"
+                error: "Você precisa cadastrar um chef, para criar uma receita!"
             });
         };
 

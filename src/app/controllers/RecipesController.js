@@ -45,9 +45,16 @@ module.exports = {
 
             const lastAdded = await Promise.all(recipesPromise);
 
-            const pagination = {
-                total: Math.ceil(recipes[0].total / limit),
-                page
+            // Remove total recipe not found
+            let pagination = {};
+
+            if(recipes.length > 0) {
+                pagination = {
+                    total: Math.ceil(recipes[0].total / limit),
+                    page
+                };
+            } else {
+                pagination = { page };
             };
 
             return res.render('recipes/recipes', { recipes: lastAdded, pagination });

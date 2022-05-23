@@ -941,16 +941,19 @@ function confirmDelete() {
     });
 }
 
-if(!pageLink.includes(`/edit`)) {
+const title = document.querySelector('title').innerText;
+
+if(!pageLink.includes(`/edit`) && title == 'Lista de Usuários') {
     confirmListDelete();
 }
+
 function confirmListDelete() {
     const deleteButton = document.querySelectorAll('.remove-user-list');
     const cancelButton = document.querySelector('.cancel-delete');
     const confirmationContainer = document.querySelector('.confirmation-container');
     const inputHidden = document.querySelector('input[name="id"]');
    
-    for(const deleteList of deleteButton ) {
+    for(const deleteList of deleteButton) {
         
         deleteList.addEventListener('click', () => {
             let num = deleteList.querySelector('span').innerText;
