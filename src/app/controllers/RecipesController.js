@@ -91,10 +91,25 @@ module.exports = {
     
             const lastAdded = await Promise.all(recipesPromise);
     
-            const pagination = {
-                total: Math.ceil(recipes[0].total / limit),
-                page
-            };
+            // tests
+            let pagination = {};
+
+            if(recipes.length > 0) {
+                pagination = {
+                    total: Math.ceil(recipes[0].total / limit),
+                    page
+                };
+            } else {
+                pagination = {
+                    page
+                };
+            }
+            // end tests
+
+            // const pagination = {
+            //     total: Math.ceil(recipes[0].total / limit),
+            //     page
+            // };
     
             return res.render('recipes/search', {recipes: lastAdded, pagination, search});  
         } catch (err) {

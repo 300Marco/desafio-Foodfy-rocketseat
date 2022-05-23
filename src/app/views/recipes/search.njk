@@ -6,7 +6,14 @@
 
 {% block contents %}
     <div class="search">
-        <h2>Buscando por "{{search}}"</h2>
+        {# <h2>Buscando por "{{search}}"</h2> #}
+        <h2>
+            {% if pagination.total %}
+                Buscando por "{{search}}"
+            {% else %}
+                Não encontramos esta receita "{{search}}"
+            {% endif %}
+        </h2>
     </div>
 
     <section class="cards-food">
