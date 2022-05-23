@@ -52,32 +52,6 @@ module.exports = {
             console.error(err);
         };
     },
-    // create(data) {
-    //     try {
-    //         const query = `
-    //             INSERT INTO recipes (
-    //                 chef_id,
-    //                 title,
-    //                 ingredients,
-    //                 preparation,
-    //                 information
-    //             ) VALUES ($1, $2, $3, $4, $5)
-    //             RETURNING id
-    //         `;
-
-    //         const values = [
-    //             data.chef,
-    //             data.title,
-    //             data.ingredients,
-    //             data.preparation,
-    //             data.information
-    //         ];
-
-    //         return db.query(query, values);
-    //     } catch(err) {
-    //         console.error(err);
-    //     };
-    // },
     create(data) {
         try {
             const query = `
@@ -132,13 +106,6 @@ module.exports = {
             console.error(err);
         };
     },
-    // delete(id) {
-    //     try {
-    //         db.query(`DELETE FROM recipes WHERE id = $1`, [id]);
-    //     } catch(err) {
-    //         console.error(err);
-    //     };
-    // }
     async delete(id) {
         try {
             let results = await db.query(`

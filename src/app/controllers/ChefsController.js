@@ -112,26 +112,6 @@ module.exports = {
             return res.render('adminUsers/not-found');
         };
     },
-    // async edit(req, res) {
-    //     try {
-    //         let results = await AdminChef.find(req.params.id);
-    //         const chef = results.rows[0];
-
-    //         if(!chef) return res.send("AdminChef not found!");
-
-    //         // get images
-    //         results = await AdminChef.files(chef.id);
-    //         let files = results.rows;
-    //         files = files.map(file => ({
-    //             ...file,
-    //             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-    //         }));
-            
-    //         return res.render('adminChefs/edit', {chef, files});
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // },
     async edit(req, res) {
         try {
             let results = await AdminChef.find(req.params.id);
@@ -156,49 +136,8 @@ module.exports = {
             return res.render('adminUsers/not-found');
         };
     },
-    // async post(req, res) {
-    //     try {
-    //         const keys = Object.keys(req.body);
-        
-    //         for(key of keys) {
-    //             if(req.body[key] == "") {
-    //                 return res.send("Please fill in all fields");
-    //             };
-    //         };
-    
-    //         if(req.files.length == 0) {
-    //             return res.send('Please, send at last one image');
-    //         };
-    
-    //         // Create Image
-    //         const filesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
-    //         let results = await filesPromise[0];
-    //         const fileId = results.rows[0].id;
-
-    //         // create chef
-    //         results = await AdminChef.create(req.body, fileId);
-    //         const chefId = results.rows[0].id;
-    
-    //         return res.redirect(`/admin/chefs/${chefId}`);
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // },
     async post(req, res) {
         try {
-            // ################ Send Validators
-            // const keys = Object.keys(req.body);
-        
-            // for(key of keys) {
-            //     if(req.body[key] == "") {
-            //         return res.send("Please fill in all fields");
-            //     };
-            // };
-    
-            // if(req.files.length == 0) {
-            //     return res.send('Please, send at last one image');
-            // };
-    
             // Create Image
             const filesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
             let results = await filesPromise[0];
@@ -257,86 +196,19 @@ module.exports = {
             return res.render('adminUsers/not-found');
         };
     },
-    // async put(req, res) {
-    //     try {
-    //         const keys = Object.keys(req.body);
-
-    //         for(key of keys) {
-    //             if(req.body[key] == "" && key != 'removed_avatar') {
-    //                 return res.send("Please fill in all fields");
-    //             };
-    //         };
-
-    //         // Find Files
-    //         let results = await AdminChef.files(req.body.id);
-    //         let fileId = results.rows[0].file_id;
-
-    //         // Create nem Image
-    //         if(req.files.length != 0) {
-    //             console.log('Adicionar imagem');
-
-    //             const oldFiles = await AdminChef.files(fileId);
-
-    //             const totalFiles = oldFiles.rows.length + (req.files.length - 1);
-
-    //             if(totalFiles <= 1) {
-    //                 console.log(totalFiles + ' Envia imagem para o banco de dados')
-    //                 const newFilesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
-
-    //                 const results = await newFilesPromise[0];
-    //                 fileId = results.rows[0].id;
-    //             }
-    //         };
-
-    //         // removed image
-    //         if(req.body.removed_avatar) {
-    //             console.log('Remover imagem')
-
-    //             const removedFiles = req.body.removed_avatar.split(',');
-    //             const lastIndex = removedFiles.length;
-
-    //             removedFiles.splice(lastIndex, 1);
-
-    //             if(req.files.length == 0) {
-    //                 return res.send("Please send one image");
-    //             } 
-
-    //             await AdminChef.update(req.body, fileId);
-    //             await removedFiles.map(id => FileAdminChef.delete(id));
-    //         };
-
-    //         await AdminChef.update(req.body, fileId);
-
-    //         return res.redirect(`/admin/chefs/${req.body.id}`);
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // },
     async put(req, res) {
         try {
-            // ################ Send Validators
-            // const keys = Object.keys(req.body);
-
-            // for(key of keys) {
-            //     if(req.body[key] == "" && key != 'removed_avatar') {
-            //         return res.send("Please fill in all fields");
-            //     };
-            // };
-
             // Find Files
             let results = await AdminChef.files(req.body.id);
             let fileId = results.rows[0].file_id;
 
             // Create nem Image
             if(req.files.length != 0) {
-                // console.log('Adicionar imagem');
-
                 const oldFiles = await AdminChef.files(fileId);
 
                 const totalFiles = oldFiles.rows.length + (req.files.length - 1);
 
                 if(totalFiles <= 1) {
-                    // console.log(totalFiles + ' Envia imagem para o banco de dados')
                     const newFilesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
 
                     const results = await newFilesPromise[0];
@@ -346,7 +218,6 @@ module.exports = {
 
             // removed image
             if(req.body.removed_avatar) {
-
                 const removedFiles = req.body.removed_avatar.split(',');
                 const lastIndex = removedFiles.length;
 
@@ -374,25 +245,10 @@ module.exports = {
                 await AdminChef.update(req.body, fileId);
                 await removedFiles.map(id => FileAdminChef.delete(id));
             };
-            // removed image
-            // if(req.body.removed_avatar) {
-
-            //     const removedFiles = req.body.removed_avatar.split(',');
-            //     const lastIndex = removedFiles.length;
-
-            //     removedFiles.splice(lastIndex, 1);
-
-            //     if(req.files.length == 0) {
-            //         return res.send(`Por favor, envie um avatar`);
-            //     };
-
-            //     await AdminChef.update(req.body, fileId);
-            //     await removedFiles.map(id => FileAdminChef.delete(id));
-            // };
 
             AdminChef.update(req.body, fileId);
             
-            //Middleware
+            // Middleware
             let { chef, recipes, recipesCount, user } = req.data;       
             
             let fileChef = await AdminChef.files(chef[0].id);
@@ -419,43 +275,6 @@ module.exports = {
             return res.render('adminUsers/not-found');
         };
     },
-    // async delete(req, res) {
-    //     try {
-    //         const results = await AdminChef.chefRecipes(req.body.id);
-    //         const chef = results.rows;
-
-    //         if(!chef) return res.send("AdminChef not found!");
-
-    //         const [ {title, recipes_id, file_id} ] = chef;
-
-    //         if(title == null && recipes_id == null) {
-
-
-    //             // await AdminChef.delete(req.body.id);
-    //             // await FileAdminChef.delete(file_id);
-    //             return res.redirect('/admin/chefs');
-    //         } else {
-    //             let results = await AdminChef.find(req.body.id);
-    //             const chef = results.rows[0];
-
-    //             // get images
-    //             results = await AdminChef.files(chef.id);
-    //             let files = results.rows;
-    //             files = files.map(file => ({
-    //                 ...file,
-    //                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-    //             }));
-                
-    //             return res.render('adminChefs/edit', {
-    //                 chef,
-    //                 files,
-    //                 error: "Chefes que possuem receitas, não podem ser deletados!"
-    //             });
-    //         };
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // }
     async delete(req, res) {
         try {
             const results = await AdminChef.chefRecipes(req.body.id);
@@ -501,39 +320,4 @@ module.exports = {
             return res.render('adminUsers/not-found');
         };
     }
-    // async delete(req, res) {
-    //     try {
-    //         const results = await AdminChef.chefRecipes(req.body.id);
-    //         const chef = results.rows;
-
-    //         if(!chef) return res.send("AdminChef not found!");
-
-    //         const [ {title, recipes_id, file_id} ] = chef;
-
-    //         if(title == null && recipes_id == null) {
-    //             await AdminChef.delete(req.body.id);
-    //             await FileAdminChef.delete(file_id);
-    //             return res.redirect('/admin/chefs');
-    //         } else {
-    //             let results = await AdminChef.find(req.body.id);
-    //             const chef = results.rows[0];
-
-    //             // get images
-    //             results = await AdminChef.files(chef.id);
-    //             let files = results.rows;
-    //             files = files.map(file => ({
-    //                 ...file,
-    //                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-    //             }));
-                
-    //             return res.render('adminChefs/edit', {
-    //                 chef,
-    //                 files,
-    //                 error: "Chefes que possuem receitas, não podem ser deletados!"
-    //             });
-    //         };
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // }
 }

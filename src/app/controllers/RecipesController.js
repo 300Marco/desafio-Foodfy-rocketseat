@@ -91,7 +91,7 @@ module.exports = {
     
             const lastAdded = await Promise.all(recipesPromise);
     
-            // tests
+            // Remove total recipe not found
             let pagination = {};
 
             if(recipes.length > 0) {
@@ -103,13 +103,7 @@ module.exports = {
                 pagination = {
                     page
                 };
-            }
-            // end tests
-
-            // const pagination = {
-            //     total: Math.ceil(recipes[0].total / limit),
-            //     page
-            // };
+            };
     
             return res.render('recipes/search', {recipes: lastAdded, pagination, search});  
         } catch (err) {
@@ -117,31 +111,6 @@ module.exports = {
             return res.render('recipes/not-found');
         };
     },
-    // async details(req, res) {
-    //     try {
-    //         const recipeIndex = req.params.index;
-        
-    //         let results = await Recipe.find(recipeIndex);
-    //         const recipe = results.rows;
-
-    //         if(!recipe) return res.render('recipes/not-found');
-    
-    //         // if(recipe == undefined) {
-    //         //     return res.render('recipes/not-found');
-    //         // };
-    
-    //         results = await Recipe.files(recipeIndex);
-    //         const files = results.rows.map(file => ({
-    //             ...file,
-    //             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-    //         }));
-    
-    //         return res.render('recipes/details', {recipe, files});  
-    //     } catch (err) {
-    //         console.error(err);
-    //         return res.render('recipes/not-found');
-    //     };
-    // },
     async details(req, res) {
         try {
             const recipeIndex = req.params.index;

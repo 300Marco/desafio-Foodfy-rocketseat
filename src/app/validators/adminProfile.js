@@ -26,7 +26,7 @@ function emailFieldFormatting(text) {
 
 async function edit(req, res, next) {
     try {
-        const { userId: id } = req.session; // pegando o id de session
+        const { userId: id } = req.session; // get session id
         
         const user = await AdminUser.findOne({ where: {id} });
 
@@ -43,37 +43,6 @@ async function edit(req, res, next) {
     };
 }
 
-// async function update(req, res, next) {
-//     const data = req.body;
-
-//     if(data.is_admin) {
-//         data.is_admin = true;
-//     } else {
-//         data.is_admin = false;
-//     };
-
-//     // checar se todos os campos estão preenchidos
-//     const fillAllFields = checkAllFields(req.body);
-//     if(fillAllFields) {
-//         return res.render('adminProfile/edit', fillAllFields);
-//         // return res.render('adminUsers/edit', fillAllFields);
-//     };
-
-//     const { id, password } = req.body;
-
-//     const user = await AdminUser.findOne({ where: {id} });
-    
-//     const passed = await compare(password, user.password);
-
-//     if(!passed) return res.render('adminProfile/edit', {
-//         user: req.body,
-//         error: "Senha incorreta"
-//     });
-
-//     req.user = user;
-
-//     next();
-// }
 async function update(req, res, next) {
     try {
         let { id, email, password } = req.body;

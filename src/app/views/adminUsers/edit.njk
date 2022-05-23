@@ -14,7 +14,6 @@
             <span class="detail-title">Atualizar Usuário</span>
 
             <div class="buttons">
-                {# <button class="delete-button" form="form-delete">Deletar</button> #}
                 <button class="delete-button delete-user">Deletar</button>
 
                 <button class="edit-button" type="submit">Salvar</button>
@@ -31,7 +30,6 @@
     </form>
 
     <form id="form-delete" method="POST" action="/admin/users/{{user_data.id}}?_method=delete">
-            {# <input type="hidden" name="id" value="{{user.id}}"> #}
             <input type="hidden" name="id" value="{{user_data.id}}">
 
 

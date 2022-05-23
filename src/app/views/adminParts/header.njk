@@ -11,7 +11,6 @@
         <nav>
             <ul class="links">
                 <li class="recipes">
-                    {# quando criar a página profile, coloque a rota neste link #}
                     <a href="/admin/recipes">Receitas</a>
                     {% if session.userId %}
                         <span class="recipes-hover">Receitas</span>
@@ -19,13 +18,11 @@
                             <span class="recipe-arrow"></span>
                             <li>
                                 <a href="/admin/user/recipes">
-                                    {# <span class="material-icons md-18">account_circle</span> #}
                                     Minhas receitas
                                 </a>
                             </li>
                             <li>
                                 <a href="/admin/recipes">
-                                    {# <span class="material-icons">person_add</span> #}
                                     Gerenciar Receitas
                                 </a>
                             </li>
@@ -34,7 +31,6 @@
                 </li>
                 <li><a href="/admin/chefs">Chefs</a></li>
                 <li class="accounts">
-                    {# quando criar a página profile, coloque a rota neste link #}
                     <a href="/admin/profile">Usuários</a>
                     {% if session.userId %}
                         <span class="accounts-hover">Usuários</span>
@@ -57,7 +53,6 @@
 
                             {% if user.is_admin %}
                                 <li>
-                                    {# quando criar a página com a listagem de usuários, colocar o link aqui #}
                                     <a href="/admin/users">
                                         <span class="material-icons">supervisor_account</span>
                                         Usuários Cadastrados
@@ -66,7 +61,6 @@
                             {% endif %}
                             
                             <li>
-                                {# quando criar a página com a listagem de usuários, colocar o link aqui #}
                                 <a href="/">
                                     <span class="material-icons">home</span>
                                     Site Foodfy
@@ -86,14 +80,6 @@
             </ul>
         </nav>
 
-        {# <div class="is_admin_header">
-            <span class="material-icons ">admin_panel_settings</span>
-            {% if user.is_admin == true %}
-                <p>Administrador</p>
-            {% else %}
-                <p>Usuário</p>
-            {% endif %}
-        </div> #}
         <div 
             class="
                 profile-type 

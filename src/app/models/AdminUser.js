@@ -14,7 +14,6 @@ module.exports = {
         try {
             let query = "SELECT * FROM users";
 
-
             // This structure does not need to be dynamic as it contains only the 'where' condition. But I will leave it this way, in case there is any additional field in the future.
             Object.keys(filters).map(key => {
                 query = `${query}
@@ -80,14 +79,6 @@ module.exports = {
         await db.query(query);
         return;
     },
-    // delete(id) {
-    //     try {
-    //         return db.query(`
-    //             DELETE FROM users WHERE id = $1`, [id]);
-    //     } catch(err) {
-    //         console.error(err);
-    //     }
-    // }
     async delete(id) {
         try {
             let results = await db.query(`
