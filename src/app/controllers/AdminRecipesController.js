@@ -384,11 +384,13 @@ module.exports = {
                 };
             };
 
+            await AdminRecipe.update(req.body);
+
             // get recipe and image
             // Pulling created recipe data, to render page with success message
             let results = await AdminRecipe.find(req.body.id);
             const recipe = results.rows[0];
-
+            
             // req.body.information = req.body.information.replace(/[\n]/g, "<br>");
             // let {title} = req.body
             // replace(/[\n]/g, "<br>");
@@ -412,7 +414,7 @@ module.exports = {
             // Check if ID matches
             const isUserRecipes = recipe.user_id == id;
 
-            await AdminRecipe.update(req.body);
+            // await AdminRecipe.update(req.body); 
             return res.render('adminRecipes/details', {
                 recipe: newData,
                 files,
