@@ -36,10 +36,7 @@ module.exports = {
             // get logged in user
             const user = await AdminUser.findOne({ where: {id} });
 
-            return res.render('adminRecipes/userRecipe', {
-                recipes: lastAdded, 
-                user
-            });
+            return res.render('adminRecipes/userRecipe', { recipes: lastAdded, user });
         } catch (err) {
             console.error(err);
             return res.render('adminUsers/not-found');
@@ -75,10 +72,7 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
 
-            return res.render('adminRecipes/index', {
-                recipes: lastAdded, 
-                user
-            });
+            return res.render('adminRecipes/index', { recipes: lastAdded, user });
         } catch (err) {
             console.error(err);
             return res.render('adminUsers/not-found');
@@ -92,10 +86,7 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
             
-            return res.render('adminRecipes/create', {
-                chefsOptions: options, 
-                user
-            });
+            return res.render('adminRecipes/create', { chefsOptions: options, user });
         } catch (err) {
             console.error(err);
             return res.render('adminUsers/not-found');
@@ -188,7 +179,7 @@ module.exports = {
             const results = await AdminRecipe.create(req.body);
             const recipeId = results.rows[0].id;
 
-            const filesPromise = req.files.map(file => File.create({...file, recipeId}))
+            const filesPromise = req.files.map(file => File.create({...file, recipeId}));
             await Promise.all(filesPromise);
 
             // get recipe and image
@@ -234,7 +225,7 @@ module.exports = {
                 const lastIndex = removedFiles.length - 1;
                 removedFiles.splice(lastIndex, 1);
 
-                const removedFilesPromise = removedFiles.map(id => File.delete(id))
+                const removedFilesPromise = removedFiles.map(id => File.delete(id));
                 await Promise.all(removedFilesPromise);
             };
 
@@ -277,14 +268,13 @@ module.exports = {
             // Check if ID matches
             const isUserRecipes = recipe.user_id == id;
 
-            // await AdminRecipe.update(req.body); 
             return res.render('adminRecipes/details', {
                 recipe: newData,
                 files,
                 user,
                 isUserRecipes,
                 success: "Receita atualizada com sucesso!"
-            })
+            });
         } catch (err) {
             console.error(err);
             return res.render('adminUsers/not-found');

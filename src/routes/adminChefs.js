@@ -7,8 +7,6 @@ const ChefValidator = require('../app/validators/adminChefs');
 
 const multer = require('../app/middlewares/multer');
 const { onlyUsers, checkIsAdmin } = require('../app/middlewares/session');
-
-// test
 const { dataToEdit, dataToUpdate, dataToDelete } = require('../app/middlewares/chefSendData');
 
 

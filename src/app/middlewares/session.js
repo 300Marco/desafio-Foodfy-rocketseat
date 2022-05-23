@@ -38,7 +38,7 @@ async function checkIsAdmin(req, res, next) {
         next();
     } catch (err) {
         console.error(err);
-    }
+    };
 }
 
 module.exports = {

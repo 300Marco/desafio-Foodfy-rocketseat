@@ -16,8 +16,8 @@ function checkAllFields(body) {
 
 function fieldFormatting(text) {
     return text.toLowerCase().split(' ').map(word => {
-        return word[0].toUpperCase() + word.slice(1)
-    }).join(' ')
+        return word[0].toUpperCase() + word.slice(1);
+    }).join(' ');
 }
 
 function emailFieldFormatting(text) {
@@ -90,7 +90,7 @@ async function update(req, res, next) {
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 module.exports = {

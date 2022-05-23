@@ -8,7 +8,7 @@ module.exports = {
         } catch (err) {
             console.error(err);
             return res.render('recipes/not-found');
-        }
+        };
     },
     async recipes(req, res) {
         try {
@@ -16,7 +16,7 @@ module.exports = {
 
             page = page || 1;
             limit = limit || 6;
-            let offset = limit * (page -1);
+            let offset = limit * (page - 1);
 
             const params = {
                 page,
@@ -50,7 +50,7 @@ module.exports = {
                 page
             };
 
-            return res.render('recipes/recipes', {recipes: lastAdded, pagination});
+            return res.render('recipes/recipes', { recipes: lastAdded, pagination });
         } catch (err) {
             console.error(err);
             return res.render('recipes/not-found');
@@ -62,7 +62,7 @@ module.exports = {
 
             page = page || 1;
             limit = limit || 6;
-            let offset = limit * (page -1);
+            let offset = limit * (page - 1);
     
             const params = {
                 search,
@@ -100,12 +100,10 @@ module.exports = {
                     page
                 };
             } else {
-                pagination = {
-                    page
-                };
+                pagination = { page };
             };
     
-            return res.render('recipes/search', {recipes: lastAdded, pagination, search});  
+            return res.render('recipes/search', { recipes: lastAdded, pagination, search });  
         } catch (err) {
             console.error(err);
             return res.render('recipes/not-found');
@@ -130,10 +128,7 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
     
-            return res.render('recipes/details', {
-                recipe, 
-                files
-            });  
+            return res.render('recipes/details', { recipe, files });  
         } catch (err) {
             console.error(err);
             return res.render('recipes/not-found');
@@ -154,7 +149,6 @@ module.exports = {
                 return files[0];
             };
     
-    
             const avatarPromise = chefs.map(async chef => {
                 chef.img = await getAvatar(chef.id);
     
@@ -163,7 +157,7 @@ module.exports = {
     
             const lastAvatarAdded = await Promise.all(avatarPromise);
     
-            return res.render('recipes/chefs', {chefs: lastAvatarAdded});  
+            return res.render('recipes/chefs', { chefs: lastAvatarAdded });  
         } catch (err) {
             console.error(err);
             return res.render('recipes/not-found');

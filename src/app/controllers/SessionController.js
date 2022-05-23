@@ -52,7 +52,7 @@ module.exports = {
             return res.render('session/forgot-password', {
                 error: "Houve um erro inesperado, tente novamente!"
             });
-        }
+        };
     },
     resetForm(req, res) {
         return res.render('session/password-reset', {

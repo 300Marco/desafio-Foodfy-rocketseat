@@ -2,8 +2,8 @@ const AdminUser = require('../models/AdminUser');
 
 function fieldFormatting(text) {
     return text.toLowerCase().split(' ').map(word => {
-        return word[0].toUpperCase() + word.slice(1)
-    }).join(' ')
+        return word[0].toUpperCase() + word.slice(1);
+    }).join(' ');
 }
 
 function emailFieldFormatting(text) {
@@ -27,7 +27,7 @@ async function edit(req, res, next) {
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 async function post(req, res, next) {
@@ -80,15 +80,11 @@ async function post(req, res, next) {
 
 async function put(req, res, next) {
     try {
-        // const data = req.body;
-
         if(req.body.is_admin) {
             req.body.is_admin = true;
         } else {
             req.body.is_admin = false;
         };
-
-        // let user_data = user;
 
         const { userId: id } = req.session;
         const user = await AdminUser.findOne({ where: {id} });
@@ -128,7 +124,7 @@ async function put(req, res, next) {
     } catch (err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 module.exports = {

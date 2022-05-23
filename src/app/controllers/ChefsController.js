@@ -18,7 +18,7 @@ module.exports = {
                 );
     
                 return files[0];
-            }
+            };
     
             const chefsPromise = chefs.map(async chef => {
                 chef.img = await getImageAvatar(chef.id);
@@ -32,7 +32,7 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
     
-            return res.render('adminChefs/index', {chefs: lastAdded, user});
+            return res.render('adminChefs/index', { chefs: lastAdded, user });
         } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
@@ -43,11 +43,11 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
 
-            return res.render('adminChefs/create', {user});
+            return res.render('adminChefs/create', { user });
         } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
-        }
+        };
     },
     async details(req, res) {
         try {
@@ -64,7 +64,7 @@ module.exports = {
                 );
 
                 return files[0];
-            }
+            };
 
             const avatarPromise = chef.map(async avatar => {
                 avatar.img = await getImageAvatar(avatar.id);
@@ -85,7 +85,7 @@ module.exports = {
                 );
 
                 return files[0];
-            }
+            };
 
             const recipePromise = recipes.map(async recipe => {
                 recipe.img = await getImageRecipe(recipe.id);
@@ -106,7 +106,12 @@ module.exports = {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
 
-            return res.render('adminChefs/details', {chef: lastAvatarAdded, recipes: lastRecipeAdded, recipesCount, user});
+            return res.render('adminChefs/details', {
+                chef: lastAvatarAdded, 
+                recipes: lastRecipeAdded, 
+                recipesCount, 
+                user
+            });
         } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
@@ -130,7 +135,7 @@ module.exports = {
             // middleware
             const user = req.data;
             
-            return res.render('adminChefs/edit', {chef, files, user});
+            return res.render('adminChefs/edit', { chef, files, user });
         } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
@@ -162,7 +167,7 @@ module.exports = {
                 );
 
                 return files[0];
-            }
+            };
 
             const avatarPromise = chef.map(async avatar => {
                 avatar.img = await getImageAvatar(avatar.id);
@@ -180,7 +185,7 @@ module.exports = {
 
             if(recipes.length == 0) {
                 recipesCount;
-            }
+            };
 
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
@@ -213,7 +218,7 @@ module.exports = {
 
                     const results = await newFilesPromise[0];
                     fileId = results.rows[0].id;
-                }
+                };
             };
 
             // removed image

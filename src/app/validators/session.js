@@ -9,7 +9,7 @@ async function login(req, res, next) {
     try {
         let { email, password } = req.body;
 
-        req.body.email = emailFieldFormatting(req.body.email)
+        req.body.email = emailFieldFormatting(req.body.email);
         email = emailFieldFormatting(email);
 
         // search user that we will edit
@@ -32,14 +32,14 @@ async function login(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
-    }
+    };
 }
 
 async function forgot(req, res, next) {
     try {
         let { email } = req.body;
 
-        req.body.email = emailFieldFormatting(req.body.email)
+        req.body.email = emailFieldFormatting(req.body.email);
         email = emailFieldFormatting(email);
 
         let user = await AdminUser.findOne({ where: {email} });
@@ -54,7 +54,7 @@ async function forgot(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
-    }
+    };
 }
 
 async function reset(req, res, next) {
@@ -62,7 +62,7 @@ async function reset(req, res, next) {
         // search user
         let { email, password, passwordRepeat, token } = req.body;
 
-        req.body.email = emailFieldFormatting(req.body.email)
+        req.body.email = emailFieldFormatting(req.body.email);
         email = emailFieldFormatting(email);
 
         // search user that we will edit
@@ -108,7 +108,7 @@ async function reset(req, res, next) {
         next();
     } catch(err) {
         console.error(err);
-    } 
+    };
 }
 
 module.exports = {

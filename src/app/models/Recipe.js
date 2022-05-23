@@ -63,7 +63,6 @@ module.exports = {
                 LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
                 ${filterQuery}
                 ORDER BY updated_at DESC LIMIT $1 OFFSET $2`;
-                // before -> GROUP BY recipes.id, chefs.name LIMIT $1 OFFSET $2`
                 
             return db.query(query, [limit, offset]);
         } catch (err) {

@@ -5,8 +5,8 @@ const fs = require('fs');
 
 function titleFieldFormatting(text) {
     return text.toLowerCase().split(' ').map(word => {
-        return word[0].toUpperCase() + word.slice(1)
-    }).join(' ')
+        return word[0].toUpperCase() + word.slice(1);
+    }).join(' ');
 }
 
 function fieldFormatting(text) {
@@ -27,7 +27,7 @@ async function post(req, res, next) {
             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
                 for(let count in req.files) {
                     await fs.unlinkSync(req.files[count].path);
-                }
+                };
 
                 return res.render('adminRecipes/create', {
                     recipe: req.body,
@@ -65,7 +65,7 @@ async function post(req, res, next) {
         if(!req.body.ingredients && !req.body.preparation) {
             for(let count in req.files) {
                 await fs.unlinkSync(req.files[count].path);
-            }
+            };
             
             return res.render('adminRecipes/create', {
                 recipe: req.body,
@@ -76,7 +76,7 @@ async function post(req, res, next) {
         } else if(!req.body.ingredients) {
             for(let count in req.files) {
                 await fs.unlinkSync(req.files[count].path);
-            }
+            };
             
             return res.render('adminRecipes/create', {
                 recipe: req.body,
@@ -87,7 +87,7 @@ async function post(req, res, next) {
         } else if(!req.body.preparation) {
             for(let count in req.files) {
                 await fs.unlinkSync(req.files[count].path);
-            }
+            };
             
             return res.render('adminRecipes/create', {
                 recipe: req.body,
@@ -109,13 +109,13 @@ async function post(req, res, next) {
         for(let ingredient of req.body.ingredients) {
             req.body.ingredients = fieldFormatting(ingredient);
             newArrayIngredients.push(req.body.ingredients);
-        }
+        };
         
         let newArrayPreparation = [];
         for(let preparation of req.body.preparation) {
             req.body.preparation = fieldFormatting(preparation);
             newArrayPreparation.push(req.body.preparation);
-        }
+        };
 
         req.body.ingredients = newArrayIngredients;
         req.body.preparation = newArrayPreparation;
@@ -163,7 +163,7 @@ async function put(req, res, next) {
         if(!req.body.ingredients && !req.body.preparation) {
             for(let count in req.files) {
                 await fs.unlinkSync(req.files[count].path);
-            }
+            };
             
             return res.render('adminRecipes/edit', {
                 recipe: req.body,
@@ -175,7 +175,7 @@ async function put(req, res, next) {
         } else if(!req.body.ingredients) {
             for(let count in req.files) {
                 await fs.unlinkSync(req.files[count].path);
-            }
+            };
             
             return res.render('adminRecipes/edit', {
                 recipe: req.body,
@@ -187,7 +187,7 @@ async function put(req, res, next) {
         } else if(!req.body.preparation) {
             for(let count in req.files) {
                 await fs.unlinkSync(req.files[count].path);
-            }
+            };
             
             return res.render('adminRecipes/edit', {
                 recipe: req.body,
@@ -209,13 +209,13 @@ async function put(req, res, next) {
         for(let ingredient of req.body.ingredients) {
             req.body.ingredients = fieldFormatting(ingredient);
             newArrayIngredients.push(req.body.ingredients);
-        }
+        };
         
         let newArrayPreparation = [];
         for(let preparation of req.body.preparation) {
             req.body.preparation = fieldFormatting(preparation);
             newArrayPreparation.push(req.body.preparation);
-        }
+        };
 
         req.body.ingredients = newArrayIngredients;
         req.body.preparation = newArrayPreparation;
@@ -224,7 +224,7 @@ async function put(req, res, next) {
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 async function removeRecipe(req, res, next) {
@@ -256,13 +256,13 @@ async function removeRecipe(req, res, next) {
         req.data = {
             recipes: lastAdded,
             user
-        }
+        };
 
         next();
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 module.exports = {

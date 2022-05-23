@@ -10,15 +10,15 @@ function checkAllFields(body) {
             return {
                 chef: body,
                 error: "Por favor, preencha todos os campos!"
-            }
+            };
         };
     };
 }
 
 function fieldFormatting(text) {
     return text.toLowerCase().split(' ').map(word => {
-        return word[0].toUpperCase() + word.slice(1)
-    }).join(' ')
+        return word[0].toUpperCase() + word.slice(1);
+    }).join(' ');
 }
 
 async function post(req, res, next) {

@@ -8,7 +8,7 @@ module.exports = {
             return db.query(`SELECT * FROM users ORDER BY users.created_at DESC`);
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     async findOne(filters) {
         try {
@@ -18,7 +18,7 @@ module.exports = {
             Object.keys(filters).map(key => {
                 query = `${query}
                     ${key}
-                `
+                `;
 
                 Object.keys(filters[key]).map(field => {
                     query = `${query} ${field} = '${filters[key][field]}'`
@@ -58,7 +58,7 @@ module.exports = {
             return results.rows[0].id;
         } catch(err) {
             console.error(err);
-        }
+        };
     },
     async update(id, fields) {
         let query = 'UPDATE users SET';
@@ -109,6 +109,6 @@ module.exports = {
                 DELETE FROM users WHERE id = $1`, [id]);
         } catch(err) {
             console.error(err);
-        }
+        };
     }
 }

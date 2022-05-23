@@ -3,13 +3,17 @@ const fs = require('fs');
 
 module.exports = {
     allUserRecipes(id) {
-        return db.query(`
-            SELECT recipes.*, chefs.name AS chefs_name
-            FROM recipes
-            LEFT JOIN users ON (recipes.user_id = users.id)
-            LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-            WHERE recipes.user_id = $1
-            ORDER BY created_at DESC`, [id]);
+        try {
+            return db.query(`
+                SELECT recipes.*, chefs.name AS chefs_name
+                FROM recipes
+                LEFT JOIN users ON (recipes.user_id = users.id)
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                WHERE recipes.user_id = $1
+                ORDER BY created_at DESC`, [id]);
+        } catch(err) {
+            console.error(err);
+        };
     },
     all() {
         try {

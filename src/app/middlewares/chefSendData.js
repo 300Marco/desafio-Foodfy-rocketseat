@@ -24,7 +24,7 @@ async function dataToEdit(req, res, next) {
                 );
 
                 return files[0];
-            }
+            };
 
             const avatarPromise = chef.map(async avatar => {
                 avatar.img = await getImageAvatar(avatar.id);
@@ -45,7 +45,7 @@ async function dataToEdit(req, res, next) {
                 );
 
                 return files[0];
-            }
+            };
 
             const recipePromise = recipes.map(async recipe => {
                 recipe.img = await getImageRecipe(recipe.id);
@@ -75,7 +75,7 @@ async function dataToEdit(req, res, next) {
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 async function dataToUpdate(req, res, next) {
@@ -113,7 +113,7 @@ async function dataToUpdate(req, res, next) {
             );
 
             return files[0];
-        }
+        };
 
         const recipePromise = recipes.map(async recipe => {
             recipe.img = await getImageRecipe(recipe.id);
@@ -146,7 +146,7 @@ async function dataToUpdate(req, res, next) {
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 async function dataToDelete(req, res, next) {
@@ -163,7 +163,7 @@ async function dataToDelete(req, res, next) {
             );
 
             return files[0];
-        }
+        };
 
         const chefsPromise = chefs.map(async chef => {
             chef.img = await getImageAvatar(chef.id);
@@ -180,13 +180,13 @@ async function dataToDelete(req, res, next) {
         req.data = {
             chefs: lastAdded,
             user
-        }
+        };
 
         next();
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
-    }
+    };
 }
 
 module.exports = {

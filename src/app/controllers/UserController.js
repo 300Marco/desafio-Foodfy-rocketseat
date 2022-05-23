@@ -20,7 +20,7 @@ module.exports = {
         } catch(err) {
             console.error(err);
             return res.render('adminUsers/not-found');
-        }
+        };
     },
     async create(req, res) {
         try {
@@ -31,7 +31,7 @@ module.exports = {
         } catch (err) {
             console.error(err);
             return res.render('adminUsers/not-found');
-        }
+        };
     },
     async post(req, res) {
         try {
@@ -66,7 +66,7 @@ module.exports = {
                 user,
                 error: "Ops... houve algum erro!"
             });
-        }
+        };
     },
     async edit(req, res) {
         try {
@@ -106,8 +106,8 @@ module.exports = {
                 user_data: req.body,
                 user,
                 error: "Ops... houve algum erro!"
-            })
-        }
+            });
+        };
     },
     async delete(req, res) {
         try {
@@ -139,7 +139,7 @@ module.exports = {
                 user,
                 error: "Ops... houve algum erro!"
             });
-        }
+        };
     },
     async deleteUserList(req, res) {
         try {
