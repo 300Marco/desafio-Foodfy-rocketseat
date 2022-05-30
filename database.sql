@@ -114,3 +114,19 @@ ADD CONSTRAINT recipes_user_id_fkey
 FOREIGN KEY ("user_id")
 REFERENCES "users" ("id")
 ON DELETE CASCADE;
+
+-- Delete table data and delete IDS string to 1
+-- to run seeds
+DELETE FROM chefs;
+DELETE FROM files;
+DELETE FROM recipe_files;
+DELETE FROM recipes;
+DELETE FROM users;
+DELETE FROM session;
+
+-- ALTER SEQUENCE chefs_id_seq RESTART WITH 1;
+ALTER SEQUENCE chefs_id_seq RESTART WITH 1;
+ALTER SEQUENCE files_id_seq RESTART WITH 1;
+ALTER SEQUENCE recipe_files_id_seq RESTART WITH 1;
+ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
+ALTER SEQUENCE users_id_seq RESTART WITH 1;

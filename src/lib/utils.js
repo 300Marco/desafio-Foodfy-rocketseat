@@ -1108,7 +1108,7 @@ module.exports = {
         </div>
         `;
     },
-    sendAccessEmail(name, senha) {
+    sendAccessEmail(name, password) {
         return `
             <div class="">
             <div class="aHl"></div>
@@ -1793,7 +1793,7 @@ module.exports = {
                                                                                                             <tr>
                                                                                                                 <td style="padding-top:18px;padding-bottom:18px" role="textbox" aria-label="Rich Text Editor, main">
                                                                                                                     <p style="font-family:Montserrat,sans-serif;font-size:28px;color:rgb(54,70,86);line-height:150%;text-align:center;padding-top:18px;padding-bottom:18px;word-break:break-word;margin:0px;overflow:hidden">
-                                                                                                                        <strong>${senha}</strong>
+                                                                                                                        <strong>${password}</strong>
                                                                                                                     </p>
                                                                                                                 </td>
         
