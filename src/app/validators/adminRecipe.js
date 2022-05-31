@@ -181,80 +181,182 @@ async function post(req, res, next) {
     };
 }
 
+// async function put(req, res, next) {
+//     try {
+//         // get images
+//         let results = await AdminRecipe.files(req.body.id);
+//         let files = results.rows;
+//         files = files.map(file => ({
+//             ...file,
+//             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+//         }));
+
+//         // get chefs
+//         results = await AdminRecipe.chefsSelectOptions();
+//         const options = results.rows;
+
+//         // get id of logged in user
+//         const { userId: id } = req.session;
+//         const user = await AdminUser.findOne({ where: {id} });
+
+//         const keys = Object.keys(req.body);
+        
+//         for(key of keys) {
+//             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
+//                 return res.render("adminRecipes/edit", {
+//                     recipe: req.body,
+//                     files,
+//                     chefsOptions: options,
+//                     user,
+//                     error: "Por favor, preencha todos os campos!"
+//                 });
+//             };
+//         };
+
+//         // Check the ingredients and method of preparation field, if the user, remove all fields
+//         if(!req.body.ingredients && !req.body.preparation) {
+//             for(let count in req.files) {
+//                 await fs.unlinkSync(req.files[count].path);
+//             };
+            
+//             return res.render('adminRecipes/edit', {
+//                 recipe: req.body,
+//                 files,
+//                 chefsOptions: options,
+//                 user,
+//                 error: "Preencha os campos (Ingrediente e Modo de preparo)"
+//             });
+//         } else if(!req.body.ingredients) {
+//             for(let count in req.files) {
+//                 await fs.unlinkSync(req.files[count].path);
+//             };
+            
+//             return res.render('adminRecipes/edit', {
+//                 recipe: req.body,
+//                 files,
+//                 chefsOptions: options,
+//                 user,
+//                 error: "Preencha o campo (Ingrediente)"
+//             });
+//         } else if(!req.body.preparation) {
+//             for(let count in req.files) {
+//                 await fs.unlinkSync(req.files[count].path);
+//             };
+            
+//             return res.render('adminRecipes/edit', {
+//                 recipe: req.body,
+//                 files,
+//                 chefsOptions: options,
+//                 user,
+//                 error: "Preencha o campo (Modo de preparo)"
+//             });
+//         };
+
+//         // removes empty fields of ingredients and preparation method
+//         req.body.ingredients = req.body.ingredients.filter((i) => {return i});
+//         req.body.preparation = req.body.preparation.filter((i) => {return i});
+
+//         // field formatting
+//         req.body.title = titleFieldFormatting(req.body.title).replace(/De/g, 'de');
+
+//         let newArrayIngredients = [];
+//         for(let ingredient of req.body.ingredients) {
+//             req.body.ingredients = fieldFormatting(ingredient);
+//             newArrayIngredients.push(req.body.ingredients);
+//         };
+        
+//         let newArrayPreparation = [];
+//         for(let preparation of req.body.preparation) {
+//             req.body.preparation = fieldFormatting(preparation);
+//             newArrayPreparation.push(req.body.preparation);
+//         };
+
+//         req.body.ingredients = newArrayIngredients;
+//         req.body.preparation = newArrayPreparation;
+
+//         next();
+//     } catch(err) {
+//         console.error(err);
+//         return res.render('adminUsers/not-found');
+//     };
+// }
+
 async function put(req, res, next) {
     try {
         // get images
-        let results = await AdminRecipe.files(req.body.id);
-        let files = results.rows;
-        files = files.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-        }));
+        // let results = await AdminRecipe.files(req.body.id);
+        // let files = results.rows;
+        // files = files.map(file => ({
+        //     ...file,
+        //     src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+        // }));
 
-        // get chefs
-        results = await AdminRecipe.chefsSelectOptions();
-        const options = results.rows;
+        // // get chefs
+        // results = await AdminRecipe.chefsSelectOptions();
+        // const options = results.rows;
 
         // get id of logged in user
-        const { userId: id } = req.session;
-        const user = await AdminUser.findOne({ where: {id} });
+        // const { userId: id } = req.session;
+        // const user = await AdminUser.findOne({ where: {id} });
 
         const keys = Object.keys(req.body);
         
         for(key of keys) {
             if(req.body[key] == "" && key != 'information' && key != 'removed_files') {
-                return res.render("adminRecipes/edit", {
-                    recipe: req.body,
-                    files,
-                    chefsOptions: options,
-                    user,
-                    error: "Por favor, preencha todos os campos!"
-                });
+                return res.render("Por favor, preencha todos os campos!");
             };
         };
+
+        // IMAGE
+        // CRIE VALIDAÇÃO PARA IMAGENS
+        // VERIFIQUE COMO O PROGRAMA ESTA SE COMPORTANDO
+        // E CRIE UMA ESTRATÉGIA DE VALIDAÇÃO
+
+
+
 
         // Check the ingredients and method of preparation field, if the user, remove all fields
-        if(!req.body.ingredients && !req.body.preparation) {
-            for(let count in req.files) {
-                await fs.unlinkSync(req.files[count].path);
-            };
+        // if(!req.body.ingredients && !req.body.preparation) {
+        //     for(let count in req.files) {
+        //         await fs.unlinkSync(req.files[count].path);
+        //     };
             
-            return res.render('adminRecipes/edit', {
-                recipe: req.body,
-                files,
-                chefsOptions: options,
-                user,
-                error: "Preencha os campos (Ingrediente e Modo de preparo)"
-            });
-        } else if(!req.body.ingredients) {
-            for(let count in req.files) {
-                await fs.unlinkSync(req.files[count].path);
-            };
+        //     return res.render('adminRecipes/edit', {
+        //         recipe: req.body,
+        //         files,
+        //         chefsOptions: options,
+        //         user,
+        //         error: "Preencha os campos (Ingrediente e Modo de preparo)"
+        //     });
+        // } else if(!req.body.ingredients) {
+        //     for(let count in req.files) {
+        //         await fs.unlinkSync(req.files[count].path);
+        //     };
             
-            return res.render('adminRecipes/edit', {
-                recipe: req.body,
-                files,
-                chefsOptions: options,
-                user,
-                error: "Preencha o campo (Ingrediente)"
-            });
-        } else if(!req.body.preparation) {
-            for(let count in req.files) {
-                await fs.unlinkSync(req.files[count].path);
-            };
+        //     return res.render('adminRecipes/edit', {
+        //         recipe: req.body,
+        //         files,
+        //         chefsOptions: options,
+        //         user,
+        //         error: "Preencha o campo (Ingrediente)"
+        //     });
+        // } else if(!req.body.preparation) {
+        //     for(let count in req.files) {
+        //         await fs.unlinkSync(req.files[count].path);
+        //     };
             
-            return res.render('adminRecipes/edit', {
-                recipe: req.body,
-                files,
-                chefsOptions: options,
-                user,
-                error: "Preencha o campo (Modo de preparo)"
-            });
-        };
+        //     return res.render('adminRecipes/edit', {
+        //         recipe: req.body,
+        //         files,
+        //         chefsOptions: options,
+        //         user,
+        //         error: "Preencha o campo (Modo de preparo)"
+        //     });
+        // };
 
         // removes empty fields of ingredients and preparation method
-        req.body.ingredients = req.body.ingredients.filter((i) => {return i});
-        req.body.preparation = req.body.preparation.filter((i) => {return i});
+        // req.body.ingredients = req.body.ingredients.filter((i) => {return i});
+        // req.body.preparation = req.body.preparation.filter((i) => {return i});
 
         // field formatting
         req.body.title = titleFieldFormatting(req.body.title).replace(/De/g, 'de');
@@ -273,6 +375,9 @@ async function put(req, res, next) {
 
         req.body.ingredients = newArrayIngredients;
         req.body.preparation = newArrayPreparation;
+
+        
+        return
 
         next();
     } catch(err) {

@@ -678,7 +678,6 @@ const PhotosUpload = {
     },
     removeOldPhoto(event) {
         const photoDiv = event.target.parentNode;
-        console.log(photoDiv.id)
 
         if(photoDiv.id) {
             const removedFiles = document.querySelector('input[name="removed_files"]');
@@ -923,6 +922,31 @@ const ValidateEmptyFields = {
             };
 
             if(item.value == '' && item.name != 'chef') {
+                message.innerHTML = "Por favor, preencha todos os campos!";
+                document.querySelector('body').append(message);
+                item.style.border = '1px solid red';
+
+                e.preventDefault();
+            };
+        };
+    },
+    allEditRecipesFields(e) {
+        const items = document.querySelectorAll('.preparation input, .preparation select, #ingredients input,  #photos-preview');
+        const message = document.createElement('div');
+        message.classList.add('messages', 'error');
+
+
+        for(let item of items) {
+            if (item.id == "photos-preview") {
+                if(item.children[1] == undefined) {
+                    message.innerHTML = "Por favor, envie pelo menos uma imagem!";
+                    document.querySelector('body').append(message);
+
+                    e.preventDefault();
+                };
+            };
+
+            if(item.value == '' && item.name != 'chef' && !item.className.includes('hide-input')) {
                 message.innerHTML = "Por favor, preencha todos os campos!";
                 document.querySelector('body').append(message);
                 item.style.border = '1px solid red';
