@@ -1,19 +1,17 @@
-const AdminChef = require('../models/AdminChef');
-
 const fs = require('fs');
 
-function checkAllFields(body) {
-    const keys = Object.keys(body);
+// function checkAllFields(body) {
+//     const keys = Object.keys(body);
 
-    for(key of keys) {
-        if(body[key] == "" && key != 'removed_avatar') {
-            return {
-                chef: body,
-                error: "Por favor, preencha todos os campos!"
-            };
-        };
-    };
-}
+//     for(key of keys) {
+//         if(body[key] == "" && key != 'removed_avatar') {
+//             return {
+//                 chef: body,
+//                 error: "Por favor, preencha todos os campos!"
+//             };
+//         };
+//     };
+// }
 
 function fieldFormatting(text) {
     return text.toLowerCase().split(' ').map(word => {
@@ -48,34 +46,52 @@ async function post(req, res, next) {
 
 async function put(req, res, next) {
     try {
-        let results = await AdminChef.find(req.body.id);
-        const chef = results.rows[0];
+        const keys = Object.keys(req.body);
 
-        // get images
-        results = await AdminChef.files(chef.id);
-        let files = results.rows;
-        files = files.map(file => ({
-            ...file,
-            src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-        }));
-
-        const fillAllFields = checkAllFields(req.body);
-        if(fillAllFields) {
-            return res.render('adminChefs/edit', {
-                chef: req.body,
-                files,
-                error: "Por favor, preencha o campo nome!"
-            });
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'removed_avatar') {
+                return res.send('Por favor, volte e preencha todos os campos!');
+            };
         };
 
         req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
-
         next();
     } catch(err) {
         console.error(err);
         return res.render('adminUsers/not-found');
     };
 }
+
+// async function put(req, res, next) {
+//     try {
+//         let results = await AdminChef.find(req.body.id);
+//         const chef = results.rows[0];
+
+//         // get images
+//         results = await AdminChef.files(chef.id);
+//         let files = results.rows;
+//         files = files.map(file => ({
+//             ...file,
+//             src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+//         }));
+
+//         const fillAllFields = checkAllFields(req.body);
+//         if(fillAllFields) {
+//             return res.render('adminChefs/edit', {
+//                 chef: req.body,
+//                 files,
+//                 error: "Por favor, preencha o campo nome!"
+//             });
+//         };
+
+//         req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+
+//         next();
+//     } catch(err) {
+//         console.error(err);
+//         return res.render('adminUsers/not-found');
+//     };
+// }
 
 module.exports = {
     post,

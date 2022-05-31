@@ -869,6 +869,36 @@ const Validate = {
     }
 }
 
+// Validate
+const ValidateEmptyFields = {
+    allChefFields(e) {
+        const items = document.querySelectorAll('.preparation input, .avatar-box input');
+        const message = document.createElement('div');
+        message.classList.add('messages', 'error');
+
+        let input = [];
+
+        for(item of items) {
+            input.push(item);
+            if(item.value == '') {
+                message.innerHTML = "Por favor, preencha todos os campos!";
+                document.querySelector('body').append(message);
+
+                e.preventDefault();
+                return;
+            }
+        }
+
+        if(input.length < 2) {
+            message.innerHTML = "Por favor, envie um avatar!";
+            document.querySelector('body').append(message);
+
+            e.preventDefault();
+            return; 
+        }
+    }
+}
+
 // show password
 function passwordField() {
     let password = document.querySelector('.password-input input');
@@ -915,7 +945,7 @@ function resetPasswordField() {
 
 const pageLink = location.pathname;
 
-if(pageLink.includes(`/edit`)) {
+if(pageLink.includes(`/edit`) && pageLink.includes(`/users`)) {
     confirmDelete();
 }
 
@@ -924,7 +954,6 @@ function confirmDelete() {
     let deleteButton = document.querySelector('.delete-user');
     let cancelButton = document.querySelector('.cancel-delete');
     let confirmationContainer = document.querySelector('.confirmation-container');
-
 
     deleteButton.addEventListener('click', e => {
         e.preventDefault();
