@@ -878,7 +878,7 @@ const ValidateEmptyFields = {
 
         let input = [];
 
-        for(item of items) {
+        for(let item of items) {
             input.push(item);
             if(item.value == '') {
                 message.innerHTML = "Por favor, preencha todos os campos!";
@@ -886,8 +886,8 @@ const ValidateEmptyFields = {
 
                 e.preventDefault();
                 return;
-            }
-        }
+            };
+        };
 
         if(input.length < 2) {
             message.innerHTML = "Por favor, envie um avatar!";
@@ -895,7 +895,41 @@ const ValidateEmptyFields = {
 
             e.preventDefault();
             return; 
-        }
+        };
+    },
+    allRecipesFields(e) {
+        const items = document.querySelectorAll('#photos-upload input, .preparation input, .preparation select, #ingredients input,  #photos-preview');
+        const message = document.createElement('div');
+        message.classList.add('messages', 'error');
+
+
+        for(let item of items) {
+            if (item.id == "photos-preview") {
+                if(item.children[1] == undefined) {
+                    message.innerHTML = "Por favor, envie pelo menos uma imagem!";
+                    document.querySelector('body').append(message);
+
+                    e.preventDefault();
+                };
+            };
+
+            if(item.name == 'chef') {
+                if(item.children[0] == undefined) {
+                    message.innerHTML = "Você precisa cadastrar um chef, para criar uma receita!";
+                    document.querySelector('body').append(message);
+
+                    e.preventDefault();
+                };
+            };
+
+            if(item.value == '' && item.name != 'chef') {
+                message.innerHTML = "Por favor, preencha todos os campos!";
+                document.querySelector('body').append(message);
+                item.style.border = '1px solid red';
+
+                e.preventDefault();
+            };
+        };
     }
 }
 
