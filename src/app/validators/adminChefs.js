@@ -19,20 +19,42 @@ function fieldFormatting(text) {
     }).join(' ');
 }
 
+// async function post(req, res, next) {
+//     try {
+//         const fillAllFields = checkAllFields(req.body);
+
+//         if(fillAllFields) {
+//             if(req.files.length > 0) await fs.unlinkSync(req.files[0].path);
+//             return res.render('adminChefs/create', fillAllFields);
+//         }
+
+//         if(req.files.length == 0) {
+//             return res.render('adminChefs/create', {
+//                 chef: req.body,
+//                 error: "Por favor, escolha um avatar!"
+//             });
+//         };
+
+//         req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+
+//         next();
+//     } catch(err) {
+//         console.error(err);
+//         return res.render('adminUsers/not-found');
+//     };
+// }
 async function post(req, res, next) {
     try {
-        const fillAllFields = checkAllFields(req.body);
+        const keys = Object.keys(req.body);
 
-        if(fillAllFields) {
-            if(req.files.length > 0) await fs.unlinkSync(req.files[0].path);
-            return res.render('adminChefs/create', fillAllFields);
-        }
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'removed_avatar') {
+                return res.send('Por favor, volte e preencha todos os campos!');
+            };
+        };
 
         if(req.files.length == 0) {
-            return res.render('adminChefs/create', {
-                chef: req.body,
-                error: "Por favor, escolha um avatar!"
-            });
+            return res.send('Por favor, escolha um avatar!');
         };
 
         req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');

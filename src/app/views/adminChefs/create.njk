@@ -12,7 +12,11 @@
     <form method="POST" action="/admin/chefs" enctype="multipart/form-data">
         <div class="recipe-detail">
             <span class="detail-title">Criando chef</span>
-            <button class="edit-button" type="submit">Salvar chef</button>
+            <button 
+                class="edit-button" 
+                type="submit"
+                onclick="ValidateEmptyFields.allChefFields(event)"
+            >Salvar chef</button>
         </div>
 
         {% include "adminChefs/fields.njk" %}
