@@ -1157,44 +1157,81 @@ const ValidateEmptyFields = {
     }
 }
 
+// show and hide fields
+const PasswordField = {
+    password: document.querySelector('.password-input input'),
+    span: document.querySelector('.password-input span'),
+    resetPassword: document.querySelectorAll('.reset-password-input input'),
+    spanResetPassword: document.querySelector('.reset-password-input span'),
+    showSpan() {
+        this.span.style.display = 'initial';
+    },
+    showPassword() {
+        if(this.span.innerHTML == 'Mostrar') {
+            this.span.innerHTML = 'Ocultar';
+            this.password.type = 'text';
+        } else {
+            this.span.innerHTML = 'Mostrar';
+            this.password.type = 'password';
+        };
+        this.password.focus();
+    },
+    showSpanResetPassword() {
+        this.spanResetPassword.style.display = 'initial';
+    },
+    showFieldsPassword() {
+        if(this.spanResetPassword.innerHTML == 'Mostrar senhas') {
+            this.spanResetPassword.innerHTML = 'Ocultar senhas';
+            for(let password of this.resetPassword) {
+                password.type = 'text';
+            };
+        } else {
+            this.spanResetPassword.innerHTML = 'Mostrar senhas';
+            for(let password of this.resetPassword) {
+                password.type = 'password';
+            };
+        };
+    }
+}
+
 // show password
-function passwordField() {
-    let password = document.querySelector('.password-input input');
-    let span = document.querySelector('.password-input span');
+// function passwordField() {
+//     let password = document.querySelector('.password-input input');
+//     let span = document.querySelector('.password-input span');
 
-    span.style.display = 'initial';
+//     span.style.display = 'initial';
 
-    span.addEventListener('click', () => {
-        if(span.innerHTML == "Mostrar") {
-            span.innerHTML = "Ocultar";
-            password.type = "text";
-        } else {
-            span.innerHTML = "Mostrar";
-            password.type = "password";
-        }
-    });
-}
+//     span.addEventListener('click', () => {
+//         if(span.innerHTML == "Mostrar") {
+//             span.innerHTML = "Ocultar";
+//             password.type = "text";
+//         } else {
+//             span.innerHTML = "Mostrar";
+//             password.type = "password";
+//         }
+//     });
+// }
 
-function resetPasswordField() {
-    let password = document.querySelectorAll('.reset-password-input input');
-    let span = document.querySelector('.reset-password-input span:nth-child(2)');
+// function resetPasswordField() {
+//     let password = document.querySelectorAll('.reset-password-input input');
+//     let span = document.querySelector('.reset-password-input span:nth-child(2)');
 
-    span.style.display = 'initial';
+//     span.style.display = 'initial';
 
-    span.addEventListener('click', () => {
-        if(span.innerHTML == "Mostrar senhas") {
-            span.innerHTML = "Ocultar";
-            for(pass of password) {
-                pass.type = "text";
-            }
-        } else {
-            span.innerHTML = "Mostrar senhas";
-            for(pass of password) {
-                pass.type = "password";
-            }
-        }
-    });
-}
+//     span.addEventListener('click', () => {
+//         if(span.innerHTML == "Mostrar senhas") {
+//             span.innerHTML = "Ocultar";
+//             for(pass of password) {
+//                 pass.type = "text";
+//             }
+//         } else {
+//             span.innerHTML = "Mostrar senhas";
+//             for(pass of password) {
+//                 pass.type = "password";
+//             }
+//         }
+//     });
+// }
 
 
 

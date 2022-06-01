@@ -38,10 +38,14 @@
                 type="password" 
                 name="passwordRepeat"
                 placeholder="Repita a nova senha"
-                onfocus="resetPasswordField()"
+                onfocus="PasswordField.showSpanResetPassword()"
+
+
+                {# apagar depois #}
+                {# onfocus="resetPasswordField()" #}
             >
 
-            <span>Mostrar senhas</span>
+            <span onclick="PasswordField.showFieldsPassword()">Mostrar senhas</span>
         </div>
     </div>
 </div>

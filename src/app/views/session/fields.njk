@@ -23,10 +23,15 @@
                 type="password" 
                 name="password"
                 placeholder="Digite sua senha"
-                onfocus="passwordField()"
+                onfocus="PasswordField.showSpan(event)"
+
+
+
+                {# Apagar depois #}
+                {# onfocus="passwordField()" #}
             >
 
-            <span>Mostrar</span>
+            <span onclick="PasswordField.showPassword()">Mostrar</span>
         </div>
     </div>
 </div>
