@@ -307,14 +307,6 @@ async function put(req, res, next) {
             };
         };
 
-        // IMAGE
-        // CRIE VALIDAÇÃO PARA IMAGENS
-        // VERIFIQUE COMO O PROGRAMA ESTA SE COMPORTANDO
-        // E CRIE UMA ESTRATÉGIA DE VALIDAÇÃO
-
-
-
-
         // Check the ingredients and method of preparation field, if the user, remove all fields
         // if(!req.body.ingredients && !req.body.preparation) {
         //     for(let count in req.files) {
@@ -375,9 +367,6 @@ async function put(req, res, next) {
 
         req.body.ingredients = newArrayIngredients;
         req.body.preparation = newArrayPreparation;
-
-        
-        return
 
         next();
     } catch(err) {

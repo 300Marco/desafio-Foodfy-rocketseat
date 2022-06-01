@@ -10,7 +10,7 @@
     font-size: 1.6rem;
     border-radius: 4px;
 
-    position: absolute;
+    position: fixed;
     right: 12px;
     top: 12px;
 
