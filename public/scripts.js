@@ -1034,6 +1034,8 @@ const ValidateEmptyFields = {
         for(let item of items) {
             input.push(item);
             if(item.value == '') {
+                item.style.border = '1px solid red';
+                item.focus();
                 message.innerHTML = "Por favor, preencha todos os campos!";
                 document.querySelector('body').append(message);
 
@@ -1075,12 +1077,14 @@ const ValidateEmptyFields = {
                 };
             };
 
-            if(item.value == '' && item.name != 'chef') {
+            if(item.value == '' && item.name != 'chef' && item.name != 'photos') {
                 message.innerHTML = "Por favor, preencha todos os campos!";
                 document.querySelector('body').append(message);
                 item.style.border = '1px solid red';
+                item.focus();
 
                 e.preventDefault();
+                return
             };
         };
     },
@@ -1104,8 +1108,10 @@ const ValidateEmptyFields = {
                 message.innerHTML = "Por favor, preencha todos os campos!";
                 document.querySelector('body').append(message);
                 item.style.border = '1px solid red';
+                item.focus();
 
                 e.preventDefault();
+                return
             };
         };
     },
@@ -1116,6 +1122,8 @@ const ValidateEmptyFields = {
 
         for(let item of items) {
             if(item.value == '') {
+                item.style.border = '1px solid red';
+                item.focus();
                 message.innerHTML = "Por favor, preencha todos os campos!";
                 document.querySelector('body').append(message);
 
@@ -1131,6 +1139,8 @@ const ValidateEmptyFields = {
 
         for(let item of items) {
             if(item.value == '') {
+                item.style.border = '1px solid red';
+                item.focus();
                 if(item.type == 'text' || item.type == 'email') {
                     message.innerHTML = "Por favor, preencha todos os campos!";
                     document.querySelector('body').append(message);
