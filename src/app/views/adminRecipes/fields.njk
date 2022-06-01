@@ -70,7 +70,11 @@
 
             <input name="ingredients[]" class="input-ingredients">
 
-            <button class="add-button add-ingredient" type="button">
+            <button 
+                class="add-button add-ingredient" 
+                type="button" 
+                onclick="AddIngredient.newField(event)"
+            >
                 Adicionar novo ingrediente
             </button>
         </div>
@@ -90,7 +94,11 @@
         
         <input  name="preparation[]" class="input-preparation">
 
-        <button class="add-button add-preparation" type="button">
+        <button 
+            class="add-button add-preparation" 
+            type="button"
+            onclick="AddPreparation.newField(event)"
+        >
             Adicionar novo passo
         </button>
     </div>

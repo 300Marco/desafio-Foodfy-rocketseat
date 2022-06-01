@@ -260,66 +260,62 @@ function displayInput() {
 
 
 // Add new inputs
-const btnIngredient = document.querySelector('.add-ingredient');
-const btnPreparation = document.querySelector('.add-preparation');
+// const btnIngredient = document.querySelector('.add-ingredient');
+// const btnPreparation = document.querySelector('.add-preparation');
 
-if(btnIngredient || btnPreparation) {
-    addIngredient();
-    addPreparation();
+// if(btnIngredient || btnPreparation) {
+    //     // addIngredient();
+    //     // addPreparation();
+    // }
+    
+// Add new inputs
+function insertButtonEdit(classes, func) {
+    const buttonsDelete = document.querySelectorAll(classes);
+    
+    for(let button of buttonsDelete) {
+        func.createDeleteButton(button);
+    }
 }
 
-function addIngredient() {
-    const inputIngredients = document.querySelector('.input-ingredients');
-    const boxIngredients = document.querySelector('.box-ingredients');
+const AddIngredient = {
+    inputIngredients: document.querySelector('.input-ingredients'),
+    boxIngredients: document.querySelector('.box-ingredients'),
+    currentPage: String(location.pathname),
+    newField(e) {
+        // click
+        if(AddIngredient.currentPage == '/admin/recipes/create') {
+            if(!AddIngredient.inputIngredients.value) return;
+            AddIngredient.createRecipe(AddIngredient.inputIngredients.value);
+        } else {
+            AddIngredient.createRecipe(AddIngredient.inputIngredients.value);
+        };
 
-    function createInput() {
+        // AddIngredient.createRecipe(AddIngredient.inputIngredients.value);
+    },
+    createInput() {
         const input = document.createElement('input');
         return input;
-    }
-
-    function createDiv() {
+    },
+    createDiv() {
         const div = document.createElement('div');
         return div;
-    }
-
-    function clearInput() {
-        inputIngredients.value = "";
-        inputIngredients.focus();
-    }
-
-    // function createDeleteButton(div) {
-    //     const deleteButton = document.createElement('button');
-    //     deleteButton.innerText = 'X';
-    //     deleteButton.setAttribute('class', 'delete-field-button');
-    //     deleteButton.setAttribute('type', 'button');
-
-    //     div.appendChild(deleteButton);
-    // }
-    function createDeleteButton(div) {
+    },
+    clearInput() {
+        AddIngredient.inputIngredients.value = "";
+        AddIngredient.inputIngredients.focus();
+    },
+    createDeleteButton(div) {
         const icon = document.createElement('span');
         icon.setAttribute('class', 'material-icons md delete-field-button');
         icon.innerHTML = 'delete';
 
+        div.setAttribute('class', 'select-ingredient');
+
         div.appendChild(icon);
-    }
-    // function createDeleteButton(div) {
-    //     // Create google trash span tag
-    //     const icon = document.createElement('span');
-    //     icon.setAttribute('class', 'material-icons md');
-    //     icon.innerHTML = 'delete';
-
-    //     // Create button and add icon
-    //     const deleteButton = document.createElement('button');
-    //     deleteButton.appendChild(icon);
-    //     deleteButton.setAttribute('class', 'delete-field-button');
-    //     deleteButton.setAttribute('type', 'button');
-
-    //     div.appendChild(deleteButton);
-    // }
-
-    function createRecipe(textoInput) {
-        const input = createInput();
-        const div = createDiv();
+    },
+    createRecipe(textoInput) {
+        const input = AddIngredient.createInput();
+        const div = AddIngredient.createDiv();
 
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'ingredients[]');
@@ -327,144 +323,96 @@ function addIngredient() {
 
         div.appendChild(input);
 
-        boxIngredients.appendChild(div);
-        clearInput();
+        AddIngredient.boxIngredients.appendChild(div);
+        AddIngredient.clearInput();
 
-        createDeleteButton(div);
-    }
-
-    btnIngredient.addEventListener('click', () => {
-        const currentPage = location.pathname;
-        let href = String(currentPage);
-
-        if(href == '/admin/recipes/create') {
-            if(!inputIngredients.value) return;
-            createRecipe(inputIngredients.value);
-        } else {
-            createRecipe(inputIngredients.value);
-        }
-    });
-
-    function insertButtonEdit() {
-        const divs = document.querySelectorAll('.box-ingredients div');
+        AddIngredient.createDeleteButton(div);
+    },
+    deleteField() {
+        // const selectIngredient = document.getElementsByClassName('select-ingredient');
         
-        for(let div of divs) {
-            createDeleteButton(div);
-        }
+        // let ingredientsArray = [];
+        // let count = 0;
+        // for(let ingredient of selectIngredient) {
+        //     let button = ingredient.querySelector('span');
+        //     ingredientsArray.push(button);
+            
+        //     count = ingredientsArray.length;
+
+        //     button.addEventListener('click', () => {
+        //         if(count > 0) {
+        //             console.log('excluir');
+        //             button.parentElement.remove();
+        //         }
+        //     });
+        // };
+
+        const selectIngredient = document.querySelectorAll('.select-ingredient');
+        
+        let count = selectIngredient.length;
+
+        console.log(count);
+
+        document.addEventListener('click', (e)=>{
+            let el = e.target;
+            
+            if(el.classList.contains('add-ingredient')) {
+                count += 1;
+            };
+
+            if(el.classList.contains('delete-field-button')) {
+                if(el.parentElement.className == 'select-ingredient') {
+                    if(count > 1) {
+                        count -= 1;
+                        el.parentElement.remove();
+                    };
+                };
+            };
+        });
     }
+};
 
-    insertButtonEdit();
-    
-    // document.addEventListener('click', (e) => {
-    //     const el = e.target;
+insertButtonEdit('.box-ingredients div', AddIngredient);
+AddIngredient.deleteField();
 
-    //     if(el.classList.contains('delete-field-button')) {
-    //             el.parentElement.remove();
-    //         }
-    //     });
-    document.addEventListener('click', (e) => {
-        const el = e.target;
-
-        if(el.classList.contains('delete-field-button')) {
-            el.parentElement.remove();
+const AddPreparation = {
+    inputPreparation: document.querySelector('.input-preparation'),
+    boxPreparation: document.querySelector('.box-preparation'),
+    currentPage: String(location.pathname),
+    newField(e) {
+        // click
+        if(AddPreparation.currentPage == '/admin/recipes/create') {
+            if(!AddPreparation.inputPreparation.value) return;
+            AddPreparation.createRecipe(AddPreparation.inputPreparation.value);
+        } else {
+            AddPreparation.createRecipe(AddPreparation.inputPreparation.value);
         };
-    });
 
-
-    // const inputIngredient = document.querySelector('input[name="ingredients[]"]');
-    // document.addEventListener('click', (e) => {
-    //     const el = e.target;
-
-    //     if(el.classList.contains('delete-field-button') || el.classList.contains('material-icons')) {
-    //         console.log(el.parentElement)
-    //         if(el.parentElement.classList.contains('ingredients-input')) {
-                
-    //         }
-    //     } 
-    //     // else if(el.classList.contains('material-icons')) {
-    //     //     const div = document.querySelector('.ingredients-input');
-
-    //     //     console.log(div);
-
-    //     //     // if(div.parentElement.classList.contains('ingredients-input')) {
-    //     //     //     console.log('Ingredients');
-    //     //     // }
-    //     // }
-    // });
-
-    
-}
-
-function addPreparation() {
-    const inputPreparation = document.querySelector('.input-preparation');
-    const boxPreparation = document.querySelector('.box-preparation');
-
-    function createInput() {
+    },
+    createInput() {
         const input = document.createElement('input');
         return input;
-    }
-
-    function createDiv() {
+    },
+    createDiv() {
         const div = document.createElement('div');
         return div;
-    }
-
-    function clearInput() {
-        inputPreparation.value = "";
-        inputPreparation.focus();
-    }
-
-    // function createDeleteButton(div) {
-    //     const deleteButton = document.createElement('button');
-    //     deleteButton.innerText = 'X';
-    //     deleteButton.setAttribute('class', 'delete-field-button');
-    //     deleteButton.setAttribute('type', 'button');
-
-    //     div.appendChild(deleteButton);
-    // }
-
-    // function createDeleteButton(div) {
-    //     // Create google trash span tag
-    //     const icon = document.createElement('span');
-    //     icon.setAttribute('class', 'material-icons md');
-    //     icon.innerHTML = 'delete';
-                
-    //     // Create button and add icon
-    //     const deleteButton = document.createElement('button');
-    //     // deleteButton.innerText = 'X';
-    //     deleteButton.appendChild(icon);
-    //     deleteButton.setAttribute('class', 'delete-field-button');
-    //     deleteButton.setAttribute('type', 'button');
-
-    //     div.appendChild(deleteButton);
-    // }
-
-    function createDeleteButton(div) {
+    },
+    clearInput() {
+        AddPreparation.inputPreparation.value = "";
+        AddPreparation.inputPreparation.focus();
+    },
+    createDeleteButton(div) {
         const icon = document.createElement('span');
         icon.setAttribute('class', 'material-icons md delete-field-button');
         icon.innerHTML = 'delete';
-        
+
+        div.setAttribute('class', 'select-preparation');
+
         div.appendChild(icon);
-    }
-    // function createDeleteButton(div) {
-    //     // Create google trash span tag
-    //     const icon = document.createElement('span');
-    //     icon.setAttribute('class', 'material-icons md');
-    //     icon.innerHTML = 'delete';
-                
-    //     // Create button and add icon
-    //     const deleteButton = document.createElement('button');
-    //     // deleteButton.innerText = 'X';
-    //     deleteButton.appendChild(icon);
-    //     deleteButton.setAttribute('class', 'delete-field-button');
-    //     deleteButton.setAttribute('type', 'button');
-
-    //     div.appendChild(deleteButton);
-    // }
-
-    function createPreparation(textoInput) {
-        const input = createInput();
-        const div = createDiv();
+    },
+    createRecipe(textoInput) {
+        const input = AddPreparation.createInput();
+        const div = AddPreparation.createDiv();
 
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'preparation[]');
@@ -472,60 +420,269 @@ function addPreparation() {
 
         div.appendChild(input);
 
-        boxPreparation.appendChild(div);
-        clearInput();
+        AddPreparation.boxPreparation.appendChild(div);
+        AddPreparation.clearInput();
 
-        createDeleteButton(div);
+        AddPreparation.createDeleteButton(div);
+    },    
+    deleteField() {
+        const selectPreparation = document.querySelectorAll('.select-preparation');
+
+        let count = selectPreparation.length;
+
+        document.addEventListener('click', (e) => {
+            let el = e.target;
+
+            if(el.classList.contains('add-preparation')) {
+                count += 1;
+            };
+
+            if(el.classList.contains('delete-field-button')) {
+                if(el.parentElement.className == 'select-preparation') {
+                    if(count > 1) {
+                        count -= 1;
+                        el.parentElement.remove();
+                    };
+                };
+            };
+        });
     }
+};
 
-    btnPreparation.addEventListener('click', () => {
-        const currentPage = location.pathname;
-        let href = String(currentPage);
+insertButtonEdit('.box-preparation div', AddPreparation);
+AddPreparation.deleteField();
 
-        if(href == '/admin/recipes/create') {
-            if(!inputPreparation.value) return;
-            createPreparation(inputPreparation.value);
-        } else {
-            createPreparation(inputPreparation.value);
-        }
-    });
+// Código de adicionar inputs, antigo
+// function addIngredient() {
+//     const inputIngredients = document.querySelector('.input-ingredients');
+//     const boxIngredients = document.querySelector('.box-ingredients');
 
-    function insertButtonEdit() {
-        const divs = document.querySelectorAll('.box-preparation div');
+//     function createInput() {
+//         const input = document.createElement('input');
+//         return input;
+//     }
+
+//     function createDiv() {
+//         const div = document.createElement('div');
+//         return div;
+//     }
+
+//     function clearInput() {
+//         inputIngredients.value = "";
+//         inputIngredients.focus();
+//     }
+
+//     function createDeleteButton(div) {
+//         const icon = document.createElement('span');
+//         icon.setAttribute('class', 'material-icons md delete-field-button');
+//         icon.innerHTML = 'delete';
+
+//         div.appendChild(icon);
+//     }
+
+//     function createRecipe(textoInput) {
+//         const input = createInput();
+//         const div = createDiv();
+
+//         input.setAttribute('type', 'text');
+//         input.setAttribute('name', 'ingredients[]');
+//         input.value = textoInput;
+
+//         div.appendChild(input);
+
+//         boxIngredients.appendChild(div);
+//         clearInput();
+
+//         createDeleteButton(div);
+//     }
+
+//     btnIngredient.addEventListener('click', () => {
+//         const currentPage = location.pathname;
+//         let href = String(currentPage);
+
+//         if(href == '/admin/recipes/create') {
+//             if(!inputIngredients.value) return;
+//             createRecipe(inputIngredients.value);
+//         } else {
+//             createRecipe(inputIngredients.value);
+//         }
+//     });
+
+//     function insertButtonEdit() {
+//         const boxDiv = document.querySelectorAll('.box-ingredients div');
         
-        for(let div of divs) {
-            createDeleteButton(div);
-        }
-    }
+//         for(let div of boxDiv) {
+//             createDeleteButton(div);
+//         }
+//     }
 
-    insertButtonEdit();
-    // document.addEventListener('click', e => {
-    //     const el = e.target;
+//     insertButtonEdit();
 
-    //     console.log(el.classList);
+//     document.addEventListener('click', (e) => {
+//         const el = e.target;
 
-    //     if(el.classList.contains('delete-field-button')) {
-    //         el.parentElement.remove();
-    //     }
-    // });
+//         if(el.classList.contains('delete-field-button')) {
+//             el.parentElement.remove();
+//         };
+//     });
 
-    // btnPreparation.addEventListener('click', e => {
-    //     console.log("Preparação")
-    // })
 
-    // document.addEventListener('click', e => {
-    //     const el = e.target;
+//     // const inputIngredient = document.querySelector('input[name="ingredients[]"]');
+//     // document.addEventListener('click', (e) => {
+//     //     const el = e.target;
 
-    //     if(el.classList.contains('delete-field-button')) {
-    //         el.parentElement.remove();
-    //     } else if(el.classList.contains('material-icons')) {
-    //         const div = document.querySelector('.delete-field-button');
-    //         div.parentElement.remove();
-    //     }
-    // });
-}
+//     //     if(el.classList.contains('delete-field-button') || el.classList.contains('material-icons')) {
+//     //         console.log(el.parentElement)
+//     //         if(el.parentElement.classList.contains('ingredients-input')) {
+                
+//     //         }
+//     //     } 
+//         // else if(el.classList.contains('material-icons')) {
+//         //     const div = document.querySelector('.ingredients-input');
+
+//         //     console.log(div);
+
+//         //     // if(div.parentElement.classList.contains('ingredients-input')) {
+//         //     //     console.log('Ingredients');
+//         //     // }
+//         // }
+//     // });
+
+    
+// }
+
+// function addPreparation() {
+//     const inputPreparation = document.querySelector('.input-preparation');
+//     const boxPreparation = document.querySelector('.box-preparation');
+
+//     function createInput() {
+//         const input = document.createElement('input');
+//         return input;
+//     }
+
+//     function createDiv() {
+//         const div = document.createElement('div');
+//         return div;
+//     }
+
+//     function clearInput() {
+//         inputPreparation.value = "";
+//         inputPreparation.focus();
+//     }
+
+//     // function createDeleteButton(div) {
+//     //     const deleteButton = document.createElement('button');
+//     //     deleteButton.innerText = 'X';
+//     //     deleteButton.setAttribute('class', 'delete-field-button');
+//     //     deleteButton.setAttribute('type', 'button');
+
+//     //     div.appendChild(deleteButton);
+//     // }
+
+//     // function createDeleteButton(div) {
+//     //     // Create google trash span tag
+//     //     const icon = document.createElement('span');
+//     //     icon.setAttribute('class', 'material-icons md');
+//     //     icon.innerHTML = 'delete';
+                
+//     //     // Create button and add icon
+//     //     const deleteButton = document.createElement('button');
+//     //     // deleteButton.innerText = 'X';
+//     //     deleteButton.appendChild(icon);
+//     //     deleteButton.setAttribute('class', 'delete-field-button');
+//     //     deleteButton.setAttribute('type', 'button');
+
+//     //     div.appendChild(deleteButton);
+//     // }
+
+//     function createDeleteButton(div) {
+//         const icon = document.createElement('span');
+//         icon.setAttribute('class', 'material-icons md delete-field-button');
+//         icon.innerHTML = 'delete';
+        
+//         div.appendChild(icon);
+//     }
+//     // function createDeleteButton(div) {
+//     //     // Create google trash span tag
+//     //     const icon = document.createElement('span');
+//     //     icon.setAttribute('class', 'material-icons md');
+//     //     icon.innerHTML = 'delete';
+                
+//     //     // Create button and add icon
+//     //     const deleteButton = document.createElement('button');
+//     //     // deleteButton.innerText = 'X';
+//     //     deleteButton.appendChild(icon);
+//     //     deleteButton.setAttribute('class', 'delete-field-button');
+//     //     deleteButton.setAttribute('type', 'button');
+
+//     //     div.appendChild(deleteButton);
+//     // }
+
+//     function createPreparation(textoInput) {
+//         const input = createInput();
+//         const div = createDiv();
+
+//         input.setAttribute('type', 'text');
+//         input.setAttribute('name', 'preparation[]');
+//         input.value = textoInput;
+
+//         div.appendChild(input);
+
+//         boxPreparation.appendChild(div);
+//         clearInput();
+
+//         createDeleteButton(div);
+//     }
+
+//     btnPreparation.addEventListener('click', () => {
+//         const currentPage = location.pathname;
+//         let href = String(currentPage);
+
+//         if(href == '/admin/recipes/create') {
+//             if(!inputPreparation.value) return;
+//             createPreparation(inputPreparation.value);
+//         } else {
+//             createPreparation(inputPreparation.value);
+//         }
+//     });
+
+//     function insertButtonEdit() {
+//         const boxDiv = document.querySelectorAll('.box-preparation div');
+        
+//         for(let div of boxDiv) {
+//             createDeleteButton(div);
+//         }
+//     }
+
+//     insertButtonEdit();
+//     // document.addEventListener('click', e => {
+//     //     const el = e.target;
+
+//     //     console.log(el.classList);
+
+//     //     if(el.classList.contains('delete-field-button')) {
+//     //         el.parentElement.remove();
+//     //     }
+//     // });
+
+//     // btnPreparation.addEventListener('click', e => {
+//     //     console.log("Preparação")
+//     // })
+
+//     // document.addEventListener('click', e => {
+//     //     const el = e.target;
+
+//     //     if(el.classList.contains('delete-field-button')) {
+//     //         el.parentElement.remove();
+//     //     } else if(el.classList.contains('material-icons')) {
+//     //         const div = document.querySelector('.delete-field-button');
+//     //         div.parentElement.remove();
+//     //     }
+//     // });
+// }
 
 // Pagination
+
 const pagination = document.querySelector('.pagination');
 const search = pagination.dataset.search;
 const page = +pagination.dataset.page;
@@ -544,7 +701,6 @@ for(let page of pages) {
             elements += `<a href="?page=${page}"> ${page} </a>`
         }
     }
-
 }
 
 pagination.innerHTML = elements;
