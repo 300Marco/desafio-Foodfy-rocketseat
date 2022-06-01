@@ -1166,36 +1166,53 @@ function resetPasswordField() {
 
 
 
+// new delete users
+const ConfirmDelete = {
+    confirmationContainer: document.querySelector('.confirmation-container'),
+    openContainer(e) {
+        // let cancelButton = document.querySelector('.cancel-delete');
+        ConfirmDelete.confirmationContainer.style.visibility = 'visible';
+        ConfirmDelete.confirmationContainer.style.opacity = 1;
+
+        e.preventDefault();
+    },
+    cancelDelete(e) {
+        ConfirmDelete.confirmationContainer.style.visibility = 'hidden';
+        ConfirmDelete.confirmationContainer.style.opacity = 0;
+
+        e.preventDefault();
+    }
+};
 
 
+// const pageLink = location.pathname;
+
+// if(pageLink.includes(`/edit`) && pageLink.includes(`/users`)) {
+//     // confirmDelete();
+// }
+
+// function confirmDelete2() {
+//     // edit user page
+//     let deleteButton = document.querySelector('.delete-user');
+//     let cancelButton = document.querySelector('.cancel-delete');
+//     let confirmationContainer = document.querySelector('.confirmation-container');
+
+//     deleteButton.addEventListener('click', e => {
+//         e.preventDefault();
+
+//         confirmationContainer.style.visibility = 'visible';
+//         confirmationContainer.style.opacity = 1;
+//     });
+
+//     cancelButton.addEventListener('click', e => {
+//         e.preventDefault();
+
+//         confirmationContainer.style.visibility = 'hidden';
+//         confirmationContainer.style.opacity = 0;
+//     });
+// }
 
 const pageLink = location.pathname;
-
-if(pageLink.includes(`/edit`) && pageLink.includes(`/users`)) {
-    confirmDelete();
-}
-
-function confirmDelete() {
-    // edit user page
-    let deleteButton = document.querySelector('.delete-user');
-    let cancelButton = document.querySelector('.cancel-delete');
-    let confirmationContainer = document.querySelector('.confirmation-container');
-
-    deleteButton.addEventListener('click', e => {
-        e.preventDefault();
-
-        confirmationContainer.style.visibility = 'visible';
-        confirmationContainer.style.opacity = 1;
-    });
-
-    cancelButton.addEventListener('click', e => {
-        e.preventDefault();
-
-        confirmationContainer.style.visibility = 'hidden';
-        confirmationContainer.style.opacity = 0;
-    });
-}
-
 const title = document.querySelector('title').innerText;
 
 if(!pageLink.includes(`/edit`) && title == 'Lista de Usuários') {

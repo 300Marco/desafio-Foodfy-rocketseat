@@ -14,7 +14,10 @@
             <span class="detail-title">Atualizar Usuário</span>
 
             <div class="buttons">
-                <button class="delete-button delete-user">Deletar</button>
+                <button 
+                    class="delete-button delete-user"
+                    onclick="ConfirmDelete.openContainer(event)"
+                >Deletar</button>
 
                 <button 
                     class="edit-button" 
@@ -36,7 +39,6 @@
     <form id="form-delete" method="POST" action="/admin/users/{{user_data.id}}?_method=delete">
             <input type="hidden" name="id" value="{{user_data.id}}">
 
-
             <div class="confirmation-container">
                 <div class="confirmation">
                     <p>Deletar usuário</p>
@@ -46,7 +48,10 @@
                     </p>
 
                     <button type="submit" class="confirm-delete">Sim, excluir</button>
-                    <button class="cancel-delete">Cancelar</button>
+                    <button 
+                        class="cancel-delete"
+                        onclick="ConfirmDelete.cancelDelete(event)"
+                    >Cancelar</button>
                 </div>
             </div>
     </form>
