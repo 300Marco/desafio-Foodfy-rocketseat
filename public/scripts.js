@@ -1118,10 +1118,32 @@ const ValidateEmptyFields = {
             if(item.value == '') {
                 message.innerHTML = "Por favor, preencha todos os campos!";
                 document.querySelector('body').append(message);
+
                 e.preventDefault();
                 return;
             }
         }
+    },
+    allProfileFields(e) {
+        const items = document.querySelectorAll('.name-email input, .admin-email input, .profile-password input');
+        const message = document.createElement('div');
+        message.classList.add('messages', 'error');
+
+        for(let item of items) {
+            if(item.value == '') {
+                if(item.type == 'text' || item.type == 'email') {
+                    message.innerHTML = "Por favor, preencha todos os campos!";
+                    document.querySelector('body').append(message);
+    
+                    e.preventDefault();
+                } else if(item.type == 'password') {
+                    message.innerHTML = "Por favor, insira a senha para atualizar!";
+                    document.querySelector('body').append(message);
+    
+                    e.preventDefault();
+                };
+            };
+        };
     }
 }
 
