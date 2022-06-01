@@ -351,8 +351,6 @@ const AddIngredient = {
         
         let count = selectIngredient.length;
 
-        console.log(count);
-
         document.addEventListener('click', (e)=>{
             let el = e.target;
             
@@ -1110,6 +1108,20 @@ const ValidateEmptyFields = {
                 e.preventDefault();
             };
         };
+    },
+    allUsersFields(e) {
+        const items = document.querySelectorAll('.admin-name input, .admin-email input');
+        const message = document.createElement('div');
+        message.classList.add('messages', 'error');
+
+        for(let item of items) {
+            if(item.value == '') {
+                message.innerHTML = "Por favor, preencha todos os campos!";
+                document.querySelector('body').append(message);
+                e.preventDefault();
+                return;
+            }
+        }
     }
 }
 

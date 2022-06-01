@@ -14,7 +14,11 @@
             <span class="detail-title">Criar Usuário</span>
 
             <div class="buttons">
-                <button class="edit-button admin-button" type="submit">Salvar</button>
+                <button 
+                    class="edit-button admin-button" 
+                    type="submit"
+                    onclick="ValidateEmptyFields.allUsersFields(event)"
+                >Salvar</button>
 
                 <a class="cancel-button" href="/admin/users">Cancelar</a>
             </div>

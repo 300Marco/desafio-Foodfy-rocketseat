@@ -30,8 +30,65 @@ async function edit(req, res, next) {
     };
 }
 
+// async function post(req, res, next) {
+//     try {
+//         const data = req.body;
+
+//         if(data.is_admin) {
+//             data.is_admin = true;
+//         } else {
+//             data.is_admin = false;
+//         };
+
+//         const { userId: id } = req.session;
+//         const user = await AdminUser.findOne({ where: {id} });
+
+//         // checar se todos os campos estão preenchidos
+//         const keys = Object.keys(req.body);
+
+//         for(key of keys) {
+//             if(req.body[key] == "" && key != 'is_admin') {
+//                 return res.render('adminUsers/create', {
+//                     user_data: req.body,
+//                     user,
+//                     error: "Por favor, preencha todos os campos"
+//                 });
+//             };
+//         };
+
+//         // Checar se usuário já existe [email]
+//         let { email } = req.body;
+
+//         req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+//         email = emailFieldFormatting(email);
+//         req.body.email = emailFieldFormatting(req.body.email);
+
+//         const findUser = await AdminUser.findOne({ where: {email} });
+
+//         if(findUser) return res.render('adminUsers/create', {
+//             user_data: data,
+//             user,
+//             error: "Email já cadastrado"
+//         });
+
+//         next();
+//     } catch(err) {
+//         console.error(err);
+//         return res.render('adminUsers/not-found');
+//     };
+// }
 async function post(req, res, next) {
     try {
+        // checar se todos os campos estão preenchidos
+        const keys = Object.keys(req.body);
+
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'is_admin') {
+                return res.send("Por favor, preencha todos os campos!");
+            };
+        };
+
+        // Validate existing user
         const data = req.body;
 
         if(data.is_admin) {
@@ -42,19 +99,6 @@ async function post(req, res, next) {
 
         const { userId: id } = req.session;
         const user = await AdminUser.findOne({ where: {id} });
-
-        // checar se todos os campos estão preenchidos
-        const keys = Object.keys(req.body);
-
-        for(key of keys) {
-            if(req.body[key] == "" && key != 'is_admin') {
-                return res.render('adminUsers/create', {
-                    user_data: req.body,
-                    user,
-                    error: "Por favor, preencha todos os campos"
-                });
-            };
-        };
 
         // Checar se usuário já existe [email]
         let { email } = req.body;
@@ -80,6 +124,16 @@ async function post(req, res, next) {
 
 async function put(req, res, next) {
     try {
+        // checar se todos os campos estão preenchidos
+        const keys = Object.keys(req.body);
+
+        for(key of keys) {
+            if(req.body[key] == "" && key != 'is_admin') {
+                return res.send("Por favor, preencha todos os campos!");
+            };
+        };
+
+        // Validate existing user
         if(req.body.is_admin) {
             req.body.is_admin = true;
         } else {
@@ -88,19 +142,6 @@ async function put(req, res, next) {
 
         const { userId: id } = req.session;
         const user = await AdminUser.findOne({ where: {id} });
-
-        // checar se todos os campos estão preenchidos
-        const keys = Object.keys(req.body);
-
-        for(key of keys) {
-            if(req.body[key] == "" && key != 'is_admin') {
-                return res.render('adminUsers/edit', {
-                    user_data: req.body,
-                    user,
-                    error: "Por favor, preencha todos os campos"
-                });
-            };
-        };
 
         let { email } = req.body;
 
