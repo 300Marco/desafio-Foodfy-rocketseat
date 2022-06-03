@@ -18,20 +18,24 @@ module.exports = {
             console.error(err);
         };
     },
-    chefsSelectOptions() {
+    async chefsSelectOptions() {
         try {
-            return db.query(`SELECT name, id FROM chefs`);
+            const results = await db.query(`SELECT name, id FROM chefs`);
+
+            return results.rows;
         } catch(err) {
             console.error(err);
         };
     },
-    files(id) {
+    async files(id) {
         try {
-            return db.query(`
+            const results = await db.query(`
                 SELECT files.*
                 FROM files
                 LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
                 WHERE recipe_files.recipe_id = $1`, [id]);
+            
+            return results.rows;
         } catch(err) {
             console.error(err);
         };
