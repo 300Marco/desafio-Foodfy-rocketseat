@@ -2,23 +2,75 @@ const db = require('../../config/db');
 
 function find(filters, table) {
     try {
-        let query = `SELECT * FROM ${table}`;
+        let query = '';
+        if(table == 'recipes') {
+            if(filters) {
+                // page details
+                let id = filters.where.id;
+                filters = undefined;
+                query = `
+                    SELECT ${table}.*, chefs.name
+                    FROM ${table}
+                    LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                    WHERE recipes.id = ${id}
+                `;
+                console.log('aqui1');
+            } else {
+                // page Home
+                query = `
+                    SELECT ${table}.*, chefs.name AS chefs_name 
+                    FROM ${table}
+                    LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                    GROUP BY ${table}.id, chefs.name LIMIT 6 OFFSET 0;
+                `;
+                console.log('aqui2');
+            };
+        } else {
+            query = `SELECT * FROM ${table}`;
+            console.log('aqui3')
+        };
+        
+        // let query = `SELECT * FROM ${table}`;
 
-        Object.keys(filters).map(key => {
-            query = `${query}
-                ${key}
-            `;
-
-            Object.keys(filters[key]).map(field => {
-                query = `${query} ${field} = '${filters[key][field]}'`
+        if(filters) {
+            Object.keys(filters).map(key => {
+                query = `${query}
+                    ${key}
+                `;
+    
+                Object.keys(filters[key]).map(field => {
+                    query = `${query} ${field} = '${filters[key][field]}'`
+                });
             });
-        });
+        };
+        console.log('aqui4');
 
         return db.query(query);
     } catch (err) {
         console.error(err);
     };
 }
+// function find(filters, table) {
+//     try {
+//         let query = `SELECT * FROM ${table}`;
+
+//         if(filters) {
+//             Object.keys(filters).map(key => {
+//                 query = `${query}
+//                     ${key}
+//                 `;
+    
+//                 Object.keys(filters[key]).map(field => {
+//                     query = `${query} ${field} = '${filters[key][field]}'`
+//                 });
+//             });
+//         };
+
+//         return db.query(query);
+//     } catch (err) {
+//         console.error(err);
+//     };
+// }
 
 const Base = {
     init({ table }) {
@@ -26,9 +78,9 @@ const Base = {
 
         this.table = table;
 
-        return this
+        return this;
     },
-    async findAll() {
+    async findAll(filters) {
         const results = await find(filters, this.table);
         
         return results.rows;
