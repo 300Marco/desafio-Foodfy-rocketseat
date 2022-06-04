@@ -80,8 +80,8 @@ module.exports = {
     },
     async create(req, res) {
         try {
-            const results = await AdminRecipe.chefsSelectOptions();
-            const options = results.rows;
+            const options = await AdminRecipe.chefsSelectOptions();
+            // const options = results.rows;
 
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
@@ -174,25 +174,49 @@ module.exports = {
     },
     async post(req, res) {
         try {
-            const results = await AdminRecipe.create(req.body);
-            const recipeId = results.rows[0].id;
+            let { chef, title, ingredients, preparation, information } = req.body;
 
-            const filesPromise = req.files.map(file => File.create({...file, recipeId}));
-            await Promise.all(filesPromise);
+            const recipeId = await AdminRecipe.create({
+                chef_id: chef,
+                title,
+                ingredients,
+                preparation,
+                information,
+                user_id: req.session.userId
+            });
+
+            const filesPromise = req.files.map(file => File.create({
+                name: file.filename,
+                path: file.path
+            }));
+            const filesId = await Promise.all(filesPromise);
+
+            const recipeFiles = filesId.map(id => AdminRecipe.create({
+                recipe_id: recipeId,
+                file_id: id
+            }));
 
             // get recipe and image
             // Pulling created recipe data, to render page with success message
-            let recipeResults = await AdminRecipe.find(recipeId);
-            const recipe = recipeResults.rows[0];
+            let recipe = await AdminRecipe.find(recipeId);
+            // const recipe = recipeResults.rows[0];
+            // let recipeResults = await AdminRecipe.find(recipeId);
+            // const recipe = recipeResults.rows[0];
 
-            let newData = {
-                ...recipe,
-                information: recipe.information.replace(/[\n]/g, "<br>")
-            };
+            // let newData = recipe;
+            // if(recipe.information != ) {
+                // newData = {
+                //     ...recipe,
+                //     // information: recipe.information.replace(/[\n]/g, "<br>")
+                // };
+            // }
+            console.log(recipe);
+            // console.log(newData);
 
-            recipeResults = await AdminRecipe.files(recipe.id);
-            const files = recipeResults.rows.map(file => ({
-                ...file,
+            let files = await AdminRecipe.files(recipe.id);
+            files = files.map(file => ({
+                name: file.filename,
+                path: file.path,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
@@ -204,7 +228,8 @@ module.exports = {
              const isUserRecipes = recipe.user_id == id;
 
             return res.render('adminRecipes/details', {
-                recipe: newData,
+                // recipe: newData,
+                recipe,
                 files,
                 user,
                 isUserRecipes,

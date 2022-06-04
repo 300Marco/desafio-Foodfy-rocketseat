@@ -99,6 +99,29 @@ const Base = {
             console.error(err);
         };
     },
+    // async create(fields) { // example: User.create({ name: 'Marco', age: 25 })
+    //     try {
+    //         let keys = [],
+    //             values = [];
+
+    //         Object.keys(fields).map(key => {
+    //             keys.push(key);
+    //             values.push(fields[key]);
+    //         });
+
+    //         const query = `
+    //             INSERT INTO ${this.table} (
+    //                 ${keys.join(',')}
+    //             ) VALUES (${values.join(',')})
+    //             RETURNING id
+    //         `;
+
+    //         const results = await db.query(query);
+    //         return results.rows[0].id;
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     async create(fields) { // example: User.create({ name: 'Marco', age: 25 })
         try {
             let keys = [],
@@ -106,9 +129,20 @@ const Base = {
 
             Object.keys(fields).map(key => {
                 keys.push(key);
-                values.push(fields[key]);
-            });
+                if(key == 'ingredients') {
+                    values.push(`'{${fields[key]}}'`);
+                } else if(key == 'preparation') {
+                    values.push(`'{${fields[key]}}'`);
+                } else {
+                    values.push(`'${fields[key]}'`);
+                }
 
+                
+                if(key == 'file_id' || key == 'recipe_id') {
+                    this.table = 'recipe_files'
+                }
+            });
+            
             const query = `
                 INSERT INTO ${this.table} (
                     ${keys.join(',')}
