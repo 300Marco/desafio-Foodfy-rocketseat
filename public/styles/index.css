@@ -465,6 +465,7 @@ footer span {
 .recipe-info ul li {
     color: var(--black-about);
     line-height: 25px;
+    padding-bottom: 10px;
     list-style: disc;
     margin-left: 18px;
 }
@@ -629,6 +630,7 @@ footer span {
 .recipe-info-admin ul li {
     margin: 0;
     list-style: none;
+    padding-bottom: 10px;
 }
 
 /* ========== RECIPES - FIELDS ========== */

@@ -2,6 +2,7 @@
 const AdminUser = require('../models/AdminUser');
 const mailer = require('../../lib/mailer');
 const { sendAccessEmail } = require('../../lib/utils');
+const { hash } = require('bcryptjs');
 
 module.exports = {
     async list(req, res) {
@@ -35,21 +36,34 @@ module.exports = {
     },
     async post(req, res) {
         try {
+            let { name, email, is_admin } = req.body;
+
             let random = Math.random().toString(36).substring(0, 8);
             let password = random.replace(/^../, "");
 
             await mailer.sendMail({
-                to: req.body.email,
+                to: email,
                 from: 'no-reply@foodfy.com.br',
                 subject: 'Acesso ao Foodfy',
-                html: sendAccessEmail(req.body.name, password),
+                html: sendAccessEmail(name, password),
             });
 
-            await AdminUser.create(req.body, password);
+            password = await hash(password, 8);
+
+            await AdminUser.create({
+                name,
+                email,
+                password,
+                is_admin
+            });
             
             // Success message when registering
-            let results = await AdminUser.all();
-            const users = results.rows;
+            let users = await AdminUser.findAll();
+            // const users = results.rows;
+
+            if(!users) return res.render('/admin/users', {
+                error: "Nenhum usuário encontrado"
+            });
 
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
