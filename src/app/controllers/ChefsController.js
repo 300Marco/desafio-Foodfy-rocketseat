@@ -141,42 +141,71 @@ module.exports = {
     async post(req, res) {
         try {
             // Create Image
-            const filesPromise = req.files.map(file => FileAdminChef.create({ ...file }));
-            let results = await filesPromise[0];
-            const fileId = results.rows[0].id;
+            const filesPromise = req.files.map(file => FileAdminChef.create({ 
+                name: file.filename,
+                path: file.path
+            }));
+
+            const filesId = await Promise.all(filesPromise);
+            // let results = await filesPromise[0];
+            // const fileId = results.rows[0].id;
+
 
             // create chef
-            results = await AdminChef.create(req.body, fileId);
-            const chefId = results.rows[0].id;
+            const chefId = await AdminChef.create({
+                name: req.body.name,
+                file_id: filesId
+            });
+
+
+            // renderizar front end
 
             // get chef and recipes
             // Pulling chef data and chef recipes, to render the page with success message
-            results = await AdminChef.find(chefId);
-            const chef = results.rows;
+            const chef = await AdminChef.find(chefId);
 
             if(!chef) return res.render('adminChefs/not-found');
 
             // get image avatar
             async function getImageAvatar(chefId) {
-                let results = await AdminChef.files(chefId);
-                const files = results.rows.map(
+                let files = await AdminChef.files(chefId);
+                files = files.map(
                     file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
                 );
 
                 return files[0];
             };
 
-            const avatarPromise = chef.map(async avatar => {
-                avatar.img = await getImageAvatar(avatar.id);
+            chef.img = await getImageAvatar(chef.id);
 
-                return avatar;
-            });
+            // const avatarPromise = chef.map(async avatar => {
+            //     avatar.img = await getImageAvatar(avatar.id);
 
-            const lastAvatarAdded = await Promise.all(avatarPromise);
+            //     return avatar;
+            // });
+
+            // const lastAvatarAdded = await Promise.all(avatarPromise);
 
             // get image Recipes
-            results = await AdminChef.findRecipe(chefId);
-            const recipes = results.rows;
+            const recipes = await AdminChef.findRecipe(chefId);
+            // recipes = results.rows;
+
+            // async function getImageRecipe(recipeId) {
+            //     let files = await AdminChef.filesRecipe(recipeId);
+            //     files = files.map(
+            //         file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            //     );
+
+            //     return files[0];
+            // };
+
+            // const recipePromise = recipes.map(async recipe => {
+            //     recipe.img = await getImageRecipe(recipe.id);
+
+            //     return recipe;
+            // });
+
+            // const lastRecipeAdded = await Promise.all(recipePromise);
 
             let recipesCount = 0;
 
@@ -188,8 +217,8 @@ module.exports = {
             const user = await AdminUser.findOne({ where: {id} });
     
             return res.render(`adminChefs/details`, {
-                chef: lastAvatarAdded,
-                recipesCount, 
+                chef,
+                recipesCount,
                 user,
                 success: "Chef criado com sucesso!"
             });
