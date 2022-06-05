@@ -120,8 +120,8 @@ async function update(req, res, next) {
         };
 
         // Check if email already exists
-        const allUsers = await AdminUser.all();
-        const users = allUsers.rows;
+        const allUsers = await AdminUser.findAll();
+        const users = allUsers;
         
         for(let userEmail of users) {
             if(email == userEmail.email && email != user.email)
