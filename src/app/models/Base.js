@@ -163,7 +163,13 @@ const Base = {
             let update = [];
 
             Object.keys(fields).map(key => {
-                const line = `${key} = '${fields[key]}'`;
+                let line = `${key} = '${fields[key]}'`;
+                if(line.includes('ingredients')) {
+                    line = `${key} = '{${fields[key]}}'`;
+                } else if(line.includes('preparation')) {
+                    line = `${key} = '{${fields[key]}}'`;
+                }
+
                 update.push(line);
             });
 

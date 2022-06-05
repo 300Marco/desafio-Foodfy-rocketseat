@@ -250,44 +250,80 @@ module.exports = {
     },
     async put(req, res) {
         try {
-            // remove image from database
-            if(req.body.removed_files) {
+            if(req.body.removed_files != '') {
                 const removedFiles = req.body.removed_files.split(',');
                 const lastIndex = removedFiles.length - 1;
                 removedFiles.splice(lastIndex, 1);
 
-                const removedFilesPromise = removedFiles.map(id => File.delete(id));
+                const removedFilesPromise = removedFiles.map(fileId => File.deleteRecipeFiles(fileId));
+
                 await Promise.all(removedFilesPromise);
             };
+            // return
+
+            // remove image from database
+            // if(req.body.removed_files) {
+            //     const removedFiles = req.body.removed_files.split(',');
+            //     const lastIndex = removedFiles.length - 1;
+            //     removedFiles.splice(lastIndex, 1);
+
+            //     const removedFilesPromise = removedFiles.map(id => File.delete(id));
+            //     await Promise.all(removedFilesPromise);
+            // };
 
             // get new edit images
             if(req.files.length != 0) {
                 const oldFiles = await AdminRecipe.files(req.body.id);
-                const totalFiles = oldFiles.rows.length + req.files.length;
+                const totalFiles = oldFiles.length + req.files.length;
 
+                
+                // console.log(totalFiles);
+                // return
+                
+                let filesId = '';
                 if(totalFiles <= 5) {
                     const newFilesPromise = req.files.map(file => 
-                        File.create({...file, recipeId: req.body.id}));
-        
-                    await Promise.all(newFilesPromise);
+                        File.create({
+                            name: file.filename,
+                            path: file.path
+                    }));
+                    filesId = await Promise.all(newFilesPromise);
                 };
+
+                filesId.map(fileId => File.createRecipeFiles({
+                    recipeId: req.body.id,
+                    fileId
+                }));
+
+                // if(totalFiles <= 5) {
+                //     const newFilesPromise = req.files.map(file => 
+                //         File.create({...file, recipeId: req.body.id}));
+        
+                //     await Promise.all(newFilesPromise);
+                // };
             };
 
-            await AdminRecipe.update(req.body);
+            await AdminRecipe.update(req.body.id, {
+                chef_id: req.body.chef,
+                title: req.body.title,
+                ingredients: req.body.ingredients,
+                preparation: req.body.preparation,
+                information: req.body.information
+            });
 
             // get recipe and image
             // Pulling created recipe data, to render page with success message
-            let results = await AdminRecipe.find(req.body.id);
-            const recipe = results.rows[0];
+            let recipe = await AdminRecipe.find(req.body.id);
 
-            let newData = {
-                ...req.body,
-                chefs_name: recipe.chefs_name,
-                information: req.body.information.replace(/[\n]/g, "<br>")
-            };
+            if(!recipe) return res.render('adminRecipes/not-found');
+            // let newData = {
+            //     ...req.body,
+            //     chefs_name: recipe.chefs_name,
+            //     information: req.body.information.replace(/[\n]/g, "<br>")
+            // };
 
-            results = await AdminRecipe.files(recipe.id);
-            const files = results.rows.map(file => ({
+            let files = await AdminRecipe.files(recipe.id);
+            files = files.map(file => ({
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
@@ -300,7 +336,7 @@ module.exports = {
             const isUserRecipes = recipe.user_id == id;
 
             return res.render('adminRecipes/details', {
-                recipe: newData,
+                recipe,
                 files,
                 user,
                 isUserRecipes,
