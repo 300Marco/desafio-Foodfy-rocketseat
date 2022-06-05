@@ -4,10 +4,9 @@ const Recipe = require('../models/Recipe');
 module.exports = {
     async index(req, res) {
         try {
-            const recipes = await Recipe.findAll();
+            let recipes = await Recipe.findAll();
 
-            // let results = await Recipe.all();
-            // let recipes = results.rows;
+            recipes = recipes.slice(0, 6);
 
             async function getImage(recipeId) {
                 let files = await Recipe.files(recipeId);
