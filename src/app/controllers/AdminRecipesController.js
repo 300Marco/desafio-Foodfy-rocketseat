@@ -174,6 +174,12 @@ module.exports = {
     },
     async post(req, res) {
         try {
+            const filesPromise = req.files.map(file => File.create({
+                name: file.filename,
+                path: file.path
+            }));
+
+
             let { chef, title, ingredients, preparation, information } = req.body;
 
             const recipeId = await AdminRecipe.create({
@@ -185,15 +191,18 @@ module.exports = {
                 user_id: req.session.userId
             });
 
-            const filesPromise = req.files.map(file => File.create({
-                name: file.filename,
-                path: file.path
-            }));
             const filesId = await Promise.all(filesPromise);
 
-            const recipeFiles = filesId.map(id => AdminRecipe.create({
-                recipe_id: recipeId,
-                file_id: id
+            // for(let fileId of filesId) {
+            //     File.createRecipeFiles({
+            //         recipeId,
+            //         fileId
+            //     });
+            // };
+
+            filesId.map(fileId => File.createRecipeFiles({
+                recipeId,
+                fileId
             }));
 
             // get recipe and image
@@ -207,10 +216,9 @@ module.exports = {
             // if(recipe.information != ) {
                 // newData = {
                 //     ...recipe,
-                //     // information: recipe.information.replace(/[\n]/g, "<br>")
+            recipe.information = recipe.information.replace(/[\n]/g, "<br>");
                 // };
             // }
-            console.log(recipe);
             // console.log(newData);
 
             let files = await AdminRecipe.files(recipe.id);
@@ -220,12 +228,12 @@ module.exports = {
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
-             // get id of logged in user
-             const { userId: id } = req.session;
-             const user = await AdminUser.findOne({ where: {id} });
- 
-             // Check if ID matches
-             const isUserRecipes = recipe.user_id == id;
+            // get id of logged in user
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+
+            // Check if ID matches
+            const isUserRecipes = recipe.user_id == id;
 
             return res.render('adminRecipes/details', {
                 // recipe: newData,

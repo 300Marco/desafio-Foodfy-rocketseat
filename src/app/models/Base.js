@@ -14,20 +14,27 @@ function find(filters, table) {
                     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
                     WHERE recipes.id = ${id}
                 `;
-                console.log('aqui1');
+                // console.log('aqui1');
             } else {
                 // page Home
+                // query = `
+                //     SELECT ${table}.*, chefs.name AS chefs_name 
+                //     FROM ${table}
+                //     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+                //     GROUP BY ${table}.id, chefs.name LIMIT 6 OFFSET 0;
+                // `;
+
+
                 query = `
                     SELECT ${table}.*, chefs.name AS chefs_name 
                     FROM ${table}
                     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-                    GROUP BY ${table}.id, chefs.name LIMIT 6 OFFSET 0;
+                    ORDER BY created_at DESC
                 `;
-                console.log('aqui2');
             };
         } else {
             query = `SELECT * FROM ${table}`;
-            console.log('aqui3')
+            // console.log('aqui3')
         };
         
         // let query = `SELECT * FROM ${table}`;
@@ -43,7 +50,7 @@ function find(filters, table) {
                 });
             });
         };
-        console.log('aqui4');
+        // console.log('aqui4');
 
         return db.query(query);
     } catch (err) {
@@ -135,12 +142,7 @@ const Base = {
                     values.push(`'{${fields[key]}}'`);
                 } else {
                     values.push(`'${fields[key]}'`);
-                }
-
-                
-                if(key == 'file_id' || key == 'recipe_id') {
-                    this.table = 'recipe_files'
-                }
+                };
             });
             
             const query = `
@@ -152,7 +154,7 @@ const Base = {
 
             const results = await db.query(query);
             return results.rows[0].id;
-        } catch (err) {
+        } catch(err) {
             console.error(err);
         };
     },
