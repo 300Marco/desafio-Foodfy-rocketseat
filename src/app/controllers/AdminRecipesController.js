@@ -1,6 +1,7 @@
 const AdminRecipe = require('../models/AdminRecipe');
 const File = require('../models/File');
-
+const { unlinkSync } = require('fs');
+ 
 const AdminUser = require('../models/AdminUser');
 
 module.exports = {
@@ -8,8 +9,7 @@ module.exports = {
         try {
             const { userId: id } = req.session;
 
-            let results = await AdminRecipe.allUserRecipes(id);
-            const recipes = results.rows;
+            let recipes = await AdminRecipe.allUserRecipes(id);
 
             if(!recipes) return res.render('adminRecipes/userRecipe', {
                 error: "Desculpe, não encontramos nenhuma receita!"
@@ -275,10 +275,6 @@ module.exports = {
             if(req.files.length != 0) {
                 const oldFiles = await AdminRecipe.files(req.body.id);
                 const totalFiles = oldFiles.length + req.files.length;
-
-                
-                // console.log(totalFiles);
-                // return
                 
                 let filesId = '';
                 if(totalFiles <= 5) {
@@ -349,14 +345,50 @@ module.exports = {
     },
     async delete(req, res) {
         try {
+            let files = await AdminRecipe.files(req.body.id);
+
             await AdminRecipe.delete(req.body.id);
 
-            let { recipes, user } = req.data;
+            files.map(file => {
+                try {
+                    File.delete(file.id);
+                    unlinkSync(file.path);
+                } catch(err) {
+                    console.error(err);
+                };
+            });
 
-            recipes = recipes.filter((recipe) => recipe.id != req.body.id);
+            // get recipe and image
+            // Pulling the data from the created recipes, to render the page with a success message
+            const { userId: id } = req.session;
+            let recipes = await AdminRecipe.allUserRecipes(id);
+
+            if(!recipes) return res.render('adminRecipes/userRecipe', {
+                error: "Desculpe, não encontramos nenhuma receita!"
+            });
+
+            async function getImage(recipeId) {
+                let files = await AdminRecipe.files(recipeId);
+                files = files.map(
+                    file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                );
+
+                return files[0];
+            };
+
+            const recipesPromise = recipes.map(async recipe => {
+                recipe.img = await getImage(recipe.id);
+
+                return recipe;
+            });
+
+            const lastAdded = await Promise.all(recipesPromise);
+
+            // get logged in user
+            const user = await AdminUser.findOne({ where: {id} });
             
             return res.render('adminRecipes/index', {
-                recipes,
+                recipes: lastAdded,
                 user,
                 success: "Receita deletada com sucesso!"
             });

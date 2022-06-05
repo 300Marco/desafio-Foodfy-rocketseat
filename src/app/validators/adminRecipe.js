@@ -1,6 +1,3 @@
-const AdminUser = require('../models/AdminUser');
-const AdminRecipe = require('../models/AdminRecipe');
-
 const fs = require('fs');
 
 function titleFieldFormatting(text) {
@@ -375,46 +372,7 @@ async function put(req, res, next) {
     };
 }
 
-async function removeRecipe(req, res, next) {
-    try {
-        let results = await AdminRecipe.all();
-        const recipes = results.rows;
-
-        // get image
-        async function getImage(recipeId) {
-            let results = await AdminRecipe.files(recipeId);
-            const files = results.rows.map(
-                file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
-            );
-
-            return files[0];
-        };
-
-        const recipesPromise = recipes.map(async recipe => {
-            recipe.img = await getImage(recipe.id);
-
-            return recipe;
-        });
-
-        const lastAdded = await Promise.all(recipesPromise);
-
-        const { userId: id } = req.session;
-        const user = await AdminUser.findOne({ where: {id} });
-
-        req.data = {
-            recipes: lastAdded,
-            user
-        };
-
-        next();
-    } catch(err) {
-        console.error(err);
-        return res.render('adminUsers/not-found');
-    };
-}
-
 module.exports = {
     post,
-    put,
-    removeRecipe
+    put
 };
