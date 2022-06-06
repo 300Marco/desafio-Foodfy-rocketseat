@@ -5,13 +5,25 @@ Base.init({ table:'chefs' });
 
 module.exports = {
     ...Base,
+    // async chefRecipes(id) {
+    //     try {
+    //         const results = await db.query(`
+    //             SELECT chefs.*, recipes.title, recipes.id AS
+    //             recipes_id
+    //             FROM chefs
+    //             LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
+    //             WHERE chefs.id = $1`, [id]);
+        
+    //             return results.rows;
+    //         } catch (err) {
+    //         console.error(err);
+    //     };
+    // },
     async chefRecipes(id) {
         try {
             const results = await db.query(`
-                SELECT chefs.*, recipes.title, recipes.id AS
-                recipes_id
-                FROM chefs
-                LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
+                SELECT * FROM recipes 
+                LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
                 WHERE chefs.id = $1`, [id]);
         
                 return results.rows;
@@ -59,15 +71,15 @@ module.exports = {
         } catch(err) {
             console.error(err);
         };
-    },
-    delete(id) {
-        try {
-            return db.query(`
-                DELETE FROM chefs WHERE id = $1`, [id]);  
-        } catch (err) {
-            console.error(err);
-        };
     }
+    // delete(id) {
+    //     try {
+    //         return db.query(`
+    //             DELETE FROM chefs WHERE id = $1`, [id]);  
+    //     } catch (err) {
+    //         console.error(err);
+    //     };
+    // }
 }
 
 // const db = require('../../config/db');

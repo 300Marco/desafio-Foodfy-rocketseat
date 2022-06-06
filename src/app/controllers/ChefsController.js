@@ -133,7 +133,8 @@ module.exports = {
             }));
 
             // middleware
-            const user = req.data;
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
             
             return res.render('adminChefs/edit', { chef, files, user });
         } catch(err) {
@@ -400,44 +401,111 @@ module.exports = {
     },
     async delete(req, res) {
         try {
-            const chef = await AdminChef.chefRecipes(req.body.id);
-            // const chef = results.rows;
+            const files = await AdminChef.files(req.body.id);
 
-            if(!chef) return res.render('adminChefs/not-found');
+            const chefRecipes = await AdminChef.chefRecipes(req.body.id);
 
-            const [ {title, recipes_id, file_id} ] = chef;
-
-            if(title == null && recipes_id == null) {
+            if(chefRecipes.length == 0) {
                 await AdminChef.delete(req.body.id);
-                await FileAdminChef.delete(file_id);
                 
-                let { chefs, user } = req.data;
-                
-                chefs = chefs.filter((chef) => chef.id != req.body.id);
+                files.map(file => {
+                    try {
+                        File.delete(file.file_id);
+                        unlinkSync(file.path);
+                    } catch(err) {
+                        console.error(err);
+                    };
+                });
 
+                // busca dados para renderizar
+                let chefs = await AdminChef.findAll();
+
+                if(!chefs) return res.render('adminChefs/not-found');
+    
+                async function getImageAvatar(chefId) {
+                    let files = await AdminChef.files(chefId);
+                    files = files.map(
+                        file => `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+                    );
+        
+                    return files[0];
+                };
+        
+                const chefsPromise = chefs.map(async chef => {
+                    chef.img = await getImageAvatar(chef.id);
+        
+                    return chef;
+                });
+    
+                const lastAdded = await Promise.all(chefsPromise);
+    
+                // get user
+                const { userId: id } = req.session;
+                const user = await AdminUser.findOne({ where: {id} });
+    
                 return res.render('adminChefs/index', {
-                    chefs,
+                    chefs: lastAdded,
                     user,
                     success: "Chef deletado com sucesso!"
                 });
             } else {
-                let results = await AdminChef.find(req.body.id);
-                const chef = results.rows[0];
+                let chef = await AdminChef.find(req.body.id);
 
-                // get images
-                results = await AdminChef.files(chef.id);
-                let files = results.rows;
+                let files = await AdminChef.files(chef.id);
                 files = files.map(file => ({
                     ...file,
                     src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
                 }));
-                
+
+                const { userId: id } = req.session;
+                const user = await AdminUser.findOne({ where: {id} });
+
                 return res.render('adminChefs/edit', {
                     chef,
                     files,
-                    error: "Chefs que possuem receitas, não podem ser deletados!"
+                    user,
+                    error: 'Chefs que possuem receitas, não podem ser deletados!'
                 });
             };
+
+            // const chef = await AdminChef.chefRecipes(req.body.id);
+            // const chef = results.rows;
+
+            // if(!chef) return res.render('adminChefs/not-found');
+
+            // const [ {title, recipes_id, file_id} ] = chef;
+
+            // if(title == null && recipes_id == null) {
+            //     await AdminChef.delete(req.body.id);
+            //     await FileAdminChef.delete(file_id);
+                
+            //     let { chefs, user } = req.data;
+                
+            //     chefs = chefs.filter((chef) => chef.id != req.body.id);
+
+            //     return res.render('adminChefs/index', {
+            //         chefs,
+            //         user,
+            //         success: "Chef deletado com sucesso!"
+            //     });
+            // } else {
+            //     let results = await AdminChef.find(req.body.id);
+            //     const chef = results.rows[0];
+
+            //     // get images
+            //     results = await AdminChef.files(chef.id);
+            //     let files = results.rows;
+            //     files = files.map(file => ({
+            //         ...file,
+            //         src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
+            //     }));
+                
+            //     return res.render('adminChefs/edit', {
+            //         chef,
+            //         files,
+            //         error: "Chefs que possuem receitas, não podem ser deletados!"
+            //     });
+            // };
         } catch (err) {
             console.error(err);
             return res.render('adminUsers/not-found');
