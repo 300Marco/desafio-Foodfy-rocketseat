@@ -5,15 +5,17 @@ Base.init({ table:'chefs' });
 
 module.exports = {
     ...Base,
-    chefRecipes(id) {
+    async chefRecipes(id) {
         try {
-            return db.query(`
+            const results = await db.query(`
                 SELECT chefs.*, recipes.title, recipes.id AS
                 recipes_id
                 FROM chefs
                 LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
                 WHERE chefs.id = $1`, [id]);
-        } catch (err) {
+        
+                return results.rows;
+            } catch (err) {
             console.error(err);
         };
     },
