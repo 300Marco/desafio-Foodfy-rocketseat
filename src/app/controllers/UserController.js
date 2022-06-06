@@ -1,8 +1,11 @@
 // const AdminChef = require('../models/AdminChef');
 const AdminUser = require('../models/AdminUser');
+const AdminRecipe = require('../models/AdminRecipe');
+const File = require('../models/File');
 const mailer = require('../../lib/mailer');
 const { sendAccessEmail } = require('../../lib/utils');
 const { hash } = require('bcryptjs');
+const { unlinkSync } = require('fs');
 
 module.exports = {
     async list(req, res) {
@@ -10,12 +13,13 @@ module.exports = {
             let users = await AdminUser.findAll();
             // const users = results.rows;
 
-            if(!users) return res.render('/admin/users', {
-                error: "Nenhum usuário encontrado"
-            });
-
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
+
+            if(!users) return res.render('/admin/users', {
+                user,
+                error: "Nenhum usuário encontrado"
+            });
 
             return res.render('adminUsers/list', { users, user });
         } catch(err) {
@@ -41,12 +45,12 @@ module.exports = {
             let random = Math.random().toString(36).substring(0, 8);
             let password = random.replace(/^../, "");
 
-            await mailer.sendMail({
-                to: email,
-                from: 'no-reply@foodfy.com.br',
-                subject: 'Acesso ao Foodfy',
-                html: sendAccessEmail(name, password),
-            });
+            // await mailer.sendMail({
+            //     to: email,
+            //     from: 'no-reply@foodfy.com.br',
+            //     subject: 'Acesso ao Foodfy',
+            //     html: sendAccessEmail(name, password),
+            // });
 
             password = await hash(password, 8);
 
@@ -127,6 +131,7 @@ module.exports = {
         try {
             const { userId: id } = req.session;
             const user = await AdminUser.findOne({ where: {id} });
+
             const checkIsUser = req.body.id == req.session.userId;
 
             if(checkIsUser == true) return res.render('adminUsers/edit', {
@@ -135,11 +140,33 @@ module.exports = {
                 error: 'Não é permitido excluir sua própria conta!'
             });
 
-            await AdminUser.delete(req.body.id);
+            // delete files
+            const userId = req.body.id;
+            const recipes = await AdminRecipe.findAll();
+
+            let confirmDelete = false;
+
+            recipes.map( async recipe => {
+                if(recipe.user_id == userId) {
+                    confirmDelete = true;
+                    let files = await AdminRecipe.files(recipe.id);
+                    files = files.map(file => {
+                        File.delete(file.id);
+                        unlinkSync(file.path);
+                    });
+                };
+            });
+
+            if(confirmDelete == true) {
+                await AdminUser.delete(req.body.id);
+            }
             
-            // Error message when deleting
-            let results = await AdminUser.all();
-            const users = results.rows;
+            // Fetch user list, to render next page
+            let users = await AdminUser.findAll();
+
+            if(!users) return res.render('/admin/users', {
+                error: "Nenhum usuário encontrado"
+            });
 
             return res.render(`adminUsers/list`, {
                 users,
@@ -162,8 +189,7 @@ module.exports = {
 
             const checkIsUser = req.body.id == req.session.userId;
 
-            let results = await AdminUser.all();
-            let users = results.rows;
+            let users = await AdminUser.findAll();
 
             if(checkIsUser == true) return res.render('adminUsers/list', {
                 users,
@@ -171,10 +197,32 @@ module.exports = {
                 error: 'Não é permitido excluir sua própria conta!'
             });
 
-            await AdminUser.delete(req.body.id);
+            // delete files
+            const userId = req.body.id;
+            const recipes = await AdminRecipe.findAll();
 
-            results = await AdminUser.all();
-            users = results.rows;
+            let confirmDelete = false;
+
+            recipes.map( async recipe => {
+                if(recipe.user_id == userId) {
+                    confirmDelete = true;
+                    let files = await AdminRecipe.files(recipe.id);
+                    files = files.map(file => {
+                        File.delete(file.id);
+                        unlinkSync(file.path);
+                    });
+                };
+            });
+
+            if(confirmDelete == true) {
+                await AdminUser.delete(req.body.id);
+            } else {
+                await AdminUser.delete(req.body.id);
+            }
+
+            // Fetch user list, to render next page
+            users = await AdminUser.findAll();
+
             if(!users) return res.render('/admin/users', {
                 error: "Nenhum usuário encontrado"
             });
@@ -182,7 +230,7 @@ module.exports = {
             return res.render('adminUsers/list', {
                 users,
                 user,
-                success: 'Usuário deletado com sucesso'
+                success: 'Usuário deletado com sucesso!'
             });
         } catch(err) {
             console.error(err);
