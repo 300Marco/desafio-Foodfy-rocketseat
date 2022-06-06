@@ -322,7 +322,7 @@ module.exports = {
                     path: file.path
                 }));
 
-                file = await Promise.all(filesPromise);
+                let file = await Promise.all(filesPromise);
 
                 let filePromise = file.map(id => AdminChef.update(req.body.id, {
                     file_id: id
