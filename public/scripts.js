@@ -29,7 +29,13 @@ function dynamicNavigationMenu() {
         if(pageLink.includes('/search', /\w/g) && item.href.includes('/recipes')) item.classList.add('active');
 
         if(item.getAttribute('href').includes('/admin')) {
-            if(pageLink.includes('/admin/chefs') && item.href.includes('/admin/chefs')) item.classList.add('admin-active');
+            // if(pageLink.includes('/admin/chefs') && item.href.includes('/admin/chefs')) item.classList.add('admin-active');
+            if(pageLink.includes('/admin/chefs') && item.href.includes('/admin/chefs')) {
+                const logo = document.querySelector('header .title a');
+                logo.href = '/admin/chefs';
+                
+                item.classList.add('admin-active')
+            };
 
             if(pageLink.includes('/admin/recipes') && item.href.includes('/admin/recipes') || pageLink.includes('/admin/user/recipes')) {
                 item.classList.add('admin-active');

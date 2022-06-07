@@ -98,13 +98,13 @@ module.exports = {
 
             if(!recipe) return res.render('adminRecipes/not-found');
 
+            recipe.information = recipe.information.replace(/[\n]/g, "<br>");
+
             let files = await AdminRecipe.files(recipe.id);
             files = files.map(file => ({
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
-
-            recipe.information = recipe.information.replace(/[\n]/g, "<br>");
             
             // get logged in user
             const { userId: id } = req.session;
@@ -116,8 +116,8 @@ module.exports = {
             return res.render('adminRecipes/details', {
                 recipe, 
                 files, 
-                isUserRecipes, 
-                user
+                user,
+                isUserRecipes 
             });
         } catch (err) {
             console.error(err);
@@ -193,13 +193,6 @@ module.exports = {
 
             const filesId = await Promise.all(filesPromise);
 
-            // for(let fileId of filesId) {
-            //     File.createRecipeFiles({
-            //         recipeId,
-            //         fileId
-            //     });
-            // };
-
             filesId.map(fileId => File.createRecipeFiles({
                 recipeId,
                 fileId
@@ -208,6 +201,8 @@ module.exports = {
             // get recipe and image
             // Pulling created recipe data, to render page with success message
             let recipe = await AdminRecipe.find(recipeId);
+
+            if(!recipe) return res.render('adminRecipes/not-found');
             // const recipe = recipeResults.rows[0];
             // let recipeResults = await AdminRecipe.find(recipeId);
             // const recipe = recipeResults.rows[0];
@@ -223,8 +218,9 @@ module.exports = {
 
             let files = await AdminRecipe.files(recipe.id);
             files = files.map(file => ({
-                name: file.filename,
-                path: file.path,
+                // name: file.filename,
+                // path: file.path,
+                ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public', '')}`
             }));
 
