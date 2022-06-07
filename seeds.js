@@ -16,7 +16,8 @@ function emailFieldFormatting(text) {
 let isAdmin = [true, false];
 let usersId = []; // recebe os IDs de usuários
 let totalUsers = 3;
-
+let chefsId = []; // recebe os IDs de usuários
+let totalChefs = 10;
 
 async function createUsers() {
     const users = []; // recebe os dados de usuários
@@ -38,8 +39,46 @@ async function createUsers() {
     usersId = await Promise.all(usersPromise);
 };
 
+async function createChefs() {
+    let files = [];
 
-createUsers();
+    while(files.length < totalChefs) {
+        files.push({
+            name: faker.image.image(),
+            path: `public/assets/images/placeholder.png`
+        });
+    };
+    
+    // const filesPromise = await files.map(file => {
+    //     // console.log(file);
+    // });
+    
+    const filesPromise = await files.map(file => File.create(file));
+    await Promise.all(filesPromise);
+
+    // return
+    
+    const chefs = []; // recebe os dados de usuários
+
+    while(chefs.length < totalChefs) {
+        chefs.push({
+            name: faker.name.findName(),
+            file_id: chefs.length + 1
+            // file_id: chefsId[Math.floor(Math.random() * totalChefs)]
+        });
+    };
+
+    // const chefsPromise = chefs.map(chef => {
+    //     console.log(chef);
+    // });
+    
+    const chefsPromise = chefs.map(chef => AdminChef.create(chef));
+    await Promise.all(chefsPromise);
+};
+
+createChefs();
+
+// createUsers();
 
 
 
