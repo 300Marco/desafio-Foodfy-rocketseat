@@ -211,7 +211,7 @@ module.exports = {
             // if(recipe.information != ) {
                 // newData = {
                 //     ...recipe,
-            recipe.information = recipe.information.replace(/[\n]/g, "<br>");
+            recipe.information = recipe.information.replace(/[\n]/g, "<br>"); // \r<br>\r<br> - duas linhas
                 // };
             // }
             // console.log(newData);

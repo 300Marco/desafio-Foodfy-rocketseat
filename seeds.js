@@ -80,7 +80,7 @@ async function createRecipes(chefs_id, users_id) {
             title: faker.name.findName(),
             ingredients: faker.helpers.arrayElements(['ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients']),
             preparation: faker.helpers.arrayElements(['preparation', 'preparation', 'preparation', 'preparation', 'preparation', 'preparation', 'preparation', 'preparation']),
-            information: faker.lorem.paragraph(Math.ceil(Math.random() * 10)).replace(/\./g, '. <br>')
+            information: faker.lorem.paragraph(Math.ceil(Math.random() * 10)).replace(/\./g, '. \r\n')
         });
     };
     
@@ -124,32 +124,3 @@ async function init() {
 }
 
 init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // estrutura
-// async function createUsers() {
-//     const users = []; // recebe os dados de usuários
-//     const password = await hash('123', 8);
-
-//     while(users.length < 3) {
-//         users.push({
-
-//         });
-//     };
-// }
