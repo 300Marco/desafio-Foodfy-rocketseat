@@ -6,8 +6,9 @@
 }
 
 .messages {
-    padding: 22px 30px;
+    padding: 40px 30px;
     font-size: 1.6rem;
+    font-weight: bold;
     border-radius: 4px;
 
     position: fixed;
