@@ -467,6 +467,17 @@ footer span {
     padding-bottom: 10px;
     list-style: disc;
     margin-left: 18px;
+
+    opacity: 0; 
+    transform: translateY(-10px);
+    animation: slide .4s forwards ease-out;
+}
+
+@keyframes slide {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .recipe-info span {
