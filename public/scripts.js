@@ -289,14 +289,14 @@ const AddIngredient = {
     currentPage: String(location.pathname),
     newField(e) {
         // click
-        if(AddIngredient.currentPage == '/admin/recipes/create') {
-            if(!AddIngredient.inputIngredients.value) return;
-            AddIngredient.createRecipe(AddIngredient.inputIngredients.value);
+        if(this.currentPage == '/admin/recipes/create') {
+            if(!this.inputIngredients.value) return;
+            this.createRecipe(this.inputIngredients.value);
         } else {
-            AddIngredient.createRecipe(AddIngredient.inputIngredients.value);
+            this.createRecipe(this.inputIngredients.value);
         };
 
-        // AddIngredient.createRecipe(AddIngredient.inputIngredients.value);
+        // this.createRecipe(this.inputIngredients.value);
     },
     createInput() {
         const input = document.createElement('input');
@@ -307,8 +307,8 @@ const AddIngredient = {
         return div;
     },
     clearInput() {
-        AddIngredient.inputIngredients.value = "";
-        AddIngredient.inputIngredients.focus();
+        this.inputIngredients.value = "";
+        this.inputIngredients.focus();
     },
     createDeleteButton(div) {
         const icon = document.createElement('span');
@@ -320,8 +320,8 @@ const AddIngredient = {
         div.appendChild(icon);
     },
     createRecipe(textoInput) {
-        const input = AddIngredient.createInput();
-        const div = AddIngredient.createDiv();
+        const input = this.createInput();
+        const div = this.createDiv();
 
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'ingredients[]');
@@ -329,10 +329,10 @@ const AddIngredient = {
 
         div.appendChild(input);
 
-        AddIngredient.boxIngredients.appendChild(div);
-        AddIngredient.clearInput();
+        this.boxIngredients.appendChild(div);
+        this.clearInput();
 
-        AddIngredient.createDeleteButton(div);
+        this.createDeleteButton(div);
     },
     deleteField() {
         // const selectIngredient = document.getElementsByClassName('select-ingredient');
@@ -385,11 +385,11 @@ const AddPreparation = {
     currentPage: String(location.pathname),
     newField(e) {
         // click
-        if(AddPreparation.currentPage == '/admin/recipes/create') {
-            if(!AddPreparation.inputPreparation.value) return;
-            AddPreparation.createRecipe(AddPreparation.inputPreparation.value);
+        if(this.currentPage == '/admin/recipes/create') {
+            if(!this.inputPreparation.value) return;
+            this.createRecipe(this.inputPreparation.value);
         } else {
-            AddPreparation.createRecipe(AddPreparation.inputPreparation.value);
+            this.createRecipe(this.inputPreparation.value);
         };
 
     },
@@ -402,8 +402,8 @@ const AddPreparation = {
         return div;
     },
     clearInput() {
-        AddPreparation.inputPreparation.value = "";
-        AddPreparation.inputPreparation.focus();
+        this.inputPreparation.value = "";
+        this.inputPreparation.focus();
     },
     createDeleteButton(div) {
         const icon = document.createElement('span');
@@ -415,8 +415,8 @@ const AddPreparation = {
         div.appendChild(icon);
     },
     createRecipe(textoInput) {
-        const input = AddPreparation.createInput();
-        const div = AddPreparation.createDiv();
+        const input = this.createInput();
+        const div = this.createDiv();
 
         input.setAttribute('type', 'text');
         input.setAttribute('name', 'preparation[]');
@@ -424,10 +424,10 @@ const AddPreparation = {
 
         div.appendChild(input);
 
-        AddPreparation.boxPreparation.appendChild(div);
-        AddPreparation.clearInput();
+        this.boxPreparation.appendChild(div);
+        this.clearInput();
 
-        AddPreparation.createDeleteButton(div);
+        this.createDeleteButton(div);
     },    
     deleteField() {
         const selectPreparation = document.querySelectorAll('.select-preparation');
@@ -1246,14 +1246,14 @@ const ConfirmDelete = {
     confirmationContainer: document.querySelector('.confirmation-container'),
     openContainer(e) {
         // let cancelButton = document.querySelector('.cancel-delete');
-        ConfirmDelete.confirmationContainer.style.visibility = 'visible';
-        ConfirmDelete.confirmationContainer.style.opacity = 1;
+        this.confirmationContainer.style.visibility = 'visible';
+        this.confirmationContainer.style.opacity = 1;
 
         e.preventDefault();
     },
     cancelDelete(e) {
-        ConfirmDelete.confirmationContainer.style.visibility = 'hidden';
-        ConfirmDelete.confirmationContainer.style.opacity = 0;
+        this.confirmationContainer.style.visibility = 'hidden';
+        this.confirmationContainer.style.opacity = 0;
 
         e.preventDefault();
     }
