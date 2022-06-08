@@ -19,6 +19,12 @@ function fieldFormatting(text) {
     }).join(' ');
 }
 
+function convertToSmallText(func) {
+    return func.replace(/À|Ao|Com|Da|De|Do|Dos|E|Em|Na|Sobre/gi, function (string) {
+        return string.toLowerCase();
+    });
+}
+
 // async function post(req, res, next) {
 //     try {
 //         const fillAllFields = checkAllFields(req.body);
@@ -57,7 +63,7 @@ async function post(req, res, next) {
             return res.send('Por favor, escolha um avatar!');
         };
 
-        req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+        req.body.name = convertToSmallText(fieldFormatting(req.body.name));
 
         next();
     } catch(err) {
@@ -76,7 +82,8 @@ async function put(req, res, next) {
             };
         };
 
-        req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+        req.body.name = convertToSmallText(fieldFormatting(req.body.name));
+
         next();
     } catch(err) {
         console.error(err);

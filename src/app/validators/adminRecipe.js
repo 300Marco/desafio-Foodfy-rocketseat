@@ -12,6 +12,12 @@ function fieldFormatting(text) {
     return text[0].toUpperCase() + text.slice(1).toLowerCase();
 }
 
+function convertToSmallText(func) {
+    return func.replace(/À|Ao|Com|Da|De|Do|Dos|E|Em|Na|Sobre/gi, function (string) {
+        return string.toLowerCase();
+    });
+}
+
 // async function post(req, res, next) {
 //     try {
 //         const { userId: id } = req.session;
@@ -149,7 +155,11 @@ async function post(req, res, next) {
         };
 
         // title field formatting
-        req.body.title = titleFieldFormatting(req.body.title).replace(/De/g, 'de');
+        // req.body.title = titleFieldFormatting(req.body.title).replace(/À|Ao|Com|De|Do|Dos|E|Em|Na|Sobre/gi, function (string) {
+        //     return string.toLowerCase();
+        // });
+
+        req.body.title =  convertToSmallText(titleFieldFormatting(req.body.title));
 
         // field formatting
         let newArrayIngredients = [];
@@ -348,7 +358,10 @@ async function put(req, res, next) {
         // req.body.preparation = req.body.preparation.filter((i) => {return i});
 
         // field formatting
-        req.body.title = titleFieldFormatting(req.body.title).replace(/De/g, 'de');
+        // req.body.title = titleFieldFormatting(req.body.title).replace(/À|Ao|Com|De|Do|Dos|E|Em|Na|Sobre/gi, function (string) {
+        //     return string.toLowerCase();
+        // });
+        req.body.title = convertToSmallText(titleFieldFormatting(req.body.title));
 
         let newArrayIngredients = [];
         for(let ingredient of req.body.ingredients) {

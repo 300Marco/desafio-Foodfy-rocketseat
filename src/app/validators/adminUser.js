@@ -12,6 +12,12 @@ function emailFieldFormatting(text) {
     return text.toLowerCase();
 }
 
+function convertToSmallText(func) {
+    return func.replace(/À|Ao|Com|Da|De|Do|Dos|E|Em|Na|Sobre/gi, function (string) {
+        return string.toLowerCase();
+    });
+}
+
 async function edit(req, res, next) {
     try {
         const id = req.params.id;
@@ -105,7 +111,8 @@ async function post(req, res, next) {
         // Checar se usuário já existe [email]
         let { email } = req.body;
 
-        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        // req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        req.body.name = convertToSmallText(fieldFormatting(req.body.name));
         email = emailFieldFormatting(email);
         req.body.email = emailFieldFormatting(req.body.email);
 
@@ -147,7 +154,8 @@ async function put(req, res, next) {
 
         let { email } = req.body;
 
-        req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        // req.body.name = fieldFormatting(req.body.name).replace(/De/, 'de');
+        req.body.name = convertToSmallText(fieldFormatting(req.body.name));
         email = emailFieldFormatting(email);
         req.body.email = emailFieldFormatting(req.body.email);
 

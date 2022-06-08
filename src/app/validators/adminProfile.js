@@ -26,6 +26,12 @@ function emailFieldFormatting(text) {
     return text.toLowerCase();
 }
 
+function convertToSmallText(func) {
+    return func.replace(/À|Ao|Com|Da|De|Do|Dos|E|Em|Na|Sobre/gi, function (string) {
+        return string.toLowerCase();
+    });
+}
+
 async function edit(req, res, next) {
     try {
         const { userId: id } = req.session; // get session id
@@ -110,7 +116,8 @@ async function update(req, res, next) {
 
         const user = await AdminUser.findOne({ where: {id} });
 
-        req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+        // req.body.name = fieldFormatting(req.body.name).replace(/De/g, 'de');
+        req.body.name = convertToSmallText(fieldFormatting(req.body.name));
         email = emailFieldFormatting(email);
         req.body.email = emailFieldFormatting(email);
 
