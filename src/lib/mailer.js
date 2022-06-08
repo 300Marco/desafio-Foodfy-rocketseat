@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
 
 module.exports = nodemailer.createTransport({
-    host: 'smtp.gmail.com', // colocar o SMTP do Google aqui
-    port: 465, // a porta aqui
-    auth: { // usuário e password fornecidos pelo SMTP do google
-        user: 'casa.testes300@gmail.com',
-        pass: '#))sparta34815461'
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+        user: "a655e65b5b1d96",
+        pass: "377d02665554cc"
     }
 });
+

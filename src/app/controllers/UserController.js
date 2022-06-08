@@ -45,12 +45,12 @@ module.exports = {
             let random = Math.random().toString(36).substring(0, 8);
             let password = random.replace(/^../, "");
 
-            // await mailer.sendMail({
-            //     to: email,
-            //     from: 'no-reply@foodfy.com.br',
-            //     subject: 'Acesso ao Foodfy',
-            //     html: sendAccessEmail(name, password),
-            // });
+            await mailer.sendMail({
+                to: email,
+                from: 'no-reply@foodfy.com.br',
+                subject: 'Acesso ao Foodfy',
+                html: sendAccessEmail(name, password),
+            });
 
             password = await hash(password, 8);
 
@@ -79,6 +79,9 @@ module.exports = {
             });
         } catch(err) {
             console.error(err);
+            const { userId: id } = req.session;
+            const user = await AdminUser.findOne({ where: {id} });
+            
             return res.render(`adminUsers/edit`, {
                 user_data: req.body,
                 user,
