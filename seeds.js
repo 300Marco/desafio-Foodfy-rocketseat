@@ -1,9 +1,7 @@
 const { hash } = require('bcryptjs');
-const { unlinkSync } = require('fs');
 const { faker } = require('@faker-js/faker');
 
 const File = require('./src/app/models/File');
-const FileAdminChef = require('./src/app/models/FileChef');
 const AdminUser = require('./src/app/models/AdminUser');
 const AdminRecipe = require('./src/app/models/AdminRecipe');
 const AdminChef = require('./src/app/models/AdminChef');
@@ -25,21 +23,6 @@ let totalUsers = 3,
     totalChefs = 10,
     totalRecipes = 10,
     totalFiles = 50;
-
-// recipes
-
-// let isAdmin = [true, false];
-// let usersId = [];
-// let totalUsers = 3;
-
-// // chefs
-// let chefsId = [];
-// let totalChefs = 10;
-
-// // recipes
-// let fileRecipeId = [];
-// let totalFiles = 50;
-// let totalRecipes = 10;
 
 async function createUsers() {
     const users = [];
