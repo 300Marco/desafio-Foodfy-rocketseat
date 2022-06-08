@@ -1,11 +1,59 @@
 {% if error %}
     <div class="messages error">
+        <div class="error-lottie"></div>
         {{error}}
     </div>
 {% endif %}
 
-{% if success %}
+{# {% if success %}
     <div class="messages success">
         {{success}}
     </div>
+{% endif %} #}
+
+{# Success Lottie #}
+{% if success %}
+    <div class="messages success">
+        <div class="success-lottie"></div>
+        {{success}}
+    </div>
 {% endif %}
+
+<script src="/lottie.min.js"></script> 
+<script>
+    let element = ''
+    let animation = '';
+
+    {% if success %}
+        element = document.querySelector('.success-lottie');
+        animation = '/97240-success.json';
+    {% elif error %}
+        element = document.querySelector('.error-lottie');
+        animation = '/15120-error.json';
+    {% endif %}
+    
+
+    lottie.loadAnimation({
+        container: element, 
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        path: `${animation}`
+    });
+</script>
+
+{# const boxMessages = document.querySelector('.messages');
+
+    if(boxMessages.innerHTML.includes('criado')) {
+    }
+
+    if(boxMessages.innerHTML.includes('deletado')) {
+        animation = '/15120-delete.json';
+    } #}
+
+{# {% if success %}
+        animation = '/97240-success.json';
+    {% else %}
+        const element = document.querySelector('.delete-lottie');
+        animation = '/15120-delete';
+    {% endif %} #}

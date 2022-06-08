@@ -6,7 +6,7 @@
 }
 
 .messages {
-    padding: 40px 60px;
+    padding: 22px 30px;
     font-size: 1.6rem;
     border-radius: 4px;
 
@@ -15,6 +15,10 @@
     top: 12px;
 
     opacity: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     animation: hidemessage 600ms 5s ease-out forwards;
 }
@@ -27,4 +31,17 @@
 .success {
     background-color: var(--color-success);
     color: white;
+}
+
+/* lotti */
+.success-lottie {
+    width: 50px;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.error-lottie {
+    width: 50px;
+    padding: 0;
+    margin-right: 10px;
 }
