@@ -13,14 +13,36 @@ function emailFieldFormatting(text) {
     return text.toLowerCase();
 }
 
+// users
 let isAdmin = [true, false];
-let usersId = []; // recebe os IDs de usuários
-let totalUsers = 3;
-let chefsId = []; // recebe os IDs de usuários
-let totalChefs = 10;
+
+let usersId = [],
+    chefsId = [],
+    fileRecipeId = [];
+
+// chefs
+let totalUsers = 3,
+    totalChefs = 10,
+    totalRecipes = 10,
+    totalFiles = 50;
+
+// recipes
+
+// let isAdmin = [true, false];
+// let usersId = [];
+// let totalUsers = 3;
+
+// // chefs
+// let chefsId = [];
+// let totalChefs = 10;
+
+// // recipes
+// let fileRecipeId = [];
+// let totalFiles = 50;
+// let totalRecipes = 10;
 
 async function createUsers() {
-    const users = []; // recebe os dados de usuários
+    const users = [];
     const password = await hash('123', 8);
 
     while(users.length < totalUsers) {
@@ -32,56 +54,93 @@ async function createUsers() {
         });
     };
 
-    // const usersPromise = users.map(user => {
-    //     console.log(user);
-    // });
     const usersPromise = users.map(user => AdminUser.create(user));
     usersId = await Promise.all(usersPromise);
 };
 
 async function createChefs() {
+    // create files
     let files = [];
 
     while(files.length < totalChefs) {
         files.push({
             name: faker.image.image(),
-            path: `public/assets/images/placeholder.png`
+            path: `public/assets/images/chef-placeholder.png`
         });
     };
     
-    // const filesPromise = await files.map(file => {
-    //     // console.log(file);
-    // });
-    
     const filesPromise = await files.map(file => File.create(file));
     await Promise.all(filesPromise);
-
-    // return
     
-    const chefs = []; // recebe os dados de usuários
+    // create chefs
+    const chefs = [];
 
     while(chefs.length < totalChefs) {
         chefs.push({
             name: faker.name.findName(),
             file_id: chefs.length + 1
-            // file_id: chefsId[Math.floor(Math.random() * totalChefs)]
         });
     };
-
-    // const chefsPromise = chefs.map(chef => {
-    //     console.log(chef);
-    // });
     
     const chefsPromise = chefs.map(chef => AdminChef.create(chef));
-    await Promise.all(chefsPromise);
+    chefsId = await Promise.all(chefsPromise);
 };
 
-createChefs();
+async function createRecipes(chefs_id, users_id) {
+    // create recipes
+    const recipes = [];
 
-// createUsers();
+    while(recipes.length < totalRecipes) {
+        recipes.push({
+            chef_id: chefs_id[Math.floor(Math.random() * totalChefs)],
+            user_id: users_id[Math.floor(Math.random() * totalUsers)],
+            title: faker.name.findName(),
+            ingredients: faker.helpers.arrayElements(['ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients', 'ingredients']),
+            preparation: faker.helpers.arrayElements(['preparation', 'preparation', 'preparation', 'preparation', 'preparation', 'preparation', 'preparation', 'preparation']),
+            information: faker.lorem.paragraph(Math.ceil(Math.random() * 10)).replace(/\./g, '. <br>')
+        });
+    };
+    
+    const recipesPromise = recipes.map(recipe => AdminRecipe.create(recipe));
+    recipesId = await Promise.all(recipesPromise);
 
+    // create files
+    let files = [];
 
+    while(files.length < totalFiles) {
+        files.push({
+            name: faker.image.image(),
+            path: `public/assets/images/recipe-placeholder.png`
+        });
+    };
+    
+    const filesPromise = await files.map(file => File.create(file));
+    fileRecipeId = await Promise.all(filesPromise);
 
+    // Create Recipe ID and Files
+    let arrayId = 0;
+    let fileId = Number(fileRecipeId[0]);
+    fileRecipeId.map(() => {
+        arrayId += 1;
+        for(let i = 0; i < 5; i++) {
+            if(fileId <= 60) {
+                File.createRecipeFiles({
+                    recipeId: arrayId,
+                    fileId
+                });
+            }
+            fileId += 1;
+        };
+    });
+};
+
+async function init() {
+    await createUsers();
+    await createChefs();
+    await createRecipes(chefsId, usersId);
+}
+
+init();
 
 
 
