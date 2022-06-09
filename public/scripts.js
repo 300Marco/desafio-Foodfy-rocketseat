@@ -5,11 +5,11 @@ for(let card of cards) {
         const revenueId = card.getAttribute('id');
         window.location.href = `/details/${revenueId}`; 
     });
-}
+};
 
 try {
     dynamicNavigationMenu();
-} catch(err){}
+} catch(err){};
 
 function dynamicNavigationMenu() {
     const pageLink = location.pathname;
@@ -20,7 +20,7 @@ function dynamicNavigationMenu() {
         // website links
         if(pageLink.includes(item.getAttribute('href'), /\w/g)) {
             if(!pageLink.includes('/admin', /\w/g)) item.classList.add('active');
-        }
+        };
 
         // recipe details
         if(pageLink.includes('/details', /\w/g) && item.href.includes('/recipes')) item.classList.add('active');
@@ -33,28 +33,28 @@ function dynamicNavigationMenu() {
                 const logo = document.querySelector('header .title a');
                 logo.href = '/admin/chefs';
                 
-                item.classList.add('admin-active')
+                item.classList.add('admin-active');
             };
 
             if(pageLink.includes('/admin/recipes') && item.href.includes('/admin/recipes') || pageLink.includes('/admin/user/recipes')) {
                 item.classList.add('admin-active');
 
                 if(item.innerHTML != 'Receitas') item.classList.remove('admin-active');
-            }
+            };
 
             if(pageLink.includes('/admin/profile') && item.href.includes('/admin/profile')) {
                 item.classList.add('admin-active');
 
                 if(item.includes('Minha conta')) item.classList.remove('admin-active');
-            }
+            };
 
             if(pageLink.includes('/admin/users') && item.href.includes('/admin/profile')) {
                 item.classList.add('admin-active');
 
                 if(item.includes('Minha conta')) item.classList.remove('admin-active');
-            }
-        }
-    }
+            };
+        };
+    };
 }
 
 // Show and hide 
@@ -104,7 +104,7 @@ const recipeFields = document.querySelector('.recipe-fields');
 
 if(recipeFields) {
     displayInput();
-}
+};
 
 function displayInput() {
     const currentPage = location.pathname;
@@ -146,7 +146,7 @@ function displayInput() {
                 inputPreparation.parentNode.removeChild(inputPreparation);
             });
         };
-    } catch(err){}
+    } catch(err){};
 }
     
 // Add new inputs
@@ -155,7 +155,7 @@ function insertButtonEdit(classes, func) {
     
     for(let button of buttonsDelete) {
         func.createDeleteButton(button);
-    }
+    };
 }
 
 const AddIngredient = {
@@ -319,15 +319,15 @@ let elements = "";
 
 for(let page of pages) {
     if(String(page).includes("...")) {
-        elements += `<span> ${page} </span>`
+        elements += `<span> ${page} </span>`;
     } else {
         if(search) {
-            elements += `<a href="?page=${page}&search=${search}"> ${page} </a>`
+            elements += `<a href="?page=${page}&search=${search}"> ${page} </a>`;
         } else {
-            elements += `<a href="?page=${page}"> ${page} </a>`
-        }
-    }
-}
+            elements += `<a href="?page=${page}"> ${page} </a>`;
+        };
+    };
+};
 
 pagination.innerHTML = elements;
 
@@ -343,17 +343,17 @@ function paginate(selectedPage, totalPages) {
         if(firstAndLastPage || pagesBeforeSelectedPage && pagesAfterSelectedPage) {
             if(oldPage && currentPage - oldPage > 2) {
                 pages.push("...");
-            }
+            };
 
             if(oldPage && currentPage - oldPage == 2) {
                 pages.push(oldPage + 1);
-            }
+            };
             
             pages.push(currentPage);
 
             oldPage = currentPage;
-        }
-    }
+        };
+    };
 
     return pages;
 }
@@ -406,7 +406,7 @@ const PhotosUpload = {
         preview.childNodes.forEach(item => {
             if(item.classList && item.classList.value == 'photo') {
                 photosDiv.push(item);
-            }
+            };
         });
 
         const totalPhotos = fileList.length + photosDiv.length;
@@ -414,7 +414,7 @@ const PhotosUpload = {
             alert("O limite máximo de fotos foi atingido");
             event.preventDefault();
             return true;
-        }
+        };
 
         return false;
     },
@@ -487,7 +487,7 @@ const ImageGallery = {
 
         ImageGallery.highlight.src = target.src;
     }
-}
+};
 
 const avatarUpload = {
     input: "",
@@ -538,7 +538,7 @@ const avatarUpload = {
         preview.childNodes.forEach(item => {
             if(item.classList && item.classList.value == "avatar-box") {
                 avatarDiv.push(item);
-            }
+            };
         });
 
         const totalPhotos = fileList.length + avatarDiv.length;
@@ -546,7 +546,7 @@ const avatarUpload = {
             alert('Não é permitido mais de 1 foto');
             event.preventDefault()
             return true;
-        }
+        };
 
         return false;
     },
@@ -598,8 +598,8 @@ const avatarUpload = {
 
             if(removedAvatar) {
                 removedAvatar.value += `${avatarDiv.id}`;
-            }
-        }
+            };
+        };
 
         avatarDiv.remove();
     },
@@ -618,7 +618,7 @@ const Validate = {
 
         if(results.error) {
             Validate.displayError(input, results.error);
-        }
+        };
     },
     displayError(input, error) {
         const div = document.createElement('div');
@@ -757,8 +757,8 @@ const ValidateEmptyFields = {
 
                 e.preventDefault();
                 return;
-            }
-        }
+            };
+        };
     },
     allProfileFields(e) {
         const items = document.querySelectorAll('.name-email input, .admin-email input, .profile-password input');
@@ -844,7 +844,7 @@ const title = document.querySelector('title').innerText;
 
 if(!pageLink.includes(`/edit`) && title == 'Lista de Usuários') {
     confirmListDelete();
-}
+};
 
 function confirmListDelete() {
     const deleteButton = document.querySelectorAll('.remove-user-list');
@@ -862,7 +862,7 @@ function confirmListDelete() {
             confirmationContainer.style.visibility = 'visible';
             confirmationContainer.style.opacity = 1;
         });
-    }
+    };
 
     cancelButton.addEventListener('click', e => {
         e.preventDefault();

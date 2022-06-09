@@ -1,8 +1,7 @@
 const AdminChef = require('../models/AdminChef');
-const FileAdminChef = require('../models/FileChef');
-const File = require('../models/File');
-
 const AdminUser = require('../models/AdminUser');
+const File = require('../models/File');
+const FileAdminChef = require('../models/FileChef');
 
 const { unlinkSync } = require('fs');
 
@@ -298,7 +297,7 @@ module.exports = {
                     };
                 });
 
-                // busca dados para renderizar
+                // fetch data to render
                 let chefs = await AdminChef.findAll();
 
                 if(!chefs) return res.render('adminChefs/not-found');

@@ -43,6 +43,7 @@ function find(filters, table) {
         console.error(err);
     };
 }
+
 const Base = {
     init({ table }) {
         if(!table) throw new Error('Invalid Params');

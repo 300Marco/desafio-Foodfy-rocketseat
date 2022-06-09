@@ -1,5 +1,4 @@
 const Recipe = require('../models/Recipe');
-// const File = require('../models/File');
 
 module.exports = {
     about(req, res) {
@@ -76,8 +75,6 @@ module.exports = {
                 offset
             };
     
-            // let results = await Recipe.paginate(params);
-            // let recipes = results.rows;
             let recipes = await Recipe.paginate(params);
     
             async function getImage(recipeId) {

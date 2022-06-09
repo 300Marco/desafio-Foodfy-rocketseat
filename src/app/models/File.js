@@ -1,6 +1,7 @@
-const db = require('../../config/db');
 const Base = require('./Base');
-const { unlinkSync } = require('fs')
+const db = require('../../config/db');
+
+const { unlinkSync } = require('fs');
 
 Base.init({ table:'files' });
 
