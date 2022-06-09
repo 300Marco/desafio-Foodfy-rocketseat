@@ -13,7 +13,7 @@ function emailFieldFormatting(text) {
 }
 
 function convertToSmallText(func) {
-    return func.replace(/À|Ao|Com|Da|De|Dos|E|Em|Na|Sobre/gi, function (string) {
+    return func.replace(/À|Ao|Com|Da|De|Dos|Em|Na|Sobre/gi, function (string) {
         return string.toLowerCase();
     });
 }
