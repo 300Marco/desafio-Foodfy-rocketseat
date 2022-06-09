@@ -15,29 +15,6 @@
     display: block;
 }
 
-/* .is_admin {
-    background-color: var(--color-success);
-    color: white;
-    border-radius: 20px;
-    padding: 5px 10px;
-
-    font-size: 1.2rem;
-    font-weight: bold;
-
-    margin-left: 15px;
-} */
-
-/* ========== STATUS ADMIN */
-/* .is_admin_header {
-    color: #00ff3c;
-    font-weight: bold;
-    margin-left: 50px;
-    font-size: 1.5rem;
-
-    display: flex;
-    align-items: center;
-} */
-
 .profile-type {
     color: white;
     font-weight: bold;
@@ -67,5 +44,4 @@
 
 .is_user_header p {
     margin-top: 2px;
-    /* font-size: 2.2rem; */
 }

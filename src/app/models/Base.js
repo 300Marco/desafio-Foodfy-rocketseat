@@ -14,17 +14,7 @@ function find(filters, table) {
                     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
                     WHERE recipes.id = ${id}
                 `;
-                // console.log('aqui1');
             } else {
-                // page Home
-                // query = `
-                //     SELECT ${table}.*, chefs.name AS chefs_name 
-                //     FROM ${table}
-                //     LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-                //     GROUP BY ${table}.id, chefs.name LIMIT 6 OFFSET 0;
-                // `;
-
-
                 query = `
                     SELECT ${table}.*, chefs.name AS chefs_name 
                     FROM ${table}
@@ -34,10 +24,7 @@ function find(filters, table) {
             };
         } else {
             query = `SELECT * FROM ${table}`;
-            // console.log('aqui3')
         };
-        
-        // let query = `SELECT * FROM ${table}`;
 
         if(filters) {
             Object.keys(filters).map(key => {
@@ -50,35 +37,12 @@ function find(filters, table) {
                 });
             });
         };
-        // console.log('aqui4');
 
         return db.query(query);
     } catch (err) {
         console.error(err);
     };
 }
-// function find(filters, table) {
-//     try {
-//         let query = `SELECT * FROM ${table}`;
-
-//         if(filters) {
-//             Object.keys(filters).map(key => {
-//                 query = `${query}
-//                     ${key}
-//                 `;
-    
-//                 Object.keys(filters[key]).map(field => {
-//                     query = `${query} ${field} = '${filters[key][field]}'`
-//                 });
-//             });
-//         };
-
-//         return db.query(query);
-//     } catch (err) {
-//         console.error(err);
-//     };
-// }
-
 const Base = {
     init({ table }) {
         if(!table) throw new Error('Invalid Params');
@@ -106,30 +70,7 @@ const Base = {
             console.error(err);
         };
     },
-    // async create(fields) { // example: User.create({ name: 'Marco', age: 25 })
-    //     try {
-    //         let keys = [],
-    //             values = [];
-
-    //         Object.keys(fields).map(key => {
-    //             keys.push(key);
-    //             values.push(fields[key]);
-    //         });
-
-    //         const query = `
-    //             INSERT INTO ${this.table} (
-    //                 ${keys.join(',')}
-    //             ) VALUES (${values.join(',')})
-    //             RETURNING id
-    //         `;
-
-    //         const results = await db.query(query);
-    //         return results.rows[0].id;
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // },
-    async create(fields) { // example: User.create({ name: 'Marco', age: 25 })
+    async create(fields) {
         try {
             let keys = [],
                 values = [];

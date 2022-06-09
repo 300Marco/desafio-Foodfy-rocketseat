@@ -29,7 +29,6 @@ function dynamicNavigationMenu() {
         if(pageLink.includes('/search', /\w/g) && item.href.includes('/recipes')) item.classList.add('active');
 
         if(item.getAttribute('href').includes('/admin')) {
-            // if(pageLink.includes('/admin/chefs') && item.href.includes('/admin/chefs')) item.classList.add('admin-active');
             if(pageLink.includes('/admin/chefs') && item.href.includes('/admin/chefs')) {
                 const logo = document.querySelector('header .title a');
                 logo.href = '/admin/chefs';
@@ -58,110 +57,7 @@ function dynamicNavigationMenu() {
     }
 }
 
-// adminDynamicNavigationMenu();
-// function adminDynamicNavigationMenu() {
-//     const pageLink = location.pathname;
-//     const menuItems = document.querySelectorAll('header nav ul a');
-
-//     for(item of menuItems) {
-//         if(pageLink.includes(item.getAttribute('href'), /\w/g)) {
-//             item.classList.add('admin-active');
-//         }
-
-//         // console.log(item.getAttribute('href') == '/');
-//         if((item.getAttribute('href') == '/')) {
-//             item.classList.remove('admin-active')
-//         }
-//     }
-// }
-
-// const menuItems = document.querySelectorAll('header .links a');
-
-// for( item of menuItems ) {
-//     if(currentPage.includes(item.getAttribute('href'))) {
-//         item.classList.add("active");
-//     }
-// }
-
-// // Dynamic visitor header
-// const pageFoodfy = document.querySelector('.page-foodfy');
-
-// if(pageFoodfy) {
-//     dynamicVisitorHeader();
-// }
-
-// function dynamicVisitorHeader() {
-//     const currentPage = location.pathname;
-//     const li = document.querySelectorAll('nav ul li');
-
-//     for(let link of li) {
-//         if(currentPage == '/about' && link.firstChild.pathname == '/about') {
-//             link.firstChild.className = 'active';
-//         } else if(currentPage == '/recipes' && link.firstChild.pathname == '/recipes') {
-//             link.firstChild.className = 'active';
-//         } else if(currentPage == '/chefs' && link.firstChild.pathname == '/chefs') {
-//             link.firstChild.className = 'active';
-//         } else if(currentPage.indexOf('/details') == 0 && link.firstChild.pathname == '/recipes') {
-//             link.firstChild.className = 'active';
-//         } else if(currentPage.indexOf('/search') == 0 && link.firstChild.pathname == '/recipes') {
-//             link.firstChild.className = 'active';
-//         };
-//     };
-// }
-
-
-// // Dynamic admin header
-// const boxAdminHeader = document.querySelector('.box-admin-header-menu');
-
-// if(boxAdminHeader) {
-//     dynamicAdminHeader();
-// };
-
-// function dynamicAdminHeader() {
-//     const currentPage = location.pathname;
-//     const logoLink = document.querySelector('.title a');
-//     const li = document.querySelectorAll('nav ul li');
-
-//     // /admin/users/create
-//     // Voltar aqui.. Funciona para edit, mais não em create
-//     // porque create não enxerga esse input.
-//     // const getInputHidden = document.querySelector('input[class="input-edit"]');
-//     // const userId = getInputHidden.getAttribute('value');
-
-//     for(let link of li) {
-//         // index page
-//         if(currentPage == '/admin/recipes' && link.firstChild.pathname == '/admin/recipes') {
-//             link.firstChild.className = 'admin-active';
-//         } else if(currentPage == '/admin/chefs' && link.firstChild.pathname == '/admin/chefs') {
-//             logoLink.href = '/admin/chefs';
-//             link.firstChild.className = 'admin-active';
-//         }
-//         // else if(currentPage == '/admin/users/create' && link.firstChild.pathname == '/admin/users/create') {
-//         //     logoLink.href = '/admin/users/create';
-//         //     link.firstChild.className = 'admin-active';
-//         // };
-        
-//         // detail page and edit - recipes and chefs
-//         if(currentPage.indexOf('/admin/recipes') == 0 && link.firstChild.pathname == '/admin/recipes') {
-//             link.firstChild.className = 'admin-active';
-//         } else if(currentPage.indexOf('/admin/chefs') == 0 && link.firstChild.pathname == '/admin/chefs') {
-//             logoLink.href = '/admin/chefs';
-//             link.firstChild.className = 'admin-active';
-//         }
-
-//         // continue posteriormente...    
-//         // // page edit user
-//         // if(currentPage.indexOf(`/admin/users/${userId}`) == 0) {
-//         //     const userLink =  document.querySelector('.accounts a');
-
-//         //     // logoLink.href = ''
-//         //     userLink.className = 'admin-active';
-//         // };
-//     }
-// }
-
-
-// Show and hide -- TESTES
+// Show and hide 
 const showAndHide = {
     hideIngredients() {
         const ingredients = document.querySelector('.ingredients');
@@ -228,17 +124,6 @@ function displayInput() {
     const getInputUser = document.querySelector('.name-input');
     const userId = getInputUser.getAttribute('id');
     
-    // get id user
-    // const getInputHidden = document.querySelector('input[class="input-edit"]');
-    // const userId = getInputHidden.getAttribute('value');
-
-    // if(
-    //     href != '/admin/recipes/create' && 
-    //     href != '/admin/chefs/create' && 
-    //     href != `/admin/chefs/${chefId}/edit` && 
-    //     href != '/admin/users/create' &&
-    //     href != `/admin/users/${userId}`
-    // ) {
     try {
         if(
             href != '/admin/recipes/create' && 
@@ -263,16 +148,6 @@ function displayInput() {
         };
     } catch(err){}
 }
-
-
-// Add new inputs
-// const btnIngredient = document.querySelector('.add-ingredient');
-// const btnPreparation = document.querySelector('.add-preparation');
-
-// if(btnIngredient || btnPreparation) {
-    //     // addIngredient();
-    //     // addPreparation();
-    // }
     
 // Add new inputs
 function insertButtonEdit(classes, func) {
@@ -288,15 +163,12 @@ const AddIngredient = {
     boxIngredients: document.querySelector('.box-ingredients'),
     currentPage: String(location.pathname),
     newField(e) {
-        // click
         if(this.currentPage == '/admin/recipes/create') {
             if(!this.inputIngredients.value) return;
             this.createRecipe(this.inputIngredients.value);
         } else {
             this.createRecipe(this.inputIngredients.value);
         };
-
-        // this.createRecipe(this.inputIngredients.value);
     },
     createInput() {
         const input = document.createElement('input');
@@ -335,24 +207,6 @@ const AddIngredient = {
         this.createDeleteButton(div);
     },
     deleteField() {
-        // const selectIngredient = document.getElementsByClassName('select-ingredient');
-        
-        // let ingredientsArray = [];
-        // let count = 0;
-        // for(let ingredient of selectIngredient) {
-        //     let button = ingredient.querySelector('span');
-        //     ingredientsArray.push(button);
-            
-        //     count = ingredientsArray.length;
-
-        //     button.addEventListener('click', () => {
-        //         if(count > 0) {
-        //             console.log('excluir');
-        //             button.parentElement.remove();
-        //         }
-        //     });
-        // };
-
         const selectIngredient = document.querySelectorAll('.select-ingredient');
         
         let count = selectIngredient.length;
@@ -384,14 +238,12 @@ const AddPreparation = {
     boxPreparation: document.querySelector('.box-preparation'),
     currentPage: String(location.pathname),
     newField(e) {
-        // click
         if(this.currentPage == '/admin/recipes/create') {
             if(!this.inputPreparation.value) return;
             this.createRecipe(this.inputPreparation.value);
         } else {
             this.createRecipe(this.inputPreparation.value);
         };
-
     },
     createInput() {
         const input = document.createElement('input');
@@ -456,237 +308,7 @@ const AddPreparation = {
 insertButtonEdit('.box-preparation div', AddPreparation);
 AddPreparation.deleteField();
 
-// Código de adicionar inputs, antigo
-// function addIngredient() {
-//     const inputIngredients = document.querySelector('.input-ingredients');
-//     const boxIngredients = document.querySelector('.box-ingredients');
-
-//     function createInput() {
-//         const input = document.createElement('input');
-//         return input;
-//     }
-
-//     function createDiv() {
-//         const div = document.createElement('div');
-//         return div;
-//     }
-
-//     function clearInput() {
-//         inputIngredients.value = "";
-//         inputIngredients.focus();
-//     }
-
-//     function createDeleteButton(div) {
-//         const icon = document.createElement('span');
-//         icon.setAttribute('class', 'material-icons md delete-field-button');
-//         icon.innerHTML = 'delete';
-
-//         div.appendChild(icon);
-//     }
-
-//     function createRecipe(textoInput) {
-//         const input = createInput();
-//         const div = createDiv();
-
-//         input.setAttribute('type', 'text');
-//         input.setAttribute('name', 'ingredients[]');
-//         input.value = textoInput;
-
-//         div.appendChild(input);
-
-//         boxIngredients.appendChild(div);
-//         clearInput();
-
-//         createDeleteButton(div);
-//     }
-
-//     btnIngredient.addEventListener('click', () => {
-//         const currentPage = location.pathname;
-//         let href = String(currentPage);
-
-//         if(href == '/admin/recipes/create') {
-//             if(!inputIngredients.value) return;
-//             createRecipe(inputIngredients.value);
-//         } else {
-//             createRecipe(inputIngredients.value);
-//         }
-//     });
-
-//     function insertButtonEdit() {
-//         const boxDiv = document.querySelectorAll('.box-ingredients div');
-        
-//         for(let div of boxDiv) {
-//             createDeleteButton(div);
-//         }
-//     }
-
-//     insertButtonEdit();
-
-//     document.addEventListener('click', (e) => {
-//         const el = e.target;
-
-//         if(el.classList.contains('delete-field-button')) {
-//             el.parentElement.remove();
-//         };
-//     });
-
-
-//     // const inputIngredient = document.querySelector('input[name="ingredients[]"]');
-//     // document.addEventListener('click', (e) => {
-//     //     const el = e.target;
-
-//     //     if(el.classList.contains('delete-field-button') || el.classList.contains('material-icons')) {
-//     //         console.log(el.parentElement)
-//     //         if(el.parentElement.classList.contains('ingredients-input')) {
-                
-//     //         }
-//     //     } 
-//         // else if(el.classList.contains('material-icons')) {
-//         //     const div = document.querySelector('.ingredients-input');
-
-//         //     console.log(div);
-
-//         //     // if(div.parentElement.classList.contains('ingredients-input')) {
-//         //     //     console.log('Ingredients');
-//         //     // }
-//         // }
-//     // });
-
-    
-// }
-
-// function addPreparation() {
-//     const inputPreparation = document.querySelector('.input-preparation');
-//     const boxPreparation = document.querySelector('.box-preparation');
-
-//     function createInput() {
-//         const input = document.createElement('input');
-//         return input;
-//     }
-
-//     function createDiv() {
-//         const div = document.createElement('div');
-//         return div;
-//     }
-
-//     function clearInput() {
-//         inputPreparation.value = "";
-//         inputPreparation.focus();
-//     }
-
-//     // function createDeleteButton(div) {
-//     //     const deleteButton = document.createElement('button');
-//     //     deleteButton.innerText = 'X';
-//     //     deleteButton.setAttribute('class', 'delete-field-button');
-//     //     deleteButton.setAttribute('type', 'button');
-
-//     //     div.appendChild(deleteButton);
-//     // }
-
-//     // function createDeleteButton(div) {
-//     //     // Create google trash span tag
-//     //     const icon = document.createElement('span');
-//     //     icon.setAttribute('class', 'material-icons md');
-//     //     icon.innerHTML = 'delete';
-                
-//     //     // Create button and add icon
-//     //     const deleteButton = document.createElement('button');
-//     //     // deleteButton.innerText = 'X';
-//     //     deleteButton.appendChild(icon);
-//     //     deleteButton.setAttribute('class', 'delete-field-button');
-//     //     deleteButton.setAttribute('type', 'button');
-
-//     //     div.appendChild(deleteButton);
-//     // }
-
-//     function createDeleteButton(div) {
-//         const icon = document.createElement('span');
-//         icon.setAttribute('class', 'material-icons md delete-field-button');
-//         icon.innerHTML = 'delete';
-        
-//         div.appendChild(icon);
-//     }
-//     // function createDeleteButton(div) {
-//     //     // Create google trash span tag
-//     //     const icon = document.createElement('span');
-//     //     icon.setAttribute('class', 'material-icons md');
-//     //     icon.innerHTML = 'delete';
-                
-//     //     // Create button and add icon
-//     //     const deleteButton = document.createElement('button');
-//     //     // deleteButton.innerText = 'X';
-//     //     deleteButton.appendChild(icon);
-//     //     deleteButton.setAttribute('class', 'delete-field-button');
-//     //     deleteButton.setAttribute('type', 'button');
-
-//     //     div.appendChild(deleteButton);
-//     // }
-
-//     function createPreparation(textoInput) {
-//         const input = createInput();
-//         const div = createDiv();
-
-//         input.setAttribute('type', 'text');
-//         input.setAttribute('name', 'preparation[]');
-//         input.value = textoInput;
-
-//         div.appendChild(input);
-
-//         boxPreparation.appendChild(div);
-//         clearInput();
-
-//         createDeleteButton(div);
-//     }
-
-//     btnPreparation.addEventListener('click', () => {
-//         const currentPage = location.pathname;
-//         let href = String(currentPage);
-
-//         if(href == '/admin/recipes/create') {
-//             if(!inputPreparation.value) return;
-//             createPreparation(inputPreparation.value);
-//         } else {
-//             createPreparation(inputPreparation.value);
-//         }
-//     });
-
-//     function insertButtonEdit() {
-//         const boxDiv = document.querySelectorAll('.box-preparation div');
-        
-//         for(let div of boxDiv) {
-//             createDeleteButton(div);
-//         }
-//     }
-
-//     insertButtonEdit();
-//     // document.addEventListener('click', e => {
-//     //     const el = e.target;
-
-//     //     console.log(el.classList);
-
-//     //     if(el.classList.contains('delete-field-button')) {
-//     //         el.parentElement.remove();
-//     //     }
-//     // });
-
-//     // btnPreparation.addEventListener('click', e => {
-//     //     console.log("Preparação")
-//     // })
-
-//     // document.addEventListener('click', e => {
-//     //     const el = e.target;
-
-//     //     if(el.classList.contains('delete-field-button')) {
-//     //         el.parentElement.remove();
-//     //     } else if(el.classList.contains('material-icons')) {
-//     //         const div = document.querySelector('.delete-field-button');
-//     //         div.parentElement.remove();
-//     //     }
-//     // });
-// }
-
 // Pagination
-
 const pagination = document.querySelector('.pagination');
 const search = pagination.dataset.search;
 const page = +pagination.dataset.page;
@@ -1200,52 +822,10 @@ const PasswordField = {
     }
 }
 
-// show password
-// function passwordField() {
-//     let password = document.querySelector('.password-input input');
-//     let span = document.querySelector('.password-input span');
-
-//     span.style.display = 'initial';
-
-//     span.addEventListener('click', () => {
-//         if(span.innerHTML == "Mostrar") {
-//             span.innerHTML = "Ocultar";
-//             password.type = "text";
-//         } else {
-//             span.innerHTML = "Mostrar";
-//             password.type = "password";
-//         }
-//     });
-// }
-
-// function resetPasswordField() {
-//     let password = document.querySelectorAll('.reset-password-input input');
-//     let span = document.querySelector('.reset-password-input span:nth-child(2)');
-
-//     span.style.display = 'initial';
-
-//     span.addEventListener('click', () => {
-//         if(span.innerHTML == "Mostrar senhas") {
-//             span.innerHTML = "Ocultar";
-//             for(pass of password) {
-//                 pass.type = "text";
-//             }
-//         } else {
-//             span.innerHTML = "Mostrar senhas";
-//             for(pass of password) {
-//                 pass.type = "password";
-//             }
-//         }
-//     });
-// }
-
-
-
 // new delete users
 const ConfirmDelete = {
     confirmationContainer: document.querySelector('.confirmation-container'),
     openContainer(e) {
-        // let cancelButton = document.querySelector('.cancel-delete');
         this.confirmationContainer.style.visibility = 'visible';
         this.confirmationContainer.style.opacity = 1;
 
@@ -1258,34 +838,6 @@ const ConfirmDelete = {
         e.preventDefault();
     }
 };
-
-
-// const pageLink = location.pathname;
-
-// if(pageLink.includes(`/edit`) && pageLink.includes(`/users`)) {
-//     // confirmDelete();
-// }
-
-// function confirmDelete2() {
-//     // edit user page
-//     let deleteButton = document.querySelector('.delete-user');
-//     let cancelButton = document.querySelector('.cancel-delete');
-//     let confirmationContainer = document.querySelector('.confirmation-container');
-
-//     deleteButton.addEventListener('click', e => {
-//         e.preventDefault();
-
-//         confirmationContainer.style.visibility = 'visible';
-//         confirmationContainer.style.opacity = 1;
-//     });
-
-//     cancelButton.addEventListener('click', e => {
-//         e.preventDefault();
-
-//         confirmationContainer.style.visibility = 'hidden';
-//         confirmationContainer.style.opacity = 0;
-//     });
-// }
 
 const pageLink = location.pathname;
 const title = document.querySelector('title').innerText;

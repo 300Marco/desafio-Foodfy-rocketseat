@@ -1,4 +1,3 @@
-// const AdminChef = require('../models/AdminChef');
 const AdminUser = require('../models/AdminUser');
 
 module.exports = {

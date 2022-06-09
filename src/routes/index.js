@@ -9,7 +9,6 @@ const users = require('../routes/users');
 
 // WEB PAGE
 routes.get('/', HomeController.index);
-// routes.get('/', recipes.index);
 
 // RECIPES
 routes.use('', recipes);

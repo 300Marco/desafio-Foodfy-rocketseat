@@ -5,13 +5,6 @@
     </div>
 {% endif %}
 
-{# {% if success %}
-    <div class="messages success">
-        {{success}}
-    </div>
-{% endif %} #}
-
-{# Success Lottie #}
 {% if success %}
     <div class="messages success">
         <div class="success-lottie"></div>
@@ -41,19 +34,3 @@
         path: `${animation}`
     });
 </script>
-
-{# const boxMessages = document.querySelector('.messages');
-
-    if(boxMessages.innerHTML.includes('criado')) {
-    }
-
-    if(boxMessages.innerHTML.includes('deletado')) {
-        animation = '/15120-delete.json';
-    } #}
-
-{# {% if success %}
-        animation = '/97240-success.json';
-    {% else %}
-        const element = document.querySelector('.delete-lottie');
-        animation = '/15120-delete';
-    {% endif %} #}
