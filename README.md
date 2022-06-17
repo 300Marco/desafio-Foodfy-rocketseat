@@ -1,6 +1,7 @@
 # LaunchBase Rocketseat - Desafio Foodfy
+![Foodfy - Web](./github/home-page.png)
+<br><br>
 
-O Foodfy é um projeto que foi desenvolvido através de desafios propostos durante o bootcamp LaunchBase da Rocketseat. A cada fase/módulo do bootcamp, o nível de dificuldade veio aumentando, e para colocarmos em prática o que aprendemos, eram propostos novos desafios, e então aplicamos essas novas habilidades, implementando e refatorando todo o projeto com métodos modernos.
 
 ## Índice
 
@@ -8,7 +9,6 @@ O Foodfy é um projeto que foi desenvolvido através de desafios propostos duran
   - [Índice](#índice)
   - [Visão Geral](#visão-geral)
     - [**O desafio**](#o-desafio)
-    - [**Captura de tela**](#captura-de-tela)
   - [Meu processo](#meu-processo)
     - [**Construído com**](#construído-com)
     - [**O que eu aprendi**](#o-que-eu-aprendi)
@@ -17,9 +17,11 @@ O Foodfy é um projeto que foi desenvolvido através de desafios propostos duran
 <br>
 
 ## Visão Geral
-<h1></h1>
 
 ### **O desafio**
+
+O Foodfy é um projeto que foi desenvolvido através de desafios propostos durante o bootcamp LaunchBase da Rocketseat. A cada fase/módulo do bootcamp, o nível de dificuldade veio aumentando, e para colocarmos em prática o que aprendemos, eram propostos novos desafios, e então aplicamos essas novas habilidades, implementando e refatorando todo o projeto com métodos modernos.
+<br><br>
 
 Fique a vontade para conferir, todos os desafios propostos durante o bootcamp.
 <br>
@@ -49,13 +51,7 @@ Cada Link dos desafios abaixo, possuem outros desafios para desenvolvimento cont
 
 <br>
 
-### **Captura de tela**
-
-![Foodfy - Web](./github/home-page.png)
-<br><br>
-
 ## Meu processo
-<h1></h1>
 
 ### **Construído com**
 
